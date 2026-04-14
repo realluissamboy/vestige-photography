@@ -56,8 +56,21 @@ const RATIOS = {
 // Stagger pattern for asymmetric layout
 const STAGGER_OFFSETS = [0, 40, 16, 56, 8, 48, 24, 60];
 
-function GalleryImage({ img, index, visible }) {
-  const offset = STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < breakpoint : false
+  );
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const onChange = (e) => setIsMobile(e.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, [breakpoint]);
+  return isMobile;
+}
+
+function GalleryImage({ img, index, visible, isMobile }) {
+  const offset = isMobile ? 0 : STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
   return (
     <div
       style={{
@@ -102,6 +115,7 @@ export default function VestigeSite() {
   const [aboutVisible, setAboutVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
   const [navHover, setNavHover] = useState(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);
@@ -179,61 +193,95 @@ export default function VestigeSite() {
           />
 
           {/* Navigation */}
-          <nav
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "32px",
-              padding: "36px 48px",
-              zIndex: 10,
-              opacity: heroVisible ? 1 : 0,
-              transform: heroVisible ? "translateY(0)" : "translateY(-12px)",
-              transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
-              flexWrap: "wrap",
-            }}
-          >
-            <button
-              style={navStyle(PAGE_LINKS[0].label)}
-              onMouseEnter={() => setNavHover(PAGE_LINKS[0].label)}
-              onMouseLeave={() => setNavHover(null)}
-              onClick={() => setPage(PAGE_LINKS[0].page)}
-            >
-              {PAGE_LINKS[0].label}
-            </button>
-            <span
+          {isMobile ? (
+            <div
               style={{
-                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                fontSize: "32px",
-                fontWeight: 300,
-                fontStyle: "italic",
-                color: COLORS.cream,
-                letterSpacing: "2px",
-                cursor: "pointer",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                padding: "24px 20px 0",
+                zIndex: 10,
+                opacity: heroVisible ? 1 : 0,
+                transform: heroVisible ? "translateY(0)" : "translateY(-12px)",
+                transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
-              onClick={() => setPage("home")}
             >
-              Vestige
-            </span>
-            <button
-              style={navStyle(PAGE_LINKS[1].label)}
-              onMouseEnter={() => setNavHover(PAGE_LINKS[1].label)}
-              onMouseLeave={() => setNavHover(null)}
-              onClick={() => setPage(PAGE_LINKS[1].page)}
+              <span
+                style={{
+                  fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                  fontSize: "28px",
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  color: COLORS.cream,
+                  letterSpacing: "2px",
+                  lineHeight: 1,
+                }}
+              >
+                Vestige
+              </span>
+              <MobileMenu variant="overlay" setPage={setPage} />
+            </div>
+          ) : (
+            <nav
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "32px",
+                padding: "36px 48px",
+                zIndex: 10,
+                opacity: heroVisible ? 1 : 0,
+                transform: heroVisible ? "translateY(0)" : "translateY(-12px)",
+                transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
+                flexWrap: "wrap",
+              }}
             >
-              {PAGE_LINKS[1].label}
-            </button>
-          </nav>
+              <button
+                style={navStyle(PAGE_LINKS[0].label)}
+                onMouseEnter={() => setNavHover(PAGE_LINKS[0].label)}
+                onMouseLeave={() => setNavHover(null)}
+                onClick={() => setPage(PAGE_LINKS[0].page)}
+              >
+                {PAGE_LINKS[0].label}
+              </button>
+              <span
+                style={{
+                  fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                  fontSize: "32px",
+                  fontWeight: 300,
+                  fontStyle: "italic",
+                  color: COLORS.cream,
+                  letterSpacing: "2px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setPage("home")}
+              >
+                Vestige
+              </span>
+              <button
+                style={navStyle(PAGE_LINKS[1].label)}
+                onMouseEnter={() => setNavHover(PAGE_LINKS[1].label)}
+                onMouseLeave={() => setNavHover(null)}
+                onClick={() => setPage(PAGE_LINKS[1].page)}
+              >
+                {PAGE_LINKS[1].label}
+              </button>
+            </nav>
+          )}
 
           {/* CTA */}
           <div
             style={{
               position: "absolute",
-              bottom: "72px",
+              bottom: isMobile ? "48px" : "72px",
               left: "50%",
               transform: "translateX(-50%)",
               opacity: heroVisible ? 1 : 0,
@@ -256,7 +304,8 @@ export default function VestigeSite() {
                 color: COLORS.cream,
                 background: "transparent",
                 border: `1px solid ${COLORS.cream}`,
-                padding: "16px 48px",
+                padding: isMobile ? "14px 32px" : "16px 48px",
+                minHeight: "44px",
                 cursor: "pointer",
                 transition: "background 0.4s ease",
               }}
@@ -280,13 +329,14 @@ export default function VestigeSite() {
     };
     const sectionHeading = {
       fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-      fontSize: "40px",
+      fontSize: isMobile ? "32px" : "40px",
       fontWeight: 300,
       fontStyle: "italic",
       color: COLORS.obsidian,
       margin: "0 0 32px",
       letterSpacing: "1px",
     };
+    const narrowSectionPadding = isMobile ? "0 24px 80px" : "0 40px 120px";
     const bodyText = {
       fontFamily: "'Inter', 'Helvetica Neue', sans-serif",
       fontSize: "16px",
@@ -306,25 +356,34 @@ export default function VestigeSite() {
           setPage={setPage}
           navStyleDark={navStyleDark}
           setNavHover={setNavHover}
+          isMobile={isMobile}
         />
-        <div style={{ height: "80px" }} />
+        <div style={{ height: isMobile ? "48px" : "80px" }} />
 
         {/* Opening: headshot + philosophy */}
         <section
           style={{
             maxWidth: "1100px",
             margin: "0 auto",
-            padding: "0 40px 120px",
+            padding: narrowSectionPadding,
             display: "grid",
-            gridTemplateColumns: "minmax(240px, 1fr) 1.4fr",
-            gap: "80px",
+            gridTemplateColumns: isMobile ? "1fr" : "minmax(240px, 1fr) 1.4fr",
+            gap: isMobile ? "32px" : "80px",
             alignItems: "center",
             opacity: aboutVisible ? 1 : 0,
             transform: aboutVisible ? "translateY(0)" : "translateY(24px)",
             transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
           }}
         >
-          <div style={{ border: `1px solid ${COLORS.obsidian}`, overflow: "hidden" }}>
+          <div
+            style={{
+              border: `1px solid ${COLORS.obsidian}`,
+              overflow: "hidden",
+              maxWidth: isMobile ? "320px" : "none",
+              margin: isMobile ? "0 auto" : 0,
+              width: "100%",
+            }}
+          >
             <img
               src="/susana headshot.webp"
               alt="Susana Andrea, founder of Vestige Photography"
@@ -336,7 +395,7 @@ export default function VestigeSite() {
             <p
               style={{
                 fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                fontSize: "30px",
+                fontSize: isMobile ? "24px" : "30px",
                 fontWeight: 300,
                 fontStyle: "italic",
                 lineHeight: 1.4,
@@ -359,7 +418,7 @@ export default function VestigeSite() {
           style={{
             maxWidth: "820px",
             margin: "0 auto",
-            padding: "0 40px 120px",
+            padding: narrowSectionPadding,
             opacity: aboutVisible ? 1 : 0,
             transition: "opacity 1s ease 0.4s",
           }}
@@ -379,7 +438,7 @@ export default function VestigeSite() {
           style={{
             maxWidth: "820px",
             margin: "0 auto",
-            padding: "0 40px 120px",
+            padding: narrowSectionPadding,
             opacity: aboutVisible ? 1 : 0,
             transition: "opacity 1s ease 0.5s",
           }}
@@ -399,7 +458,7 @@ export default function VestigeSite() {
           style={{
             maxWidth: "820px",
             margin: "0 auto",
-            padding: "0 40px 120px",
+            padding: narrowSectionPadding,
             opacity: aboutVisible ? 1 : 0,
             transition: "opacity 1s ease 0.6s",
           }}
@@ -460,7 +519,8 @@ export default function VestigeSite() {
                 color: COLORS.obsidian,
                 background: "transparent",
                 border: `1px solid ${COLORS.obsidian}`,
-                padding: "16px 48px",
+                padding: isMobile ? "14px 32px" : "16px 48px",
+                minHeight: "44px",
                 cursor: "pointer",
               }}
             >
@@ -469,7 +529,7 @@ export default function VestigeSite() {
           </div>
         </section>
 
-        <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} />
+        <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
       </div>
     );
   }
@@ -486,6 +546,7 @@ export default function VestigeSite() {
         setPage={setPage}
         navStyleDark={navStyleDark}
         setNavHover={setNavHover}
+        isMobile={isMobile}
       />
 
       {/* Category Filter */}
@@ -493,8 +554,8 @@ export default function VestigeSite() {
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "36px",
-          padding: "40px 24px 48px",
+          gap: isMobile ? "18px 20px" : "36px",
+          padding: isMobile ? "24px 16px 32px" : "40px 24px 48px",
           flexWrap: "wrap",
           opacity: galleryVisible ? 1 : 0,
           transition: "opacity 0.8s ease 0.15s",
@@ -526,24 +587,24 @@ export default function VestigeSite() {
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 40px 80px",
+          padding: isMobile ? "0 20px 60px" : "0 40px 80px",
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "20px",
+          gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
+          gap: isMobile ? "24px" : "20px",
           alignItems: "start",
         }}
       >
         {filteredImages.map((img, i) => (
-          <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} />
+          <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} />
         ))}
       </div>
 
-      <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} />
+      <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
     </div>
   );
 }
 
-function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHover }) {
+function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHover, isMobile }) {
   const navBtn = (label, targetPage, isActive) => (
     <button
       style={navStyleDark(label, isActive)}
@@ -557,37 +618,69 @@ function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHove
 
   return (
     <>
-      <nav
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "40px",
-          padding: "36px 24px 0",
-          flexWrap: "wrap",
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(-12px)",
-          transition: "opacity 0.8s ease, transform 0.8s ease",
-        }}
-      >
-        {navBtn("Portfolio", "portfolio", page === "portfolio")}
-        <span
+      {isMobile ? (
+        <div
           style={{
-            fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-            fontSize: "40px",
-            fontWeight: 300,
-            fontStyle: "italic",
-            color: COLORS.obsidian,
-            letterSpacing: "2px",
-            cursor: "pointer",
-            lineHeight: 1,
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "24px 16px 0",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(-12px)",
+            transition: "opacity 0.8s ease, transform 0.8s ease",
           }}
-          onClick={() => setPage("home")}
         >
-          Vestige
-        </span>
-        {navBtn("About", "about", page === "about")}
-      </nav>
+          <span
+            style={{
+              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+              fontSize: "32px",
+              fontWeight: 300,
+              fontStyle: "italic",
+              color: COLORS.obsidian,
+              letterSpacing: "2px",
+              cursor: "pointer",
+              lineHeight: 1,
+            }}
+            onClick={() => setPage("home")}
+          >
+            Vestige
+          </span>
+          <MobileMenu variant="solid" setPage={setPage} />
+        </div>
+      ) : (
+        <nav
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "40px",
+            padding: "36px 24px 0",
+            flexWrap: "wrap",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(-12px)",
+            transition: "opacity 0.8s ease, transform 0.8s ease",
+          }}
+        >
+          {navBtn("Portfolio", "portfolio", page === "portfolio")}
+          <span
+            style={{
+              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+              fontSize: "40px",
+              fontWeight: 300,
+              fontStyle: "italic",
+              color: COLORS.obsidian,
+              letterSpacing: "2px",
+              cursor: "pointer",
+              lineHeight: 1,
+            }}
+            onClick={() => setPage("home")}
+          >
+            Vestige
+          </span>
+          {navBtn("About", "about", page === "about")}
+        </nav>
+      )}
       {subtitle && (
         <p
           style={{
@@ -609,12 +702,12 @@ function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHove
   );
 }
 
-function PageFooter({ visible, navStyleDark }) {
+function PageFooter({ visible, navStyleDark, isMobile }) {
   return (
     <footer
       style={{
         textAlign: "center",
-        padding: "48px 24px 40px",
+        padding: isMobile ? "40px 20px 32px" : "48px 24px 40px",
         borderTop: `1px solid ${COLORS.stone}44`,
         opacity: visible ? 1 : 0,
         transition: "opacity 0.8s ease 0.6s",
@@ -624,7 +717,7 @@ function PageFooter({ visible, navStyleDark }) {
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "28px",
+          gap: isMobile ? "20px" : "28px",
           marginBottom: "20px",
           flexWrap: "wrap",
         }}
@@ -661,5 +754,163 @@ function PageFooter({ visible, navStyleDark }) {
         © Vestige Fine Art Photography 2024
       </p>
     </footer>
+  );
+}
+
+function MobileMenu({ variant, setPage }) {
+  const [open, setOpen] = useState(false);
+  const iconColor = variant === "overlay" ? COLORS.cream : COLORS.obsidian;
+
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
+  const handleNav = (targetPage) => {
+    setOpen(false);
+    setPage(targetPage);
+  };
+
+  const barStyle = { display: "block", width: "22px", height: "1px", background: iconColor };
+
+  return (
+    <>
+      <button
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        onClick={() => setOpen(true)}
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "16px",
+          width: "44px",
+          height: "44px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "6px",
+          background: "transparent",
+          border: "none",
+          padding: 0,
+          cursor: "pointer",
+          zIndex: 11,
+        }}
+      >
+        <span style={barStyle} />
+        <span style={barStyle} />
+        <span style={barStyle} />
+      </button>
+
+      {open && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(26,26,26,0.98)",
+            zIndex: 100,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "12px",
+            padding: "24px",
+            animation: "vestige-fade 0.25s ease",
+          }}
+        >
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+            style={{
+              position: "absolute",
+              top: "20px",
+              right: "16px",
+              width: "44px",
+              height: "44px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "transparent",
+              border: "none",
+              color: COLORS.cream,
+              cursor: "pointer",
+              padding: 0,
+            }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" aria-hidden="true">
+              <line x1="5" y1="5" x2="19" y2="19" />
+              <line x1="19" y1="5" x2="5" y2="19" />
+            </svg>
+          </button>
+
+          {PAGE_LINKS.map((link) => (
+            <button
+              key={link.page}
+              type="button"
+              onClick={() => handleNav(link.page)}
+              style={{
+                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                fontSize: "28px",
+                fontWeight: 300,
+                fontStyle: "italic",
+                letterSpacing: "3px",
+                color: COLORS.cream,
+                background: "transparent",
+                border: "none",
+                padding: "12px 24px",
+                minHeight: "44px",
+                cursor: "pointer",
+              }}
+            >
+              {link.label}
+            </button>
+          ))}
+
+          <div
+            style={{
+              marginTop: "32px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "4px",
+            }}
+          >
+            {SOCIALS.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                style={{
+                  fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                  fontSize: "13px",
+                  letterSpacing: "3px",
+                  textTransform: "uppercase",
+                  color: COLORS.cream,
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  padding: "12px 16px",
+                  minHeight: "44px",
+                }}
+              >
+                {s.svg}
+                {s.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
