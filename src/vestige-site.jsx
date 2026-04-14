@@ -10,8 +10,33 @@ const COLORS = {
 
 const CATEGORIES = ["Pin-Up", "Burlesque", "Classic Cars", "Tiki-Rockabilly", "Vintage-Glamour"];
 
-const NAV_LINKS_HOME = ["Home", "Portfolio", "About", "Books", "Gazette", "Contact"];
-const NAV_LINKS_FOOTER = ["Home", "About", "Books", "Gazette", "Contact", "Instagram"];
+const PAGE_LINKS = [
+  { label: "Portfolio", page: "portfolio" },
+  { label: "About", page: "about" },
+];
+
+const SOCIALS = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/susanavestige/",
+    svg: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/vestigephotography/",
+    svg: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.29-.04-1.27-.12-2.41-.12-2.38 0-4.01 1.45-4.01 4.12V9.9H7.6V13h2.68v8h3.22z" />
+      </svg>
+    ),
+  },
+];
 
 // Placeholder images using gradient blocks to simulate the gallery
 const GALLERY_IMAGES = [
@@ -172,42 +197,36 @@ export default function VestigeSite() {
               flexWrap: "wrap",
             }}
           >
-            {NAV_LINKS_HOME.map((link, i) => {
-              // Place logo in center
-              const isCenter = i === 3;
-              return (
-                <div key={link} style={{ display: "flex", alignItems: "center", gap: "32px" }}>
-                  {isCenter && (
-                    <span
-                      style={{
-                        fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                        fontSize: "32px",
-                        fontWeight: 300,
-                        fontStyle: "italic",
-                        color: COLORS.cream,
-                        letterSpacing: "2px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => setPage("home")}
-                    >
-                      Vestige
-                    </span>
-                  )}
-                  <button
-                    style={navStyle(link)}
-                    onMouseEnter={() => setNavHover(link)}
-                    onMouseLeave={() => setNavHover(null)}
-                    onClick={() => {
-                      if (link === "Portfolio") setPage("portfolio");
-                      if (link === "About") setPage("about");
-                      if (link === "Home") setPage("home");
-                    }}
-                  >
-                    {link}
-                  </button>
-                </div>
-              );
-            })}
+            <button
+              style={navStyle(PAGE_LINKS[0].label)}
+              onMouseEnter={() => setNavHover(PAGE_LINKS[0].label)}
+              onMouseLeave={() => setNavHover(null)}
+              onClick={() => setPage(PAGE_LINKS[0].page)}
+            >
+              {PAGE_LINKS[0].label}
+            </button>
+            <span
+              style={{
+                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                fontSize: "32px",
+                fontWeight: 300,
+                fontStyle: "italic",
+                color: COLORS.cream,
+                letterSpacing: "2px",
+                cursor: "pointer",
+              }}
+              onClick={() => setPage("home")}
+            >
+              Vestige
+            </span>
+            <button
+              style={navStyle(PAGE_LINKS[1].label)}
+              onMouseEnter={() => setNavHover(PAGE_LINKS[1].label)}
+              onMouseLeave={() => setNavHover(null)}
+              onClick={() => setPage(PAGE_LINKS[1].page)}
+            >
+              {PAGE_LINKS[1].label}
+            </button>
           </nav>
 
           {/* CTA */}
@@ -280,59 +299,15 @@ export default function VestigeSite() {
       <div style={{ background: COLORS.cream, minHeight: "100vh", fontFamily: "'Cormorant Garamond', 'Times New Roman', serif" }}>
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
-        {/* Header */}
-        <header
-          style={{
-            textAlign: "center",
-            padding: "56px 24px 0",
-            opacity: aboutVisible ? 1 : 0,
-            transform: aboutVisible ? "translateY(0)" : "translateY(-16px)",
-            transition: "opacity 0.8s ease, transform 0.8s ease",
-          }}
-        >
-          <h1
-            style={{
-              fontSize: "48px",
-              fontWeight: 300,
-              fontStyle: "italic",
-              color: COLORS.obsidian,
-              margin: 0,
-              letterSpacing: "2px",
-              cursor: "pointer",
-            }}
-            onClick={() => setPage("home")}
-          >
-            Vestige
-          </h1>
-          <p
-            style={{
-              fontSize: "11px",
-              letterSpacing: "5px",
-              textTransform: "uppercase",
-              color: COLORS.muted,
-              marginTop: "12px",
-            }}
-          >
-            About the Storyteller
-          </p>
-        </header>
-
-        {/* Page nav */}
-        <nav
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "36px",
-            padding: "40px 24px 80px",
-            flexWrap: "wrap",
-            opacity: aboutVisible ? 1 : 0,
-            transition: "opacity 0.8s ease 0.15s",
-          }}
-        >
-          <button style={navStyleDark("Home", false)} onClick={() => setPage("home")}>Home</button>
-          <button style={navStyleDark("Portfolio", false)} onClick={() => setPage("portfolio")}>Portfolio</button>
-          <button style={navStyleDark("About", true)}>About</button>
-        </nav>
+        <PageHeader
+          page="about"
+          subtitle="About the Storyteller"
+          visible={aboutVisible}
+          setPage={setPage}
+          navStyleDark={navStyleDark}
+          setNavHover={setNavHover}
+        />
+        <div style={{ height: "80px" }} />
 
         {/* Opening: headshot + philosophy */}
         <section
@@ -432,9 +407,34 @@ export default function VestigeSite() {
           <p style={sectionLabel}>The Accomplishments</p>
           <h2 style={sectionHeading}>In Print</h2>
           <p style={bodyText}>
-            Susana is the author of <em>Vestige: Twenty Years of Modern Pin-Up</em> and
-            <em> Kittens and Kulture</em>, and editor of <em>The Velvet Gazette</em>,
-            a quarterly publication on vintage style, burlesque, and the women who keep
+            Susana is the author of{" "}
+            <a
+              href="https://www.wonkpress.com/products/vestige-twenty-years-of-modern-pin-up"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: COLORS.obsidian, textDecoration: "underline", textUnderlineOffset: "3px" }}
+            >
+              <em>Vestige: Twenty Years of Modern Pin-Up</em>
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://schifferbooks.com/products/kittens-kulture"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: COLORS.obsidian, textDecoration: "underline", textUnderlineOffset: "3px" }}
+            >
+              <em>Kittens and Kulture</em>
+            </a>
+            , and editor of{" "}
+            <a
+              href="https://www.instagram.com/thevelvetgazette/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: COLORS.obsidian, textDecoration: "underline", textUnderlineOffset: "3px" }}
+            >
+              <em>The Velvet Gazette</em>
+            </a>
+            , a quarterly publication on vintage style, burlesque, and the women who keep
             those traditions alive.
           </p>
         </section>
@@ -469,76 +469,7 @@ export default function VestigeSite() {
           </div>
         </section>
 
-        {/* Footer */}
-        <footer
-          style={{
-            textAlign: "center",
-            padding: "48px 24px 40px",
-            borderTop: `1px solid ${COLORS.stone}44`,
-            opacity: aboutVisible ? 1 : 0,
-            transition: "opacity 0.8s ease 0.8s",
-          }}
-        >
-          <nav
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "28px",
-              marginBottom: "20px",
-              flexWrap: "wrap",
-            }}
-          >
-            <a
-              href="https://www.instagram.com/susanavestige/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              style={{
-                ...navStyleDark("ig", false),
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
-              </svg>
-              Instagram
-            </a>
-            <a
-              href="https://www.facebook.com/vestigephotography/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              style={{
-                ...navStyleDark("fb", false),
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5h1.65V3.6c-.29-.04-1.27-.12-2.41-.12-2.38 0-4.01 1.45-4.01 4.12V9.9H7.6V13h2.68v8h3.22z" />
-              </svg>
-              Facebook
-            </a>
-          </nav>
-          <p
-            style={{
-              fontSize: "10px",
-              letterSpacing: "3px",
-              textTransform: "uppercase",
-              color: COLORS.muted,
-              margin: 0,
-            }}
-          >
-            © Vestige Fine Art Photography 2024
-          </p>
-        </footer>
+        <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} />
       </div>
     );
   }
@@ -548,42 +479,14 @@ export default function VestigeSite() {
     <div style={{ background: COLORS.cream, minHeight: "100vh", fontFamily: "'Cormorant Garamond', 'Times New Roman', serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
-      {/* Header */}
-      <header
-        style={{
-          textAlign: "center",
-          padding: "56px 24px 0",
-          opacity: galleryVisible ? 1 : 0,
-          transform: galleryVisible ? "translateY(0)" : "translateY(-16px)",
-          transition: "opacity 0.8s ease, transform 0.8s ease",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "48px",
-            fontWeight: 300,
-            fontStyle: "italic",
-            color: COLORS.obsidian,
-            margin: 0,
-            letterSpacing: "2px",
-            cursor: "pointer",
-          }}
-          onClick={() => setPage("home")}
-        >
-          Vestige
-        </h1>
-        <p
-          style={{
-            fontSize: "11px",
-            letterSpacing: "5px",
-            textTransform: "uppercase",
-            color: COLORS.muted,
-            marginTop: "12px",
-          }}
-        >
-          Portfolio Gallery View
-        </p>
-      </header>
+      <PageHeader
+        page="portfolio"
+        subtitle="Portfolio Gallery View"
+        visible={galleryVisible}
+        setPage={setPage}
+        navStyleDark={navStyleDark}
+        setNavHover={setNavHover}
+      />
 
       {/* Category Filter */}
       <nav
@@ -635,56 +538,128 @@ export default function VestigeSite() {
         ))}
       </div>
 
-      {/* Footer */}
-      <footer
+      <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} />
+    </div>
+  );
+}
+
+function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHover }) {
+  const navBtn = (label, targetPage, isActive) => (
+    <button
+      style={navStyleDark(label, isActive)}
+      onMouseEnter={() => setNavHover(label)}
+      onMouseLeave={() => setNavHover(null)}
+      onClick={() => setPage(targetPage)}
+    >
+      {label}
+    </button>
+  );
+
+  return (
+    <>
+      <nav
         style={{
-          textAlign: "center",
-          padding: "48px 24px 40px",
-          borderTop: `1px solid ${COLORS.stone}44`,
-          opacity: galleryVisible ? 1 : 0,
-          transition: "opacity 0.8s ease 0.6s",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "40px",
+          padding: "36px 24px 0",
+          flexWrap: "wrap",
+          opacity: visible ? 1 : 0,
+          transform: visible ? "translateY(0)" : "translateY(-12px)",
+          transition: "opacity 0.8s ease, transform 0.8s ease",
         }}
       >
-        <nav
+        {navBtn("Portfolio", "portfolio", page === "portfolio")}
+        <span
           style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "28px",
-            marginBottom: "16px",
-            flexWrap: "wrap",
+            fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+            fontSize: "40px",
+            fontWeight: 300,
+            fontStyle: "italic",
+            color: COLORS.obsidian,
+            letterSpacing: "2px",
+            cursor: "pointer",
+            lineHeight: 1,
           }}
+          onClick={() => setPage("home")}
         >
-          {NAV_LINKS_FOOTER.map((link) => (
-            <button
-              key={link}
-              style={{
-                ...navStyleDark(link, false),
-                opacity: navHover === `f-${link}` ? 0.9 : 0.5,
-              }}
-              onMouseEnter={() => setNavHover(`f-${link}`)}
-              onMouseLeave={() => setNavHover(null)}
-              onClick={() => {
-                if (link === "Home") setPage("home");
-                if (link === "About") setPage("about");
-                if (link === "Instagram") window.open("https://www.instagram.com/susanavestige/", "_blank");
-              }}
-            >
-              {link}
-            </button>
-          ))}
-        </nav>
+          Vestige
+        </span>
+        {navBtn("About", "about", page === "about")}
+      </nav>
+      {subtitle && (
         <p
           style={{
-            fontSize: "10px",
-            letterSpacing: "3px",
+            textAlign: "center",
+            fontSize: "11px",
+            letterSpacing: "5px",
             textTransform: "uppercase",
             color: COLORS.muted,
-            margin: 0,
+            marginTop: "16px",
+            marginBottom: 0,
+            opacity: visible ? 1 : 0,
+            transition: "opacity 0.8s ease 0.1s",
           }}
         >
-          © Vestige Fine Art Photography 2024
+          {subtitle}
         </p>
-      </footer>
-    </div>
+      )}
+    </>
+  );
+}
+
+function PageFooter({ visible, navStyleDark }) {
+  return (
+    <footer
+      style={{
+        textAlign: "center",
+        padding: "48px 24px 40px",
+        borderTop: `1px solid ${COLORS.stone}44`,
+        opacity: visible ? 1 : 0,
+        transition: "opacity 0.8s ease 0.6s",
+      }}
+    >
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "28px",
+          marginBottom: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        {SOCIALS.map((s) => (
+          <a
+            key={s.label}
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={s.label}
+            style={{
+              ...navStyleDark(s.label, false),
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            {s.svg}
+            {s.label}
+          </a>
+        ))}
+      </nav>
+      <p
+        style={{
+          fontSize: "10px",
+          letterSpacing: "3px",
+          textTransform: "uppercase",
+          color: COLORS.muted,
+          margin: 0,
+        }}
+      >
+        © Vestige Fine Art Photography 2024
+      </p>
+    </footer>
   );
 }
