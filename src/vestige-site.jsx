@@ -128,8 +128,8 @@ function GalleryImage({ img, index, visible, isMobile }) {
               letterSpacing: "4px",
               textTransform: "uppercase",
               color: COLORS.cream,
-              filter: revealed ? "blur(0)" : "blur(1.5px)",
-              opacity: revealed ? 1 : 0.5,
+              filter: revealed ? "blur(0)" : "blur(0.5px)",
+              opacity: revealed ? 1 : 0.85,
               transition: "filter 0.4s ease, opacity 0.4s ease",
             }}
           >
@@ -308,42 +308,6 @@ export default function VestigeSite() {
             </nav>
           )}
 
-          {/* CTA */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: isMobile ? "48px" : "72px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              opacity: heroVisible ? 1 : 0,
-              transition: "opacity 1.2s ease 0.8s",
-            }}
-          >
-            <button
-              onClick={() => setPage("portfolio")}
-              onMouseEnter={(e) => {
-                e.target.style.background = "rgba(250,248,244,0.12)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "transparent";
-              }}
-              style={{
-                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                fontSize: "11px",
-                letterSpacing: "4px",
-                textTransform: "uppercase",
-                color: COLORS.cream,
-                background: "transparent",
-                border: `1px solid ${COLORS.cream}`,
-                padding: isMobile ? "14px 32px" : "16px 48px",
-                minHeight: "44px",
-                cursor: "pointer",
-                transition: "background 0.4s ease",
-              }}
-            >
-              View the Archives
-            </button>
-          </div>
         </div>
       </div>
     );
@@ -369,20 +333,20 @@ export default function VestigeSite() {
     };
     const narrowSectionPadding = isMobile ? "0 24px 80px" : "0 40px 120px";
     const bodyText = {
-      fontFamily: "'Inter', 'Helvetica Neue', sans-serif",
-      fontSize: "16px",
-      lineHeight: 1.75,
+      fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+      fontSize: "18px",
+      fontWeight: 400,
+      lineHeight: 1.7,
       color: COLORS.obsidian,
       margin: "0 0 20px",
     };
 
     return (
       <div style={{ background: COLORS.cream, minHeight: "100vh", fontFamily: "'Cormorant Garamond', 'Times New Roman', serif" }}>
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
         <PageHeader
           page="about"
-          subtitle="About the Storyteller"
           visible={aboutVisible}
           setPage={setPage}
           navStyleDark={navStyleDark}
@@ -555,7 +519,7 @@ export default function VestigeSite() {
                 cursor: "pointer",
               }}
             >
-              View the Archives
+              View Portfolio
             </button>
           </div>
         </section>
@@ -572,7 +536,6 @@ export default function VestigeSite() {
 
       <PageHeader
         page="portfolio"
-        subtitle="Portfolio Gallery View"
         visible={galleryVisible}
         setPage={setPage}
         navStyleDark={navStyleDark}
@@ -598,6 +561,34 @@ export default function VestigeSite() {
           <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} />
         ))}
       </div>
+
+      <section
+        style={{
+          textAlign: "center",
+          padding: "0 24px 120px",
+          opacity: galleryVisible ? 1 : 0,
+          transition: "opacity 1s ease 0.7s",
+        }}
+      >
+        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+          <button
+            style={{
+              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+              fontSize: "11px",
+              letterSpacing: "4px",
+              textTransform: "uppercase",
+              color: COLORS.obsidian,
+              background: "transparent",
+              border: `1px solid ${COLORS.obsidian}`,
+              padding: isMobile ? "14px 32px" : "16px 48px",
+              minHeight: "44px",
+              cursor: "pointer",
+            }}
+          >
+            Book a Session
+          </button>
+        </div>
+      </section>
 
       <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
     </div>
@@ -753,7 +744,18 @@ function PageFooter({ visible, navStyleDark, isMobile }) {
           margin: 0,
         }}
       >
-        © Vestige Fine Art Photography 2024
+        © Vestige Photography 2026
+      </p>
+      <p
+        style={{
+          fontSize: "10px",
+          letterSpacing: "3px",
+          textTransform: "uppercase",
+          color: COLORS.muted,
+          margin: "8px 0 0 0",
+        }}
+      >
+        Website created by Luis Samboy | www.luissamboy.com
       </p>
     </footer>
   );
