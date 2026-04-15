@@ -748,14 +748,14 @@ function PageFooter({ visible, navStyleDark, isMobile }) {
       </p>
       <p
         style={{
-          fontSize: "10px",
+          fontSize: "8px",
           letterSpacing: "3px",
           textTransform: "uppercase",
           color: COLORS.muted,
           margin: "8px 0 0 0",
         }}
       >
-        Website created by Luis Samboy | www.luissamboy.com
+        Built by Samboy | www.luissamboy.com
       </p>
     </footer>
   );
