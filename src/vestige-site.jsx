@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const COLORS = {
   cream: "#F5F0E8",
@@ -8,7 +9,6 @@ const COLORS = {
   muted: "#8A8070",
 };
 
-const CATEGORIES = ["Pin-Up", "Burlesque", "Classic Cars", "Tiki-Rockabilly", "Vintage-Glamour"];
 
 const PAGE_LINKS = [
   { label: "Portfolio", page: "portfolio" },
@@ -71,6 +71,8 @@ function useIsMobile(breakpoint = 768) {
 
 function GalleryImage({ img, index, visible, isMobile }) {
   const offset = isMobile ? 0 : STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
+  const [hovered, setHovered] = useState(false);
+  const revealed = isMobile || hovered;
   return (
     <div
       style={{
@@ -81,6 +83,8 @@ function GalleryImage({ img, index, visible, isMobile }) {
       }}
     >
       <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
         style={{
           position: "relative",
           width: "100%",
@@ -103,6 +107,35 @@ function GalleryImage({ img, index, visible, isMobile }) {
             display: "block",
           }}
         />
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            padding: "40px 16px 20px",
+            textAlign: "center",
+            background:
+              "linear-gradient(to top, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0) 100%)",
+            pointerEvents: "none",
+          }}
+        >
+          <span
+            style={{
+              display: "inline-block",
+              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+              fontSize: "12px",
+              letterSpacing: "4px",
+              textTransform: "uppercase",
+              color: COLORS.cream,
+              filter: revealed ? "blur(0)" : "blur(1.5px)",
+              opacity: revealed ? 1 : 0.5,
+              transition: "filter 0.4s ease, opacity 0.4s ease",
+            }}
+          >
+            {img.cat}
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -113,7 +146,6 @@ export default function VestigeSite() {
   const [heroVisible, setHeroVisible] = useState(false);
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [aboutVisible, setAboutVisible] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(null);
   const [navHover, setNavHover] = useState(null);
   const isMobile = useIsMobile();
 
@@ -137,10 +169,6 @@ export default function VestigeSite() {
     }
     setAboutVisible(false);
   }, [page]);
-
-  const filteredImages = activeCategory
-    ? GALLERY_IMAGES.filter((img) => img.cat === activeCategory)
-    : GALLERY_IMAGES;
 
   const navStyle = (link) => ({
     fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
@@ -187,6 +215,7 @@ export default function VestigeSite() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
+              objectPosition: isMobile ? "65% 35%" : "50% 50%",
               opacity: heroVisible ? 1 : 0,
               transition: "opacity 1.6s ease",
             }}
@@ -200,16 +229,17 @@ export default function VestigeSite() {
                 top: 0,
                 left: 0,
                 right: 0,
-                padding: "24px 20px 0",
+                padding: "24px 16px 0",
                 zIndex: 10,
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? "translateY(0)" : "translateY(-12px)",
                 transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
-                display: "flex",
+                display: "grid",
+                gridTemplateColumns: "44px 1fr 44px",
                 alignItems: "center",
-                justifyContent: "center",
               }}
             >
+              <span aria-hidden="true" />
               <span
                 style={{
                   fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
@@ -219,6 +249,7 @@ export default function VestigeSite() {
                   color: COLORS.cream,
                   letterSpacing: "2px",
                   lineHeight: 1,
+                  textAlign: "center",
                 }}
               >
                 Vestige
@@ -549,38 +580,7 @@ export default function VestigeSite() {
         isMobile={isMobile}
       />
 
-      {/* Category Filter */}
-      <nav
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: isMobile ? "18px 20px" : "36px",
-          padding: isMobile ? "24px 16px 32px" : "40px 24px 48px",
-          flexWrap: "wrap",
-          opacity: galleryVisible ? 1 : 0,
-          transition: "opacity 0.8s ease 0.15s",
-        }}
-      >
-        <button
-          style={navStyleDark("All", !activeCategory)}
-          onMouseEnter={() => setNavHover("All")}
-          onMouseLeave={() => setNavHover(null)}
-          onClick={() => setActiveCategory(null)}
-        >
-          All
-        </button>
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            style={navStyleDark(cat, activeCategory === cat)}
-            onMouseEnter={() => setNavHover(cat)}
-            onMouseLeave={() => setNavHover(null)}
-            onClick={() => setActiveCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </nav>
+      <div style={{ height: isMobile ? "24px" : "40px" }} />
 
       {/* Asymmetric Gallery Grid */}
       <div
@@ -594,7 +594,7 @@ export default function VestigeSite() {
           alignItems: "start",
         }}
       >
-        {filteredImages.map((img, i) => (
+        {GALLERY_IMAGES.map((img, i) => (
           <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} />
         ))}
       </div>
@@ -622,15 +622,16 @@ function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHove
         <div
           style={{
             position: "relative",
-            display: "flex",
+            display: "grid",
+            gridTemplateColumns: "44px 1fr 44px",
             alignItems: "center",
-            justifyContent: "center",
             padding: "24px 16px 0",
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(-12px)",
             transition: "opacity 0.8s ease, transform 0.8s ease",
           }}
         >
+          <span aria-hidden="true" />
           <span
             style={{
               fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
@@ -641,6 +642,7 @@ function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHove
               letterSpacing: "2px",
               cursor: "pointer",
               lineHeight: 1,
+              textAlign: "center",
             }}
             onClick={() => setPage("home")}
           >
@@ -785,11 +787,9 @@ function MobileMenu({ variant, setPage }) {
         aria-expanded={open}
         onClick={() => setOpen(true)}
         style={{
-          position: "absolute",
-          top: "20px",
-          right: "16px",
           width: "44px",
           height: "44px",
+          justifySelf: "end",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -807,7 +807,7 @@ function MobileMenu({ variant, setPage }) {
         <span style={barStyle} />
       </button>
 
-      {open && (
+      {open && typeof document !== "undefined" && createPortal(
         <div
           role="dialog"
           aria-modal="true"
@@ -851,7 +851,7 @@ function MobileMenu({ variant, setPage }) {
             </svg>
           </button>
 
-          {PAGE_LINKS.map((link) => (
+          {[{ label: "Vestige", page: "home" }, ...PAGE_LINKS].map((link) => (
             <button
               key={link.page}
               type="button"
@@ -909,7 +909,8 @@ function MobileMenu({ variant, setPage }) {
               </a>
             ))}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
