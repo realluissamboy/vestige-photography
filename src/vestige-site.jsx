@@ -170,12 +170,32 @@ export default function VestigeSite() {
   }, []);
 
   useEffect(() => {
-    if (page === "portfolio") {
+    if (page !== "portfolio") {
       setGalleryVisible(false);
-      const t = setTimeout(() => setGalleryVisible(true), 200);
-      return () => clearTimeout(t);
+      return;
     }
     setGalleryVisible(false);
+    const srcs = portfolioCategory === null
+      ? PORTFOLIO_CATEGORIES.map((c) => categoryCover(c)?.src).filter(Boolean)
+      : GALLERY_IMAGES.filter((i) => i.cat === portfolioCategory).map((i) => i.src);
+    let cancelled = false;
+    const preload = Promise.all(
+      srcs.map(
+        (s) =>
+          new Promise((res) => {
+            const img = new Image();
+            img.onload = img.onerror = () => res();
+            img.src = s;
+          })
+      )
+    );
+    const fallback = new Promise((res) => setTimeout(res, 1500));
+    Promise.race([preload, fallback]).then(() => {
+      if (!cancelled) setGalleryVisible(true);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [page, portfolioCategory]);
 
   useEffect(() => {
