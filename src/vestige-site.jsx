@@ -39,20 +39,20 @@ const SOCIALS = [
 ];
 
 const GALLERY_IMAGES = [
-  { id: 1,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-green-wall.jpg",       label: "Jade Wall" },
-  { id: 2,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-marie.jpg",            label: "Marie Devilreaux" },
-  { id: 3,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-coral.jpg",            label: "Coral & Bloom" },
-  { id: 4,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-mosh.jpg",             label: "Miss Mosh" },
-  { id: 5,  ratio: "landscape", cat: "Classic Cars",     src: "/portfolio/cars-cervena.jpg",           label: "Cervena Fox" },
-  { id: 6,  ratio: "portrait",  cat: "Classic Cars",     src: "/portfolio/cars-a5.jpg",                label: "Midnight Cruiser" },
-  { id: 7,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-winny.jpg",        label: "Winny Queen" },
-  { id: 8,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-sabrina.jpg",      label: "Sabrina Minx" },
-  { id: 9,  ratio: "portrait",  cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-avalon.jpg",            label: "Avalon Monet" },
-  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-patio.jpg",             label: "Tiki Patio" },
-  { id: 11, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-ashlyn.jpg",         label: "Ashlyn Coco" },
-  { id: 12, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-vanity.jpg",         label: "The Vanity" },
-  { id: 13, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-architectural.jpg",  label: "Architectural" },
-  { id: 14, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-seaside.jpg",        label: "Seaside Villa" },
+  { id: 1,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-green-wall.webp",       label: "Jade Wall" },
+  { id: 2,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-marie.webp",            label: "Marie Devilreaux" },
+  { id: 3,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-coral.webp",            label: "Coral & Bloom" },
+  { id: 4,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-mosh.webp",             label: "Miss Mosh" },
+  { id: 5,  ratio: "landscape", cat: "Classic Cars",     src: "/portfolio/cars-cervena.webp",           label: "Cervena Fox" },
+  { id: 6,  ratio: "portrait",  cat: "Classic Cars",     src: "/portfolio/cars-a5.webp",                label: "Midnight Cruiser" },
+  { id: 7,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-winny.webp",        label: "Winny Queen" },
+  { id: 8,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-sabrina.webp",      label: "Sabrina Minx" },
+  { id: 9,  ratio: "portrait",  cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-avalon.webp",            label: "Avalon Monet" },
+  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-patio.webp",             label: "Tiki Patio" },
+  { id: 11, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-ashlyn.webp",         label: "Ashlyn Coco" },
+  { id: 12, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-vanity.webp",         label: "The Vanity" },
+  { id: 13, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-architectural.webp",  label: "Architectural" },
+  { id: 14, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-seaside.webp",        label: "Seaside Villa" },
 ];
 
 const RATIOS = {
@@ -221,7 +221,7 @@ export default function VestigeSite() {
         {/* Hero Section - full viewport */}
         <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
           <img
-            src="/hero.jpg"
+            src="/hero.webp"
             alt="Vestige hero portrait"
             style={{
               position: "absolute",

@@ -26,3 +26,6 @@ pnpm-debug.log*
 .idea/
 .vscode/
 *.swp
+
+# Raw, unoptimized source assets (kept locally, not served or committed)
+raw-assets/

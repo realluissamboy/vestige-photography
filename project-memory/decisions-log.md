@@ -91,3 +91,13 @@ Portfolio restructured from flat grid to category-cover tiles + drill-in sub-vie
 ## 2026-04-17 — Portfolio categorization revised
 
 Two photos re-tagged after Luis noted category drift: A5 (woman + classic car) moved from Pin-Up → Classic Cars; Sabrina Minx (pink robe + ostrich feather boa, no car) moved from Classic Cars → Burlesque. Final counts: Pin-Up 4, Classic Cars 2, Burlesque 2, Tiki-Rockabilly 2, Vintage-Glamour 4. More photos to follow from Susana.
+
+## 2026-04-17 — Portfolio + hero converted to WebP
+
+Portfolio images and home-page hero converted from JPEG to WebP (via sharp, quality 80/82). Combined bundle dropped from 6.5MB to 2.7MB, ~58% smaller. 15 original JPEGs removed. Raw photographer exports (~200MB) moved to gitignored `raw-assets/` — kept locally for re-optimization, not served, not committed. `sharp` added as a devDependency for future conversions.
+
+**Normal web-dev pipeline for photo-heavy sites:**
+- Keep originals outside the served directory (what raw-assets/ is for now)
+- Serve only optimized, properly-sized derivatives (currently: 1600px long-edge WebP @ q80)
+- Use `<picture>` with AVIF + WebP + JPEG fallback for wider browser support (WebP alone is ~97% supported as of 2026, probably fine here)
+- Build-time tooling (vite-imagetools, next/image, etc.) can auto-generate sizes and formats from one source — worth adopting if the image set grows
