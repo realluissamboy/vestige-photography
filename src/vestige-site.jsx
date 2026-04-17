@@ -566,6 +566,8 @@ export default function VestigeSite() {
 
       <div style={{ height: isMobile ? "24px" : "40px" }} />
 
+      <div style={{ opacity: galleryVisible ? 1 : 0, transition: "opacity 0.8s ease" }}>
+
       {portfolioCategory === null ? (
         /* Category Tiles */
         <div
@@ -590,8 +592,6 @@ export default function VestigeSite() {
                 style={{
                   marginTop: `${offset}px`,
                   cursor: "pointer",
-                  opacity: galleryVisible ? 1 : 0,
-                  transition: "opacity 0.8s ease",
                 }}
               >
                 <div
@@ -693,11 +693,13 @@ export default function VestigeSite() {
             {GALLERY_IMAGES
               .filter((img) => img.cat === portfolioCategory)
               .map((img, i) => (
-                <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} showLabel={false} />
+                <GalleryImage key={img.id} img={img} index={i} visible={true} isMobile={isMobile} showLabel={false} />
               ))}
           </div>
         </>
       )}
+
+      </div>
 
       <section
         style={{
