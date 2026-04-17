@@ -170,11 +170,12 @@ export default function VestigeSite() {
 
   useEffect(() => {
     if (page === "portfolio") {
+      setGalleryVisible(false);
       const t = setTimeout(() => setGalleryVisible(true), 200);
       return () => clearTimeout(t);
     }
     setGalleryVisible(false);
-  }, [page]);
+  }, [page, portfolioCategory]);
 
   useEffect(() => {
     if (page === "about") {
