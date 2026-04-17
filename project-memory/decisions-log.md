@@ -71,3 +71,11 @@ Append-only. One entry per decision. Newest at the top.
 - **Rationale:** Luis runs the agency and wants a single internal point of contact (PM) with leads underneath. Existing Vestige repo becomes the first project under this system.
 - **Scope impact:** none (operational setup, not a deliverable change)
 - **Related leads consulted:** none (setup decision)
+
+## 2026-04-17 — Hero image selected
+
+Avalon Monet portrait chosen as the home page hero after a three-way preview (Ashlyn Coco, Winny Queen, Avalon Monet). Chosen for tiki-bar chiaroscuro, fine-art cinematic read, and composition room for nav + CTA. AI placeholder retired.
+
+- `public/hero.jpg` now serves the Avalon portrait (2400px long edge, ~714KB).
+- `public/hero-ai-placeholder.png.bak` keeps the prior placeholder in case of revert.
+- Query-param preview scaffold (`?hero=`) stripped from `src/vestige-site.jsx`.

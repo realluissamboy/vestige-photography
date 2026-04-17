@@ -207,7 +207,7 @@ export default function VestigeSite() {
         {/* Hero Section - full viewport */}
         <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
           <img
-            src="/hero.png"
+            src="/hero.jpg"
             alt="Vestige hero portrait"
             style={{
               position: "absolute",
