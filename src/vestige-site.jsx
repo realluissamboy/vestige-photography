@@ -86,8 +86,7 @@ function GalleryImage({ img, index, visible, isMobile, showLabel = true }) {
       style={{
         marginTop: `${offset}px`,
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.8s ease ${index * 0.1}s, transform 0.8s ease ${index * 0.1}s`,
+        transition: "opacity 0.8s ease",
       }}
     >
       <div
@@ -592,8 +591,7 @@ export default function VestigeSite() {
                   marginTop: `${offset}px`,
                   cursor: "pointer",
                   opacity: galleryVisible ? 1 : 0,
-                  transform: galleryVisible ? "translateY(0)" : "translateY(24px)",
-                  transition: `opacity 0.8s ease ${i * 0.1}s, transform 0.8s ease ${i * 0.1}s`,
+                  transition: "opacity 0.8s ease",
                 }}
               >
                 <div
