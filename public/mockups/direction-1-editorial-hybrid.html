@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Direction 1 — Editorial Hybrid · Vestige</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF9F6;
+    --ink:#1A1A1B;
+    --muted:#B4A69A;
+    --crimson:#C8142C;
+    --glamour:#C47F7A;
+    --kulture:#5D7F9A;
+    --tiki:#317B73;
+    --burlesque:#8B6F7C;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond','Times New Roman',serif;-webkit-font-smoothing:antialiased}
+  .sticker{position:fixed;top:14px;left:14px;z-index:50;background:var(--ink);color:var(--bg);font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:8px 14px;font-family:'Cormorant Garamond',serif}
+
+  /* HERO */
+  .hero{position:relative;height:100vh;overflow:hidden}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
+  .hero .scrim{position:absolute;inset:0 0 auto 0;height:200px;background:linear-gradient(to bottom, rgba(10,10,11,.5), rgba(10,10,11,0))}
+  .hero nav{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:48px;padding:32px;color:var(--bg)}
+  .hero nav button{background:none;border:none;color:inherit;font-family:inherit;font-size:11px;letter-spacing:3.5px;text-transform:uppercase;cursor:pointer;opacity:.85}
+  .hero nav .mark{font-size:28px;font-style:italic;font-weight:300;letter-spacing:2px}
+  .hero .cta{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);border:1px solid #fff;color:#fff;padding:14px 36px;font-size:11px;letter-spacing:4px;text-transform:uppercase;text-decoration:none}
+
+  /* SECTION DIVIDER */
+  .section-label{padding:72px 24px 24px;text-align:center;font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--muted)}
+  .section-label::before,.section-label::after{content:"";display:inline-block;width:40px;height:1px;background:var(--muted);vertical-align:middle;margin:0 20px}
+
+  /* PORTFOLIO TILES */
+  .portfolio{max-width:1200px;margin:0 auto;padding:40px 40px 80px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;align-items:start}
+  .tile{cursor:pointer}
+  .tile .frame{position:relative;width:100%;padding-bottom:140%;border:1px solid var(--ink);overflow:hidden}
+  .tile.land .frame{padding-bottom:66%}
+  .tile .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .tile .label{margin-top:14px;text-align:center}
+  .tile .label .cat{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--ink)}
+  .tile .label .bar{display:inline-block;width:32px;height:2px;margin-top:8px}
+  .tile.pinup .bar{background:var(--crimson)}
+  .tile.cars .bar{background:var(--kulture)}
+  .tile.burlesque .bar{background:var(--burlesque)}
+  .tile.tiki .bar{background:var(--tiki)}
+  .tile.glamour .bar{background:var(--glamour)}
+  .tile[data-offset="1"]{margin-top:40px}
+  .tile[data-offset="2"]{margin-top:16px}
+  .tile[data-offset="3"]{margin-top:56px}
+  .tile[data-offset="4"]{margin-top:8px}
+
+  /* DRILL-IN HEADER */
+  .drill{background:var(--bg);padding-top:60px}
+  .drill-nav{max-width:1200px;margin:0 auto;padding:0 40px 24px;display:flex;justify-content:space-between;align-items:baseline}
+  .drill-nav .back{font-size:11px;letter-spacing:3px;text-transform:uppercase;opacity:.6;cursor:pointer}
+  .drill-header{max-width:1200px;margin:0 auto;padding:40px 40px 32px;text-align:center;border-top:1px solid var(--ink)}
+  .drill-header .script{font-family:'Caveat',cursive;font-size:38px;color:var(--crimson);font-weight:500;line-height:1}
+  .drill-header .title{margin-top:8px;font-style:italic;font-weight:500;font-size:56px;letter-spacing:-1px;color:var(--ink)}
+  .drill-header .rule{margin:22px auto 0;width:48px;height:2px;background:var(--crimson)}
+  .drill-grid{max-width:1200px;margin:0 auto;padding:40px 40px 80px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start}
+  .drill-grid .photo{position:relative;padding-bottom:140%;border:1px solid var(--ink);overflow:hidden;cursor:zoom-in}
+  .drill-grid .photo.land{padding-bottom:66%}
+  .drill-grid .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .drill-grid .photo[data-offset="1"]{margin-top:40px}
+  .drill-grid .photo[data-offset="2"]{margin-top:16px}
+
+  /* CTA */
+  .book{padding:60px 24px 120px;text-align:center}
+  .book a{display:inline-block;padding:16px 48px;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-size:11px;letter-spacing:4px;text-transform:uppercase;transition:background .3s, color .3s}
+  .book a:hover{background:var(--crimson);border-color:var(--crimson);color:var(--bg)}
+
+  footer{padding:40px;text-align:center;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);border-top:1px solid rgba(0,0,0,.06)}
+
+  @media (max-width:768px){
+    .portfolio,.drill-grid{grid-template-columns:1fr;padding:32px 20px 60px}
+    .tile[data-offset]{margin-top:0}
+    .drill-header .title{font-size:40px}
+  }
+</style>
+</head>
+<body>
+<div class="sticker">Direction 1 · Editorial Hybrid</div>
+
+<section class="hero">
+  <img src="/hero.webp" alt="">
+  <div class="scrim"></div>
+  <nav>
+    <button>Portfolio</button>
+    <span class="mark">Vestige</span>
+    <button>About</button>
+  </nav>
+  <a class="cta" href="#portfolio">View the Archives</a>
+</section>
+
+<div class="section-label">Portfolio Landing</div>
+
+<section class="portfolio" id="portfolio">
+  <div class="tile pinup" data-offset="0">
+    <div class="frame"><img src="/portfolio/pinup-green-wall.webp" alt=""></div>
+    <div class="label"><div class="cat">Pin-Up</div><span class="bar"></span></div>
+  </div>
+  <div class="tile cars" data-offset="1">
+    <div class="frame"><img src="/portfolio/cars-cervena.webp" alt=""></div>
+    <div class="label"><div class="cat">Classic Cars</div><span class="bar"></span></div>
+  </div>
+  <div class="tile burlesque" data-offset="2">
+    <div class="frame"><img src="/portfolio/burlesque-winny.webp" alt=""></div>
+    <div class="label"><div class="cat">Burlesque</div><span class="bar"></span></div>
+  </div>
+  <div class="tile tiki" data-offset="3">
+    <div class="frame"><img src="/portfolio/tiki-avalon.webp" alt=""></div>
+    <div class="label"><div class="cat">Tiki-Rockabilly</div><span class="bar"></span></div>
+  </div>
+  <div class="tile glamour" data-offset="4">
+    <div class="frame"><img src="/portfolio/glamour-ashlyn.webp" alt=""></div>
+    <div class="label"><div class="cat">Vintage-Glamour</div><span class="bar"></span></div>
+  </div>
+</section>
+
+<div class="section-label">Drill-In Category</div>
+
+<section class="drill">
+  <div class="drill-nav">
+    <div class="back">← All Categories</div>
+    <div class="back" style="opacity:1">Pin-Up</div>
+  </div>
+  <div class="drill-header">
+    <div class="script">a study in</div>
+    <div class="title">Modern Pin-Up</div>
+    <div class="rule"></div>
+  </div>
+  <div class="drill-grid">
+    <div class="photo" data-offset="0"><img src="/portfolio/pinup-green-wall.webp" alt=""></div>
+    <div class="photo" data-offset="1"><img src="/portfolio/pinup-marie.webp" alt=""></div>
+    <div class="photo" data-offset="2"><img src="/portfolio/pinup-coral.webp" alt=""></div>
+    <div class="photo" data-offset="0"><img src="/portfolio/pinup-mosh.webp" alt=""></div>
+  </div>
+  <div class="book"><a href="#">Book a Session</a></div>
+</section>
+
+<footer>© Vestige Photography 2026 · Mockup · Direction 1</footer>
+</body>
+</html>

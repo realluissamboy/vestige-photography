@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Direction 2 — Book-True · Vestige</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;0,800;1,600;1,800;1,900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#EFE9D9;
+    --ink:#1A1A1B;
+    --crimson:#C8142C;
+    --rose:#C47F7A;
+    --plum:#8B6F7C;
+    --sage:#5A9B98;
+    --kulture:#5D7F9A;
+    --tiki:#317B73;
+    --cream:#F5F0E8;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--parchment);color:var(--ink);font-family:'Crimson Text',Georgia,serif;-webkit-font-smoothing:antialiased}
+  .sticker{position:fixed;top:14px;left:14px;z-index:50;background:var(--crimson);color:var(--cream);font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:8px 14px;font-family:'Playfair Display',serif;font-weight:800}
+
+  /* HERO — book-framed photo on parchment */
+  .hero{position:relative;min-height:100vh;display:grid;place-items:center;padding:72px 48px 48px}
+  .hero-frame{position:relative;max-width:960px;width:100%;aspect-ratio:3/4;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+  .hero-frame img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-wordmark{position:absolute;bottom:-30px;right:-20px;font-family:'Great Vibes',cursive;color:var(--crimson);font-size:280px;line-height:.8;pointer-events:none;text-shadow:0 4px 20px rgba(0,0,0,.15)}
+  .hero-tag{position:absolute;top:40px;left:40px;color:var(--cream);font-family:'Playfair Display',serif;font-style:italic;font-size:22px;letter-spacing:3px;text-transform:uppercase;opacity:.95}
+  .hero-tag small{display:block;font-family:'Great Vibes',cursive;font-style:normal;font-size:36px;letter-spacing:0;text-transform:none;margin-bottom:-4px}
+  .hero nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:28px 48px;z-index:40;background:linear-gradient(to bottom, rgba(239,233,217,.95), rgba(239,233,217,0))}
+  .hero nav .links{display:flex;gap:40px}
+  .hero nav button{background:none;border:none;color:var(--ink);font-family:'Playfair Display',serif;font-weight:600;font-style:italic;font-size:14px;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
+  .hero nav .logo{font-family:'Great Vibes',cursive;color:var(--crimson);font-size:36px;line-height:1}
+  .hero nav .spacer{width:120px}
+
+  /* SECTION MARKER */
+  .section-mark{text-align:center;padding:96px 24px 32px}
+  .section-mark .k{font-family:'Great Vibes',cursive;font-size:58px;color:var(--crimson);line-height:.9}
+  .section-mark .t{font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:14px;letter-spacing:6px;text-transform:uppercase;margin-top:4px;color:var(--ink)}
+
+  /* PORTFOLIO LANDING — book-style section tiles */
+  .portfolio{max-width:1200px;margin:0 auto;padding:24px 40px 80px;display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .cat{position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;min-height:280px}
+  .cat.tile-color{color:var(--cream);text-align:center;padding:32px}
+  .cat.tile-color .ttl{font-family:'Great Vibes',cursive;font-size:54px;line-height:.8;margin-bottom:6px;opacity:.85}
+  .cat.tile-color .mod{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:36px;letter-spacing:-1px;line-height:1}
+  .cat.tile-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cat.tile-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.25), rgba(0,0,0,0) 45%)}
+  .c-pinup{grid-column:span 2;grid-row:span 2;background:var(--crimson)}
+  .c-pinup-a{grid-column:span 2;grid-row:span 1}
+  .c-pinup-b{grid-column:span 2;grid-row:span 1}
+  .c-glamour{grid-column:span 2;grid-row:span 2;background:var(--rose)}
+  .c-glamour-a{grid-column:span 2;grid-row:span 1}
+  .c-glamour-b{grid-column:span 2;grid-row:span 1}
+  .c-kulture{grid-column:span 2;grid-row:span 2;background:var(--kulture)}
+  .c-kulture-a{grid-column:span 2;grid-row:span 1}
+  .c-kulture-b{grid-column:span 2;grid-row:span 1}
+  .c-tiki{grid-column:span 2;grid-row:span 2;background:var(--tiki)}
+  .c-tiki-a{grid-column:span 2;grid-row:span 1}
+  .c-tiki-b{grid-column:span 2;grid-row:span 1}
+  .c-burl{grid-column:span 2;grid-row:span 2;background:var(--plum)}
+  .c-burl-a{grid-column:span 2;grid-row:span 1}
+  .c-burl-b{grid-column:span 2;grid-row:span 1}
+
+  /* DRILL-IN */
+  .drill-band{background:var(--crimson);color:var(--cream);padding:64px 40px;text-align:center}
+  .drill-band .s{font-family:'Great Vibes',cursive;font-size:62px;line-height:.9;opacity:.9}
+  .drill-band .t{font-family:'Playfair Display',serif;font-weight:800;font-style:italic;font-size:92px;letter-spacing:-2px;line-height:1;margin-top:4px}
+  .drill-band .back{display:inline-block;margin-top:28px;font-family:'Playfair Display',serif;font-style:italic;font-size:13px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;opacity:.85;border-bottom:1px solid rgba(255,255,255,.4);padding-bottom:2px}
+  .drill-grid{max-width:1200px;margin:0 auto;padding:64px 40px 80px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start}
+  .drill-grid .photo{position:relative;padding-bottom:140%;overflow:hidden;cursor:zoom-in;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+  .drill-grid .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .drill-grid .photo[data-offset="1"]{margin-top:40px}
+  .drill-grid .photo[data-offset="2"]{margin-top:16px}
+
+  /* CTA */
+  .book{padding:60px 24px 120px;text-align:center}
+  .book a{display:inline-block;padding:18px 52px;background:var(--crimson);color:var(--cream);text-decoration:none;font-family:'Playfair Display',serif;font-style:italic;font-weight:800;font-size:14px;letter-spacing:4px;text-transform:uppercase;transition:transform .3s}
+  .book a:hover{transform:translateY(-2px)}
+
+  footer{padding:48px 24px;text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--plum);border-top:1px solid rgba(0,0,0,.08)}
+
+  @media (max-width:900px){
+    .hero-wordmark{font-size:160px;right:0;bottom:-16px}
+    .hero-tag{font-size:16px}
+    .portfolio{grid-template-columns:repeat(2,1fr)}
+    .c-pinup,.c-glamour,.c-kulture,.c-tiki,.c-burl{grid-column:span 2;grid-row:auto;min-height:220px}
+    .c-pinup-a,.c-pinup-b,.c-glamour-a,.c-glamour-b,.c-kulture-a,.c-kulture-b,.c-tiki-a,.c-tiki-b,.c-burl-a,.c-burl-b{grid-column:span 1;grid-row:auto}
+    .drill-grid{grid-template-columns:1fr;padding:32px 20px 60px}
+    .drill-band .t{font-size:56px}
+    .hero nav{padding:16px 20px}
+    .hero nav .links{gap:20px}
+    .hero nav .spacer{display:none}
+    .hero-frame{aspect-ratio:4/5}
+  }
+</style>
+</head>
+<body>
+<div class="sticker">Direction 2 · Book-True</div>
+
+<section class="hero">
+  <nav>
+    <div class="links">
+      <button>Portfolio</button>
+      <button>About</button>
+    </div>
+    <div class="logo">Vestige</div>
+    <div class="spacer"></div>
+  </nav>
+  <div class="hero-frame">
+    <img src="/hero.webp" alt="">
+    <div class="hero-tag"><small>twenty years of</small>MODERN PIN-UP</div>
+    <div class="hero-wordmark">Vestige</div>
+  </div>
+</section>
+
+<div class="section-mark">
+  <div class="k">the</div>
+  <div class="t">Portfolio</div>
+</div>
+
+<section class="portfolio">
+  <!-- Row 1 -->
+  <div class="cat tile-color c-pinup"><div><div class="ttl">a modern</div><div class="mod">Pin-Up</div></div></div>
+  <div class="cat tile-photo c-pinup-a"><img src="/portfolio/pinup-green-wall.webp" alt=""></div>
+  <div class="cat tile-photo c-pinup-b"><img src="/portfolio/pinup-coral.webp" alt=""></div>
+  <div class="cat tile-photo c-pinup-a"><img src="/portfolio/pinup-marie.webp" alt=""></div>
+  <div class="cat tile-photo c-pinup-b"><img src="/portfolio/pinup-mosh.webp" alt=""></div>
+  <!-- Row 2 -->
+  <div class="cat tile-photo c-glamour-a"><img src="/portfolio/glamour-ashlyn.webp" alt=""></div>
+  <div class="cat tile-photo c-glamour-b"><img src="/portfolio/glamour-vanity.webp" alt=""></div>
+  <div class="cat tile-color c-glamour"><div><div class="ttl">modern</div><div class="mod">Glamour</div></div></div>
+  <div class="cat tile-photo c-glamour-a"><img src="/portfolio/glamour-architectural.webp" alt=""></div>
+  <div class="cat tile-photo c-glamour-b"><img src="/portfolio/glamour-seaside.webp" alt=""></div>
+  <!-- Row 3 -->
+  <div class="cat tile-color c-kulture"><div><div class="ttl">modern</div><div class="mod">Kulture</div></div></div>
+  <div class="cat tile-photo c-kulture-a"><img src="/portfolio/cars-cervena.webp" alt=""></div>
+  <div class="cat tile-photo c-kulture-b"><img src="/portfolio/cars-a5.webp" alt=""></div>
+  <div class="cat tile-photo c-kulture-a"><img src="/portfolio/cars-cervena.webp" alt=""></div>
+  <div class="cat tile-photo c-kulture-b"><img src="/portfolio/cars-a5.webp" alt=""></div>
+  <!-- Row 4 -->
+  <div class="cat tile-photo c-tiki-a"><img src="/portfolio/tiki-avalon.webp" alt=""></div>
+  <div class="cat tile-photo c-tiki-b"><img src="/portfolio/tiki-patio.webp" alt=""></div>
+  <div class="cat tile-color c-tiki"><div><div class="ttl">modern</div><div class="mod">Tiki</div></div></div>
+  <div class="cat tile-photo c-tiki-a"><img src="/portfolio/tiki-avalon.webp" alt=""></div>
+  <div class="cat tile-photo c-tiki-b"><img src="/portfolio/tiki-patio.webp" alt=""></div>
+  <!-- Row 5 -->
+  <div class="cat tile-color c-burl"><div><div class="ttl">modern</div><div class="mod">Burlesque</div></div></div>
+  <div class="cat tile-photo c-burl-a"><img src="/portfolio/burlesque-winny.webp" alt=""></div>
+  <div class="cat tile-photo c-burl-b"><img src="/portfolio/burlesque-sabrina.webp" alt=""></div>
+  <div class="cat tile-photo c-burl-a"><img src="/portfolio/burlesque-winny.webp" alt=""></div>
+  <div class="cat tile-photo c-burl-b"><img src="/portfolio/burlesque-sabrina.webp" alt=""></div>
+</section>
+
+<section class="drill-band">
+  <div class="s">a study in</div>
+  <div class="t">Modern Pin-Up</div>
+  <div class="back">← back to portfolio</div>
+</section>
+
+<div class="drill-grid">
+  <div class="photo" data-offset="0"><img src="/portfolio/pinup-green-wall.webp" alt=""></div>
+  <div class="photo" data-offset="1"><img src="/portfolio/pinup-marie.webp" alt=""></div>
+  <div class="photo" data-offset="2"><img src="/portfolio/pinup-coral.webp" alt=""></div>
+  <div class="photo" data-offset="0"><img src="/portfolio/pinup-mosh.webp" alt=""></div>
+</div>
+
+<div class="book"><a href="#">Book a Session</a></div>
+
+<footer>© Vestige Photography · Mockup · Direction 2</footer>
+</body>
+</html>
