@@ -77,7 +77,7 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-function GalleryImage({ img, index, visible, isMobile }) {
+function GalleryImage({ img, index, visible, isMobile, showLabel = true }) {
   const offset = isMobile ? 0 : STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
   const [hovered, setHovered] = useState(false);
   const revealed = isMobile || hovered;
@@ -115,35 +115,37 @@ function GalleryImage({ img, index, visible, isMobile }) {
             display: "block",
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            padding: "40px 16px 20px",
-            textAlign: "center",
-            background:
-              "linear-gradient(to top, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0) 100%)",
-            pointerEvents: "none",
-          }}
-        >
-          <span
+        {showLabel && (
+          <div
             style={{
-              display: "inline-block",
-              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-              fontSize: "12px",
-              letterSpacing: "4px",
-              textTransform: "uppercase",
-              color: COLORS.cream,
-              filter: revealed ? "blur(0)" : "blur(0.5px)",
-              opacity: revealed ? 1 : 0.85,
-              transition: "filter 0.4s ease, opacity 0.4s ease",
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              padding: "40px 16px 20px",
+              textAlign: "center",
+              background:
+                "linear-gradient(to top, rgba(26,26,26,0.55) 0%, rgba(26,26,26,0) 100%)",
+              pointerEvents: "none",
             }}
           >
-            {img.cat}
-          </span>
-        </div>
+            <span
+              style={{
+                display: "inline-block",
+                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                fontSize: "12px",
+                letterSpacing: "4px",
+                textTransform: "uppercase",
+                color: COLORS.cream,
+                filter: revealed ? "blur(0)" : "blur(0.5px)",
+                opacity: revealed ? 1 : 0.85,
+                transition: "filter 0.4s ease, opacity 0.4s ease",
+              }}
+            >
+              {img.cat}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -693,7 +695,7 @@ export default function VestigeSite() {
             {GALLERY_IMAGES
               .filter((img) => img.cat === portfolioCategory)
               .map((img, i) => (
-                <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} />
+                <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} showLabel={false} />
               ))}
           </div>
         </>
