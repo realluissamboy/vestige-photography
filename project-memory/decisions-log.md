@@ -79,3 +79,7 @@ Avalon Monet portrait chosen as the home page hero after a three-way preview (As
 - `public/hero.jpg` now serves the Avalon portrait (2400px long edge, ~714KB).
 - `public/hero-ai-placeholder.png.bak` keeps the prior placeholder in case of revert.
 - Query-param preview scaffold (`?hero=`) stripped from `src/vestige-site.jsx`.
+
+## 2026-04-17 — Hero image revised to Ashlyn Coco
+
+Hero swapped from Avalon Monet to Ashlyn Coco. Luis's read: Avalon's tiki-bar saturation was too much tonal contrast against the rest of the site; Ashlyn's warmer, more restrained wood-and-satin palette sits better in context. `public/hero.jpg` regenerated from `Ashlyn Coco.jpg` at 2400px / quality 80 (~1.2MB).
