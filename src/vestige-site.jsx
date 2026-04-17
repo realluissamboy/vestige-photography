@@ -1,12 +1,42 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
+// Book-True palette, drawn from Susana's monograph.
 const COLORS = {
+  parchment: "#EFE9D9",
   cream: "#F5F0E8",
+  ink: "#1A1A1B",
   obsidian: "#1A1A1A",
   warmWhite: "#FAF8F4",
   stone: "#C8BFA9",
   muted: "#8A8070",
+  crimson: "#C8142C",
+  rose: "#C47F7A",
+  plum: "#8B6F7C",
+  kulture: "#5D7F9A",
+  tiki: "#317B73",
+};
+
+const CATEGORY_COLORS = {
+  "Pin-Up": COLORS.crimson,
+  "Classic Cars": COLORS.kulture,
+  "Burlesque": COLORS.plum,
+  "Tiki-Rockabilly": COLORS.tiki,
+  "Vintage-Glamour": COLORS.rose,
+};
+
+const CATEGORY_TITLES = {
+  "Pin-Up": "Modern Pin-Up",
+  "Classic Cars": "Modern Kulture",
+  "Burlesque": "Modern Burlesque",
+  "Tiki-Rockabilly": "Modern Tiki",
+  "Vintage-Glamour": "Modern Glamour",
+};
+
+const FONTS = {
+  script: "'Great Vibes', cursive",
+  display: "'Playfair Display', 'Times New Roman', serif",
+  body: "'Crimson Text', Georgia, serif",
 };
 
 
@@ -97,7 +127,7 @@ function GalleryImage({ img, index, visible, isMobile, showLabel = true, onClick
           position: "relative",
           width: "100%",
           ...RATIOS[img.ratio],
-          border: `1px solid ${COLORS.obsidian}`,
+          boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
           cursor: onClick ? "zoom-in" : "pointer",
           overflow: "hidden",
         }}
@@ -235,147 +265,151 @@ export default function VestigeSite() {
   });
 
   const navStyleDark = (link, isActive) => ({
-    fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-    fontSize: "11px",
-    letterSpacing: "3.5px",
+    fontFamily: FONTS.display,
+    fontStyle: "italic",
+    fontWeight: 600,
+    fontSize: "13px",
+    letterSpacing: "3px",
     textTransform: "uppercase",
-    color: COLORS.obsidian,
+    color: isActive ? COLORS.crimson : COLORS.ink,
     cursor: "pointer",
     border: "none",
     background: "none",
     padding: "4px 0",
-    opacity: isActive ? 1 : navHover === link ? 0.9 : 0.5,
-    transition: "opacity 0.3s ease",
+    opacity: isActive ? 1 : navHover === link ? 1 : 0.7,
+    transition: "opacity 0.3s ease, color 0.3s ease",
   });
 
   // HOME PAGE
   if (page === "home") {
     return (
-      <div style={{ background: COLORS.cream, minHeight: "100vh", fontFamily: "'Cormorant Garamond', 'Times New Roman', serif" }}>
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
-
-        {/* Hero Section - full viewport */}
-        <div style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
-          <img
-            src="/hero.webp"
-            alt="Vestige hero portrait"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: isMobile ? "65% 35%" : "50% 50%",
-              opacity: heroVisible ? 1 : 0,
-              transition: "opacity 1.6s ease",
-            }}
-          />
-
-          {/* Top scrim for nav legibility over bright hero images */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height: "200px",
-              pointerEvents: "none",
-              background:
-                "linear-gradient(to bottom, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.25) 55%, rgba(10,10,11,0) 100%)",
-              opacity: heroVisible ? 1 : 0,
-              transition: "opacity 1.6s ease",
-              zIndex: 5,
-            }}
-          />
-
-          {/* Navigation */}
+      <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
+        <nav
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: isMobile ? "16px 20px" : "24px 48px",
+            zIndex: 40,
+            opacity: heroVisible ? 1 : 0,
+            transition: "opacity 1s ease 0.3s",
+            background: "linear-gradient(to bottom, rgba(239,233,217,0.96), rgba(239,233,217,0))",
+          }}
+        >
           {isMobile ? (
+            <>
+              <span
+                onClick={() => setPage("home")}
+                style={{ fontFamily: FONTS.script, color: COLORS.crimson, fontSize: "34px", lineHeight: 1, cursor: "pointer" }}
+              >
+                Vestige
+              </span>
+              <MobileMenu variant="inline" setPage={setPage} />
+            </>
+          ) : (
+            <>
+              <div style={{ display: "flex", gap: "40px" }}>
+                <button
+                  style={navStyleDark(PAGE_LINKS[0].label, false)}
+                  onMouseEnter={() => setNavHover(PAGE_LINKS[0].label)}
+                  onMouseLeave={() => setNavHover(null)}
+                  onClick={() => setPage(PAGE_LINKS[0].page)}
+                >
+                  {PAGE_LINKS[0].label}
+                </button>
+                <button
+                  style={navStyleDark(PAGE_LINKS[1].label, false)}
+                  onMouseEnter={() => setNavHover(PAGE_LINKS[1].label)}
+                  onMouseLeave={() => setNavHover(null)}
+                  onClick={() => setPage(PAGE_LINKS[1].page)}
+                >
+                  {PAGE_LINKS[1].label}
+                </button>
+              </div>
+              <span
+                onClick={() => setPage("home")}
+                style={{ fontFamily: FONTS.script, color: COLORS.crimson, fontSize: "44px", lineHeight: 1, cursor: "pointer" }}
+              >
+                Vestige
+              </span>
+              <div style={{ width: "120px" }} />
+            </>
+          )}
+        </nav>
+
+        {/* Book-framed hero */}
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "grid",
+            placeItems: "center",
+            padding: isMobile ? "96px 20px 48px" : "120px 48px 64px",
+            opacity: heroVisible ? 1 : 0,
+            transition: "opacity 1.6s ease",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: "960px",
+              aspectRatio: isMobile ? "4/5" : "3/4",
+              overflow: "hidden",
+              boxShadow: "0 30px 80px rgba(0,0,0,0.25)",
+            }}
+          >
+            <img
+              src="/hero.webp"
+              alt="Vestige hero portrait"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            />
             <div
               style={{
                 position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                padding: "24px 16px 0",
-                zIndex: 10,
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? "translateY(0)" : "translateY(-12px)",
-                transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
-                display: "grid",
-                gridTemplateColumns: "44px 1fr 44px",
-                alignItems: "center",
+                top: isMobile ? "20px" : "40px",
+                left: isMobile ? "20px" : "40px",
+                color: COLORS.cream,
+                textShadow: "0 2px 20px rgba(0,0,0,0.4)",
               }}
             >
-              <span aria-hidden="true" />
+              <span style={{ display: "block", fontFamily: FONTS.script, fontSize: isMobile ? "28px" : "40px", lineHeight: 1, marginBottom: "-2px" }}>
+                twenty years of
+              </span>
               <span
                 style={{
-                  fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                  fontSize: "28px",
-                  fontWeight: 300,
+                  display: "block",
+                  fontFamily: FONTS.display,
                   fontStyle: "italic",
-                  color: COLORS.cream,
-                  letterSpacing: "2px",
-                  lineHeight: 1,
-                  textAlign: "center",
+                  fontWeight: 800,
+                  fontSize: isMobile ? "16px" : "24px",
+                  letterSpacing: "3px",
+                  textTransform: "uppercase",
                 }}
               >
-                Vestige
+                Modern Pin-Up
               </span>
-              <MobileMenu variant="overlay" setPage={setPage} />
             </div>
-          ) : (
-            <nav
+            <div
+              aria-hidden="true"
               style={{
                 position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "32px",
-                padding: "36px 48px",
-                zIndex: 10,
-                opacity: heroVisible ? 1 : 0,
-                transform: heroVisible ? "translateY(0)" : "translateY(-12px)",
-                transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
-                flexWrap: "wrap",
+                bottom: isMobile ? "-14px" : "-36px",
+                right: isMobile ? "-4px" : "-20px",
+                fontFamily: FONTS.script,
+                color: COLORS.crimson,
+                fontSize: isMobile ? "150px" : "280px",
+                lineHeight: 0.8,
+                pointerEvents: "none",
+                textShadow: "0 4px 20px rgba(0,0,0,0.15)",
               }}
             >
-              <button
-                style={navStyle(PAGE_LINKS[0].label)}
-                onMouseEnter={() => setNavHover(PAGE_LINKS[0].label)}
-                onMouseLeave={() => setNavHover(null)}
-                onClick={() => setPage(PAGE_LINKS[0].page)}
-              >
-                {PAGE_LINKS[0].label}
-              </button>
-              <span
-                style={{
-                  fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                  fontSize: "32px",
-                  fontWeight: 300,
-                  fontStyle: "italic",
-                  color: COLORS.cream,
-                  letterSpacing: "2px",
-                  cursor: "pointer",
-                }}
-                onClick={() => setPage("home")}
-              >
-                Vestige
-              </span>
-              <button
-                style={navStyle(PAGE_LINKS[1].label)}
-                onMouseEnter={() => setNavHover(PAGE_LINKS[1].label)}
-                onMouseLeave={() => setNavHover(null)}
-                onClick={() => setPage(PAGE_LINKS[1].page)}
-              >
-                {PAGE_LINKS[1].label}
-              </button>
-            </nav>
-          )}
-
+              Vestige
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -384,33 +418,34 @@ export default function VestigeSite() {
   // ABOUT PAGE
   if (page === "about") {
     const sectionLabel = {
-      fontSize: "11px",
-      letterSpacing: "5px",
-      textTransform: "uppercase",
-      color: COLORS.muted,
-      marginBottom: "16px",
+      fontFamily: FONTS.script,
+      fontSize: isMobile ? "40px" : "52px",
+      color: COLORS.crimson,
+      marginBottom: "4px",
+      lineHeight: 0.9,
     };
     const sectionHeading = {
-      fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-      fontSize: isMobile ? "32px" : "40px",
-      fontWeight: 300,
+      fontFamily: FONTS.display,
       fontStyle: "italic",
-      color: COLORS.obsidian,
+      fontWeight: 800,
+      fontSize: isMobile ? "36px" : "48px",
+      color: COLORS.ink,
       margin: "0 0 32px",
-      letterSpacing: "1px",
+      letterSpacing: "-0.5px",
+      lineHeight: 1,
     };
     const narrowSectionPadding = isMobile ? "0 24px 80px" : "0 40px 120px";
     const bodyText = {
-      fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-      fontSize: "18px",
+      fontFamily: FONTS.body,
+      fontSize: "19px",
       fontWeight: 400,
-      lineHeight: 1.7,
-      color: COLORS.obsidian,
+      lineHeight: 1.65,
+      color: COLORS.ink,
       margin: "0 0 20px",
     };
 
     return (
-      <div style={{ background: COLORS.cream, minHeight: "100vh", fontFamily: "'Cormorant Garamond', 'Times New Roman', serif" }}>
+      <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
         <PageHeader
@@ -440,11 +475,11 @@ export default function VestigeSite() {
         >
           <div
             style={{
-              border: `1px solid ${COLORS.obsidian}`,
               overflow: "hidden",
               maxWidth: isMobile ? "320px" : "none",
               margin: isMobile ? "0 auto" : 0,
               width: "100%",
+              boxShadow: "0 20px 50px rgba(0,0,0,0.2)",
             }}
           >
             <img
@@ -576,20 +611,23 @@ export default function VestigeSite() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                fontSize: "11px",
+                fontFamily: FONTS.display,
+                fontStyle: "italic",
+                fontWeight: 800,
+                fontSize: "14px",
                 letterSpacing: "4px",
                 textTransform: "uppercase",
-                color: COLORS.obsidian,
-                background: "transparent",
-                border: `1px solid ${COLORS.obsidian}`,
-                padding: isMobile ? "14px 32px" : "16px 48px",
+                color: COLORS.cream,
+                background: COLORS.crimson,
+                border: "none",
+                padding: isMobile ? "16px 40px" : "18px 52px",
                 minHeight: "44px",
                 cursor: "pointer",
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
+                transition: "transform 0.3s ease",
               }}
             >
               Book a Session
@@ -604,7 +642,7 @@ export default function VestigeSite() {
 
   // PORTFOLIO PAGE
   return (
-    <div style={{ background: COLORS.cream, minHeight: "100vh", fontFamily: "'Cormorant Garamond', 'Times New Roman', serif" }}>
+    <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
       <PageHeader
@@ -621,121 +659,117 @@ export default function VestigeSite() {
       <div style={{ opacity: galleryVisible ? 1 : 0, transition: "opacity 0.8s ease" }}>
 
       {portfolioCategory === null ? (
-        /* Category Tiles */
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: isMobile ? "0 20px 60px" : "0 40px 80px",
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
-            gap: isMobile ? "32px" : "40px",
-            alignItems: "start",
-          }}
-        >
-          {PORTFOLIO_CATEGORIES.map((cat, i) => {
-            const cover = categoryCover(cat);
-            if (!cover) return null;
-            const offset = isMobile ? 0 : STAGGER_OFFSETS[i % STAGGER_OFFSETS.length];
+        /* Book-style colored section tiles */
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: isMobile ? "0 20px 60px" : "0 40px 80px" }}>
+          <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "56px" }}>
+            <div style={{ fontFamily: FONTS.script, color: COLORS.crimson, fontSize: isMobile ? "52px" : "72px", lineHeight: 0.9 }}>the</div>
+            <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "16px" : "18px", letterSpacing: "6px", textTransform: "uppercase", marginTop: "-4px" }}>Portfolio</div>
+          </div>
+          {PORTFOLIO_CATEGORIES.map((cat, rowIdx) => {
+            const catPhotos = GALLERY_IMAGES.filter((img) => img.cat === cat);
+            const color = CATEGORY_COLORS[cat];
+            const title = CATEGORY_TITLES[cat];
+            const reverse = rowIdx % 2 === 1;
+            const tileBlock = (
+              <div
+                key="tile"
+                onClick={() => setPortfolioCategory(cat)}
+                style={{
+                  background: color,
+                  color: COLORS.cream,
+                  textAlign: "center",
+                  padding: isMobile ? "32px 20px" : "40px 24px",
+                  minHeight: isMobile ? "180px" : "220px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "transform 0.3s ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.01)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              >
+                <div>
+                  <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "42px" : "54px", lineHeight: 0.85, opacity: 0.9 }}>
+                    {title.startsWith("Modern ") ? "modern" : "a modern"}
+                  </div>
+                  <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "32px" : "40px", letterSpacing: "-1px", lineHeight: 1 }}>
+                    {title.replace(/^Modern\s/, "")}
+                  </div>
+                </div>
+              </div>
+            );
+            const photos = catPhotos.slice(0, 2).map((img, i) => (
+              <div
+                key={img.id}
+                onClick={() => setPortfolioCategory(cat)}
+                style={{ position: "relative", overflow: "hidden", cursor: "pointer", minHeight: isMobile ? "180px" : "220px" }}
+              >
+                <img src={img.src} alt={img.label} loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+              </div>
+            ));
+            const cells = reverse ? [...photos, tileBlock] : [tileBlock, ...photos];
+            while (cells.length < 3) cells.push(<div key={`pad-${cells.length}`} style={{ background: "transparent", minHeight: isMobile ? "180px" : "220px" }} />);
             return (
               <div
                 key={cat}
-                onClick={() => setPortfolioCategory(cat)}
                 style={{
-                  marginTop: `${offset}px`,
-                  cursor: "pointer",
+                  display: "grid",
+                  gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr",
+                  gap: "12px",
+                  marginBottom: "12px",
                 }}
               >
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    ...RATIOS[cover.ratio],
-                    border: `1px solid ${COLORS.obsidian}`,
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={cover.src}
-                    alt={cat}
-                    loading="lazy"
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
-                <p
-                  style={{
-                    textAlign: "center",
-                    marginTop: "16px",
-                    fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                    fontSize: "12px",
-                    letterSpacing: "4px",
-                    textTransform: "uppercase",
-                    color: COLORS.obsidian,
-                  }}
-                >
-                  {cat}
-                </p>
+                {cells}
               </div>
             );
           })}
         </div>
       ) : (
-        /* Drilled-in Category View */
+        /* Drilled-in Category View — crimson band header */
         <>
-          <div
+          <section
             style={{
-              maxWidth: "1200px",
-              margin: "0 auto",
-              padding: isMobile ? "0 20px 24px" : "0 40px 32px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              flexWrap: "wrap",
-              gap: "16px",
+              background: CATEGORY_COLORS[portfolioCategory],
+              color: COLORS.cream,
+              padding: isMobile ? "48px 20px" : "72px 40px",
+              textAlign: "center",
             }}
           >
+            <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "44px" : "62px", lineHeight: 0.9, opacity: 0.9 }}>
+              a study in
+            </div>
+            <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px" }}>
+              {CATEGORY_TITLES[portfolioCategory]}
+            </div>
             <button
               onClick={() => setPortfolioCategory(null)}
               style={{
-                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                fontSize: "11px",
+                marginTop: "28px",
+                fontFamily: FONTS.display,
+                fontStyle: "italic",
+                fontWeight: 600,
+                fontSize: "13px",
                 letterSpacing: "3px",
                 textTransform: "uppercase",
-                color: COLORS.obsidian,
+                color: COLORS.cream,
                 background: "transparent",
                 border: "none",
-                padding: "8px 0",
+                borderBottom: `1px solid rgba(245,240,232,0.4)`,
+                paddingBottom: "2px",
                 cursor: "pointer",
                 minHeight: "44px",
-                opacity: 0.7,
+                opacity: 0.9,
               }}
             >
-              ← All Categories
+              ← back to portfolio
             </button>
-            <p
-              style={{
-                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                fontSize: "12px",
-                letterSpacing: "4px",
-                textTransform: "uppercase",
-                color: COLORS.obsidian,
-                margin: 0,
-              }}
-            >
-              {portfolioCategory}
-            </p>
-          </div>
+          </section>
           <div
             style={{
               maxWidth: "1200px",
               margin: "0 auto",
-              padding: isMobile ? "0 20px 60px" : "0 40px 80px",
+              padding: isMobile ? "40px 20px 60px" : "64px 40px 80px",
               display: "grid",
               gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
               gap: isMobile ? "24px" : "20px",
@@ -767,20 +801,23 @@ export default function VestigeSite() {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-              fontSize: "11px",
+              fontFamily: FONTS.display,
+              fontStyle: "italic",
+              fontWeight: 800,
+              fontSize: "14px",
               letterSpacing: "4px",
               textTransform: "uppercase",
-              color: COLORS.obsidian,
-              background: "transparent",
-              border: `1px solid ${COLORS.obsidian}`,
-              padding: isMobile ? "14px 32px" : "16px 48px",
+              color: COLORS.cream,
+              background: COLORS.crimson,
+              border: "none",
+              padding: isMobile ? "16px 40px" : "18px 52px",
               minHeight: "44px",
               cursor: "pointer",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
+              transition: "transform 0.3s ease",
             }}
           >
             Book a Session
@@ -875,12 +912,9 @@ function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHove
           <span aria-hidden="true" />
           <span
             style={{
-              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-              fontSize: "32px",
-              fontWeight: 300,
-              fontStyle: "italic",
-              color: COLORS.obsidian,
-              letterSpacing: "2px",
+              fontFamily: FONTS.script,
+              fontSize: "36px",
+              color: COLORS.crimson,
               cursor: "pointer",
               lineHeight: 1,
               textAlign: "center",
@@ -908,12 +942,9 @@ function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHove
           {navBtn("Portfolio", "portfolio", page === "portfolio")}
           <span
             style={{
-              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-              fontSize: "40px",
-              fontWeight: 300,
-              fontStyle: "italic",
-              color: COLORS.obsidian,
-              letterSpacing: "2px",
+              fontFamily: FONTS.script,
+              fontSize: "48px",
+              color: COLORS.crimson,
               cursor: "pointer",
               lineHeight: 1,
             }}
@@ -987,10 +1018,13 @@ function PageFooter({ visible, navStyleDark, isMobile }) {
       </nav>
       <p
         style={{
-          fontSize: "10px",
-          letterSpacing: "3px",
+          fontFamily: FONTS.display,
+          fontStyle: "italic",
+          fontWeight: 600,
+          fontSize: "12px",
+          letterSpacing: "4px",
           textTransform: "uppercase",
-          color: COLORS.muted,
+          color: COLORS.plum,
           margin: 0,
         }}
       >
@@ -998,11 +1032,26 @@ function PageFooter({ visible, navStyleDark, isMobile }) {
       </p>
       <p
         style={{
-          fontSize: "8px",
+          fontFamily: FONTS.body,
+          fontStyle: "italic",
+          fontSize: "13px",
+          color: COLORS.plum,
+          margin: "12px auto 0",
+          opacity: 0.8,
+          maxWidth: "540px",
+          lineHeight: 1.5,
+        }}
+      >
+        Brand voice informed by <em>Vestige: Twenty Years of Modern Pin-Up</em> (Wonk Press, 2025). Book design by Carrie A. Smith.
+      </p>
+      <p
+        style={{
+          fontSize: "9px",
           letterSpacing: "3px",
           textTransform: "uppercase",
-          color: COLORS.muted,
-          margin: "8px 0 0 0",
+          color: COLORS.plum,
+          margin: "12px 0 0 0",
+          opacity: 0.7,
         }}
       >
         Built by Samboy | www.luissamboy.com
