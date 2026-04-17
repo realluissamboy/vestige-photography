@@ -271,6 +271,24 @@ export default function VestigeSite() {
             }}
           />
 
+          {/* Top scrim for nav legibility over bright hero images */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: "200px",
+              pointerEvents: "none",
+              background:
+                "linear-gradient(to bottom, rgba(10,10,11,0.55) 0%, rgba(10,10,11,0.25) 55%, rgba(10,10,11,0) 100%)",
+              opacity: heroVisible ? 1 : 0,
+              transition: "opacity 1.6s ease",
+              zIndex: 5,
+            }}
+          />
+
           {/* Navigation */}
           {isMobile ? (
             <div
