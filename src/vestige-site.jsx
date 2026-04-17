@@ -390,18 +390,18 @@ export default function VestigeSite() {
             </nav>
           )}
 
-          {/* Editorial tag top-left */}
+          {/* Editorial tag top-left — aligned with hamburger on mobile */}
           <div
             style={{
               position: "absolute",
-              top: isMobile ? "72px" : "110px",
-              left: isMobile ? "20px" : "48px",
+              top: isMobile ? "16px" : "110px",
+              left: isMobile ? "16px" : "48px",
               color: COLORS.cream,
               textShadow: "0 2px 20px rgba(0,0,0,0.5)",
               zIndex: 6,
             }}
           >
-            <span style={{ display: "block", fontFamily: FONTS.script, fontSize: isMobile ? "34px" : "52px", lineHeight: 1 }}>
+            <span style={{ display: "block", fontFamily: FONTS.script, fontSize: isMobile ? "30px" : "52px", lineHeight: 1 }}>
               twenty years of
             </span>
             <span
@@ -410,7 +410,7 @@ export default function VestigeSite() {
                 fontFamily: FONTS.display,
                 fontStyle: "italic",
                 fontWeight: 800,
-                fontSize: isMobile ? "18px" : "28px",
+                fontSize: isMobile ? "14px" : "28px",
                 letterSpacing: "4px",
                 textTransform: "uppercase",
                 marginTop: "2px",
@@ -420,16 +420,16 @@ export default function VestigeSite() {
             </span>
           </div>
 
-          {/* Signature wordmark — single Vestige identity moment, overlapping bottom */}
+          {/* Signature wordmark — single Vestige identity moment */}
           <div
             aria-hidden="true"
             style={{
               position: "absolute",
-              bottom: isMobile ? "4%" : "6%",
-              right: isMobile ? "-2%" : "-1.5%",
+              bottom: isMobile ? "6%" : "7%",
+              right: isMobile ? "4%" : "4%",
               fontFamily: FONTS.script,
               color: COLORS.crimson,
-              fontSize: isMobile ? "180px" : "420px",
+              fontSize: isMobile ? "110px" : "320px",
               lineHeight: 0.8,
               pointerEvents: "none",
               textShadow: "0 6px 30px rgba(0,0,0,0.35)",
@@ -688,11 +688,7 @@ export default function VestigeSite() {
 
       {portfolioCategory === null ? (
         /* Book-style colored section tiles */
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: isMobile ? "0 20px 60px" : "0 40px 80px" }}>
-          <div style={{ textAlign: "center", marginBottom: isMobile ? "32px" : "56px" }}>
-            <div style={{ fontFamily: FONTS.script, color: COLORS.crimson, fontSize: isMobile ? "52px" : "72px", lineHeight: 0.9 }}>the</div>
-            <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "16px" : "18px", letterSpacing: "6px", textTransform: "uppercase", marginTop: "-4px" }}>Portfolio</div>
-          </div>
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: isMobile ? "16px 20px 60px" : "32px 40px 80px" }}>
           {PORTFOLIO_CATEGORIES.map((cat, rowIdx) => {
             const catPhotos = GALLERY_IMAGES.filter((img) => img.cat === cat);
             const color = CATEGORY_COLORS[cat];
@@ -706,8 +702,8 @@ export default function VestigeSite() {
                   background: color,
                   color: COLORS.cream,
                   textAlign: "center",
-                  padding: isMobile ? "32px 20px" : "40px 24px",
-                  minHeight: isMobile ? "180px" : "220px",
+                  padding: isMobile ? "40px 20px" : "40px 24px",
+                  minHeight: isMobile ? "220px" : "220px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -718,32 +714,48 @@ export default function VestigeSite() {
                 onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
               >
                 <div>
-                  <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "42px" : "54px", lineHeight: 0.85, opacity: 0.9 }}>
+                  <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "52px" : "54px", lineHeight: 0.85, opacity: 0.9 }}>
                     {title.startsWith("Modern ") ? "modern" : "a modern"}
                   </div>
-                  <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "32px" : "40px", letterSpacing: "-1px", lineHeight: 1 }}>
+                  <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "38px" : "40px", letterSpacing: "-1px", lineHeight: 1 }}>
                     {title.replace(/^Modern\s/, "")}
                   </div>
                 </div>
               </div>
             );
+            if (isMobile) {
+              /* Mobile: just the colored tile, no photos (cleaner) */
+              return <div key={cat} style={{ marginBottom: "12px" }}>{tileBlock}</div>;
+            }
             const photos = catPhotos.slice(0, 2).map((img, i) => (
               <div
                 key={img.id}
                 onClick={() => setPortfolioCategory(cat)}
-                style={{ position: "relative", overflow: "hidden", cursor: "pointer", minHeight: isMobile ? "180px" : "220px" }}
+                style={{ position: "relative", overflow: "hidden", cursor: "pointer", minHeight: "220px" }}
               >
-                <img src={img.src} alt={img.label} loading="lazy" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+                <img
+                  src={img.src}
+                  alt={img.label}
+                  loading="lazy"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "50% 18%",
+                  }}
+                />
               </div>
             ));
             const cells = reverse ? [...photos, tileBlock] : [tileBlock, ...photos];
-            while (cells.length < 3) cells.push(<div key={`pad-${cells.length}`} style={{ background: "transparent", minHeight: isMobile ? "180px" : "220px" }} />);
+            while (cells.length < 3) cells.push(<div key={`pad-${cells.length}`} style={{ background: "transparent", minHeight: "220px" }} />);
             return (
               <div
                 key={cat}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr 1fr",
+                  gridTemplateColumns: "1fr 1fr 1fr",
                   gap: "12px",
                   marginBottom: "12px",
                 }}
@@ -1090,7 +1102,7 @@ function PageFooter({ visible, navStyleDark, isMobile }) {
 
 function MobileMenu({ variant, setPage }) {
   const [open, setOpen] = useState(false);
-  const iconColor = variant === "overlay" ? COLORS.cream : COLORS.obsidian;
+  const iconColor = COLORS.crimson;
 
   useEffect(() => {
     if (!open) return;
