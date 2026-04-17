@@ -38,13 +38,21 @@ const SOCIALS = [
   },
 ];
 
-// Placeholder images using gradient blocks to simulate the gallery
 const GALLERY_IMAGES = [
-  { id: 1, ratio: "portrait", cat: "Pin-Up", src: "/modern-pinup.webp", label: "Modern Pin-Up" },
-  { id: 2, ratio: "portrait", cat: "Classic Cars", src: "/classic-cars.webp", label: "Chrome & Leather" },
-  { id: 3, ratio: "portrait", cat: "Burlesque", src: "/burlesque.webp", label: "The Caravan Club" },
-  { id: 4, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/tiki-rockabilly.webp", label: "Bamboo Bar" },
-  { id: 5, ratio: "portrait", cat: "Vintage-Glamour", src: "/vintage-glamour.webp", label: "Silver Screen" },
+  { id: 1,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-green-wall.jpg",       label: "Jade Wall" },
+  { id: 2,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-marie.jpg",            label: "Marie Devilreaux" },
+  { id: 3,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-coral.jpg",            label: "Coral & Bloom" },
+  { id: 4,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-mosh.jpg",             label: "Miss Mosh" },
+  { id: 5,  ratio: "landscape", cat: "Classic Cars",     src: "/portfolio/cars-cervena.jpg",           label: "Cervena Fox" },
+  { id: 6,  ratio: "portrait",  cat: "Classic Cars",     src: "/portfolio/cars-a5.jpg",                label: "Midnight Cruiser" },
+  { id: 7,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-winny.jpg",        label: "Winny Queen" },
+  { id: 8,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-sabrina.jpg",      label: "Sabrina Minx" },
+  { id: 9,  ratio: "portrait",  cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-avalon.jpg",            label: "Avalon Monet" },
+  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-patio.jpg",             label: "Tiki Patio" },
+  { id: 11, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-ashlyn.jpg",         label: "Ashlyn Coco" },
+  { id: 12, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-vanity.jpg",         label: "The Vanity" },
+  { id: 13, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-architectural.jpg",  label: "Architectural" },
+  { id: 14, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-seaside.jpg",        label: "Seaside Villa" },
 ];
 
 const RATIOS = {
@@ -147,7 +155,13 @@ export default function VestigeSite() {
   const [galleryVisible, setGalleryVisible] = useState(false);
   const [aboutVisible, setAboutVisible] = useState(false);
   const [navHover, setNavHover] = useState(null);
+  const [portfolioCategory, setPortfolioCategory] = useState(null);
   const isMobile = useIsMobile();
+
+  useEffect(() => { setPortfolioCategory(null); }, [page]);
+
+  const PORTFOLIO_CATEGORIES = ["Pin-Up", "Classic Cars", "Burlesque", "Tiki-Rockabilly", "Vintage-Glamour"];
+  const categoryCover = (cat) => GALLERY_IMAGES.find((img) => img.cat === cat);
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);
@@ -550,22 +564,139 @@ export default function VestigeSite() {
 
       <div style={{ height: isMobile ? "24px" : "40px" }} />
 
-      {/* Asymmetric Gallery Grid */}
-      <div
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: isMobile ? "0 20px 60px" : "0 40px 80px",
-          display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
-          gap: isMobile ? "24px" : "20px",
-          alignItems: "start",
-        }}
-      >
-        {GALLERY_IMAGES.map((img, i) => (
-          <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} />
-        ))}
-      </div>
+      {portfolioCategory === null ? (
+        /* Category Tiles */
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: isMobile ? "0 20px 60px" : "0 40px 80px",
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+            gap: isMobile ? "32px" : "40px",
+            alignItems: "start",
+          }}
+        >
+          {PORTFOLIO_CATEGORIES.map((cat, i) => {
+            const cover = categoryCover(cat);
+            if (!cover) return null;
+            const offset = isMobile ? 0 : STAGGER_OFFSETS[i % STAGGER_OFFSETS.length];
+            return (
+              <div
+                key={cat}
+                onClick={() => setPortfolioCategory(cat)}
+                style={{
+                  marginTop: `${offset}px`,
+                  cursor: "pointer",
+                  opacity: galleryVisible ? 1 : 0,
+                  transform: galleryVisible ? "translateY(0)" : "translateY(24px)",
+                  transition: `opacity 0.8s ease ${i * 0.1}s, transform 0.8s ease ${i * 0.1}s`,
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    ...RATIOS[cover.ratio],
+                    border: `1px solid ${COLORS.obsidian}`,
+                    overflow: "hidden",
+                  }}
+                >
+                  <img
+                    src={cover.src}
+                    alt={cat}
+                    loading="lazy"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <p
+                  style={{
+                    textAlign: "center",
+                    marginTop: "16px",
+                    fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                    fontSize: "12px",
+                    letterSpacing: "4px",
+                    textTransform: "uppercase",
+                    color: COLORS.obsidian,
+                  }}
+                >
+                  {cat}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        /* Drilled-in Category View */
+        <>
+          <div
+            style={{
+              maxWidth: "1200px",
+              margin: "0 auto",
+              padding: isMobile ? "0 20px 24px" : "0 40px 32px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "baseline",
+              flexWrap: "wrap",
+              gap: "16px",
+            }}
+          >
+            <button
+              onClick={() => setPortfolioCategory(null)}
+              style={{
+                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                fontSize: "11px",
+                letterSpacing: "3px",
+                textTransform: "uppercase",
+                color: COLORS.obsidian,
+                background: "transparent",
+                border: "none",
+                padding: "8px 0",
+                cursor: "pointer",
+                minHeight: "44px",
+                opacity: 0.7,
+              }}
+            >
+              ← All Categories
+            </button>
+            <p
+              style={{
+                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                fontSize: "12px",
+                letterSpacing: "4px",
+                textTransform: "uppercase",
+                color: COLORS.obsidian,
+                margin: 0,
+              }}
+            >
+              {portfolioCategory}
+            </p>
+          </div>
+          <div
+            style={{
+              maxWidth: "1200px",
+              margin: "0 auto",
+              padding: isMobile ? "0 20px 60px" : "0 40px 80px",
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
+              gap: isMobile ? "24px" : "20px",
+              alignItems: "start",
+            }}
+          >
+            {GALLERY_IMAGES
+              .filter((img) => img.cat === portfolioCategory)
+              .map((img, i) => (
+                <GalleryImage key={img.id} img={img} index={i} visible={galleryVisible} isMobile={isMobile} />
+              ))}
+          </div>
+        </>
+      )}
 
       <section
         style={{

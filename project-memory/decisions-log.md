@@ -83,3 +83,11 @@ Avalon Monet portrait chosen as the home page hero after a three-way preview (As
 ## 2026-04-17 — Hero image revised to Ashlyn Coco
 
 Hero swapped from Avalon Monet to Ashlyn Coco. Luis's read: Avalon's tiki-bar saturation was too much tonal contrast against the rest of the site; Ashlyn's warmer, more restrained wood-and-satin palette sits better in context. `public/hero.jpg` regenerated from `Ashlyn Coco.jpg` at 2400px / quality 80 (~1.2MB).
+
+## 2026-04-17 — Portfolio drill-in built
+
+Portfolio restructured from flat grid to category-cover tiles + drill-in sub-views. Five category cards (Pin-Up, Classic Cars, Burlesque, Tiki-Rockabilly, Vintage-Glamour) serve as the portfolio landing; click a tile to see all photos in that category; "← All Categories" returns. Live categories confirmed as source of truth over any spec mismatch in `.claude/rules/`. 14 photos from the OneDrive set categorized and optimized into `public/portfolio/`. Susana author photo held in reserve for About page. No tabs/filters — tiles + drill-in only.
+
+## 2026-04-17 — Portfolio categorization revised
+
+Two photos re-tagged after Luis noted category drift: A5 (woman + classic car) moved from Pin-Up → Classic Cars; Sabrina Minx (pink robe + ostrich feather boa, no car) moved from Classic Cars → Burlesque. Final counts: Pin-Up 4, Classic Cars 2, Burlesque 2, Tiki-Rockabilly 2, Vintage-Glamour 4. More photos to follow from Susana.
