@@ -77,7 +77,7 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-function GalleryImage({ img, index, visible, isMobile, showLabel = true }) {
+function GalleryImage({ img, index, visible, isMobile, showLabel = true, onClick }) {
   const offset = isMobile ? 0 : STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
   const [hovered, setHovered] = useState(false);
   const revealed = isMobile || hovered;
@@ -92,12 +92,13 @@ function GalleryImage({ img, index, visible, isMobile, showLabel = true }) {
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onClick={onClick}
         style={{
           position: "relative",
           width: "100%",
           ...RATIOS[img.ratio],
           border: `1px solid ${COLORS.obsidian}`,
-          cursor: "pointer",
+          cursor: onClick ? "zoom-in" : "pointer",
           overflow: "hidden",
         }}
       >
@@ -157,6 +158,19 @@ export default function VestigeSite() {
   const [aboutVisible, setAboutVisible] = useState(false);
   const [navHover, setNavHover] = useState(null);
   const [portfolioCategory, setPortfolioCategory] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
+
+  useEffect(() => {
+    if (!lightboxImage) return;
+    const onKey = (e) => { if (e.key === "Escape") setLightboxImage(null); };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [lightboxImage]);
   const isMobile = useIsMobile();
 
   useEffect(() => { setPortfolioCategory(null); }, [page]);
@@ -713,7 +727,7 @@ export default function VestigeSite() {
             {GALLERY_IMAGES
               .filter((img) => img.cat === portfolioCategory)
               .map((img, i) => (
-                <GalleryImage key={img.id} img={img} index={i} visible={true} isMobile={isMobile} showLabel={false} />
+                <GalleryImage key={img.id} img={img} index={i} visible={true} isMobile={isMobile} showLabel={false} onClick={() => setLightboxImage(img)} />
               ))}
           </div>
         </>
@@ -757,6 +771,58 @@ export default function VestigeSite() {
       </section>
 
       <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
+
+      {lightboxImage && (
+        <div
+          onClick={() => setLightboxImage(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(10, 10, 11, 0.92)",
+            zIndex: 1000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: isMobile ? "16px" : "48px",
+            cursor: "zoom-out",
+            animation: "vestigeLightboxIn 0.3s ease",
+          }}
+        >
+          <style>{`@keyframes vestigeLightboxIn { from { opacity: 0 } to { opacity: 1 } }`}</style>
+          <img
+            src={lightboxImage.src}
+            alt={lightboxImage.label}
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+              display: "block",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+            }}
+          />
+          <button
+            aria-label="Close"
+            onClick={(e) => { e.stopPropagation(); setLightboxImage(null); }}
+            style={{
+              position: "absolute",
+              top: isMobile ? "16px" : "32px",
+              right: isMobile ? "16px" : "32px",
+              width: "44px",
+              height: "44px",
+              background: "transparent",
+              border: "none",
+              color: COLORS.cream,
+              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+              fontSize: "28px",
+              lineHeight: 1,
+              cursor: "pointer",
+              opacity: 0.7,
+            }}
+          >
+            ×
+          </button>
+        </div>
+      )}
     </div>
   );
 }
