@@ -493,6 +493,42 @@ export default function VestigeSite() {
           </p>
         </section>
 
+        {/* CTA */}
+        <section
+          style={{
+            textAlign: "center",
+            padding: "0 24px 120px",
+            opacity: aboutVisible ? 1 : 0,
+            transition: "opacity 1s ease 0.7s",
+          }}
+        >
+          <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+            <a
+              href="https://ig.me/m/susanavestige"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                fontSize: "11px",
+                letterSpacing: "4px",
+                textTransform: "uppercase",
+                color: COLORS.obsidian,
+                background: "transparent",
+                border: `1px solid ${COLORS.obsidian}`,
+                padding: isMobile ? "14px 32px" : "16px 48px",
+                minHeight: "44px",
+                cursor: "pointer",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              Book a Session
+            </a>
+          </div>
+        </section>
+
         <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
       </div>
     );
