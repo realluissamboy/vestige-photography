@@ -20,7 +20,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
     fontSize: "13px",
     letterSpacing: "3px",
     textTransform: "uppercase",
-    color: COLORS.cream,
+    color: "var(--color-cream)",
     cursor: "pointer",
     border: "none",
     background: "none",
@@ -31,7 +31,10 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
   });
 
   return (
-    <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
+    <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
+      <h1 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
+        Vestige Photography
+      </h1>
       {/* Full-bleed hero with floating nav + script wordmark */}
       <div
         style={{
@@ -128,7 +131,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             position: "absolute",
             top: isMobile ? "16px" : "110px",
             left: isMobile ? "16px" : "48px",
-            color: COLORS.crimson,
+            color: "var(--color-crimson)",
             textShadow: "0 2px 18px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.4)",
             zIndex: 6,
           }}
@@ -160,7 +163,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             bottom: isMobile ? "6%" : "7%",
             right: isMobile ? "4%" : "4%",
             fontFamily: FONTS.script,
-            color: COLORS.crimson,
+            color: "var(--color-crimson)",
             fontSize: isMobile ? "110px" : "320px",
             lineHeight: 0.8,
             pointerEvents: "none",
@@ -179,6 +182,6 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           Vestige
         </div>
       </div>
-    </div>
+    </main>
   );
 }

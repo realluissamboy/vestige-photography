@@ -1,5 +1,4 @@
-import React from "react";
-import { COLORS } from "../theme/colors";
+import React, { useEffect, useRef } from "react";
 import { useIsMobile } from "../hooks/useIsMobile";
 import type { GalleryImage as GalleryImageData } from "../data/gallery";
 
@@ -10,11 +9,73 @@ export interface LightboxProps {
 
 export default function Lightbox({ image, onClose }: LightboxProps) {
   const isMobile = useIsMobile();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!image) return;
+
+    // Store the currently focused element so we can restore it on close
+    triggerRef.current = document.activeElement as HTMLElement;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+      }
+
+      // Focus trap: cycle focus within dialog
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusableElements = dialogRef.current.querySelectorAll(
+          "button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])"
+        );
+        if (focusableElements.length === 0) return;
+
+        const firstElement = focusableElements[0] as HTMLElement;
+        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+        const activeElement = document.activeElement;
+
+        if (e.shiftKey) {
+          // Shift+Tab
+          if (activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          // Tab
+          if (activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+
+    // Move focus to close button on open
+    if (closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      // Restore focus on close
+      if (triggerRef.current && typeof triggerRef.current.focus === "function") {
+        triggerRef.current.focus();
+      }
+    };
+  }, [image, onClose]);
 
   if (!image) return null;
 
   return (
     <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Photo: ${image.label}`}
       onClick={() => onClose()}
       style={{
         position: "fixed",
@@ -42,7 +103,8 @@ export default function Lightbox({ image, onClose }: LightboxProps) {
         }}
       />
       <button
-        aria-label="Close"
+        ref={closeButtonRef}
+        aria-label="Close lightbox"
         onClick={(e) => { e.stopPropagation(); onClose(); }}
         style={{
           position: "absolute",
@@ -52,7 +114,7 @@ export default function Lightbox({ image, onClose }: LightboxProps) {
           height: "44px",
           background: "transparent",
           border: "none",
-          color: COLORS.cream,
+          color: "var(--color-cream)",
           fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
           fontSize: "28px",
           lineHeight: 1,

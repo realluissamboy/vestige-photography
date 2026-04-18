@@ -18,7 +18,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
   const sectionLabel: CSSProperties = {
     fontFamily: FONTS.script,
     fontSize: isMobile ? "40px" : "52px",
-    color: COLORS.crimson,
+    color: "var(--color-crimson)",
     marginBottom: "4px",
     lineHeight: 0.9,
   };
@@ -27,7 +27,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
     fontStyle: "italic",
     fontWeight: 800,
     fontSize: isMobile ? "36px" : "48px",
-    color: COLORS.ink,
+    color: "var(--color-ink)",
     margin: "0 0 32px",
     letterSpacing: "-0.5px",
     lineHeight: 1,
@@ -38,12 +38,12 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
     fontSize: "19px",
     fontWeight: 400,
     lineHeight: 1.65,
-    color: COLORS.ink,
+    color: "var(--color-ink)",
     margin: "0 0 20px",
   };
 
   return (
-    <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
+    <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
       <PageHeader
@@ -94,7 +94,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
               fontWeight: 300,
               fontStyle: "italic",
               lineHeight: 1.4,
-              color: COLORS.obsidian,
+              color: "var(--color-obsidian)",
               margin: "0 0 24px",
             }}
           >
@@ -119,7 +119,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         }}
       >
         <p style={sectionLabel}>The Roots</p>
-        <h2 style={sectionHeading}>From the Pit to the Portrait</h2>
+        <h1 style={sectionHeading}>From the Pit to the Portrait</h1>
         <p style={bodyText}>
           Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
           sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
@@ -166,7 +166,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
             href="https://www.wonkpress.com/products/vestige-twenty-years-of-modern-pin-up"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: COLORS.obsidian, textDecoration: "underline", textUnderlineOffset: "3px" }}
+            style={{ color: "var(--color-obsidian)", textDecoration: "underline", textUnderlineOffset: "3px" }}
           >
             <em>Vestige: Twenty Years of Modern Pin-Up</em>
           </a>{" "}
@@ -175,7 +175,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
             href="https://schifferbooks.com/products/kittens-kulture"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: COLORS.obsidian, textDecoration: "underline", textUnderlineOffset: "3px" }}
+            style={{ color: "var(--color-obsidian)", textDecoration: "underline", textUnderlineOffset: "3px" }}
           >
             <em>Kittens and Kulture</em>
           </a>
@@ -184,7 +184,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
             href="https://www.instagram.com/thevelvetgazette/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: COLORS.obsidian, textDecoration: "underline", textUnderlineOffset: "3px" }}
+            style={{ color: "var(--color-obsidian)", textDecoration: "underline", textUnderlineOffset: "3px" }}
           >
             <em>The Velvet Gazette</em>
           </a>
@@ -208,6 +208,6 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
       </section>
 
       <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
-    </div>
+    </main>
   );
 }

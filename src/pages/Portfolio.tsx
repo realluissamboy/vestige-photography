@@ -31,7 +31,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
 
   return (
-    <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
+    <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
       <PageHeader
@@ -44,6 +44,10 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
       />
 
       <div style={{ height: isMobile ? "24px" : "40px" }} />
+
+      <h1 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
+        Portfolio
+      </h1>
 
       <div style={{ opacity: galleryVisible ? 1 : 0, transition: "opacity 0.8s ease" }}>
 
@@ -61,7 +65,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
                 onClick={() => setPortfolioCategory(cat)}
                 style={{
                   background: color,
-                  color: COLORS.cream,
+                  color: "var(--color-cream)",
                   textAlign: "center",
                   padding: isMobile ? "40px 20px" : "40px 24px",
                   minHeight: isMobile ? "220px" : "220px",
@@ -140,9 +144,9 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
             <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "44px" : "62px", lineHeight: 0.9, opacity: 0.9 }}>
               a study in
             </div>
-            <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px" }}>
+            <h1 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
               {CATEGORY_TITLES[portfolioCategory] ?? ""}
-            </div>
+            </h1>
             <button
               onClick={() => setPortfolioCategory(null)}
               style={{
@@ -180,7 +184,15 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
             {GALLERY_IMAGES
               .filter((img) => img.cat === portfolioCategory)
               .map((img: GalleryImage, i) => (
-                <GalleryImageView key={img.id} img={img} index={i} visible={true} isMobile={isMobile} showLabel={false} onClick={() => openLightbox(img)} />
+                <GalleryImageView
+                  key={img.id}
+                  img={img}
+                  index={i}
+                  visible={true}
+                  isMobile={isMobile}
+                  showLabel={false}
+                  onClick={() => openLightbox(img)}
+                />
               ))}
           </div>
         </>
@@ -204,6 +216,6 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
       <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
 
       <Lightbox image={lightboxImage} onClose={closeLightbox} />
-    </div>
+    </main>
   );
 }
