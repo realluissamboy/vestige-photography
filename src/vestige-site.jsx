@@ -9,6 +9,7 @@ import { useLightbox } from "./hooks/useLightbox";
 import { usePortfolioState } from "./hooks/usePortfolioState";
 import GalleryImage from "./components/GalleryImage";
 import Lightbox from "./components/Lightbox";
+import Button from "./components/Button";
 
 export default function VestigeSite() {
   const [page, setPage] = useState("home");
@@ -424,32 +425,7 @@ export default function VestigeSite() {
           }}
         >
           <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-            <a
-              href="https://ig.me/m/susanavestige"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: FONTS.display,
-                fontStyle: "italic",
-                fontWeight: 800,
-                fontSize: "14px",
-                letterSpacing: "4px",
-                textTransform: "uppercase",
-                color: COLORS.cream,
-                background: COLORS.crimson,
-                border: "none",
-                padding: isMobile ? "16px 40px" : "18px 52px",
-                minHeight: "44px",
-                cursor: "pointer",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "transform 0.3s ease",
-              }}
-            >
-              Book a Session
-            </a>
+            <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
           </div>
         </section>
 
@@ -626,32 +602,7 @@ export default function VestigeSite() {
         }}
       >
         <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-          <a
-            href="https://ig.me/m/susanavestige"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: FONTS.display,
-              fontStyle: "italic",
-              fontWeight: 800,
-              fontSize: "14px",
-              letterSpacing: "4px",
-              textTransform: "uppercase",
-              color: COLORS.cream,
-              background: COLORS.crimson,
-              border: "none",
-              padding: isMobile ? "16px 40px" : "18px 52px",
-              minHeight: "44px",
-              cursor: "pointer",
-              textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s ease",
-            }}
-          >
-            Book a Session
-          </a>
+          <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
         </div>
       </section>
 
