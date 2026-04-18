@@ -1,22 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { COLORS } from "./theme/colors";
 import { GALLERY_IMAGES, CATEGORY_COLORS, CATEGORY_TITLES, RATIOS, STAGGER_OFFSETS, PORTFOLIO_CATEGORIES, categoryCover } from "./data/gallery";
-
-// Book-True palette, drawn from Susana's monograph.
-export const COLORS = {
-  parchment: "#EFE9D9",
-  cream: "#F5F0E8",
-  ink: "#1A1A1B",
-  obsidian: "#1A1A1A",
-  warmWhite: "#FAF8F4",
-  stone: "#C8BFA9",
-  muted: "#8A8070",
-  crimson: "#C8142C",
-  rose: "#C47F7A",
-  plum: "#8B6F7C",
-  kulture: "#5D7F9A",
-  tiki: "#317B73",
-};
 
 
 const FONTS = {

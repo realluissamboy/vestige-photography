@@ -1,4 +1,4 @@
-import { COLORS } from "../vestige-site";
+import { COLORS } from "../theme/colors";
 
 export type Ratio = "portrait" | "landscape" | "square";
 
