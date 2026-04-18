@@ -67,8 +67,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
           gap: isMobile ? "32px" : "80px",
           alignItems: "center",
           opacity: aboutVisible ? 1 : 0,
-          transform: aboutVisible ? "translateY(0)" : "translateY(24px)",
-          transition: "opacity 1s ease 0.3s, transform 1s ease 0.3s",
+          transition: "opacity 1s ease 0.3s",
         }}
       >
         <div
