@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { COLORS } from "./theme/colors";
+import { FONTS } from "./theme/fonts";
 import { GALLERY_IMAGES, CATEGORY_COLORS, CATEGORY_TITLES, RATIOS, STAGGER_OFFSETS, PORTFOLIO_CATEGORIES, categoryCover } from "./data/gallery";
-
-
-const FONTS = {
-  script: "'Great Vibes', cursive",
-  display: "'Playfair Display', 'Times New Roman', serif",
-  body: "'Crimson Text', Georgia, serif",
-};
 
 
 const PAGE_LINKS = [
