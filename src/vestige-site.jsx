@@ -69,20 +69,20 @@ const SOCIALS = [
 ];
 
 const GALLERY_IMAGES = [
-  { id: 1,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-green-wall.webp",       label: "Jade Wall" },
-  { id: 2,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-marie.webp",            label: "Marie Devilreaux" },
-  { id: 3,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-coral.webp",            label: "Coral & Bloom" },
-  { id: 4,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-mosh.webp",             label: "Miss Mosh" },
-  { id: 5,  ratio: "landscape", cat: "Classic Cars",     src: "/portfolio/cars-cervena.webp",           label: "Cervena Fox" },
-  { id: 6,  ratio: "portrait",  cat: "Classic Cars",     src: "/portfolio/cars-a5.webp",                label: "Midnight Cruiser" },
-  { id: 7,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-winny.webp",        label: "Winny Queen" },
-  { id: 8,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-sabrina.webp",      label: "Sabrina Minx" },
-  { id: 9,  ratio: "portrait",  cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-avalon.webp",            label: "Avalon Monet" },
-  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-patio.webp",             label: "Tiki Patio" },
-  { id: 11, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-ashlyn.webp",         label: "Ashlyn Coco" },
-  { id: 12, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-vanity.webp",         label: "The Vanity" },
-  { id: 13, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-architectural.webp",  label: "Architectural" },
-  { id: 14, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-seaside.webp",        label: "Seaside Villa" },
+  { id: 1,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-green-wall.webp",       label: "Jade Wall",         focus: "50% 20%" },
+  { id: 2,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-marie.webp",            label: "Marie Devilreaux",  focus: "50% 25%" },
+  { id: 3,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-coral.webp",            label: "Coral & Bloom",     focus: "50% 15%" },
+  { id: 4,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-mosh.webp",             label: "Miss Mosh",         focus: "50% 10%" },
+  { id: 5,  ratio: "landscape", cat: "Classic Cars",     src: "/portfolio/cars-cervena.webp",           label: "Cervena Fox",       focus: "50% 50%" },
+  { id: 6,  ratio: "portrait",  cat: "Classic Cars",     src: "/portfolio/cars-a5.webp",                label: "Midnight Cruiser",  focus: "50% 30%" },
+  { id: 7,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-winny.webp",        label: "Winny Queen",       focus: "50% 10%" },
+  { id: 8,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-sabrina.webp",      label: "Sabrina Minx",      focus: "50% 10%" },
+  { id: 9,  ratio: "portrait",  cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-avalon.webp",            label: "Avalon Monet",      focus: "55% 30%" },
+  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-patio.webp",             label: "Tiki Patio",        focus: "50% 20%" },
+  { id: 11, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-ashlyn.webp",         label: "Ashlyn Coco",       focus: "55% 15%" },
+  { id: 12, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-vanity.webp",         label: "The Vanity",        focus: "65% 40%" },
+  { id: 13, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-architectural.webp",  label: "Architectural",     focus: "50% 20%" },
+  { id: 14, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-seaside.webp",        label: "Seaside Villa",     focus: "50% 40%" },
 ];
 
 const RATIOS = {
@@ -396,8 +396,8 @@ export default function VestigeSite() {
               position: "absolute",
               top: isMobile ? "16px" : "110px",
               left: isMobile ? "16px" : "48px",
-              color: COLORS.cream,
-              textShadow: "0 2px 20px rgba(0,0,0,0.5)",
+              color: COLORS.crimson,
+              textShadow: "0 2px 18px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.4)",
               zIndex: 6,
             }}
           >
@@ -420,7 +420,7 @@ export default function VestigeSite() {
             </span>
           </div>
 
-          {/* Signature wordmark — single Vestige identity moment */}
+          {/* Signature wordmark — dimensional drop-shadow for pop */}
           <div
             aria-hidden="true"
             style={{
@@ -432,7 +432,15 @@ export default function VestigeSite() {
               fontSize: isMobile ? "110px" : "320px",
               lineHeight: 0.8,
               pointerEvents: "none",
-              textShadow: "0 6px 30px rgba(0,0,0,0.35)",
+              textShadow: [
+                "0 1px 0 rgba(255,255,255,0.18)",
+                "0 -1px 0 rgba(0,0,0,0.4)",
+                "0 2px 0 #8f0e1f",
+                "0 4px 0 #7a0c1b",
+                "0 6px 0 #650a16",
+                "0 14px 30px rgba(0,0,0,0.55)",
+                "0 24px 60px rgba(0,0,0,0.35)",
+              ].join(", "),
               zIndex: 6,
             }}
           >
@@ -743,7 +751,7 @@ export default function VestigeSite() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    objectPosition: "50% 18%",
+                    objectPosition: img.focus || "50% 10%",
                   }}
                 />
               </div>
@@ -1078,11 +1086,14 @@ function PageFooter({ visible, navStyleDark, isMobile }) {
           color: COLORS.plum,
           margin: "12px auto 0",
           opacity: 0.8,
-          maxWidth: "540px",
-          lineHeight: 1.5,
+          maxWidth: "640px",
+          lineHeight: 1.6,
+          textAlign: "center",
         }}
       >
-        Brand voice informed by <em>Vestige: Twenty Years of Modern Pin-Up</em> (Wonk Press, 2025). Book design by Carrie A. Smith.
+        Brand voice informed by <em>Vestige: Twenty Years of Modern Pin-Up</em> (Wonk Press, 2025).
+        <br />
+        Book design by Carrie A. Smith.
       </p>
       <p
         style={{
@@ -1118,7 +1129,7 @@ function MobileMenu({ variant, setPage }) {
     setPage(targetPage);
   };
 
-  const barStyle = { display: "block", width: "22px", height: "1px", background: iconColor };
+  const barStyle = { display: "block", width: "26px", height: "2px", background: iconColor, borderRadius: "1px" };
 
   return (
     <>
@@ -1192,23 +1203,25 @@ function MobileMenu({ variant, setPage }) {
             </svg>
           </button>
 
-          {[{ label: "Vestige", page: "home" }, ...PAGE_LINKS].map((link) => (
+          {[{ label: "Vestige", page: "home", isWordmark: true }, ...PAGE_LINKS].map((link) => (
             <button
               key={link.page}
               type="button"
               onClick={() => handleNav(link.page)}
               style={{
-                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                fontSize: "28px",
-                fontWeight: 300,
-                fontStyle: "italic",
-                letterSpacing: "3px",
-                color: COLORS.cream,
+                fontFamily: link.isWordmark ? FONTS.script : FONTS.display,
+                fontStyle: link.isWordmark ? "normal" : "italic",
+                fontWeight: link.isWordmark ? 400 : 700,
+                fontSize: link.isWordmark ? "56px" : "22px",
+                letterSpacing: link.isWordmark ? "0" : "3px",
+                textTransform: link.isWordmark ? "none" : "uppercase",
+                color: COLORS.crimson,
                 background: "transparent",
                 border: "none",
                 padding: "12px 24px",
                 minHeight: "44px",
                 cursor: "pointer",
+                lineHeight: 1,
               }}
             >
               {link.label}
