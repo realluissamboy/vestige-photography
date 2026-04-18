@@ -91,7 +91,15 @@ export default function PageFooter({ visible, navStyleDark, isMobile }: PageFoot
           opacity: 0.7,
         }}
       >
-        Built by Samboy | www.luissamboy.com
+        Built by Samboy |{" "}
+        <a
+          href="https://www.luissamboy.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "inherit", textDecoration: "none", borderBottom: "1px solid currentColor" }}
+        >
+          www.luissamboy.com
+        </a>
       </p>
     </footer>
   );
