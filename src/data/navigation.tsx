@@ -13,10 +13,13 @@ export interface SocialLink {
   svg: React.ReactNode;
 }
 
-export const PAGE_LINKS: PageLink[] = [
+// Tuple (not plain PageLink[]) so consumers that index by literal 0/1 —
+// e.g. the Home hero's two-button nav — get statically-known elements
+// under noUncheckedIndexedAccess without non-null assertions.
+export const PAGE_LINKS = [
   { label: "Portfolio", page: "portfolio" },
   { label: "About", page: "about" },
-];
+] as const satisfies readonly PageLink[];
 
 export const SOCIALS: SocialLink[] = [
   {

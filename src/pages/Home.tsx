@@ -104,20 +104,20 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             }}
           >
             <button
-              style={navLinkStyle(PAGE_LINKS[0]!.label)}
-              onMouseEnter={() => setNavHover(PAGE_LINKS[0]!.label)}
+              style={navLinkStyle(PAGE_LINKS[0].label)}
+              onMouseEnter={() => setNavHover(PAGE_LINKS[0].label)}
               onMouseLeave={() => setNavHover(null)}
-              onClick={() => setPage(PAGE_LINKS[0]!.page)}
+              onClick={() => setPage(PAGE_LINKS[0].page)}
             >
-              {PAGE_LINKS[0]!.label}
+              {PAGE_LINKS[0].label}
             </button>
             <button
-              style={navLinkStyle(PAGE_LINKS[1]!.label)}
-              onMouseEnter={() => setNavHover(PAGE_LINKS[1]!.label)}
+              style={navLinkStyle(PAGE_LINKS[1].label)}
+              onMouseEnter={() => setNavHover(PAGE_LINKS[1].label)}
               onMouseLeave={() => setNavHover(null)}
-              onClick={() => setPage(PAGE_LINKS[1]!.page)}
+              onClick={() => setPage(PAGE_LINKS[1].page)}
             >
-              {PAGE_LINKS[1]!.label}
+              {PAGE_LINKS[1].label}
             </button>
           </nav>
         )}
