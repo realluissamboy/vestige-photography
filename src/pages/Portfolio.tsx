@@ -7,8 +7,6 @@ import {
   CATEGORY_COLORS,
   CATEGORY_TITLES,
   PORTFOLIO_CATEGORIES,
-  generateSrcSet,
-  generateSizes,
 } from "../data/gallery";
 import type { Category, GalleryImage } from "../data/gallery";
 import type { PageKey } from "../data/navigation";
@@ -193,8 +191,6 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
                   visible={true}
                   isMobile={isMobile}
                   showLabel={false}
-                  srcSet={generateSrcSet(img.src)}
-                  sizes={generateSizes()}
                   onClick={() => openLightbox(img)}
                 />
               ))}
