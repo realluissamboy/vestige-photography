@@ -4,20 +4,7 @@ import { COLORS } from "./theme/colors";
 import { FONTS } from "./theme/fonts";
 import { GALLERY_IMAGES, CATEGORY_COLORS, CATEGORY_TITLES, RATIOS, STAGGER_OFFSETS, PORTFOLIO_CATEGORIES, categoryCover } from "./data/gallery";
 import { PAGE_LINKS, SOCIALS } from "./data/navigation";
-
-
-function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < breakpoint : false
-  );
-  useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
-    const onChange = (e) => setIsMobile(e.matches);
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
-  }, [breakpoint]);
-  return isMobile;
-}
+import { useIsMobile } from "./hooks/useIsMobile";
 
 function GalleryImage({ img, index, visible, isMobile, showLabel = true, onClick }) {
   const offset = isMobile ? 0 : STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
