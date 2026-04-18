@@ -8,6 +8,7 @@ import { useIsMobile } from "./hooks/useIsMobile";
 import { useLightbox } from "./hooks/useLightbox";
 import { usePortfolioState } from "./hooks/usePortfolioState";
 import GalleryImage from "./components/GalleryImage";
+import Lightbox from "./components/Lightbox";
 
 export default function VestigeSite() {
   const [page, setPage] = useState("home");
@@ -656,57 +657,7 @@ export default function VestigeSite() {
 
       <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
 
-      {lightboxImage && (
-        <div
-          onClick={() => closeLightbox()}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(10, 10, 11, 0.92)",
-            zIndex: 1000,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: isMobile ? "16px" : "48px",
-            cursor: "zoom-out",
-            animation: "vestigeLightboxIn 0.3s ease",
-          }}
-        >
-          <style>{`@keyframes vestigeLightboxIn { from { opacity: 0 } to { opacity: 1 } }`}</style>
-          <img
-            src={lightboxImage.src}
-            alt={lightboxImage.label}
-            style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
-              objectFit: "contain",
-              display: "block",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-            }}
-          />
-          <button
-            aria-label="Close"
-            onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
-            style={{
-              position: "absolute",
-              top: isMobile ? "16px" : "32px",
-              right: isMobile ? "16px" : "32px",
-              width: "44px",
-              height: "44px",
-              background: "transparent",
-              border: "none",
-              color: COLORS.cream,
-              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-              fontSize: "28px",
-              lineHeight: 1,
-              cursor: "pointer",
-              opacity: 0.7,
-            }}
-          >
-            ×
-          </button>
-        </div>
-      )}
+      <Lightbox image={lightboxImage} onClose={closeLightbox} />
     </div>
   );
 }
