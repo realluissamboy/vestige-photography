@@ -8,11 +8,17 @@ import { FONTS } from "../theme/fonts";
 export interface MobileMenuProps {
   variant: "overlay" | "solid";
   setPage: (p: PageKey) => void;
+  menuId?: string;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export default function MobileMenu({ variant: _variant, setPage }: MobileMenuProps) {
+export default function MobileMenu({ variant: _variant, setPage, menuId = "mobile-menu", onOpenChange }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
-  const iconColor = COLORS.crimson;
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -24,11 +30,11 @@ export default function MobileMenu({ variant: _variant, setPage }: MobileMenuPro
   }, [open]);
 
   const handleNav = (targetPage: PageKey) => {
-    setOpen(false);
+    handleOpenChange(false);
     setPage(targetPage);
   };
 
-  const barStyle: CSSProperties = { display: "block", width: "26px", height: "2px", background: iconColor, borderRadius: "1px" };
+  const barStyle: CSSProperties = { display: "block", width: "26px", height: "2px", background: "var(--color-crimson)", borderRadius: "1px" };
 
   return (
     <>
@@ -36,7 +42,8 @@ export default function MobileMenu({ variant: _variant, setPage }: MobileMenuPro
         type="button"
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
-        onClick={() => setOpen(true)}
+        aria-controls={menuId}
+        onClick={() => handleOpenChange(true)}
         style={{
           width: "44px",
           height: "44px",
@@ -60,6 +67,7 @@ export default function MobileMenu({ variant: _variant, setPage }: MobileMenuPro
 
       {open && typeof document !== "undefined" && createPortal(
         <div
+          id={menuId}
           role="dialog"
           aria-modal="true"
           style={{
@@ -79,7 +87,7 @@ export default function MobileMenu({ variant: _variant, setPage }: MobileMenuPro
           <button
             type="button"
             aria-label="Close menu"
-            onClick={() => setOpen(false)}
+            onClick={() => handleOpenChange(false)}
             style={{
               position: "absolute",
               top: "20px",
@@ -114,7 +122,7 @@ export default function MobileMenu({ variant: _variant, setPage }: MobileMenuPro
                 fontSize: link.isWordmark ? "56px" : "22px",
                 letterSpacing: link.isWordmark ? "0" : "3px",
                 textTransform: link.isWordmark ? "none" : "uppercase",
-                color: COLORS.crimson,
+                color: "var(--color-crimson)",
                 background: "transparent",
                 border: "none",
                 padding: "12px 24px",
@@ -148,7 +156,7 @@ export default function MobileMenu({ variant: _variant, setPage }: MobileMenuPro
                   fontSize: "13px",
                   letterSpacing: "3px",
                   textTransform: "uppercase",
-                  color: COLORS.cream,
+                  color: "var(--color-cream)",
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",

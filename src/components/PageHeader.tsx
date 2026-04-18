@@ -46,7 +46,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
             style={{
               fontFamily: FONTS.script,
               fontSize: "36px",
-              color: COLORS.crimson,
+              color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,
               textAlign: "center",
@@ -76,7 +76,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
             style={{
               fontFamily: FONTS.script,
               fontSize: "48px",
-              color: COLORS.crimson,
+              color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,
             }}
@@ -94,7 +94,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
             fontSize: "11px",
             letterSpacing: "5px",
             textTransform: "uppercase",
-            color: COLORS.muted,
+            color: "var(--color-muted)",
             marginTop: "16px",
             marginBottom: 0,
             opacity: visible ? 1 : 0,

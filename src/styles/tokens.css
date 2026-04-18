@@ -1,0 +1,39 @@
+/* CSS Custom Properties – Vestige Design Tokens */
+
+:root {
+  /* Color Palette – Book-True palette from Susana's monograph */
+  --color-parchment: #EFE9D9;
+  --color-cream: #F5F0E8;
+  --color-ink: #1A1A1B;
+  --color-obsidian: #1A1A1A;
+  --color-warm-white: #FAF8F4;
+  --color-stone: #C8BFA9;
+  --color-stone-divider: #9E8C79; /* Updated for ≥3:1 contrast against parchment */
+  --color-muted: #6B5B4A; /* Updated for ≥4.5:1 contrast (body-on-parchment) */
+  --color-crimson: #C8142C;
+  --color-rose: #C47F7A;
+  --color-plum: #8B6F7C;
+  --color-kulture: #5D7F9A;
+  --color-tiki: #317B73;
+
+  /* Typography */
+  --font-script: "Great Vibes", cursive;
+  --font-display: "Playfair Display", "Times New Roman", serif;
+  --font-body: "Crimson Text", Georgia, serif;
+  --font-cormorant: "Cormorant Garamond", "Times New Roman", serif;
+
+  /* Spacing (baseline 4px) */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-52: 52px;
+  --spacing-60: 60px;
+  --spacing-80: 80px;
+  --spacing-120: 120px;
+}
