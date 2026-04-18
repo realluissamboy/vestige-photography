@@ -71,3 +71,30 @@ export const PORTFOLIO_CATEGORIES: Category[] = [
 export function categoryCover(category: string): GalleryImage | undefined {
   return GALLERY_IMAGES.find((i) => i.cat === category);
 }
+
+/**
+ * Generate a responsive srcSet string for a gallery image.
+ * Assumes variants exist at: {basename}-480w.webp, {basename}-768w.webp, {basename}-1280w.webp
+ * Falls back gracefully if variants don't exist on disk (returns empty string).
+ */
+export function generateSrcSet(src: string): string {
+  if (!src) return "";
+  // Extract basename without .webp extension
+  const match = src.match(/\/([^/]+)\.webp$/);
+  if (!match) return "";
+  const basename = match[1];
+  // Generate srcSet with responsive variants
+  return `
+    /portfolio/${basename}-480w.webp 480w,
+    /portfolio/${basename}-768w.webp 768w,
+    /portfolio/${basename}-1280w.webp 1280w
+  `.trim();
+}
+
+/**
+ * Generate a sizes attribute for responsive images.
+ * Describes the layout width at different viewport sizes.
+ */
+export function generateSizes(): string {
+  return "(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 25vw";
+}

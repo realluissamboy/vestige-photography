@@ -1,11 +1,12 @@
-import React, { useState, useEffect, type CSSProperties } from "react";
+import React, { useState, useEffect, Suspense, type CSSProperties } from "react";
 import { COLORS } from "./theme/colors";
 import { FONTS } from "./theme/fonts";
 import { useIsMobile } from "./hooks/useIsMobile";
-import Home from "./pages/Home";
-import Portfolio from "./pages/Portfolio";
-import About from "./pages/About";
 import { type PageKey } from "./data/navigation";
+
+const Home = React.lazy(() => import("./pages/Home"));
+const Portfolio = React.lazy(() => import("./pages/Portfolio"));
+const About = React.lazy(() => import("./pages/About"));
 
 export default function App() {
   const [page, setPage] = useState<PageKey>("home");
@@ -43,39 +44,39 @@ export default function App() {
     transition: "opacity 0.3s ease, color 0.3s ease",
   });
 
-  // HOME PAGE
-  if (page === "home") {
-    return (
-      <Home
-        heroVisible={heroVisible}
-        isMobile={isMobile}
-        setPage={setPage}
-        navHover={navHover}
-        setNavHover={setNavHover}
-      />
-    );
-  }
-
-  // ABOUT PAGE
-  if (page === "about") {
-    return (
-      <About
-        aboutVisible={aboutVisible}
-        setPage={setPage}
-        isMobile={isMobile}
-        navStyleDark={navStyleDark}
-        setNavHover={setNavHover}
-      />
-    );
-  }
-
-  // PORTFOLIO PAGE
   return (
-    <Portfolio
-      setPage={setPage}
-      isMobile={isMobile}
-      navStyleDark={navStyleDark}
-      setNavHover={setNavHover}
-    />
+    <Suspense fallback={null}>
+      {/* HOME PAGE */}
+      {page === "home" && (
+        <Home
+          heroVisible={heroVisible}
+          isMobile={isMobile}
+          setPage={setPage}
+          navHover={navHover}
+          setNavHover={setNavHover}
+        />
+      )}
+
+      {/* ABOUT PAGE */}
+      {page === "about" && (
+        <About
+          aboutVisible={aboutVisible}
+          setPage={setPage}
+          isMobile={isMobile}
+          navStyleDark={navStyleDark}
+          setNavHover={setNavHover}
+        />
+      )}
+
+      {/* PORTFOLIO PAGE */}
+      {page === "portfolio" && (
+        <Portfolio
+          setPage={setPage}
+          isMobile={isMobile}
+          navStyleDark={navStyleDark}
+          setNavHover={setNavHover}
+        />
+      )}
+    </Suspense>
   );
 }

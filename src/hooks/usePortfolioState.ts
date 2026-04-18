@@ -23,27 +23,33 @@ export function usePortfolioState(page: PageKey): UsePortfolioStateResult {
       return;
     }
     setGalleryVisible(false);
-    const srcs: string[] =
-      portfolioCategory === null
-        ? PORTFOLIO_CATEGORIES.map((c) => categoryCover(c)?.src).filter(
-            (s): s is string => s !== undefined
-          )
-        : GALLERY_IMAGES.filter((i) => i.cat === portfolioCategory).map((i) => i.src);
+    // Preload only the active category cover (or the first image if a category is selected).
+    // This avoids eager preloading of all 14 portfolio images.
+    const srcs: string[] = portfolioCategory === null
+      ? [] // When showing category tiles, don't preload all covers; browser will lazy-load them as needed
+      : [GALLERY_IMAGES.find((i) => i.cat === portfolioCategory)?.src].filter(
+          (s): s is string => s !== undefined
+        );
     let cancelled = false;
-    const preload = Promise.all(
-      srcs.map(
-        (s) =>
-          new Promise<void>((res) => {
-            const img = new Image();
-            img.onload = img.onerror = () => res();
-            img.src = s;
-          })
-      )
-    );
-    const fallback = new Promise<void>((res) => setTimeout(res, 1500));
-    Promise.race([preload, fallback]).then(() => {
-      if (!cancelled) setGalleryVisible(true);
-    });
+    if (srcs.length === 0) {
+      // No preload needed; show gallery immediately for category tiles view
+      setGalleryVisible(true);
+    } else {
+      const preload = Promise.all(
+        srcs.map(
+          (s) =>
+            new Promise<void>((res) => {
+              const img = new Image();
+              img.onload = img.onerror = () => res();
+              img.src = s;
+            })
+        )
+      );
+      const fallback = new Promise<void>((res) => setTimeout(res, 1500));
+      Promise.race([preload, fallback]).then(() => {
+        if (!cancelled) setGalleryVisible(true);
+      });
+    }
     return () => {
       cancelled = true;
     };

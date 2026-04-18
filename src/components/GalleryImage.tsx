@@ -9,6 +9,8 @@ export interface GalleryImageProps {
   visible: boolean;
   isMobile: boolean;
   showLabel?: boolean;
+  srcSet?: string;
+  sizes?: string;
   onClick: () => void;
 }
 
@@ -18,6 +20,8 @@ export default function GalleryImage({
   visible,
   isMobile,
   showLabel = true,
+  srcSet,
+  sizes,
   onClick,
 }: GalleryImageProps) {
   const offset = isMobile ? 0 : (STAGGER_OFFSETS[index % STAGGER_OFFSETS.length] ?? 0);
@@ -48,6 +52,8 @@ export default function GalleryImage({
           src={img.src}
           alt={img.label}
           loading="lazy"
+          srcSet={srcSet}
+          sizes={sizes}
           style={{
             position: "absolute",
             inset: 0,
