@@ -70,7 +70,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
                   color: "var(--color-cream)",
                   textAlign: "center",
                   padding: isMobile ? "40px 20px" : "40px 24px",
-                  minHeight: isMobile ? "220px" : "220px",
+                  aspectRatio: "4/3",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -98,7 +98,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
               <div
                 key={img.id}
                 onClick={() => setPortfolioCategory(cat)}
-                style={{ position: "relative", overflow: "hidden", cursor: "pointer", minHeight: "220px" }}
+                style={{ position: "relative", overflow: "hidden", cursor: "pointer", aspectRatio: "4/3" }}
               >
                 <img
                   src={img.src}
@@ -116,7 +116,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
               </div>
             ));
             const cells: React.ReactNode[] = reverse ? [...photos, tileBlock] : [tileBlock, ...photos];
-            while (cells.length < 3) cells.push(<div key={`pad-${cells.length}`} style={{ background: "transparent", minHeight: "220px" }} />);
+            while (cells.length < 3) cells.push(<div key={`pad-${cells.length}`} style={{ background: "transparent", aspectRatio: "4/3" }} />);
             return (
               <div
                 key={cat}
