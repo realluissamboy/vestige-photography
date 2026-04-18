@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { GALLERY_IMAGES, CATEGORY_COLORS, CATEGORY_TITLES, RATIOS, STAGGER_OFFSETS, PORTFOLIO_CATEGORIES, categoryCover } from "./data/gallery";
 
 // Book-True palette, drawn from Susana's monograph.
-const COLORS = {
+export const COLORS = {
   parchment: "#EFE9D9",
   cream: "#F5F0E8",
   ink: "#1A1A1B",
@@ -17,21 +18,6 @@ const COLORS = {
   tiki: "#317B73",
 };
 
-const CATEGORY_COLORS = {
-  "Pin-Up": COLORS.crimson,
-  "Classic Cars": COLORS.kulture,
-  "Burlesque": COLORS.plum,
-  "Tiki-Rockabilly": COLORS.tiki,
-  "Vintage-Glamour": COLORS.rose,
-};
-
-const CATEGORY_TITLES = {
-  "Pin-Up": "Modern Pin-Up",
-  "Classic Cars": "Modern Kulture",
-  "Burlesque": "Modern Burlesque",
-  "Tiki-Rockabilly": "Modern Tiki",
-  "Vintage-Glamour": "Modern Glamour",
-};
 
 const FONTS = {
   script: "'Great Vibes', cursive",
@@ -68,31 +54,6 @@ const SOCIALS = [
   },
 ];
 
-const GALLERY_IMAGES = [
-  { id: 1,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-green-wall.webp",       label: "Jade Wall",         focus: "50% 20%" },
-  { id: 2,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-marie.webp",            label: "Marie Devilreaux",  focus: "50% 25%" },
-  { id: 3,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-coral.webp",            label: "Coral & Bloom",     focus: "50% 15%" },
-  { id: 4,  ratio: "portrait",  cat: "Pin-Up",           src: "/portfolio/pinup-mosh.webp",             label: "Miss Mosh",         focus: "50% 10%" },
-  { id: 5,  ratio: "landscape", cat: "Classic Cars",     src: "/portfolio/cars-cervena.webp",           label: "Cervena Fox",       focus: "50% 50%" },
-  { id: 6,  ratio: "portrait",  cat: "Classic Cars",     src: "/portfolio/cars-a5.webp",                label: "Midnight Cruiser",  focus: "50% 30%" },
-  { id: 7,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-winny.webp",        label: "Winny Queen",       focus: "50% 10%" },
-  { id: 8,  ratio: "portrait",  cat: "Burlesque",        src: "/portfolio/burlesque-sabrina.webp",      label: "Sabrina Minx",      focus: "50% 10%" },
-  { id: 9,  ratio: "portrait",  cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-avalon.webp",            label: "Avalon Monet",      focus: "55% 30%" },
-  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly",  src: "/portfolio/tiki-patio.webp",             label: "Tiki Patio",        focus: "50% 20%" },
-  { id: 11, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-ashlyn.webp",         label: "Ashlyn Coco",       focus: "55% 15%" },
-  { id: 12, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-vanity.webp",         label: "The Vanity",        focus: "65% 40%" },
-  { id: 13, ratio: "portrait",  cat: "Vintage-Glamour",  src: "/portfolio/glamour-architectural.webp",  label: "Architectural",     focus: "50% 20%" },
-  { id: 14, ratio: "landscape", cat: "Vintage-Glamour",  src: "/portfolio/glamour-seaside.webp",        label: "Seaside Villa",     focus: "50% 40%" },
-];
-
-const RATIOS = {
-  portrait: { paddingBottom: "140%" },
-  landscape: { paddingBottom: "66%" },
-  square: { paddingBottom: "100%" },
-};
-
-// Stagger pattern for asymmetric layout
-const STAGGER_OFFSETS = [0, 40, 16, 56, 8, 48, 24, 60];
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(
@@ -204,9 +165,6 @@ export default function VestigeSite() {
   const isMobile = useIsMobile();
 
   useEffect(() => { setPortfolioCategory(null); }, [page]);
-
-  const PORTFOLIO_CATEGORIES = ["Pin-Up", "Classic Cars", "Burlesque", "Tiki-Rockabilly", "Vintage-Glamour"];
-  const categoryCover = (cat) => GALLERY_IMAGES.find((img) => img.cat === cat);
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);
