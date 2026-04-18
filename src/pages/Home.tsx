@@ -31,7 +31,10 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
   });
 
   return (
-    <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
+    <main style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
+      <h1 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
+        Vestige Photography
+      </h1>
       {/* Full-bleed hero with floating nav + script wordmark */}
       <div
         style={{
@@ -179,6 +182,6 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           Vestige
         </div>
       </div>
-    </div>
+    </main>
   );
 }

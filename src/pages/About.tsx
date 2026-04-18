@@ -43,7 +43,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
   };
 
   return (
-    <div style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
+    <main style={{ background: COLORS.parchment, minHeight: "100vh", fontFamily: FONTS.body, color: COLORS.ink }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
       <PageHeader
@@ -119,7 +119,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         }}
       >
         <p style={sectionLabel}>The Roots</p>
-        <h2 style={sectionHeading}>From the Pit to the Portrait</h2>
+        <h1 style={sectionHeading}>From the Pit to the Portrait</h1>
         <p style={bodyText}>
           Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
           sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
@@ -208,6 +208,6 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
       </section>
 
       <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
-    </div>
+    </main>
   );
 }
