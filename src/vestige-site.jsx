@@ -6,6 +6,7 @@ import { GALLERY_IMAGES, CATEGORY_COLORS, CATEGORY_TITLES, RATIOS, STAGGER_OFFSE
 import { PAGE_LINKS, SOCIALS } from "./data/navigation";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { useLightbox } from "./hooks/useLightbox";
+import { usePortfolioState } from "./hooks/usePortfolioState";
 
 function GalleryImage({ img, index, visible, isMobile, showLabel = true, onClick }) {
   const offset = isMobile ? 0 : STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
@@ -84,48 +85,16 @@ function GalleryImage({ img, index, visible, isMobile, showLabel = true, onClick
 export default function VestigeSite() {
   const [page, setPage] = useState("home");
   const [heroVisible, setHeroVisible] = useState(false);
-  const [galleryVisible, setGalleryVisible] = useState(false);
   const [aboutVisible, setAboutVisible] = useState(false);
   const [navHover, setNavHover] = useState(null);
-  const [portfolioCategory, setPortfolioCategory] = useState(null);
+  const { portfolioCategory, setPortfolioCategory, galleryVisible } = usePortfolioState(page);
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
   const isMobile = useIsMobile();
-
-  useEffect(() => { setPortfolioCategory(null); }, [page]);
 
   useEffect(() => {
     const t = setTimeout(() => setHeroVisible(true), 100);
     return () => clearTimeout(t);
   }, []);
-
-  useEffect(() => {
-    if (page !== "portfolio") {
-      setGalleryVisible(false);
-      return;
-    }
-    setGalleryVisible(false);
-    const srcs = portfolioCategory === null
-      ? PORTFOLIO_CATEGORIES.map((c) => categoryCover(c)?.src).filter(Boolean)
-      : GALLERY_IMAGES.filter((i) => i.cat === portfolioCategory).map((i) => i.src);
-    let cancelled = false;
-    const preload = Promise.all(
-      srcs.map(
-        (s) =>
-          new Promise((res) => {
-            const img = new Image();
-            img.onload = img.onerror = () => res();
-            img.src = s;
-          })
-      )
-    );
-    const fallback = new Promise((res) => setTimeout(res, 1500));
-    Promise.race([preload, fallback]).then(() => {
-      if (!cancelled) setGalleryVisible(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [page, portfolioCategory]);
 
   useEffect(() => {
     if (page === "about") {
