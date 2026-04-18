@@ -11,6 +11,7 @@ import GalleryImage from "./components/GalleryImage";
 import Lightbox from "./components/Lightbox";
 import Button from "./components/Button";
 import MobileMenu from "./components/MobileMenu";
+import PageHeader from "./components/PageHeader";
 
 export default function VestigeSite() {
   const [page, setPage] = useState("home");
@@ -614,99 +615,6 @@ export default function VestigeSite() {
   );
 }
 
-function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHover, isMobile }) {
-  const navBtn = (label, targetPage, isActive) => (
-    <button
-      style={navStyleDark(label, isActive)}
-      onMouseEnter={() => setNavHover(label)}
-      onMouseLeave={() => setNavHover(null)}
-      onClick={() => setPage(targetPage)}
-    >
-      {label}
-    </button>
-  );
-
-  return (
-    <>
-      {isMobile ? (
-        <div
-          style={{
-            position: "relative",
-            display: "grid",
-            gridTemplateColumns: "44px 1fr 44px",
-            alignItems: "center",
-            padding: "24px 16px 0",
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(-12px)",
-            transition: "opacity 0.8s ease, transform 0.8s ease",
-          }}
-        >
-          <span aria-hidden="true" />
-          <span
-            style={{
-              fontFamily: FONTS.script,
-              fontSize: "36px",
-              color: COLORS.crimson,
-              cursor: "pointer",
-              lineHeight: 1,
-              textAlign: "center",
-            }}
-            onClick={() => setPage("home")}
-          >
-            Vestige
-          </span>
-          <MobileMenu variant="solid" setPage={setPage} />
-        </div>
-      ) : (
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "40px",
-            padding: "36px 24px 0",
-            flexWrap: "wrap",
-            opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(-12px)",
-            transition: "opacity 0.8s ease, transform 0.8s ease",
-          }}
-        >
-          {navBtn("Portfolio", "portfolio", page === "portfolio")}
-          <span
-            style={{
-              fontFamily: FONTS.script,
-              fontSize: "48px",
-              color: COLORS.crimson,
-              cursor: "pointer",
-              lineHeight: 1,
-            }}
-            onClick={() => setPage("home")}
-          >
-            Vestige
-          </span>
-          {navBtn("About", "about", page === "about")}
-        </nav>
-      )}
-      {subtitle && (
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "11px",
-            letterSpacing: "5px",
-            textTransform: "uppercase",
-            color: COLORS.muted,
-            marginTop: "16px",
-            marginBottom: 0,
-            opacity: visible ? 1 : 0,
-            transition: "opacity 0.8s ease 0.1s",
-          }}
-        >
-          {subtitle}
-        </p>
-      )}
-    </>
-  );
-}
 
 function PageFooter({ visible, navStyleDark, isMobile }) {
   return (
