@@ -37,8 +37,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
             alignItems: "center",
             padding: "24px 16px 0",
             opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(-12px)",
-            transition: "opacity 0.8s ease, transform 0.8s ease",
+            transition: "opacity 0.8s ease",
           }}
         >
           <span aria-hidden="true" />
@@ -67,8 +66,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
             padding: "36px 24px 0",
             flexWrap: "wrap",
             opacity: visible ? 1 : 0,
-            transform: visible ? "translateY(0)" : "translateY(-12px)",
-            transition: "opacity 0.8s ease, transform 0.8s ease",
+            transition: "opacity 0.8s ease",
           }}
         >
           {navBtn("Portfolio", "portfolio", page === "portfolio")}

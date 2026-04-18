@@ -74,21 +74,22 @@ export function categoryCover(category: string): GalleryImage | undefined {
 
 /**
  * Generate a responsive srcSet string for a gallery image.
- * Assumes variants exist at: {basename}-480w.webp, {basename}-768w.webp, {basename}-1280w.webp
- * Falls back gracefully if variants don't exist on disk (returns empty string).
+ * 480w and 768w variants exist for all images.
+ * 1280w variants exist only for landscape images (cars-cervena, glamour-seaside,
+ * glamour-vanity, tiki-patio). Pass ratio="landscape" to include the 1280w entry.
  */
-export function generateSrcSet(src: string): string {
+export function generateSrcSet(src: string, ratio?: Ratio): string {
   if (!src) return "";
   // Extract basename without .webp extension
   const match = src.match(/\/([^/]+)\.webp$/);
   if (!match) return "";
   const basename = match[1];
-  // Generate srcSet with responsive variants
-  return `
-    /portfolio/${basename}-480w.webp 480w,
-    /portfolio/${basename}-768w.webp 768w,
-    /portfolio/${basename}-1280w.webp 1280w
-  `.trim();
+  const base480 = `/portfolio/${basename}-480w.webp 480w`;
+  const base768 = `/portfolio/${basename}-768w.webp 768w`;
+  if (ratio === "landscape") {
+    return `${base480}, ${base768}, /portfolio/${basename}-1280w.webp 1280w`;
+  }
+  return `${base480}, ${base768}`;
 }
 
 /**

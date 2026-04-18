@@ -77,8 +77,8 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
                   cursor: "pointer",
                   transition: "transform 0.3s ease",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.01)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.92")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
                 <div>
                   <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "52px" : "54px", lineHeight: 0.85, opacity: 0.9 }}>
@@ -146,9 +146,9 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
             <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "44px" : "62px", lineHeight: 0.9, opacity: 0.9 }}>
               a study in
             </div>
-            <h1 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
+            <h2 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
               {CATEGORY_TITLES[portfolioCategory] ?? ""}
-            </h1>
+            </h2>
             <button
               onClick={() => setPortfolioCategory(null)}
               style={{
@@ -193,7 +193,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
                   visible={true}
                   isMobile={isMobile}
                   showLabel={false}
-                  srcSet={generateSrcSet(img.src)}
+                  srcSet={generateSrcSet(img.src, img.ratio)}
                   sizes={generateSizes()}
                   onClick={() => openLightbox(img)}
                 />
