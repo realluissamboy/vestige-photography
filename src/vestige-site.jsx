@@ -5,6 +5,7 @@ import { FONTS } from "./theme/fonts";
 import { GALLERY_IMAGES, CATEGORY_COLORS, CATEGORY_TITLES, RATIOS, STAGGER_OFFSETS, PORTFOLIO_CATEGORIES, categoryCover } from "./data/gallery";
 import { PAGE_LINKS, SOCIALS } from "./data/navigation";
 import { useIsMobile } from "./hooks/useIsMobile";
+import { useLightbox } from "./hooks/useLightbox";
 
 function GalleryImage({ img, index, visible, isMobile, showLabel = true, onClick }) {
   const offset = isMobile ? 0 : STAGGER_OFFSETS[index % STAGGER_OFFSETS.length];
@@ -87,19 +88,7 @@ export default function VestigeSite() {
   const [aboutVisible, setAboutVisible] = useState(false);
   const [navHover, setNavHover] = useState(null);
   const [portfolioCategory, setPortfolioCategory] = useState(null);
-  const [lightboxImage, setLightboxImage] = useState(null);
-
-  useEffect(() => {
-    if (!lightboxImage) return;
-    const onKey = (e) => { if (e.key === "Escape") setLightboxImage(null); };
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [lightboxImage]);
+  const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
   const isMobile = useIsMobile();
 
   useEffect(() => { setPortfolioCategory(null); }, [page]);
@@ -723,7 +712,7 @@ export default function VestigeSite() {
             {GALLERY_IMAGES
               .filter((img) => img.cat === portfolioCategory)
               .map((img, i) => (
-                <GalleryImage key={img.id} img={img} index={i} visible={true} isMobile={isMobile} showLabel={false} onClick={() => setLightboxImage(img)} />
+                <GalleryImage key={img.id} img={img} index={i} visible={true} isMobile={isMobile} showLabel={false} onClick={() => openLightbox(img)} />
               ))}
           </div>
         </>
@@ -773,7 +762,7 @@ export default function VestigeSite() {
 
       {lightboxImage && (
         <div
-          onClick={() => setLightboxImage(null)}
+          onClick={() => closeLightbox()}
           style={{
             position: "fixed",
             inset: 0,
@@ -801,7 +790,7 @@ export default function VestigeSite() {
           />
           <button
             aria-label="Close"
-            onClick={(e) => { e.stopPropagation(); setLightboxImage(null); }}
+            onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
             style={{
               position: "absolute",
               top: isMobile ? "16px" : "32px",
