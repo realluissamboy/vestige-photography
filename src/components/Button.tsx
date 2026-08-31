@@ -17,22 +17,19 @@ export default function Button({ href, target, rel, isMobile, children }: Button
       target={target}
       rel={rel}
       style={{
-        fontFamily: FONTS.display,
-        fontStyle: "italic",
-        fontWeight: 800,
-        fontSize: "14px",
-        letterSpacing: "4px",
-        textTransform: "uppercase",
+        fontFamily: FONTS.script,
+        fontSize: isMobile ? "32px" : "40px",
         color: COLORS.cream,
         background: COLORS.crimson,
         border: "none",
-        padding: isMobile ? "16px 40px" : "18px 52px",
+        padding: isMobile ? "12px 36px" : "14px 48px",
         minHeight: "44px",
         cursor: "pointer",
         textDecoration: "none",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
+        lineHeight: 1,
         boxShadow: "0 6px 20px rgba(200, 20, 44, 0.25)",
         transition: "transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease",
       }}

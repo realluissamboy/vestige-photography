@@ -167,17 +167,16 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
                 rel="noopener noreferrer"
                 aria-label={s.label}
                 style={{
-                  fontFamily: FONTS.cormorant,
-                  fontSize: "13px",
-                  letterSpacing: "3px",
-                  textTransform: "uppercase",
+                  fontFamily: FONTS.script,
+                  fontSize: "32px",
                   color: "var(--color-cream)",
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
-                  padding: "12px 16px",
+                  padding: "8px 16px",
                   minHeight: "44px",
+                  lineHeight: 1,
                 }}
               >
                 {s.svg}
