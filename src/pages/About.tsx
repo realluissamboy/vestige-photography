@@ -1,6 +1,7 @@
 import React, { type CSSProperties } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import type { PageKey } from "../data/navigation";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
@@ -21,6 +22,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
     color: "var(--color-crimson)",
     marginBottom: "2px",
     lineHeight: 0.95,
+    textShadow: VESTIGE_TEXT_SHADOW,
   };
   const sectionHeading: CSSProperties = {
     fontFamily: FONTS.display,
@@ -109,6 +111,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
               marginTop: "12px",
               marginBottom: 0,
               lineHeight: 1,
+              textShadow: VESTIGE_TEXT_SHADOW,
             }}
           >
             Susana Andrea, founder

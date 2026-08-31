@@ -2,6 +2,7 @@ import React, { type CSSProperties } from "react";
 import type { PageKey } from "../data/navigation";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_WORDMARK_SHADOW, VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import MobileMenu from "./MobileMenu";
 
 export interface PageHeaderProps {
@@ -27,6 +28,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile 
         padding: "0 8px",
         opacity: isActive ? 1 : 0.75,
         transition: "opacity 0.25s ease, color 0.25s ease",
+        textShadow: VESTIGE_TEXT_SHADOW,
         lineHeight: 1,
       }}
       onClick={() => setPage(targetPage)}
@@ -58,6 +60,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile 
               cursor: "pointer",
               lineHeight: 1,
               textAlign: "center",
+              textShadow: VESTIGE_WORDMARK_SHADOW,
             }}
             onClick={() => setPage("home")}
           >
@@ -86,6 +89,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile 
               color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,
+              textShadow: VESTIGE_WORDMARK_SHADOW,
             }}
             onClick={() => setPage("home")}
           >
