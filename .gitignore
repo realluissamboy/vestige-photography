@@ -30,3 +30,5 @@ pnpm-debug.log*
 
 # Raw, unoptimized source assets (kept locally, not served or committed)
 raw-assets/
+work/
+
