@@ -18,21 +18,20 @@ export interface AboutProps {
 export default function About({ aboutVisible, setPage, isMobile, navStyleDark, setNavHover }: AboutProps) {
   const sectionLabel: CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isMobile ? "38px" : "48px",
+    fontSize: isMobile ? "30px" : "38px",
     color: "var(--color-crimson)",
     marginBottom: "2px",
-    lineHeight: 0.95,
+    lineHeight: 1,
     textShadow: VESTIGE_TEXT_SHADOW,
   };
   const sectionHeading: CSSProperties = {
-    fontFamily: FONTS.display,
-    fontStyle: "italic",
-    fontWeight: 800,
-    fontSize: isMobile ? "32px" : "44px",
+    fontFamily: FONTS.script,
+    fontSize: isMobile ? "40px" : "54px",
+    fontWeight: 400,
+    fontStyle: "normal",
     color: "var(--color-ink)",
     margin: "4px 0 24px",
-    letterSpacing: "-0.5px",
-    lineHeight: 1.1,
+    lineHeight: 1.15,
   };
   const narrowSectionPadding = isMobile ? "0 20px 64px" : "0 40px 96px";
   const bodyText: CSSProperties = {
