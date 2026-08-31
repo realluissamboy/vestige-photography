@@ -2,6 +2,13 @@
 
 Append-only. One entry per decision. Newest at the top.
 
+### 2026-08-31 — Comprehensive Design System & Interaction Polish
+- **Decision:** (1) Consolidated all design standards, typography rules, color tokens, 3D text elevation effects, component specifications, and motion curves into `DESIGN_SYSTEM.md` as the permanent single source of truth. (2) Unified script typography across all navigation ("Portfolio", "About"), wordmarks, subtitles, founder captions, CTA buttons, and social links using `Great Vibes` (`FONTS.script`). (3) Resolved hero descender clearance with minimum 68px top margin on desktop / 32px on mobile. (4) Replaced subpixel hamburger bars with a mathematically symmetric vector SVG with unified drop-shadow. (5) Implemented universal cross-fade page transitions (280ms cubic-bezier) and category drill-in transitions (200ms cubic-bezier). (6) Added mobile 2-column split-cards (Option A) with category cover photo previews.
+- **Proposed by:** Luis
+- **Rationale:** Guarantees permanent visual cohesion, effortless legibility across all devices, WCAG AA compliance, and eliminates jarring DOM page swaps.
+- **Scope impact:** Polishes existing surfaces (Home, Portfolio, About) without adding new routes. Fully documented in `DESIGN_SYSTEM.md`.
+- **Related leads consulted:** Luis
+
 ### 2026-04-17 — Book Now CTA repointed to IG DM, no contact route
 - **Decision:** (1) The "Book a Session" CTA (only Book CTA in the codebase, on the Portfolio page at `src/vestige-site.jsx:588`) links to `https://ig.me/m/susanavestige`, opens in a new tab, `rel="noopener noreferrer"`. (2) No dedicated contact/booking route will be built. Site stays at three surfaces: Home, Portfolio, About. (3) If Susana later asks for a real on-site form, Luis frames it as a paid add-on under the Avenida upsell, not as free scope on this engagement.
 - **Proposed by:** Luis
