@@ -89,12 +89,12 @@ export const VESTIGE_TEXT_SHADOW = [
 ## 5. Component Specifications
 
 ### 5.1 Homepage Hero Carousel (`Home.tsx`)
-- **Duration**: `6500ms` auto-advance cycle.
+- **Duration**: `7000ms` (7s) auto-advance cycle.
 - **Keyboard Navigation**: Left and Right arrow keys cycle through slides.
 - **Top Scrim**: Smooth gradient (`rgba(10,10,11,0.45)` down to transparent) ensuring high visibility for nav links over light/dark photos.
 - **Slide Indicators (Progress Pills)**:
   - Active capsule: `28px × 10px`, `1.5px solid var(--color-crimson)`, `background: rgba(10,10,11,0.6)`.
-  - Progress fill: Pure `#FFFFFF` animating via `@keyframes hero-progress` over 6500ms.
+  - Progress fill: Pure `#FFFFFF` animating via `@keyframes hero-progress` over 7000ms.
   - Inactive dots: `10px × 10px`, `1.5px solid var(--color-crimson)`.
   - Shadows: `boxShadow: 0 1px 2px rgba(255,255,255,0.35), 0 2px 4px rgba(0,0,0,0.35)`.
 

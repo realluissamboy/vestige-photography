@@ -28,7 +28,7 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
   50: "50% 65%",
 };
 
-const SLIDE_DURATION = 8300;
+const SLIDE_DURATION = 7000;
 const COMPACT_HERO_QUERY = "(max-width: 900px), (orientation: landscape) and (max-height: 500px)";
 
 function useCompactHero(): boolean {
