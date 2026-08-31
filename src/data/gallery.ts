@@ -23,7 +23,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 18, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--Outlaw2.webp", label: "Outlaw2", focus: "60% 5%" },
   { id: 21, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--R2C0A8596.webp", label: "R2C0A8596", focus: "50% 50%" },
   { id: 6, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/cars-a5.webp", label: "Midnight Cruiser", focus: "50% 72%" },
-  { id: 4, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/pinup-mosh.webp", label: "Miss Mosh", focus: "50% 10%" },
+  { id: 4, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/pinup-mosh.webp", label: "Miss Mosh", focus: "50% 85%" },
   { id: 25, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A2950.webp", label: "R2C0A2950", focus: "50% 38%" },
   { id: 27, ratio: "landscape", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A7114.webp", label: "R2C0A7114", focus: "50% 50%" },
   { id: 34, ratio: "portrait", cat: "Burlesque", src: "/portfolio/modern-burlesque--r2C0A4286.webp", label: "r2C0A4286", focus: "50% 28%" },

@@ -61,6 +61,7 @@ export default function GalleryImage({
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            objectPosition: img.focus || "50% 50%",
             display: "block",
           }}
         />
