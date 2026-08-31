@@ -339,32 +339,6 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
             <h2 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
               {CATEGORY_TITLES[displayedCategory] ?? ""}
             </h2>
-            <button
-              onClick={handleBackToPortfolio}
-              style={{
-                marginTop: "24px",
-                fontFamily: FONTS.script,
-                fontSize: isMobile ? "30px" : "40px",
-                color: "#FFFFFF",
-                background: "transparent",
-                border: "none",
-                borderBottom: "2px solid rgba(255, 255, 255, 0.8)",
-                paddingBottom: "4px",
-                cursor: "pointer",
-                minHeight: "44px",
-                lineHeight: 1,
-                textShadow: "0 1px 3px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25)",
-                transition: "opacity 0.2s ease, transform 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Back to Portfolio
-            </button>
           </section>
           <div
             style={{
@@ -400,13 +374,44 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
         style={{
           textAlign: "center",
           padding: "0 24px 120px",
-          opacity: galleryVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.7s",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "14px",
         }}
       >
         <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
           <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
         </div>
+
+        {displayedCategory !== null && (
+          <button
+            onClick={handleBackToPortfolio}
+            style={{
+              marginTop: "4px",
+              fontFamily: FONTS.script,
+              fontSize: isMobile ? "26px" : "32px",
+              color: "var(--color-crimson)",
+              background: "transparent",
+              border: "none",
+              borderBottom: "1.5px solid var(--color-crimson)",
+              paddingBottom: "2px",
+              cursor: "pointer",
+              minHeight: "44px",
+              lineHeight: 1,
+              textShadow: VESTIGE_TEXT_SHADOW,
+              transition: "opacity 0.2s ease, transform 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
+          >
+            Back to Portfolio
+          </button>
+        )}
       </section>
 
       <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
