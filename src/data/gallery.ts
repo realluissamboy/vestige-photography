@@ -19,8 +19,8 @@ export interface GalleryImage {
 }
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: 1, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/pinup-green-wall.webp", label: "Jade Wall", focus: "50% 20%" },
   { id: 18, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--Outlaw2.webp", label: "Outlaw2", focus: "60% 5%" },
+  { id: 1, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/pinup-green-wall.webp", label: "Jade Wall", focus: "50% 20%" },
   { id: 21, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--R2C0A8596.webp", label: "R2C0A8596", focus: "50% 50%" },
   { id: 5, ratio: "landscape", cat: "Classic Cars", src: "/portfolio/cars-cervena.webp", label: "Cervena Fox", focus: "50% 50%" },
   { id: 3, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/pinup-coral.webp", label: "Coral & Bloom", focus: "50% 80%" },
