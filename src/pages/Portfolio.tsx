@@ -2,6 +2,7 @@ import React from "react";
 import type { CSSProperties } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import {
   GALLERY_IMAGES,
   CATEGORY_COLORS,
@@ -341,27 +342,28 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
             <button
               onClick={handleBackToPortfolio}
               style={{
-                marginTop: "28px",
-                fontFamily: FONTS.display,
-                fontStyle: "italic",
-                fontWeight: 600,
-                fontSize: "13px",
-                letterSpacing: "3px",
-                textTransform: "uppercase",
-                color: COLORS.cream,
+                marginTop: "24px",
+                fontFamily: FONTS.script,
+                fontSize: isMobile ? "30px" : "40px",
+                color: "var(--color-crimson)",
                 background: "transparent",
                 border: "none",
-                borderBottom: `1px solid rgba(245,240,232,0.4)`,
-                paddingBottom: "2px",
+                borderBottom: "2px solid var(--color-crimson)",
+                paddingBottom: "4px",
                 cursor: "pointer",
                 minHeight: "44px",
-                opacity: 0.9,
-                transition: "opacity 0.2s ease",
+                lineHeight: 1,
+                textShadow: VESTIGE_TEXT_SHADOW,
+                transition: "opacity 0.2s ease, transform 0.2s ease",
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.9")}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
             >
-              ← back to portfolio
+              Back to Portfolio
             </button>
           </section>
           <div
