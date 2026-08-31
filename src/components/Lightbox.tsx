@@ -20,10 +20,6 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
   useEffect(() => {
     if (!image) return;
 
-    // Lock body scroll
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
     // Store the currently focused element so we can restore it on close
     triggerRef.current = document.activeElement as HTMLElement;
 
@@ -74,7 +70,6 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", handleKeyDown);
       // Restore focus on close
       if (triggerRef.current && typeof triggerRef.current.focus === "function") {

@@ -36,6 +36,12 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
   const [displayedCategory, setDisplayedCategory] = React.useState<Category | null>(portfolioCategory);
   const [isCategoryTransitioning, setIsCategoryTransitioning] = React.useState<boolean>(false);
 
+  React.useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "";
+    }
+  }, []);
+
   const handleSelectCategory = (cat: Category) => {
     if (cat === displayedCategory) return;
     setIsCategoryTransitioning(true);

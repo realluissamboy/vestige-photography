@@ -21,13 +21,18 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
   6: "50% 72%",
   10: "50% 30%",
   12: "65% 40%",
+  14: "58% 70%",
   18: "20% 5%",
   25: "50% 38%",
   26: "50% 50%",
   34: "50% 28%",
-  36: "68% 72%",
+  36: "78% 72%",
   43: "50% 50%",
   50: "50% 65%",
+};
+
+const HERO_MOBILE_POSITIONS: Record<number, string> = {
+  18: "70% 5%",
 };
 
 const SLIDE_DURATION = 7000;
@@ -153,7 +158,9 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              objectPosition: HERO_IMAGE_POSITIONS[image.id] ?? image.focus ?? "50% 50%",
+              objectPosition: (compactHero && HERO_MOBILE_POSITIONS[image.id])
+                ? HERO_MOBILE_POSITIONS[image.id]!
+                : (HERO_IMAGE_POSITIONS[image.id] ?? image.focus ?? "50% 50%"),
               opacity: index === activeSlide ? 1 : 0,
               transition: "opacity 0.8s ease",
             }}

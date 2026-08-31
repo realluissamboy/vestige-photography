@@ -23,8 +23,12 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
   };
 
   useEffect(() => {
-    if (!open) return;
-    const previous = document.body.style.overflow;
+    if (!open) {
+      if (typeof document !== "undefined") {
+        document.body.style.overflow = "";
+      }
+      return;
+    }
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -36,7 +40,7 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previous;
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);

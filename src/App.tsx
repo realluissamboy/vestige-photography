@@ -19,11 +19,17 @@ export default function App() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "";
+    }
     const t = setTimeout(() => setMounted(true), 40);
     return () => clearTimeout(t);
   }, []);
 
   const handleSetPage = useCallback((newPage: PageKey) => {
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "";
+    }
     if (newPage === activePage) {
       if (typeof window !== "undefined") {
         window.scrollTo({ top: 0, behavior: "smooth" });

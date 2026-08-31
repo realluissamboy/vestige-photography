@@ -19,8 +19,8 @@ export interface GalleryImage {
 }
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: 18, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--Outlaw2.webp", label: "Outlaw2", focus: "20% 5%" },
   { id: 1, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/pinup-green-wall.webp", label: "Jade Wall", focus: "50% 20%" },
+  { id: 18, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--Outlaw2.webp", label: "Outlaw2", focus: "20% 5%" },
   { id: 21, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--R2C0A8596.webp", label: "R2C0A8596", focus: "50% 50%" },
   { id: 25, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A2950.webp", label: "R2C0A2950", focus: "50% 38%" },
   { id: 3, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/pinup-coral.webp", label: "Coral & Bloom", focus: "50% 80%" },
@@ -28,15 +28,15 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 27, ratio: "landscape", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A7114.webp", label: "R2C0A7114", focus: "50% 50%" },
   { id: 34, ratio: "portrait", cat: "Burlesque", src: "/portfolio/modern-burlesque--r2C0A4286.webp", label: "r2C0A4286", focus: "50% 28%" },
   { id: 28, ratio: "landscape", cat: "Burlesque", src: "/portfolio/modern-burlesque--2C0A4365.webp", label: "2C0A4365", focus: "50% 50%" },
-  { id: 36, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A0890.webp", label: "2C0A0890", focus: "68% 72%" },
+  { id: 36, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A0890.webp", label: "2C0A0890", focus: "78% 72%" },
   { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly", src: "/portfolio/tiki-patio.webp", label: "Tiki Patio", focus: "50% 30%" },
   { id: 9, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/tiki-avalon.webp", label: "Avalon Monet", focus: "50% 58%" },
   { id: 37, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A9684.webp", label: "2C0A9684", focus: "50% 50%" },
-  { id: 43, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--GlamGhoul-(1 of 1).webp", label: "GlamGhoul-(1 of 1)", focus: "50% 50%" },
+  { id: 14, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/glamour-seaside.webp", label: "Seaside Villa", focus: "58% 70%" },
   { id: 48, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--R2C0A5263.webp", label: "R2C0A5263", focus: "50% 75%" },
   { id: 50, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--R2C0A9752.webp", label: "R2C0A9752", focus: "50% 65%" },
   { id: 51, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--RE2C0A5644.webp", label: "RE2C0A5644", focus: "50% 50%" },
-  { id: 14, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/glamour-seaside.webp", label: "Seaside Villa", focus: "50% 40%" },
+  { id: 43, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--GlamGhoul-(1 of 1).webp", label: "GlamGhoul-(1 of 1)", focus: "50% 50%" },
   { id: 16, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--A0E876E6-FA74-4E22-A0D7-26DFB5261E58.webp", label: "A0E876E6-FA74-4E22-A0D7-26DFB5261E58", focus: "50% 45%" },
   { id: 15, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--2C0A8311.webp", label: "2C0A8311", focus: "50% 50%" },
   { id: 17, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--EDIT2C0A5244.webp", label: "EDIT2C0A5244", focus: "50% 50%" },
