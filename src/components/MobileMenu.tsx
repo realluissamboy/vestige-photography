@@ -4,6 +4,7 @@ import { PAGE_LINKS, SOCIALS } from "../data/navigation";
 import type { PageKey } from "../data/navigation";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_ICON_SHADOW, VESTIGE_TEXT_SHADOW } from "../theme/effects";
 
 export interface MobileMenuProps {
   variant: "overlay" | "solid";
@@ -12,7 +13,7 @@ export interface MobileMenuProps {
   onOpenChange?: (open: boolean) => void;
 }
 
-export default function MobileMenu({ variant: _variant, setPage, menuId = "mobile-menu", onOpenChange }: MobileMenuProps) {
+export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", onOpenChange }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -34,7 +35,14 @@ export default function MobileMenu({ variant: _variant, setPage, menuId = "mobil
     setPage(targetPage);
   };
 
-  const barStyle: CSSProperties = { display: "block", width: "26px", height: "2px", background: "var(--color-crimson)", borderRadius: "1px" };
+  const barStyle: CSSProperties = {
+    display: "block",
+    width: "26px",
+    height: "2px",
+    background: "var(--color-crimson)",
+    borderRadius: "1px",
+    filter: variant === "overlay" ? VESTIGE_ICON_SHADOW : undefined,
+  };
 
   return (
     <>
@@ -123,6 +131,7 @@ export default function MobileMenu({ variant: _variant, setPage, menuId = "mobil
                 letterSpacing: link.isWordmark ? "0" : "3px",
                 textTransform: link.isWordmark ? "none" : "uppercase",
                 color: "var(--color-crimson)",
+                textShadow: variant === "overlay" ? VESTIGE_TEXT_SHADOW : undefined,
                 background: "transparent",
                 border: "none",
                 padding: "12px 24px",

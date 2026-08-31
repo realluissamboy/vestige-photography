@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_TEXT_SHADOW, VESTIGE_WORDMARK_SHADOW } from "../theme/effects";
 import { PAGE_LINKS, type PageKey } from "../data/navigation";
 import MobileMenu from "../components/MobileMenu";
 import { CATEGORY_TITLES, GALLERY_IMAGES, PORTFOLIO_CATEGORIES } from "../data/gallery";
@@ -18,15 +19,24 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
   18: "35% 5%",
 };
 
-const SLIDE_DURATION = 6500;
+const SLIDE_DURATION = 8300;
+const COMPACT_HERO_QUERY = "(max-width: 900px), (orientation: landscape) and (max-height: 500px)";
 
-const HERO_LABEL_SHADOWS: Record<number, string> = {
-  1: "0 2px 10px rgba(10,10,11,0.9), 0 1px 2px rgba(10,10,11,0.9)",
-  5: "0 2px 10px rgba(10,10,11,0.9), 0 1px 2px rgba(10,10,11,0.9)",
-  13: "0 1px 0 rgba(245,240,232,0.9), 0 0 10px rgba(245,240,232,0.7)",
-  34: "0 1px 0 rgba(245,240,232,0.9), 0 0 10px rgba(245,240,232,0.7)",
-  36: "0 1px 0 rgba(245,240,232,0.9), 0 0 10px rgba(245,240,232,0.7)",
-};
+function useCompactHero(): boolean {
+  const [compact, setCompact] = useState(
+    typeof window !== "undefined" ? window.matchMedia(COMPACT_HERO_QUERY).matches : false,
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(COMPACT_HERO_QUERY);
+    const onChange = (event: MediaQueryListEvent) => setCompact(event.matches);
+    setCompact(mediaQuery.matches);
+    mediaQuery.addEventListener("change", onChange);
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
+
+  return compact;
+}
 
 export interface HomeProps {
   heroVisible: boolean;
@@ -39,6 +49,7 @@ export interface HomeProps {
 export default function Home({ heroVisible, isMobile, setPage, navHover, setNavHover }: HomeProps) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [slideCycle, setSlideCycle] = useState(0);
+  const compactHero = useCompactHero() || isMobile;
   const activeHero = HERO_SLIDES[activeSlide] ?? HERO_SLIDES[0];
 
   useEffect(() => {
@@ -56,14 +67,14 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
     fontSize: "13px",
     letterSpacing: "3px",
     textTransform: "uppercase",
-    color: "var(--color-cream)",
+    color: "var(--color-crimson)",
     cursor: "pointer",
     border: "none",
     background: "none",
     padding: "8px 0",
     opacity: navHover === link ? 1 : 0.85,
     transition: "opacity 0.3s ease",
-    textShadow: "0 2px 12px rgba(0,0,0,0.4)",
+    textShadow: VESTIGE_TEXT_SHADOW,
   });
 
   return (
@@ -110,7 +121,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             top: 0,
             left: 0,
             right: 0,
-            height: "200px",
+            height: compactHero ? "230px" : "200px",
             pointerEvents: "none",
             background:
               "linear-gradient(to bottom, rgba(10,10,11,0.45) 0%, rgba(10,10,11,0.15) 60%, rgba(10,10,11,0) 100%)",
@@ -119,7 +130,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
         />
 
         {/* Nav — no wordmark here; the big script below is the identity */}
-        {isMobile ? (
+        {compactHero ? (
           <div
             style={{
               position: "absolute",
@@ -168,41 +179,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           </nav>
         )}
 
-        {/* Editorial tag top-left — aligned with hamburger on mobile */}
-        <div
-          style={{
-            position: "absolute",
-            top: isMobile ? "16px" : "110px",
-            left: isMobile ? "16px" : "48px",
-            color: "var(--color-crimson)",
-            textShadow: HERO_LABEL_SHADOWS[activeHero.id] ?? "0 2px 10px rgba(10,10,11,0.9)",
-            zIndex: 6,
-          }}
-        >
-          <span style={{ display: "block", fontFamily: FONTS.script, fontSize: isMobile ? "34px" : "62px", lineHeight: 1 }}>
-            twenty years of
-          </span>
-          <span
-            style={{
-              display: "block",
-              fontFamily: FONTS.display,
-              fontStyle: "italic",
-              fontWeight: 800,
-              fontSize: isMobile ? "16px" : "32px",
-              letterSpacing: "4px",
-              textTransform: "uppercase",
-              marginTop: "2px",
-            }}
-          >
-            {CATEGORY_TITLES[activeHero.cat as keyof typeof CATEGORY_TITLES]}
-          </span>
-        </div>
-
         <div
           aria-label="Featured photography slides"
           style={{
             position: "absolute",
-            bottom: isMobile ? "28px" : "34px",
+            bottom: compactHero ? "28px" : "34px",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
@@ -253,31 +234,68 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           ))}
         </div>
 
-        {/* Signature wordmark — dimensional drop-shadow for pop */}
+        {/* Responsive signature and category lockup */}
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
-            bottom: isMobile ? "6%" : "7%",
-            right: isMobile ? "4%" : "4%",
-            fontFamily: FONTS.script,
+            top: compactHero ? "24px" : "auto",
+            bottom: compactHero ? "auto" : "58px",
+            left: compactHero ? "16px" : "auto",
+            right: compactHero ? "auto" : "4%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: compactHero ? "flex-start" : "flex-end",
             color: "var(--color-crimson)",
-            fontSize: isMobile ? "110px" : "320px",
-            lineHeight: 0.8,
+            maxWidth: compactHero ? "calc(100vw - 32px)" : "min(92vw, 940px)",
             pointerEvents: "none",
-            textShadow: [
-              "0 1px 0 rgba(255,255,255,0.18)",
-              "0 -1px 0 rgba(0,0,0,0.4)",
-              "0 2px 0 #8f0e1f",
-              "0 4px 0 #7a0c1b",
-              "0 6px 0 #650a16",
-              "0 14px 30px rgba(0,0,0,0.55)",
-              "0 24px 60px rgba(0,0,0,0.35)",
-            ].join(", "),
             zIndex: 6,
           }}
         >
-          Vestige
+          <div
+            style={{
+              fontFamily: FONTS.script,
+              fontSize: compactHero ? "clamp(82px, 14vw, 110px)" : "320px",
+              lineHeight: 0.8,
+              textShadow: VESTIGE_WORDMARK_SHADOW,
+            }}
+          >
+            Vestige
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: compactHero ? "flex-start" : "flex-end",
+              alignItems: "baseline",
+              columnGap: compactHero ? "10px" : "18px",
+              rowGap: "2px",
+              marginTop: compactHero ? "6px" : "10px",
+              textAlign: compactHero ? "left" : "right",
+              textShadow: VESTIGE_TEXT_SHADOW,
+            }}
+          >
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                fontFamily: FONTS.script,
+                fontSize: compactHero ? "34px" : "62px",
+                lineHeight: 1,
+              }}
+            >
+              twenty years of
+            </span>
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                fontFamily: FONTS.script,
+                fontSize: compactHero ? "34px" : "62px",
+                lineHeight: 1,
+              }}
+            >
+              {CATEGORY_TITLES[activeHero.cat as keyof typeof CATEGORY_TITLES].toLowerCase()}
+            </span>
+          </div>
         </div>
       </div>
     </main>
