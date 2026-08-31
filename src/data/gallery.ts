@@ -28,11 +28,11 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 27, ratio: "landscape", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A7114.webp", label: "R2C0A7114", focus: "50% 50%" },
   { id: 34, ratio: "portrait", cat: "Burlesque", src: "/portfolio/modern-burlesque--r2C0A4286.webp", label: "r2C0A4286", focus: "50% 28%" },
   { id: 28, ratio: "landscape", cat: "Burlesque", src: "/portfolio/modern-burlesque--2C0A4365.webp", label: "2C0A4365", focus: "50% 50%" },
-  { id: 36, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A0890.webp", label: "2C0A0890", focus: "78% 72%" },
-  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly", src: "/portfolio/tiki-patio.webp", label: "Tiki Patio", focus: "50% 30%" },
   { id: 9, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/tiki-avalon.webp", label: "Avalon Monet", focus: "50% 58%" },
+  { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly", src: "/portfolio/tiki-patio.webp", label: "Tiki Patio", focus: "50% 30%" },
+  { id: 36, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A0890.webp", label: "2C0A0890", focus: "78% 72%" },
   { id: 37, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A9684.webp", label: "2C0A9684", focus: "50% 50%" },
-  { id: 14, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/glamour-seaside.webp", label: "Seaside Villa", focus: "58% 70%" },
+  { id: 19, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-pinup--R2C0A1609.webp", label: "R2C0A1609", focus: "50% 50%" },
   { id: 48, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--R2C0A5263.webp", label: "R2C0A5263", focus: "50% 75%" },
   { id: 50, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--R2C0A9752.webp", label: "R2C0A9752", focus: "50% 65%" },
   { id: 51, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--RE2C0A5644.webp", label: "RE2C0A5644", focus: "50% 50%" },
@@ -68,7 +68,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 12, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/glamour-vanity.webp", label: "The Vanity", focus: "65% 40%" },
   { id: 44, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--R2C0A0407.webp", label: "R2C0A0407", focus: "50% 50%" },
   { id: 52, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-glamour--TJ6.webp", label: "TJ6", focus: "50% 50%" },
-  { id: 19, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-pinup--R2C0A1609.webp", label: "R2C0A1609", focus: "50% 50%" },
+  { id: 14, ratio: "landscape", cat: "Vintage-Glamour", src: "/portfolio/glamour-seaside.webp", label: "Seaside Villa", focus: "58% 70%" },
   { id: 20, ratio: "portrait", cat: "Vintage-Glamour", src: "/portfolio/modern-pinup--R2C0A5650.webp", label: "R2C0A5650", focus: "50% 50%" },
 ];
 

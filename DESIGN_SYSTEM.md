@@ -18,9 +18,9 @@ All typography in the codebase is defined in `src/theme/fonts.ts` and `src/style
 
 | Token | Font Family | Typical Size | Usage |
 | :--- | :--- | :--- | :--- |
-| `FONTS.script` | `'Great Vibes', cursive` | `28px` – `64px` | • **Wordmark**: "Vestige"<br>• **Navigation**: "Portfolio", "About"<br>• **Subtitle**: "Twenty years of [category]"<br>• **Founder Tag**: "Susana Andrea, founder"<br>• **About Section Headings**: "From the Pit to the Portrait", "San Diego, by Way of Everywhere", "In Print" (in ink black)<br>• **CTA Button**: "Book a Session"<br>• **Social Links**: "Instagram", "Facebook"<br>• **Section Kickers**: "The Philosophy", "The Roots", "The Heritage", "The Accomplishments" |
+| `FONTS.script` | `'Great Vibes', cursive` | `28px` – `64px` | • **Wordmark**: "Vestige"<br>• **Navigation**: "Portfolio", "About"<br>• **Subtitle**: "Twenty years of [category]"<br>• **Founder Tag**: "Susana Andrea · Founder"<br>• **About Section Headings**: "The Philosophy", "The Roots", "The Heritage", "The Accomplishments" (in crimson with 3D shadow)<br>• **About Subtitles**: "From the Pit to the Portrait", "San Diego, by Way of Everywhere", "In Print" (in ink black)<br>• **CTA Button**: "Book a Session"<br>• **Action Links**: "View Portfolio", "Back to Portfolio"<br>• **Social Links**: "Instagram", "Facebook" |
 | `FONTS.display` | `'Playfair Display', serif` | `32px` – `92px` | • Editorial headings and category titles<br>• Large numerals and date markers |
-| `FONTS.cormorant` | `'Cormorant Garamond', serif` | `24px` – `32px` | • Philosophy pull-quote on About page<br>• Lightbox controls |
+| `FONTS.cormorant` | `'Cormorant Garamond', serif` | `24px` – `32px` | • Philosophy pull-quote on About page<br>• Lightbox controls and metadata |
 | `FONTS.body` | `'Crimson Text', serif` | `18px` – `20px` | • Editorial body narrative, bio paragraphs, and book colophon credits |
 
 ### Key Typographic Rules:
@@ -28,6 +28,7 @@ All typography in the codebase is defined in `src/theme/fonts.ts` and `src/style
 2. **Descender Clearance**: The cursive lowercase "g" in the "Vestige" wordmark requires minimum **`68px` top margin** on desktop and **`32px`** on mobile to ensure the descender loop never collides with subtitles below.
 3. **Universal Navigation**: "Portfolio" and "About" use `FONTS.script` on all pages (Home hero, subpage headers, and mobile menu overlay) to ensure instant visual consistency.
 4. **About Page Hierarchy**: Section titles ("The Philosophy", "The Roots", "The Heritage", "The Accomplishments") are rendered in prominent crimson script (`54px` desktop / `40px` mobile with 3D shadow), while descriptive section subtitles ("From the Pit to the Portrait", "San Diego, by Way of Everywhere", "In Print") sit beneath in a smaller, delicate ink black script (`38px` desktop / `30px` mobile).
+5. **CTA Companion Links**: "Back to Portfolio" (on Portfolio drill-in) and "View Portfolio" (on About) sit directly below "Book a Session" in `32px` script with crimson underline and 3D shadow.
 
 ---
 
@@ -46,14 +47,14 @@ Defined in `src/theme/colors.ts` and `src/styles/tokens.css`.
 | `muted` | `#6B5B4A` | Secondary text & subtitles (**WCAG AA compliant ≥4.5:1** on parchment) |
 | `stoneDivider` | `#9E8C79` | Archival dividers and borders (**≥3:1 contrast** on parchment) |
 
-### Category Signature Palette
-| Category | Token | Hex Code |
-| :--- | :--- | :--- |
-| Modern Pin-Up | `crimson` | `#C8142C` |
-| Boudoir Noir | `plum` | `#8B6F7C` |
-| Classic Glamour | `rose` | `#C47F7A` |
-| Kulture Kitsch | `kulture` | `#5D7F9A` |
-| Tiki & Tropical | `tiki` | `#317B73` |
+### Category Signature Palette & Sequence Covers
+| Category | Token | Hex Code | Category Cover Image (`id`) |
+| :--- | :--- | :--- | :--- |
+| Modern Pin-Up | `crimson` | `#C8142C` | *Jade Wall* (`id: 1`) |
+| Modern Kulture | `kulture` | `#5D7F9A` | `R2C0A2950` (`id: 25`) |
+| Modern Burlesque | `plum` | `#8B6F7C` | `r2C0A4286` (`id: 34`) |
+| Modern Tiki | `tiki` | `#317B73` | *Avalon Monet* (`id: 9`) |
+| Modern Glamour | `rose` | `#C47F7A` | `R2C0A1609` (`id: 19`) |
 
 ---
 
@@ -61,7 +62,7 @@ Defined in `src/theme/colors.ts` and `src/styles/tokens.css`.
 
 Defined in `src/theme/effects.ts`.
 
-To ensure crimson and cream typography pops off photographic textures without feeling like a flat label or heavy glow, multi-layered 3D shadows are used:
+Multi-layered 3D bevel and specular lighting ensures crimson and cream typography pops off photographic textures without feeling like flat labels or harsh glows:
 
 ```ts
 // 3D Bevel Extrusion + Top Specular Highlight + Ambient Depth
@@ -90,31 +91,28 @@ export const VESTIGE_TEXT_SHADOW = [
 ## 5. Component Specifications
 
 ### 5.1 Homepage Hero Carousel (`Home.tsx`)
-- **Duration**: `7000ms` (7s) auto-advance cycle.
+- **Duration**: `7000ms` (7.0s) auto-advance cycle with synchronized CSS progress bar.
 - **Keyboard Navigation**: Left and Right arrow keys cycle through slides.
-- **Top Scrim**: Smooth gradient (`rgba(10,10,11,0.45)` down to transparent) ensuring high visibility for nav links over light/dark photos.
+- **Focal Cropping System**:
+  - `HERO_IMAGE_POSITIONS` specifies tailored `objectPosition` values for desktop.
+  - `HERO_MOBILE_POSITIONS` provides responsive override crops for mobile screens.
 - **Slide Indicators (Progress Pills)**:
   - Active capsule: `28px × 10px`, `1.5px solid var(--color-crimson)`, `background: rgba(10,10,11,0.6)`.
   - Progress fill: Pure `#FFFFFF` animating via `@keyframes hero-progress` over 7000ms.
   - Inactive dots: `10px × 10px`, `1.5px solid var(--color-crimson)`.
-  - Shadows: `boxShadow: 0 1px 2px rgba(255,255,255,0.35), 0 2px 4px rgba(0,0,0,0.35)`.
 
 ### 5.2 Mobile Hamburger Menu (`MobileMenu.tsx`)
-- **Structure**: Pixel-perfect vector SVG (`viewBox="0 0 26 20"`, 3 lines at `y = 3, 10, 17` with `strokeWidth="2.5"` and `strokeLinecap="round"`).
-- **Shadow**: Uniform `VESTIGE_ICON_SHADOW` (`drop-shadow(0 -1px 1px rgba(255,255,255,0.4)) drop-shadow(0 1px 0 #7a0c1b) drop-shadow(0 3px 5px rgba(0,0,0,0.45))`).
-- **Overlay**: Full-screen modal backdrop (`rgba(26,26,26,0.98)`), Escape key to dismiss, locked body scrolling.
+- **Structure**: Pixel-perfect vector SVG (`viewBox="0 0 26 20"` with `strokeWidth="2.5"`).
+- **Overlay**: Full-screen modal backdrop (`rgba(26,26,26,0.98)`), Escape key dismiss.
+- **Scroll Management**: Clean lock on open, automatic release on close.
 
 ### 5.3 Portfolio Page (`Portfolio.tsx`)
-- **Desktop Grid**: 4-column balanced grid with category cover plate and adjacent preview photos.
-- **Mobile Split Cards (Option A)**: 2-column editorial card with cover photo on the left (`1.15fr`) and category color plate on the right (`1fr`).
-- **Drill-In Gallery**:
-  - Category header banner in signature brand color with large display title.
-  - "← back to portfolio" smooth return navigation.
-  - Photography grid with responsive columns and subtle hover zoom.
+- **Category Overview**: 4-column balanced grid on desktop, editorial 2-column split cards on mobile.
+- **Drill-In Gallery**: Category banner with display typography and smooth auto-scroll to top.
+- **Universal Reset**: Clicking "Portfolio" from header or menu resets drilled-in category view back to overview.
 - **Lightbox (`Lightbox.tsx`)**:
-  - Fullscreen dark overlay with image fade-in.
-  - Next / Prev buttons and Arrow key navigation cycling within current category.
-  - Touch-friendly 44px hit targets.
+  - Rendered directly into `document.body` via `createPortal` for 100% true viewport centering and isolation from ancestor CSS transforms.
+  - Left / Right keyboard arrow navigation and touch swipe support.
 
 ### 5.4 Call-to-Action Buttons (`Button.tsx`)
 - **Font**: `FONTS.script` (*Great Vibes*, `40px` desktop, `32px` mobile).
@@ -133,4 +131,4 @@ export const VESTIGE_TEXT_SHADOW = [
 ### 6.2 Category Drill-In Transitions (`Portfolio.tsx`)
 - **Transition Duration**: `200ms`.
 - **Easing Curve**: `cubic-bezier(0.4, 0, 0.2, 1)`.
-- **Behavior**: Overview tiles dissolve into category header and masonry gallery, with instant scroll to top and smooth entrance.
+- **Behavior**: Overview tiles dissolve into category header and masonry gallery with instant scroll to top.
