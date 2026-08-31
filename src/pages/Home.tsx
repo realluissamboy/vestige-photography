@@ -75,13 +75,12 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
 
   // Auto-advance timer
   useEffect(() => {
-    if (isPaused) return;
     const timer = window.setTimeout(() => {
       setActiveSlide((current) => (current + 1) % (HERO_SLIDES.length || 1));
       setSlideCycle((cycle) => cycle + 1);
     }, SLIDE_DURATION);
     return () => window.clearTimeout(timer);
-  }, [activeSlide, slideCycle, isPaused]);
+  }, [activeSlide, slideCycle]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -121,8 +120,6 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
         fontFamily: FONTS.body,
         color: "var(--color-ink)",
       }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
     >
       <h1 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
         Vestige Photography
@@ -247,11 +244,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               onClick={() => goToSlide(index)}
               style={{
                 position: "relative",
-                width: index === activeSlide ? "24px" : "9px",
-                height: "9px",
+                width: index === activeSlide ? "28px" : "10px",
+                height: "10px",
                 borderRadius: "999px",
-                border: "1px solid var(--color-crimson)",
-                background: "rgba(10,10,11,0.45)",
+                border: "1.5px solid var(--color-crimson)",
+                background: "rgba(10,10,11,0.6)",
                 boxShadow: "0 1px 2px rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.35)",
                 cursor: "pointer",
                 padding: 0,
@@ -266,12 +263,10 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "var(--color-cream)",
+                    background: "#FFFFFF",
                     transform: "scaleX(0)",
                     transformOrigin: "left center",
-                    animation: isPaused
-                      ? "none"
-                      : `hero-progress ${SLIDE_DURATION}ms linear forwards`,
+                    animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
                     willChange: "transform",
                   }}
                 />
