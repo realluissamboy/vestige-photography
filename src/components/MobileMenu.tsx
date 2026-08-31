@@ -45,15 +45,6 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
     setPage(targetPage);
   };
 
-  const barStyle: CSSProperties = {
-    display: "block",
-    width: "26px",
-    height: "2.5px",
-    background: "var(--color-crimson)",
-    borderRadius: "999px",
-    boxShadow: "0 1px 2px rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.35)",
-  };
-
   return (
     <>
       <button
@@ -66,11 +57,9 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
           width: "44px",
           height: "44px",
           justifySelf: "end",
-          display: "flex",
-          flexDirection: "column",
+          display: "inline-flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: "6px",
           background: "transparent",
           border: "none",
           padding: 0,
@@ -78,9 +67,24 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
           zIndex: 11,
         }}
       >
-        <span style={barStyle} />
-        <span style={barStyle} />
-        <span style={barStyle} />
+        <svg
+          width="26"
+          height="20"
+          viewBox="0 0 26 20"
+          fill="none"
+          stroke="var(--color-crimson)"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{
+            display: "block",
+            filter: "drop-shadow(0 1px 2px rgba(255, 255, 255, 0.35)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35))",
+          }}
+          aria-hidden="true"
+        >
+          <line x1="2" y1="3" x2="24" y2="3" />
+          <line x1="2" y1="10" x2="24" y2="10" />
+          <line x1="2" y1="17" x2="24" y2="17" />
+        </svg>
       </button>
 
       {open && typeof document !== "undefined" && createPortal(
