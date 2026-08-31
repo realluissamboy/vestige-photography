@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useIsMobile } from "../hooks/useIsMobile";
 import type { GalleryImage as GalleryImageData } from "../data/gallery";
 import { FONTS } from "../theme/fonts";
@@ -18,6 +19,10 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
 
   useEffect(() => {
     if (!image) return;
+
+    // Lock body scroll
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     // Store the currently focused element so we can restore it on close
     triggerRef.current = document.activeElement as HTMLElement;
@@ -69,6 +74,7 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      document.body.style.overflow = originalOverflow;
       document.removeEventListener("keydown", handleKeyDown);
       // Restore focus on close
       if (triggerRef.current && typeof triggerRef.current.focus === "function") {
@@ -77,9 +83,9 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
     };
   }, [image, onClose, onPrev, onNext]);
 
-  if (!image) return null;
+  if (!image || typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div
       ref={dialogRef}
       role="dialog"
@@ -88,15 +94,20 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
       onClick={() => onClose()}
       style={{
         position: "fixed",
-        inset: 0,
-        background: "rgba(10, 10, 11, 0.94)",
-        zIndex: 1000,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: "100vw",
+        height: "100vh",
+        background: "rgba(10, 10, 11, 0.95)",
+        zIndex: 9999,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: isMobile ? "16px" : "48px",
+        padding: isMobile ? "20px" : "48px",
         cursor: "zoom-out",
-        animation: "vestigeLightboxIn 0.3s ease",
+        animation: "vestige-fade 0.2s ease",
       }}
     >
       <img
@@ -104,12 +115,15 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
         alt={image.label}
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: "100%",
-          maxHeight: "100%",
+          maxWidth: isMobile ? "calc(100vw - 32px)" : "calc(100vw - 120px)",
+          maxHeight: isMobile ? "calc(100vh - 48px)" : "calc(100vh - 96px)",
+          width: "auto",
+          height: "auto",
           objectFit: "contain",
           display: "block",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+          boxShadow: "0 24px 70px rgba(0,0,0,0.75)",
           cursor: "default",
+          borderRadius: "2px",
         }}
       />
 
@@ -124,12 +138,12 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
           }}
           style={{
             position: "absolute",
-            left: isMobile ? "8px" : "24px",
+            left: isMobile ? "8px" : "28px",
             top: "50%",
             transform: "translateY(-50%)",
-            width: "44px",
-            height: "44px",
-            background: "rgba(26,26,26,0.6)",
+            width: "48px",
+            height: "48px",
+            background: "rgba(26,26,26,0.7)",
             border: "1px solid rgba(245,240,232,0.3)",
             borderRadius: "50%",
             color: "var(--color-cream)",
@@ -137,7 +151,7 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            fontSize: "20px",
+            fontSize: "22px",
             transition: "background 0.2s ease, opacity 0.2s ease",
           }}
         >
@@ -156,12 +170,12 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
           }}
           style={{
             position: "absolute",
-            right: isMobile ? "8px" : "24px",
+            right: isMobile ? "8px" : "28px",
             top: "50%",
             transform: "translateY(-50%)",
-            width: "44px",
-            height: "44px",
-            background: "rgba(26,26,26,0.6)",
+            width: "48px",
+            height: "48px",
+            background: "rgba(26,26,26,0.7)",
             border: "1px solid rgba(245,240,232,0.3)",
             borderRadius: "50%",
             color: "var(--color-cream)",
@@ -169,7 +183,7 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            fontSize: "20px",
+            fontSize: "22px",
             transition: "background 0.2s ease, opacity 0.2s ease",
           }}
         >
@@ -187,18 +201,19 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
         }}
         style={{
           position: "absolute",
-          top: isMobile ? "16px" : "32px",
-          right: isMobile ? "16px" : "32px",
-          width: "44px",
-          height: "44px",
-          background: "transparent",
-          border: "none",
+          top: isMobile ? "16px" : "28px",
+          right: isMobile ? "16px" : "28px",
+          width: "48px",
+          height: "48px",
+          background: "rgba(26,26,26,0.5)",
+          borderRadius: "50%",
+          border: "1px solid rgba(245,240,232,0.2)",
           color: "var(--color-cream)",
           fontFamily: FONTS.cormorant,
-          fontSize: "32px",
+          fontSize: "30px",
           lineHeight: 1,
           cursor: "pointer",
-          opacity: 0.8,
+          opacity: 0.9,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -206,7 +221,8 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
       >
         ×
       </button>
-    </div>
+    </div>,
+    document.body
   );
 }
 
