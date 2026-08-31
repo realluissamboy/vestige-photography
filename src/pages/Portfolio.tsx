@@ -94,7 +94,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
               /* Mobile: just the colored tile, no photos (cleaner) */
               return <div key={cat} style={{ marginBottom: "12px" }}>{tileBlock}</div>;
             }
-            const photos = catPhotos.slice(0, 2).map((img) => (
+            const photos = catPhotos.slice(0, 3).map((img) => (
               <div
                 key={img.id}
                 onClick={() => setPortfolioCategory(cat)}
@@ -116,13 +116,13 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
               </div>
             ));
             const cells: React.ReactNode[] = reverse ? [...photos, tileBlock] : [tileBlock, ...photos];
-            while (cells.length < 3) cells.push(<div key={`pad-${cells.length}`} style={{ background: "transparent", aspectRatio: "4/3" }} />);
+            while (cells.length < 4) cells.push(<div key={`pad-${cells.length}`} style={{ background: "transparent", aspectRatio: "4/3" }} />);
             return (
               <div
                 key={cat}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr 1fr",
+                  gridTemplateColumns: "repeat(4, 1fr)",
                   gap: "12px",
                   marginBottom: "12px",
                 }}
