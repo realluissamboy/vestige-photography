@@ -13,9 +13,17 @@ export interface PageHeaderProps {
   isMobile: boolean;
   navStyleDark?: (label: string, isActive: boolean) => CSSProperties;
   setNavHover?: (p: string | null) => void;
+  onResetPortfolio?: () => void;
 }
 
-export default function PageHeader({ page, subtitle, visible, setPage, isMobile }: PageHeaderProps) {
+export default function PageHeader({ page, subtitle, visible, setPage, isMobile, onResetPortfolio }: PageHeaderProps) {
+  const handleNavClick = (targetPage: PageKey) => {
+    if (targetPage === "portfolio" && onResetPortfolio) {
+      onResetPortfolio();
+    }
+    setPage(targetPage);
+  };
+
   const navBtn = (label: string, targetPage: PageKey, isActive: boolean): React.ReactElement => (
     <button
       style={{
@@ -31,7 +39,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile 
         textShadow: VESTIGE_TEXT_SHADOW,
         lineHeight: 1,
       }}
-      onClick={() => setPage(targetPage)}
+      onClick={() => handleNavClick(targetPage)}
     >
       {label}
     </button>
@@ -66,7 +74,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile 
           >
             Vestige
           </span>
-          <MobileMenu variant="solid" setPage={setPage} />
+          <MobileMenu variant="solid" setPage={setPage} onResetPortfolio={onResetPortfolio} />
         </div>
       ) : (
         <nav

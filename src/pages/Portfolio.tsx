@@ -101,6 +101,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
         page="portfolio"
         visible={galleryVisible}
         setPage={setPage}
+        onResetPortfolio={handleBackToPortfolio}
         navStyleDark={navStyleDark}
         setNavHover={setNavHover}
         isMobile={isMobile}

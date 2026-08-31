@@ -24,7 +24,12 @@ export default function App() {
   }, []);
 
   const handleSetPage = useCallback((newPage: PageKey) => {
-    if (newPage === activePage) return;
+    if (newPage === activePage) {
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      return;
+    }
     setIsTransitioning(true);
     setActivePage(newPage);
 

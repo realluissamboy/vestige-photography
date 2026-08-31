@@ -11,9 +11,10 @@ export interface MobileMenuProps {
   setPage: (p: PageKey) => void;
   menuId?: string;
   onOpenChange?: (open: boolean) => void;
+  onResetPortfolio?: () => void;
 }
 
-export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", onOpenChange }: MobileMenuProps) {
+export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", onOpenChange, onResetPortfolio }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -42,6 +43,9 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
 
   const handleNav = (targetPage: PageKey) => {
     handleOpenChange(false);
+    if (targetPage === "portfolio" && onResetPortfolio) {
+      onResetPortfolio();
+    }
     setPage(targetPage);
   };
 
