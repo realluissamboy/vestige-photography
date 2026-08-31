@@ -48,10 +48,10 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
   const barStyle: CSSProperties = {
     display: "block",
     width: "26px",
-    height: "2px",
+    height: "2.5px",
     background: "var(--color-crimson)",
-    borderRadius: "1px",
-    filter: variant === "overlay" ? VESTIGE_ICON_SHADOW : undefined,
+    borderRadius: "999px",
+    boxShadow: "0 1px 2px rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.35)",
   };
 
   return (
