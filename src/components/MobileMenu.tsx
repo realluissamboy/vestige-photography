@@ -77,7 +77,7 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
           strokeLinecap="round"
           style={{
             display: "block",
-            filter: "drop-shadow(0 1px 2px rgba(255, 255, 255, 0.35)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35))",
+            filter: VESTIGE_ICON_SHADOW,
           }}
           aria-hidden="true"
         >
@@ -141,7 +141,7 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
                 fontFamily: FONTS.script,
                 fontSize: link.isWordmark ? "64px" : "48px",
                 color: "var(--color-crimson)",
-                textShadow: variant === "overlay" ? VESTIGE_TEXT_SHADOW : undefined,
+                textShadow: VESTIGE_TEXT_SHADOW,
                 background: "transparent",
                 border: "none",
                 padding: "8px 24px",
@@ -174,6 +174,7 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
                   fontFamily: FONTS.script,
                   fontSize: "32px",
                   color: "var(--color-cream)",
+                  textShadow: VESTIGE_TEXT_SHADOW,
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
