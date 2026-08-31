@@ -19,7 +19,7 @@ export interface GalleryImage {
 }
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: 18, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--Outlaw2.webp", label: "Outlaw2", focus: "60% 5%" },
+  { id: 18, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--Outlaw2.webp", label: "Outlaw2", focus: "20% 5%" },
   { id: 1, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/pinup-green-wall.webp", label: "Jade Wall", focus: "50% 20%" },
   { id: 21, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--R2C0A8596.webp", label: "R2C0A8596", focus: "50% 50%" },
   { id: 5, ratio: "landscape", cat: "Classic Cars", src: "/portfolio/cars-cervena.webp", label: "Cervena Fox", focus: "50% 50%" },
@@ -28,7 +28,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 27, ratio: "landscape", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A7114.webp", label: "R2C0A7114", focus: "50% 50%" },
   { id: 34, ratio: "portrait", cat: "Burlesque", src: "/portfolio/modern-burlesque--r2C0A4286.webp", label: "r2C0A4286", focus: "50% 28%" },
   { id: 28, ratio: "landscape", cat: "Burlesque", src: "/portfolio/modern-burlesque--2C0A4365.webp", label: "2C0A4365", focus: "50% 50%" },
-  { id: 36, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A0890.webp", label: "2C0A0890", focus: "50% 72%" },
+  { id: 36, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A0890.webp", label: "2C0A0890", focus: "68% 72%" },
   { id: 10, ratio: "landscape", cat: "Tiki-Rockabilly", src: "/portfolio/tiki-patio.webp", label: "Tiki Patio", focus: "50% 30%" },
   { id: 9, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/tiki-avalon.webp", label: "Avalon Monet", focus: "50% 58%" },
   { id: 37, ratio: "portrait", cat: "Tiki-Rockabilly", src: "/portfolio/modern-tiki--2C0A9684.webp", label: "2C0A9684", focus: "50% 50%" },
