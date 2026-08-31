@@ -32,22 +32,44 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
     usePortfolioState("portfolio");
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
 
+  const [displayedCategory, setDisplayedCategory] = React.useState<Category | null>(portfolioCategory);
+  const [isCategoryTransitioning, setIsCategoryTransitioning] = React.useState<boolean>(false);
+
   const handleSelectCategory = (cat: Category) => {
-    setPortfolioCategory(cat);
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    if (cat === displayedCategory) return;
+    setIsCategoryTransitioning(true);
+    setTimeout(() => {
+      setPortfolioCategory(cat);
+      setDisplayedCategory(cat);
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          setIsCategoryTransitioning(false);
+        }, 30);
+      });
+    }, 200);
   };
 
   const handleBackToPortfolio = () => {
-    setPortfolioCategory(null);
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    setIsCategoryTransitioning(true);
+    setTimeout(() => {
+      setPortfolioCategory(null);
+      setDisplayedCategory(null);
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          setIsCategoryTransitioning(false);
+        }, 30);
+      });
+    }, 200);
   };
 
-  const currentCategoryImages = portfolioCategory
-    ? GALLERY_IMAGES.filter((img) => img.cat === portfolioCategory)
+  const currentCategoryImages = displayedCategory
+    ? GALLERY_IMAGES.filter((img) => img.cat === displayedCategory)
     : [];
 
   const currentLightboxIndex = lightboxImage
@@ -89,9 +111,14 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
         Portfolio
       </h1>
 
-      <div style={{ opacity: galleryVisible ? 1 : 0, transition: "opacity 0.8s ease" }}>
-
-      {portfolioCategory === null ? (
+      <div
+        style={{
+          opacity: isCategoryTransitioning ? 0 : 1,
+          transform: isCategoryTransitioning ? "translateY(6px) scale(0.996)" : "translateY(0) scale(1)",
+          transition: "opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
+      >
+      {displayedCategory === null ? (
         /* Book-style colored section tiles */
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: isMobile ? "16px 20px 60px" : "32px 40px 80px" }}>
           {PORTFOLIO_CATEGORIES.map((cat, rowIdx) => {
@@ -299,7 +326,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
         <>
           <section
             style={{
-              background: CATEGORY_COLORS[portfolioCategory] ?? "",
+              background: CATEGORY_COLORS[displayedCategory] ?? "",
               color: COLORS.cream,
               padding: isMobile ? "48px 20px" : "72px 40px",
               textAlign: "center",
@@ -309,7 +336,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
               a study in
             </div>
             <h2 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
-              {CATEGORY_TITLES[portfolioCategory] ?? ""}
+              {CATEGORY_TITLES[displayedCategory] ?? ""}
             </h2>
             <button
               onClick={handleBackToPortfolio}
