@@ -238,6 +238,10 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         style={{
           textAlign: "center",
           padding: "0 24px 120px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "14px",
           opacity: aboutVisible ? 1 : 0,
           transition: "opacity 1s ease 0.7s",
         }}
@@ -245,6 +249,34 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
           <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
         </div>
+
+        <button
+          type="button"
+          onClick={() => setPage("portfolio")}
+          style={{
+            marginTop: "4px",
+            fontFamily: FONTS.script,
+            fontSize: isMobile ? "26px" : "32px",
+            color: "var(--color-crimson)",
+            background: "transparent",
+            border: "none",
+            borderBottom: "1.5px solid var(--color-crimson)",
+            paddingBottom: "2px",
+            cursor: "pointer",
+            minHeight: "44px",
+            lineHeight: 1,
+            textShadow: VESTIGE_TEXT_SHADOW,
+            transition: "opacity 0.2s ease, transform 0.2s ease",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-1px)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "translateY(0)";
+          }}
+        >
+          View Portfolio
+        </button>
       </section>
 
       <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
