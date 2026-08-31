@@ -103,15 +103,15 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
           <p
             style={{
               fontFamily: FONTS.script,
-              fontSize: isMobile ? "30px" : "38px",
+              fontSize: isMobile ? "32px" : "42px",
               color: "var(--color-crimson)",
               textAlign: "center",
-              marginTop: "8px",
+              marginTop: "12px",
               marginBottom: 0,
               lineHeight: 1,
             }}
           >
-            Susana Andrea · Founder
+            Susana Andrea, founder
           </p>
         </div>
 
