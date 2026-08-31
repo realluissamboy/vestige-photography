@@ -18,7 +18,7 @@ All typography in the codebase is defined in `src/theme/fonts.ts` and `src/style
 
 | Token | Font Family | Typical Size | Usage |
 | :--- | :--- | :--- | :--- |
-| `FONTS.script` | `'Great Vibes', cursive` | `28px` – `64px` | • **Wordmark**: "Vestige"<br>• **Navigation**: "Portfolio", "About"<br>• **Subtitle**: "Twenty years of [category]"<br>• **Founder Tag**: "Susana Andrea, founder"<br>• **CTA Button**: "Book a Session"<br>• **Social Links**: "Instagram", "Facebook"<br>• **Section Kickers**: "The Philosophy", "The Roots" |
+| `FONTS.script` | `'Great Vibes', cursive` | `28px` – `64px` | • **Wordmark**: "Vestige"<br>• **Navigation**: "Portfolio", "About"<br>• **Subtitle**: "Twenty years of [category]"<br>• **Founder Tag**: "Susana Andrea, founder"<br>• **About Section Headings**: "From the Pit to the Portrait", "San Diego, by Way of Everywhere", "In Print" (in ink black)<br>• **CTA Button**: "Book a Session"<br>• **Social Links**: "Instagram", "Facebook"<br>• **Section Kickers**: "The Philosophy", "The Roots", "The Heritage", "The Accomplishments" |
 | `FONTS.display` | `'Playfair Display', serif` | `32px` – `92px` | • Editorial headings and category titles<br>• Large numerals and date markers |
 | `FONTS.cormorant` | `'Cormorant Garamond', serif` | `24px` – `32px` | • Philosophy pull-quote on About page<br>• Lightbox controls |
 | `FONTS.body` | `'Crimson Text', serif` | `18px` – `20px` | • Editorial body narrative, bio paragraphs, and book colophon credits |
