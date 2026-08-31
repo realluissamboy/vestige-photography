@@ -62,7 +62,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "40px",
+            gap: "56px",
             padding: "36px 24px 0",
             flexWrap: "wrap",
             opacity: visible ? 1 : 0,
@@ -73,7 +73,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
           <span
             style={{
               fontFamily: FONTS.script,
-              fontSize: "48px",
+              fontSize: "54px",
               color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,

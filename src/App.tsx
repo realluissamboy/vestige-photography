@@ -31,16 +31,16 @@ export default function App() {
   const navStyleDark = (link: string, isActive: boolean): CSSProperties => ({
     fontFamily: FONTS.display,
     fontStyle: "italic",
-    fontWeight: 600,
-    fontSize: "13px",
-    letterSpacing: "3px",
+    fontWeight: 700,
+    fontSize: "18px",
+    letterSpacing: "4px",
     textTransform: "uppercase",
     color: isActive ? COLORS.crimson : COLORS.ink,
     cursor: "pointer",
     border: "none",
     background: "none",
     padding: "4px 0",
-    opacity: isActive ? 1 : navHover === link ? 1 : 0.7,
+    opacity: isActive ? 1 : navHover === link ? 1 : 0.75,
     transition: "opacity 0.3s ease, color 0.3s ease",
   });
 

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
 import { VESTIGE_TEXT_SHADOW, VESTIGE_WORDMARK_SHADOW } from "../theme/effects";
 import { PAGE_LINKS, type PageKey } from "../data/navigation";
 import MobileMenu from "../components/MobileMenu";
-import { CATEGORY_TITLES, GALLERY_IMAGES, PORTFOLIO_CATEGORIES } from "../data/gallery";
+import { CATEGORY_TITLES, GALLERY_IMAGES, PORTFOLIO_CATEGORIES, type GalleryImage } from "../data/gallery";
 
-const HERO_SLIDES = PORTFOLIO_CATEGORIES
+const HERO_SLIDES: GalleryImage[] = PORTFOLIO_CATEGORIES
   .map((category) => GALLERY_IMAGES.find((image) => image.cat === category))
-  .filter((image): image is NonNullable<typeof image> => image !== undefined);
+  .filter((image): image is GalleryImage => image !== undefined);
 
 const HIGH_RES_HERO_SOURCES: Record<number, string> = {
   34: "/hero-slides/modern-burlesque.webp",
@@ -16,7 +16,13 @@ const HIGH_RES_HERO_SOURCES: Record<number, string> = {
 };
 
 const HERO_IMAGE_POSITIONS: Record<number, string> = {
+  1: "50% 20%",
+  10: "50% 30%",
+  12: "65% 40%",
   18: "35% 5%",
+  25: "50% 38%",
+  34: "50% 28%",
+  36: "50% 72%",
 };
 
 const SLIDE_DURATION = 8300;
@@ -49,40 +55,79 @@ export interface HomeProps {
 export default function Home({ heroVisible, isMobile, setPage, navHover, setNavHover }: HomeProps) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [slideCycle, setSlideCycle] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const compactHero = useCompactHero() || isMobile;
-  const activeHero = HERO_SLIDES[activeSlide] ?? HERO_SLIDES[0];
+  const activeHero: GalleryImage = HERO_SLIDES[activeSlide] ?? HERO_SLIDES[0] ?? GALLERY_IMAGES[0]!;
 
+  const goToSlide = useCallback((index: number) => {
+    setActiveSlide(index);
+    setSlideCycle((cycle) => cycle + 1);
+  }, []);
+
+  const nextSlide = useCallback(() => {
+    goToSlide((activeSlide + 1) % (HERO_SLIDES.length || 1));
+  }, [activeSlide, goToSlide]);
+
+  const prevSlide = useCallback(() => {
+    const len = HERO_SLIDES.length || 1;
+    goToSlide((activeSlide - 1 + len) % len);
+  }, [activeSlide, goToSlide]);
+
+  // Auto-advance timer
   useEffect(() => {
+    if (isPaused) return;
     const timer = window.setTimeout(() => {
-      setActiveSlide((current) => (current + 1) % HERO_SLIDES.length);
+      setActiveSlide((current) => (current + 1) % (HERO_SLIDES.length || 1));
       setSlideCycle((cycle) => cycle + 1);
     }, SLIDE_DURATION);
     return () => window.clearTimeout(timer);
-  }, [activeSlide, slideCycle]);
+  }, [activeSlide, slideCycle, isPaused]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        nextSlide();
+      } else if (e.key === "ArrowLeft") {
+        prevSlide();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [nextSlide, prevSlide]);
 
   const navLinkStyle = (link: string): React.CSSProperties => ({
-    fontFamily: FONTS.display,
-    fontStyle: "italic",
-    fontWeight: 600,
-    fontSize: "13px",
-    letterSpacing: "3px",
-    textTransform: "uppercase",
+    fontFamily: FONTS.script,
+    fontSize: compactHero ? "28px" : "52px",
     color: "var(--color-crimson)",
     cursor: "pointer",
     border: "none",
     background: "none",
-    padding: "8px 0",
-    opacity: navHover === link ? 1 : 0.85,
+    padding: "4px 0",
+    opacity: navHover === link ? 1 : 0.9,
     transition: "opacity 0.3s ease",
     textShadow: VESTIGE_TEXT_SHADOW,
+    lineHeight: 1,
   });
 
+  const categoryTitle =
+    CATEGORY_TITLES[activeHero.cat as keyof typeof CATEGORY_TITLES] ?? activeHero.cat;
+
   return (
-    <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
-      <style>{`@keyframes hero-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }`}</style>
+    <main
+      style={{
+        background: "var(--color-parchment)",
+        minHeight: "100vh",
+        fontFamily: FONTS.body,
+        color: "var(--color-ink)",
+      }}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <h1 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
         Vestige Photography
       </h1>
+
       {/* Full-bleed hero with floating nav + script wordmark */}
       <div
         style={{
@@ -98,7 +143,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           <img
             key={image.id}
             src={HIGH_RES_HERO_SOURCES[image.id] ?? image.src}
-            alt={index === activeSlide ? `${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES]} photography` : ""}
+            alt={index === activeSlide ? `${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat} photography` : ""}
             aria-hidden={index !== activeSlide}
             style={{
               position: "absolute",
@@ -179,6 +224,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           </nav>
         )}
 
+        {/* Slide Indicators / Navigation Dots */}
         <div
           aria-label="Featured photography slides"
           style={{
@@ -196,19 +242,16 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             <button
               key={image.id}
               type="button"
-              aria-label={`Show ${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES]}`}
+              aria-label={`Show ${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat}`}
               aria-current={index === activeSlide}
-              onClick={() => {
-                setActiveSlide(index);
-                setSlideCycle((cycle) => cycle + 1);
-              }}
+              onClick={() => goToSlide(index)}
               style={{
                 position: "relative",
                 width: index === activeSlide ? "24px" : "9px",
                 height: "9px",
                 borderRadius: "999px",
-                border: "1px solid rgba(245,240,232,0.9)",
-                background: "rgba(10,10,11,0.38)",
+                border: "1px solid var(--color-crimson)",
+                background: "rgba(10,10,11,0.45)",
                 cursor: "pointer",
                 padding: 0,
                 overflow: "hidden",
@@ -225,7 +268,9 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                     background: "var(--color-cream)",
                     transform: "scaleX(0)",
                     transformOrigin: "left center",
-                    animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
+                    animation: isPaused
+                      ? "none"
+                      : `hero-progress ${SLIDE_DURATION}ms linear forwards`,
                     willChange: "transform",
                   }}
                 />
@@ -240,60 +285,66 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           style={{
             position: "absolute",
             top: compactHero ? "24px" : "auto",
-            bottom: compactHero ? "auto" : "58px",
+            bottom: compactHero ? "auto" : "56px",
             left: compactHero ? "16px" : "auto",
             right: compactHero ? "auto" : "4%",
             display: "flex",
             flexDirection: "column",
             alignItems: compactHero ? "flex-start" : "flex-end",
             color: "var(--color-crimson)",
-            maxWidth: compactHero ? "calc(100vw - 32px)" : "min(92vw, 940px)",
+            maxWidth: compactHero ? "calc(100vw - 32px)" : "min(92vw, 960px)",
             pointerEvents: "none",
             zIndex: 6,
           }}
         >
+          {/* Wordmark with full line-height to give the cursive descenders breathing room */}
           <div
             style={{
               fontFamily: FONTS.script,
-              fontSize: compactHero ? "clamp(82px, 14vw, 110px)" : "320px",
-              lineHeight: 0.8,
+              fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(160px, 17vw, 250px)",
+              lineHeight: 1,
               textShadow: VESTIGE_WORDMARK_SHADOW,
+              userSelect: "none",
             }}
           >
             Vestige
           </div>
+
+          {/* Subtitle with ample clearance below the 'g' descender loop, in matching fluid lowercase script */}
           <div
+            key={`${activeHero.cat}-${slideCycle}`}
             style={{
               display: "flex",
               flexWrap: "wrap",
               justifyContent: compactHero ? "flex-start" : "flex-end",
               alignItems: "baseline",
-              columnGap: compactHero ? "10px" : "18px",
+              columnGap: compactHero ? "8px" : "12px",
               rowGap: "2px",
-              marginTop: compactHero ? "6px" : "10px",
+              marginTop: compactHero ? "32px" : "68px",
               textAlign: compactHero ? "left" : "right",
               textShadow: VESTIGE_TEXT_SHADOW,
+              animation: "category-text-fade 0.45s ease forwards",
             }}
           >
             <span
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "34px" : "62px",
+                fontSize: compactHero ? "28px" : "52px",
                 lineHeight: 1,
               }}
             >
-              twenty years of
+              Twenty years of
             </span>
             <span
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "34px" : "62px",
+                fontSize: compactHero ? "28px" : "52px",
                 lineHeight: 1,
               }}
             >
-              {CATEGORY_TITLES[activeHero.cat as keyof typeof CATEGORY_TITLES].toLowerCase()}
+              {categoryTitle.toLowerCase()}
             </span>
           </div>
         </div>

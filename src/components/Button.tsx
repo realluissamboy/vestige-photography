@@ -33,10 +33,20 @@ export default function Button({ href, target, rel, isMobile, children }: Button
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        transition: "transform 0.3s ease",
+        boxShadow: "0 6px 20px rgba(200, 20, 44, 0.25)",
+        transition: "transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-2px)";
+        e.currentTarget.style.boxShadow = "0 10px 28px rgba(200, 20, 44, 0.38)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "0 6px 20px rgba(200, 20, 44, 0.25)";
       }}
     >
       {children}
     </a>
   );
 }
+

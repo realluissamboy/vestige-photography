@@ -6,7 +6,8 @@ export const COLORS = {
   obsidian: "#1A1A1A",
   warmWhite: "#FAF8F4",
   stone: "#C8BFA9",
-  muted: "#8A8070",
+  stoneDivider: "#9E8C79",
+  muted: "#6B5B4A",
   crimson: "#C8142C",
   rose: "#C47F7A",
   plum: "#8B6F7C",
@@ -15,3 +16,4 @@ export const COLORS = {
 } as const;
 
 export type ColorToken = keyof typeof COLORS;
+

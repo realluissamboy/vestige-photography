@@ -25,8 +25,18 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleOpenChange(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
       document.body.style.overflow = previous;
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
@@ -161,7 +171,7 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
                 rel="noopener noreferrer"
                 aria-label={s.label}
                 style={{
-                  fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                  fontFamily: FONTS.cormorant,
                   fontSize: "13px",
                   letterSpacing: "3px",
                   textTransform: "uppercase",

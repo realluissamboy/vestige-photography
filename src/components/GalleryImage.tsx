@@ -2,6 +2,7 @@ import { useState } from "react";
 import { STAGGER_OFFSETS, RATIOS } from "../data/gallery";
 import type { GalleryImage as GalleryImageData } from "../data/gallery";
 import { COLORS } from "../theme/colors";
+import { FONTS } from "../theme/fonts";
 
 export interface GalleryImageProps {
   img: GalleryImageData;
@@ -80,7 +81,7 @@ export default function GalleryImage({
             <span
               style={{
                 display: "inline-block",
-                fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
+                fontFamily: FONTS.cormorant,
                 fontSize: "12px",
                 letterSpacing: "4px",
                 textTransform: "uppercase",
