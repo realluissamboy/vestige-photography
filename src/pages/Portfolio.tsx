@@ -345,15 +345,15 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
                 marginTop: "24px",
                 fontFamily: FONTS.script,
                 fontSize: isMobile ? "30px" : "40px",
-                color: "var(--color-crimson)",
+                color: "#FFFFFF",
                 background: "transparent",
                 border: "none",
-                borderBottom: "2px solid var(--color-crimson)",
+                borderBottom: "2px solid rgba(255, 255, 255, 0.8)",
                 paddingBottom: "4px",
                 cursor: "pointer",
                 minHeight: "44px",
                 lineHeight: 1,
-                textShadow: VESTIGE_TEXT_SHADOW,
+                textShadow: "0 1px 3px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.25)",
                 transition: "opacity 0.2s ease, transform 0.2s ease",
               }}
               onMouseEnter={(e) => {
