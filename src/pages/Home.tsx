@@ -252,10 +252,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                 borderRadius: "999px",
                 border: "1px solid var(--color-crimson)",
                 background: "rgba(10,10,11,0.45)",
+                boxShadow: "0 1px 2px rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.35)",
                 cursor: "pointer",
                 padding: 0,
                 overflow: "hidden",
-                transition: "width 0.25s ease, background 0.25s ease",
+                transition: "width 0.25s ease, background 0.25s ease, box-shadow 0.25s ease",
               }}
             >
               {index === activeSlide && (
