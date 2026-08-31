@@ -27,6 +27,7 @@ All typography in the codebase is defined in `src/theme/fonts.ts` and `src/style
 1. **Script Subtitle Case**: The hero subtitle is formatted as `"Twenty years of "` followed by the lowercase category title (`"modern pin-up"`, `"boudoir noir"`), preserving fluid cursive flow.
 2. **Descender Clearance**: The cursive lowercase "g" in the "Vestige" wordmark requires minimum **`68px` top margin** on desktop and **`32px`** on mobile to ensure the descender loop never collides with subtitles below.
 3. **Universal Navigation**: "Portfolio" and "About" use `FONTS.script` on all pages (Home hero, subpage headers, and mobile menu overlay) to ensure instant visual consistency.
+4. **About Page Hierarchy**: Section titles ("The Philosophy", "The Roots", "The Heritage", "The Accomplishments") are rendered in prominent crimson script (`54px` desktop / `40px` mobile with 3D shadow), while descriptive section subtitles ("From the Pit to the Portrait", "San Diego, by Way of Everywhere", "In Print") sit beneath in a smaller, delicate ink black script (`38px` desktop / `30px` mobile).
 
 ---
 

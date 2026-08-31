@@ -18,7 +18,7 @@ export interface AboutProps {
 export default function About({ aboutVisible, setPage, isMobile, navStyleDark, setNavHover }: AboutProps) {
   const sectionLabel: CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isMobile ? "30px" : "38px",
+    fontSize: isMobile ? "40px" : "54px",
     color: "var(--color-crimson)",
     marginBottom: "2px",
     lineHeight: 1,
@@ -26,7 +26,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
   };
   const sectionHeading: CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isMobile ? "40px" : "54px",
+    fontSize: isMobile ? "30px" : "38px",
     fontWeight: 400,
     fontStyle: "normal",
     color: "var(--color-ink)",
