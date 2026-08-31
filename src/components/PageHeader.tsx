@@ -9,17 +9,26 @@ export interface PageHeaderProps {
   subtitle?: string;
   visible: boolean;
   setPage: (p: PageKey) => void;
-  navStyleDark: (label: string, isActive: boolean) => CSSProperties;
-  setNavHover: (p: string | null) => void;
   isMobile: boolean;
+  navStyleDark?: (label: string, isActive: boolean) => CSSProperties;
+  setNavHover?: (p: string | null) => void;
 }
 
-export default function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHover, isMobile }: PageHeaderProps) {
+export default function PageHeader({ page, subtitle, visible, setPage, isMobile }: PageHeaderProps) {
   const navBtn = (label: string, targetPage: PageKey, isActive: boolean): React.ReactElement => (
     <button
-      style={navStyleDark(label, isActive)}
-      onMouseEnter={() => setNavHover(label)}
-      onMouseLeave={() => setNavHover(null)}
+      style={{
+        fontFamily: FONTS.script,
+        fontSize: isMobile ? "32px" : "44px",
+        color: isActive ? "var(--color-crimson)" : "var(--color-ink)",
+        cursor: "pointer",
+        border: "none",
+        background: "none",
+        padding: "0 8px",
+        opacity: isActive ? 1 : 0.75,
+        transition: "opacity 0.25s ease, color 0.25s ease",
+        lineHeight: 1,
+      }}
       onClick={() => setPage(targetPage)}
     >
       {label}
@@ -44,7 +53,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
           <span
             style={{
               fontFamily: FONTS.script,
-              fontSize: "36px",
+              fontSize: "42px",
               color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,

@@ -134,18 +134,14 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
               type="button"
               onClick={() => handleNav(link.page)}
               style={{
-                fontFamily: link.isWordmark ? FONTS.script : FONTS.display,
-                fontStyle: link.isWordmark ? "normal" : "italic",
-                fontWeight: link.isWordmark ? 400 : 700,
-                fontSize: link.isWordmark ? "56px" : "22px",
-                letterSpacing: link.isWordmark ? "0" : "3px",
-                textTransform: link.isWordmark ? "none" : "uppercase",
+                fontFamily: FONTS.script,
+                fontSize: link.isWordmark ? "64px" : "48px",
                 color: "var(--color-crimson)",
                 textShadow: variant === "overlay" ? VESTIGE_TEXT_SHADOW : undefined,
                 background: "transparent",
                 border: "none",
-                padding: "12px 24px",
-                minHeight: "44px",
+                padding: "8px 24px",
+                minHeight: "48px",
                 cursor: "pointer",
                 lineHeight: 1,
               }}
