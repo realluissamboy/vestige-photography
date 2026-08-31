@@ -23,6 +23,7 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
   25: "50% 38%",
   34: "50% 28%",
   36: "50% 72%",
+  50: "50% 65%",
 };
 
 const SLIDE_DURATION = 8300;
