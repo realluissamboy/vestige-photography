@@ -222,7 +222,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             zIndex: 6,
           }}
         >
-          {/* Wordmark in #CD2644 with crisp, solid unblurred white dimensional shadow */}
+          {/* Wordmark in #CD2644 with very light, subtle white shadow for gentle separation */}
           <div
             style={{
               fontFamily: FONTS.script,
@@ -230,7 +230,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               lineHeight: 1,
               color: "#CD2644",
               textShadow:
-                "1.5px 1.5px 0px #FFFFFF, 3px 3px 0px rgba(255, 255, 255, 0.85), 4.5px 4.5px 0px rgba(0, 0, 0, 0.35)",
+                "1px 1px 2px rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2)",
               userSelect: "none",
             }}
           >
