@@ -6,11 +6,11 @@ import { SOCIALS } from "../data/navigation";
 
 export interface PageFooterProps {
   visible: boolean;
-  navStyleDark: (label: string, isActive: boolean) => CSSProperties;
   isMobile: boolean;
+  navStyleDark?: (label: string, isActive: boolean) => CSSProperties;
 }
 
-export default function PageFooter({ visible, navStyleDark, isMobile }: PageFooterProps) {
+export default function PageFooter({ visible, isMobile }: PageFooterProps) {
   return (
     <footer
       style={{
@@ -25,9 +25,10 @@ export default function PageFooter({ visible, navStyleDark, isMobile }: PageFoot
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: isMobile ? "20px" : "28px",
+          gap: isMobile ? "24px" : "36px",
           marginBottom: "20px",
           flexWrap: "wrap",
+          alignItems: "center",
         }}
       >
         {SOCIALS.map((s) => (
@@ -38,12 +39,19 @@ export default function PageFooter({ visible, navStyleDark, isMobile }: PageFoot
             rel="noopener noreferrer"
             aria-label={s.label}
             style={{
-              ...navStyleDark(s.label, false),
+              fontFamily: FONTS.script,
+              fontSize: isMobile ? "28px" : "36px",
+              color: "var(--color-crimson)",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
-              gap: "10px",
+              gap: "8px",
+              lineHeight: 1,
+              opacity: 0.9,
+              transition: "opacity 0.25s ease, transform 0.25s ease",
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.9")}
           >
             {s.svg}
             {s.label}

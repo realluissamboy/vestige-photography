@@ -2,6 +2,7 @@ import React, { type CSSProperties } from "react";
 import type { PageKey } from "../data/navigation";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_WORDMARK_SHADOW, VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import MobileMenu from "./MobileMenu";
 
 export interface PageHeaderProps {
@@ -9,18 +10,39 @@ export interface PageHeaderProps {
   subtitle?: string;
   visible: boolean;
   setPage: (p: PageKey) => void;
-  navStyleDark: (label: string, isActive: boolean) => CSSProperties;
-  setNavHover: (p: string | null) => void;
   isMobile: boolean;
+  navStyleDark?: (label: string, isActive: boolean) => CSSProperties;
+  setNavHover?: (p: string | null) => void;
+  onResetPortfolio?: () => void;
 }
 
-export default function PageHeader({ page, subtitle, visible, setPage, navStyleDark, setNavHover, isMobile }: PageHeaderProps) {
+export default function PageHeader({ page, subtitle, visible, setPage, isMobile, onResetPortfolio }: PageHeaderProps) {
+  const handleNavClick = (targetPage: PageKey) => {
+    if (targetPage === "portfolio" && onResetPortfolio) {
+      onResetPortfolio();
+    }
+    setPage(targetPage);
+  };
+
   const navBtn = (label: string, targetPage: PageKey, isActive: boolean): React.ReactElement => (
     <button
-      style={navStyleDark(label, isActive)}
-      onMouseEnter={() => setNavHover(label)}
-      onMouseLeave={() => setNavHover(null)}
-      onClick={() => setPage(targetPage)}
+      style={{
+        fontFamily: FONTS.script,
+        fontSize: isMobile ? "32px" : "44px",
+        color: "var(--color-crimson)",
+        cursor: "pointer",
+        border: "none",
+        background: "none",
+        padding: "0 4px 4px 4px",
+        borderBottom: isActive ? "2.5px solid var(--color-crimson)" : "2.5px solid transparent",
+        opacity: 1,
+        transition: "transform 0.2s ease, border-color 0.2s ease",
+        textShadow: VESTIGE_TEXT_SHADOW,
+        lineHeight: 1,
+      }}
+      onClick={() => handleNavClick(targetPage)}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
     >
       {label}
     </button>
@@ -44,17 +66,18 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
           <span
             style={{
               fontFamily: FONTS.script,
-              fontSize: "36px",
+              fontSize: "42px",
               color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,
               textAlign: "center",
+              textShadow: VESTIGE_WORDMARK_SHADOW,
             }}
             onClick={() => setPage("home")}
           >
             Vestige
           </span>
-          <MobileMenu variant="solid" setPage={setPage} />
+          <MobileMenu variant="solid" setPage={setPage} onResetPortfolio={onResetPortfolio} />
         </div>
       ) : (
         <nav
@@ -62,7 +85,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "40px",
+            gap: "56px",
             padding: "36px 24px 0",
             flexWrap: "wrap",
             opacity: visible ? 1 : 0,
@@ -73,10 +96,11 @@ export default function PageHeader({ page, subtitle, visible, setPage, navStyleD
           <span
             style={{
               fontFamily: FONTS.script,
-              fontSize: "48px",
+              fontSize: "54px",
               color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,
+              textShadow: VESTIGE_WORDMARK_SHADOW,
             }}
             onClick={() => setPage("home")}
           >

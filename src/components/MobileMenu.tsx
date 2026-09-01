@@ -4,15 +4,17 @@ import { PAGE_LINKS, SOCIALS } from "../data/navigation";
 import type { PageKey } from "../data/navigation";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_ICON_SHADOW, VESTIGE_TEXT_SHADOW } from "../theme/effects";
 
 export interface MobileMenuProps {
   variant: "overlay" | "solid";
   setPage: (p: PageKey) => void;
   menuId?: string;
   onOpenChange?: (open: boolean) => void;
+  onResetPortfolio?: () => void;
 }
 
-export default function MobileMenu({ variant: _variant, setPage, menuId = "mobile-menu", onOpenChange }: MobileMenuProps) {
+export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", onOpenChange, onResetPortfolio }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -21,20 +23,35 @@ export default function MobileMenu({ variant: _variant, setPage, menuId = "mobil
   };
 
   useEffect(() => {
-    if (!open) return;
-    const previous = document.body.style.overflow;
+    if (!open) {
+      if (typeof document !== "undefined") {
+        document.body.style.overflow = "";
+      }
+      return;
+    }
     document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleOpenChange(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      document.body.style.overflow = previous;
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);
 
   const handleNav = (targetPage: PageKey) => {
     handleOpenChange(false);
+    if (targetPage === "portfolio" && onResetPortfolio) {
+      onResetPortfolio();
+    }
     setPage(targetPage);
   };
-
-  const barStyle: CSSProperties = { display: "block", width: "26px", height: "2px", background: "var(--color-crimson)", borderRadius: "1px" };
 
   return (
     <>
@@ -48,11 +65,9 @@ export default function MobileMenu({ variant: _variant, setPage, menuId = "mobil
           width: "44px",
           height: "44px",
           justifySelf: "end",
-          display: "flex",
-          flexDirection: "column",
+          display: "inline-flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: "6px",
           background: "transparent",
           border: "none",
           padding: 0,
@@ -60,9 +75,26 @@ export default function MobileMenu({ variant: _variant, setPage, menuId = "mobil
           zIndex: 11,
         }}
       >
-        <span style={barStyle} />
-        <span style={barStyle} />
-        <span style={barStyle} />
+        <svg
+          width="26"
+          height="20"
+          viewBox="0 0 26 20"
+          fill="none"
+          stroke={variant === "overlay" ? "#FFFFFF" : "var(--color-crimson)"}
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{
+            display: "block",
+            filter: variant === "overlay"
+              ? "drop-shadow(0 2px 4px rgba(0,0,0,0.85)) drop-shadow(0 0 10px rgba(200,20,44,0.6))"
+              : VESTIGE_ICON_SHADOW,
+          }}
+          aria-hidden="true"
+        >
+          <line x1="2" y1="3" x2="24" y2="3" />
+          <line x1="2" y1="10" x2="24" y2="10" />
+          <line x1="2" y1="17" x2="24" y2="17" />
+        </svg>
       </button>
 
       {open && typeof document !== "undefined" && createPortal(
@@ -116,17 +148,14 @@ export default function MobileMenu({ variant: _variant, setPage, menuId = "mobil
               type="button"
               onClick={() => handleNav(link.page)}
               style={{
-                fontFamily: link.isWordmark ? FONTS.script : FONTS.display,
-                fontStyle: link.isWordmark ? "normal" : "italic",
-                fontWeight: link.isWordmark ? 400 : 700,
-                fontSize: link.isWordmark ? "56px" : "22px",
-                letterSpacing: link.isWordmark ? "0" : "3px",
-                textTransform: link.isWordmark ? "none" : "uppercase",
+                fontFamily: FONTS.script,
+                fontSize: link.isWordmark ? "64px" : "48px",
                 color: "var(--color-crimson)",
+                textShadow: VESTIGE_TEXT_SHADOW,
                 background: "transparent",
                 border: "none",
-                padding: "12px 24px",
-                minHeight: "44px",
+                padding: "8px 24px",
+                minHeight: "48px",
                 cursor: "pointer",
                 lineHeight: 1,
               }}
@@ -152,17 +181,17 @@ export default function MobileMenu({ variant: _variant, setPage, menuId = "mobil
                 rel="noopener noreferrer"
                 aria-label={s.label}
                 style={{
-                  fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-                  fontSize: "13px",
-                  letterSpacing: "3px",
-                  textTransform: "uppercase",
+                  fontFamily: FONTS.script,
+                  fontSize: "32px",
                   color: "var(--color-cream)",
+                  textShadow: VESTIGE_TEXT_SHADOW,
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
-                  padding: "12px 16px",
+                  padding: "8px 16px",
                   minHeight: "44px",
+                  lineHeight: 1,
                 }}
               >
                 {s.svg}

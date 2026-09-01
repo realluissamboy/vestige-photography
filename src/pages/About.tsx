@@ -1,6 +1,7 @@
 import React, { type CSSProperties } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
+import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import type { PageKey } from "../data/navigation";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
@@ -17,30 +18,45 @@ export interface AboutProps {
 export default function About({ aboutVisible, setPage, isMobile, navStyleDark, setNavHover }: AboutProps) {
   const sectionLabel: CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isMobile ? "40px" : "52px",
+    fontSize: isMobile ? "40px" : "54px",
     color: "var(--color-crimson)",
-    marginBottom: "4px",
-    lineHeight: 0.9,
+    marginBottom: "2px",
+    lineHeight: 1,
+    textShadow: VESTIGE_TEXT_SHADOW,
   };
   const sectionHeading: CSSProperties = {
-    fontFamily: FONTS.display,
-    fontStyle: "italic",
-    fontWeight: 800,
-    fontSize: isMobile ? "36px" : "48px",
+    fontFamily: FONTS.script,
+    fontSize: isMobile ? "30px" : "38px",
+    fontWeight: 400,
+    fontStyle: "normal",
     color: "var(--color-ink)",
-    margin: "0 0 32px",
-    letterSpacing: "-0.5px",
-    lineHeight: 1,
+    margin: "4px 0 24px",
+    lineHeight: 1.15,
   };
-  const narrowSectionPadding = isMobile ? "0 24px 80px" : "0 40px 120px";
+  const narrowSectionPadding = isMobile ? "0 20px 64px" : "0 40px 96px";
   const bodyText: CSSProperties = {
     fontFamily: FONTS.body,
-    fontSize: "19px",
+    fontSize: isMobile ? "18px" : "20px",
     fontWeight: 400,
-    lineHeight: 1.65,
+    lineHeight: 1.75,
     color: "var(--color-ink)",
     margin: "0 0 20px",
   };
+
+  const linkStyle: CSSProperties = {
+    color: "var(--color-crimson)",
+    fontWeight: 600,
+    textDecoration: "none",
+    borderBottom: "1px solid rgba(200, 20, 44, 0.4)",
+    paddingBottom: "1px",
+    transition: "border-color 0.2s ease, opacity 0.2s ease",
+  };
+
+  React.useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "";
+    }
+  }, []);
 
   return (
     <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
@@ -54,7 +70,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         setNavHover={setNavHover}
         isMobile={isMobile}
       />
-      <div style={{ height: isMobile ? "48px" : "80px" }} />
+      <div style={{ height: isMobile ? "40px" : "64px" }} />
 
       {/* Opening: headshot + philosophy */}
       <section
@@ -63,8 +79,8 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
           margin: "0 auto",
           padding: narrowSectionPadding,
           display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "minmax(240px, 1fr) 1.4fr",
-          gap: isMobile ? "32px" : "80px",
+          gridTemplateColumns: isMobile ? "1fr" : "minmax(280px, 1fr) 1.5fr",
+          gap: isMobile ? "36px" : "72px",
           alignItems: "center",
           opacity: aboutVisible ? 1 : 0,
           transition: "opacity 1s ease 0.3s",
@@ -72,34 +88,64 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
       >
         <div
           style={{
-            overflow: "hidden",
             maxWidth: isMobile ? "320px" : "none",
             margin: isMobile ? "0 auto" : 0,
             width: "100%",
-            boxShadow: "0 20px 50px rgba(0,0,0,0.2)",
           }}
         >
-          <img
-            src="/susana headshot.webp"
-            alt="Susana Andrea, founder of Vestige Photography"
-            style={{ display: "block", width: "100%", height: "auto" }}
-          />
-        </div>
-        <div>
-          <p style={sectionLabel}>The Philosophy</p>
-          <p
+          <div
             style={{
-              fontFamily: "'Cormorant Garamond', 'Times New Roman', serif",
-              fontSize: isMobile ? "24px" : "30px",
-              fontWeight: 300,
-              fontStyle: "italic",
-              lineHeight: 1.4,
-              color: "var(--color-obsidian)",
-              margin: "0 0 24px",
+              overflow: "hidden",
+              borderRadius: "2px",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.18)",
+              border: "1px solid rgba(158, 140, 121, 0.3)",
             }}
           >
-            &ldquo;My job is pose coaching, not posing. The camera just records the moment a woman finally believes what the room already sees.&rdquo;
+            <img
+              src="/susana headshot.webp"
+              alt="Susana Andrea, founder of Vestige Photography"
+              style={{ display: "block", width: "100%", height: "auto" }}
+            />
+          </div>
+          <p
+            style={{
+              fontFamily: FONTS.script,
+              fontSize: isMobile ? "32px" : "42px",
+              color: "var(--color-crimson)",
+              textAlign: "center",
+              marginTop: "12px",
+              marginBottom: 0,
+              lineHeight: 1,
+              textShadow: VESTIGE_TEXT_SHADOW,
+            }}
+          >
+            Susana Andrea, founder
           </p>
+        </div>
+
+        <div>
+          <p style={sectionLabel}>The Philosophy</p>
+          <div
+            style={{
+              borderLeft: "3px solid var(--color-crimson)",
+              paddingLeft: isMobile ? "16px" : "24px",
+              margin: "12px 0 28px",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: FONTS.cormorant,
+                fontSize: isMobile ? "24px" : "30px",
+                fontWeight: 400,
+                fontStyle: "italic",
+                lineHeight: 1.45,
+                color: "var(--color-obsidian)",
+                margin: 0,
+              }}
+            >
+              &ldquo;My job is pose coaching, not posing. The camera just records the moment a woman finally believes what the room already sees.&rdquo;
+            </p>
+          </div>
           <p style={bodyText}>
             Susana Andrea is the photographer and founder behind Vestige. For twenty years
             she has built a practice around one idea: that a great portrait is an act of
@@ -111,7 +157,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
       {/* The Roots */}
       <section
         style={{
-          maxWidth: "820px",
+          maxWidth: "800px",
           margin: "0 auto",
           padding: narrowSectionPadding,
           opacity: aboutVisible ? 1 : 0,
@@ -131,7 +177,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
       {/* The Heritage */}
       <section
         style={{
-          maxWidth: "820px",
+          maxWidth: "800px",
           margin: "0 auto",
           padding: narrowSectionPadding,
           opacity: aboutVisible ? 1 : 0,
@@ -151,7 +197,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
       {/* The Accomplishments */}
       <section
         style={{
-          maxWidth: "820px",
+          maxWidth: "800px",
           margin: "0 auto",
           padding: narrowSectionPadding,
           opacity: aboutVisible ? 1 : 0,
@@ -166,25 +212,25 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
             href="https://www.wonkpress.com/products/vestige-twenty-years-of-modern-pin-up"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--color-obsidian)", textDecoration: "underline", textUnderlineOffset: "3px" }}
+            style={linkStyle}
           >
             <em>Vestige: Twenty Years of Modern Pin-Up</em>
           </a>{" "}
-          and{" "}
+          (Wonk Press) and{" "}
           <a
             href="https://schifferbooks.com/products/kittens-kulture"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--color-obsidian)", textDecoration: "underline", textUnderlineOffset: "3px" }}
+            style={linkStyle}
           >
             <em>Kittens and Kulture</em>
-          </a>
-          , and editor of{" "}
+          </a>{" "}
+          (Schiffer Publishing), and editor of{" "}
           <a
             href="https://www.instagram.com/thevelvetgazette/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--color-obsidian)", textDecoration: "underline", textUnderlineOffset: "3px" }}
+            style={linkStyle}
           >
             <em>The Velvet Gazette</em>
           </a>
@@ -198,6 +244,10 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         style={{
           textAlign: "center",
           padding: "0 24px 120px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "14px",
           opacity: aboutVisible ? 1 : 0,
           transition: "opacity 1s ease 0.7s",
         }}
@@ -211,3 +261,4 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
     </main>
   );
 }
+
