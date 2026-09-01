@@ -222,14 +222,15 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             zIndex: 6,
           }}
         >
-          {/* Wordmark in #CD2644 with deep dimensional lighting */}
+          {/* Wordmark in #CD2644 with soft whitish luminous shadow for clarity */}
           <div
             style={{
               fontFamily: FONTS.script,
               fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(120px, 13vw, 200px)",
               lineHeight: 1,
               color: "#CD2644",
-              textShadow: "0 2px 4px rgba(0, 0, 0, 0.85), 0 4px 16px rgba(0, 0, 0, 0.5), 0 -1px 2px rgba(255, 255, 255, 0.35)",
+              textShadow:
+                "0 0 2px rgba(255, 255, 255, 0.9), 0 0 10px rgba(255, 255, 255, 0.65), 0 0 24px rgba(255, 255, 255, 0.4), 0 0 48px rgba(255, 255, 255, 0.2), 0 2px 8px rgba(0, 0, 0, 0.25)",
               userSelect: "none",
             }}
           >
