@@ -448,124 +448,238 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           </nav>
         )}
 
-        {/* Navigation & Indicators — Landscape Preview Dock vs Portrait/Desktop Progress Pills */}
-        {isShortLandscape ? (
+        {/* Navigation & Indicators — Dynamic Morphing Category Bar on Desktop, Laptop & Landscape vs Progress Pills on Mobile Portrait */}
+        {!isMobilePortrait ? (
           <div
-            aria-label="Photography categories preview"
             style={{
               position: "absolute",
-              bottom: "max(10px, calc(env(safe-area-inset-bottom, 0px) + 8px))",
-              left: "50%",
-              transform: "translateX(-50%)",
+              bottom: isShortLandscape
+                ? "max(12px, calc(env(safe-area-inset-bottom, 0px) + 8px))"
+                : "36px",
+              left: 0,
+              right: 0,
               display: "flex",
+              justifyContent: "center",
               alignItems: "center",
-              gap: "8px",
-              maxWidth: "calc(100vw - 120px)",
-              overflowX: "auto",
-              padding: "4px 8px",
-              scrollbarWidth: "none",
               zIndex: 7,
+              pointerEvents: "none",
             }}
           >
-            {HERO_SLIDES.map((image, index) => {
-              const isActive = index === activeSlide;
-              const title = CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat;
+            {/* Unified Floating Category Dock */}
+            <div
+              aria-label="Photography categories"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: isShortLandscape ? "8px" : "12px",
+                background: "rgba(10, 10, 12, 0.65)",
+                backdropFilter: "blur(14px)",
+                padding: isShortLandscape ? "6px 10px" : "8px 14px",
+                borderRadius: "999px",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.5)",
+                pointerEvents: "auto",
+                maxWidth: "min(96vw, 920px)",
+              }}
+            >
+              {HERO_SLIDES.map((image, index) => {
+                const isActive = index === activeSlide;
+                const title = CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat;
+                const num = String(index + 1).padStart(2, "0");
 
-              return (
-                <button
-                  key={image.id}
-                  type="button"
-                  onClick={() => {
-                    if (isActive) {
-                      setPage("portfolio");
-                    } else {
-                      goToSlide(index);
-                    }
-                  }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    background: isActive ? "rgba(10, 10, 12, 0.88)" : "rgba(10, 10, 12, 0.55)",
-                    backdropFilter: "blur(10px)",
-                    border: isActive ? "1.5px solid #CD2644" : "1px solid rgba(255, 255, 255, 0.2)",
-                    borderRadius: "8px",
-                    padding: "4px 10px 4px 4px",
-                    cursor: "pointer",
-                    boxShadow: isActive
-                      ? "0 0 16px rgba(205, 38, 68, 0.5), 0 4px 14px rgba(0, 0, 0, 0.6)"
-                      : "0 2px 6px rgba(0, 0, 0, 0.4)",
-                    transform: isActive ? "scale(1.05)" : "scale(1)",
-                    transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
-                  }}
-                >
-                  {/* Thumbnail Preview */}
-                  <div
+                if (isActive) {
+                  /* Active Expanded Pill */
+                  return (
+                    <button
+                      key={image.id}
+                      type="button"
+                      onClick={() => setPage("portfolio")}
+                      aria-label={`Current slide: ${title}. Click to view portfolio`}
+                      style={{
+                        position: "relative",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: isShortLandscape ? "6px" : "10px",
+                        background: "rgba(205, 38, 68, 0.25)",
+                        border: "1.5px solid #CD2644",
+                        borderRadius: "999px",
+                        padding: isShortLandscape ? "6px 14px" : "8px 18px",
+                        cursor: "pointer",
+                        boxShadow: "0 0 16px rgba(205, 38, 68, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4)",
+                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                        whiteSpace: "nowrap",
+                        flexShrink: 0,
+                        overflow: "hidden",
+                      }}
+                    >
+                      {/* Number badge */}
+                      <span
+                        style={{
+                          fontFamily: FONTS.display,
+                          fontStyle: "italic",
+                          fontSize: isShortLandscape ? "11px" : "12px",
+                          fontWeight: 700,
+                          letterSpacing: "1px",
+                          color: "#FDFEFD",
+                          opacity: 0.85,
+                        }}
+                      >
+                        {num}
+                      </span>
+
+                      {/* Category Title */}
+                      <span
+                        style={{
+                          fontFamily: FONTS.script,
+                          fontSize: isShortLandscape ? "19px" : "23px",
+                          lineHeight: 1,
+                          color: "#FDFEFD",
+                          textShadow: "0 0 12px rgba(205, 38, 68, 0.9)",
+                        }}
+                      >
+                        {title}
+                      </span>
+
+                      {/* Active Progress Bar Along Bottom Edge */}
+                      <span
+                        key={`${image.id}-${slideCycle}`}
+                        style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          height: "2.5px",
+                          background: "linear-gradient(to right, #CD2644, #FDFEFD)",
+                          transform: "scaleX(0)",
+                          transformOrigin: "left center",
+                          animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
+                        }}
+                      />
+                    </button>
+                  );
+                }
+
+                /* Inactive Compact Thumbnail Tile */
+                const thumbSize = isShortLandscape ? "34px" : "40px";
+
+                return (
+                  <button
+                    key={image.id}
+                    type="button"
+                    onClick={() => goToSlide(index)}
+                    aria-label={`Switch to ${title}`}
+                    title={title}
                     style={{
-                      width: "34px",
-                      height: "34px",
-                      borderRadius: "5px",
-                      overflow: "hidden",
                       position: "relative",
-                      border: isActive ? "1px solid rgba(205, 38, 68, 0.9)" : "1px solid rgba(255, 255, 255, 0.2)",
+                      width: thumbSize,
+                      height: thumbSize,
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      border: "1.5px solid rgba(255, 255, 255, 0.28)",
+                      background: "rgba(10, 10, 12, 0.8)",
+                      cursor: "pointer",
+                      padding: 0,
                       flexShrink: 0,
+                      boxShadow: "0 2px 6px rgba(0, 0, 0, 0.4)",
+                      transition: "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.15)";
+                      e.currentTarget.style.borderColor = "rgba(205, 38, 68, 0.8)";
+                      e.currentTarget.style.boxShadow = "0 0 12px rgba(205, 38, 68, 0.6)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.28)";
+                      e.currentTarget.style.boxShadow = "0 2px 6px rgba(0, 0, 0, 0.4)";
                     }}
                   >
                     <img
                       src={image.src}
-                      alt=""
-                      aria-hidden="true"
+                      alt={title}
                       style={{
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",
                         objectPosition: HERO_LANDSCAPE_POSITIONS[image.id] ?? "50% 20%",
+                        filter: "brightness(0.85)",
+                        transition: "filter 0.2s ease",
                       }}
                     />
-                  </div>
+                  </button>
+                );
+              })}
 
-                  {/* Category Title */}
-                  <div style={{ textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                    <div
-                      style={{
-                        fontFamily: FONTS.script,
-                        fontSize: "17px",
-                        lineHeight: 1,
-                        color: isActive ? "#FDFEFD" : "rgba(250, 248, 244, 0.75)",
-                        textShadow: isActive ? "0 0 8px rgba(205, 38, 68, 0.85)" : "none",
-                      }}
-                    >
-                      {title}
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
+              {/* Vertical Divider */}
+              <div
+                style={{
+                  width: "1px",
+                  height: isShortLandscape ? "20px" : "24px",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  margin: "0 2px",
+                  flexShrink: 0,
+                }}
+              />
+
+              {/* Call-to-Action: Book a Session */}
+              <a
+                href="https://ig.me/m/susanavestige"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "linear-gradient(135deg, #CD2644 0%, #A01932 100%)",
+                  border: "1px solid rgba(255, 255, 255, 0.35)",
+                  borderRadius: "999px",
+                  padding: isShortLandscape ? "6px 14px" : "8px 18px",
+                  color: "#FFFFFF",
+                  fontFamily: FONTS.display,
+                  fontStyle: "italic",
+                  fontWeight: 700,
+                  fontSize: isShortLandscape ? "11px" : "13px",
+                  letterSpacing: "1.2px",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                  cursor: "pointer",
+                  boxShadow: "0 2px 10px rgba(205, 38, 68, 0.5)",
+                  transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.05)";
+                  e.currentTarget.style.boxShadow = "0 0 16px rgba(205, 38, 68, 0.8)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow = "0 2px 10px rgba(205, 38, 68, 0.5)";
+                }}
+              >
+                <span>Book a Session</span>
+                <span style={{ fontSize: isShortLandscape ? "13px" : "15px", fontStyle: "normal" }}>→</span>
+              </a>
+            </div>
           </div>
         ) : (
-          /* Slide Indicators / Navigation Dots — Centered in Lower Middle */
+          /* Slide Indicators / Navigation Dots — Centered in Lower Middle for Mobile Portrait */
           <div
             aria-label="Featured photography slides"
             style={{
               position: "absolute",
-              bottom: isCompact
-                ? "max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px))"
-                : "36px",
+              bottom: "max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px))",
               left: "50%",
               transform: "translateX(-50%)",
               display: "flex",
               alignItems: "center",
-              gap: isCompact ? "10px" : "12px",
+              gap: "10px",
               zIndex: 7,
             }}
           >
             {HERO_SLIDES.map((image, index) => {
               const isActive = index === activeSlide;
-              const pillHeight = isCompact ? "12px" : "13px";
-              const activeWidth = isCompact ? "44px" : "52px";
-              const inactiveWidth = isCompact ? "12px" : "13px";
 
               return (
                 <button
@@ -576,8 +690,8 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                   onClick={() => goToSlide(index)}
                   style={{
                     position: "relative",
-                    width: isActive ? activeWidth : inactiveWidth,
-                    height: pillHeight,
+                    width: isActive ? "44px" : "12px",
+                    height: "12px",
                     borderRadius: "999px",
                     border: isActive ? "2px solid #CD2644" : "1.5px solid rgba(205, 38, 68, 0.75)",
                     background: isActive ? "rgba(10, 10, 12, 0.6)" : "rgba(205, 38, 68, 0.25)",
