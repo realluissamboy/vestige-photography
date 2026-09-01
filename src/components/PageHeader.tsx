@@ -29,17 +29,20 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile,
       style={{
         fontFamily: FONTS.script,
         fontSize: isMobile ? "32px" : "44px",
-        color: isActive ? "var(--color-crimson)" : "var(--color-ink)",
+        color: "var(--color-crimson)",
         cursor: "pointer",
         border: "none",
         background: "none",
-        padding: "0 8px",
-        opacity: isActive ? 1 : 0.75,
-        transition: "opacity 0.25s ease, color 0.25s ease",
+        padding: "0 4px 4px 4px",
+        borderBottom: isActive ? "2.5px solid var(--color-crimson)" : "2.5px solid transparent",
+        opacity: 1,
+        transition: "transform 0.2s ease, border-color 0.2s ease",
         textShadow: VESTIGE_TEXT_SHADOW,
         lineHeight: 1,
       }}
       onClick={() => handleNavClick(targetPage)}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
     >
       {label}
     </button>
