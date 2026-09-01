@@ -109,15 +109,18 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
 
   const navLinkStyle = (link: string): React.CSSProperties => ({
     fontFamily: FONTS.script,
-    fontSize: compactHero ? "28px" : "52px",
-    color: "var(--color-crimson)",
+    fontSize: compactHero ? "26px" : "36px",
+    color: "#FFFFFF",
     cursor: "pointer",
-    border: "none",
-    background: "none",
-    padding: "4px 0",
-    opacity: navHover === link ? 1 : 0.9,
-    transition: "opacity 0.3s ease",
-    textShadow: VESTIGE_TEXT_SHADOW,
+    border: "1px solid rgba(255, 255, 255, 0.25)",
+    background: "var(--color-crimson)",
+    padding: compactHero ? "6px 18px" : "10px 28px",
+    borderRadius: "999px",
+    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(200, 20, 44, 0.3)",
+    opacity: navHover === link ? 1 : 0.92,
+    transform: navHover === link ? "translateY(-2px) scale(1.02)" : "translateY(0) scale(1)",
+    transition: "opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
+    textShadow: "0 1px 3px rgba(0, 0, 0, 0.4)",
     lineHeight: 1,
   });
 
@@ -148,28 +151,33 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           transition: "opacity 1.6s ease",
         }}
       >
-        {HERO_SLIDES.map((image, index) => (
-          <img
-            key={image.id}
-            src={HIGH_RES_HERO_SOURCES[image.id] ?? image.src}
-            alt={index === activeSlide ? `${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat} photography` : ""}
-            aria-hidden={index !== activeSlide}
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: (compactHero && HERO_MOBILE_POSITIONS[image.id])
-                ? HERO_MOBILE_POSITIONS[image.id]!
-                : (HERO_IMAGE_POSITIONS[image.id] ?? image.focus ?? "50% 50%"),
-              opacity: index === activeSlide ? 1 : 0,
-              transition: "opacity 0.8s ease",
-            }}
-          />
-        ))}
+        {HERO_SLIDES.map((image, index) => {
+          const isCurrent = index === activeSlide;
+          const pos = (compactHero && HERO_MOBILE_POSITIONS[image.id])
+            ? HERO_MOBILE_POSITIONS[image.id]!
+            : (HERO_IMAGE_POSITIONS[image.id] ?? image.focus ?? "50% 50%");
 
-        {/* Top scrim for nav legibility */}
+          return (
+            <img
+              key={image.id}
+              src={HIGH_RES_HERO_SOURCES[image.id] ?? image.src}
+              alt={isCurrent ? `${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat} photography` : ""}
+              aria-hidden={!isCurrent}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: pos,
+                opacity: isCurrent ? 1 : 0,
+                transition: "opacity 0.45s ease-in-out",
+              }}
+            />
+          );
+        })}
+
+        {/* Top scrim for readability */}
         <div
           aria-hidden="true"
           style={{
@@ -177,21 +185,113 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             top: 0,
             left: 0,
             right: 0,
-            height: compactHero ? "230px" : "200px",
+            height: compactHero ? "240px" : "260px",
             pointerEvents: "none",
             background:
-              "linear-gradient(to bottom, rgba(10,10,11,0.45) 0%, rgba(10,10,11,0.15) 60%, rgba(10,10,11,0) 100%)",
-            zIndex: 5,
+              "linear-gradient(to bottom, rgba(10,10,11,0.5) 0%, rgba(10,10,11,0.2) 60%, rgba(10,10,11,0) 100%)",
+            zIndex: 4,
           }}
         />
 
-        {/* Nav — no wordmark here; the big script below is the identity */}
+        {/* Bottom scrim for controls and nav legibility */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "180px",
+            pointerEvents: "none",
+            background:
+              "linear-gradient(to top, rgba(10,10,11,0.5) 0%, rgba(10,10,11,0.15) 60%, rgba(10,10,11,0) 100%)",
+            zIndex: 4,
+          }}
+        />
+
+        {/* Top-Left: "Vestige" Signature & Category Lockup */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: compactHero ? "20px" : "36px",
+            left: compactHero ? "16px" : "48px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            maxWidth: compactHero ? "calc(100vw - 32px)" : "min(92vw, 960px)",
+            pointerEvents: "none",
+            zIndex: 6,
+          }}
+        >
+          {/* Wordmark with white glow and crimson depth shadows */}
+          <div
+            style={{
+              fontFamily: FONTS.script,
+              fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(120px, 13vw, 200px)",
+              lineHeight: 1,
+              color: "#FFFFFF",
+              textShadow: "0 2px 6px rgba(0, 0, 0, 0.8), 0 4px 18px rgba(200, 20, 44, 0.85), 0 0 32px rgba(200, 20, 44, 0.5)",
+              userSelect: "none",
+            }}
+          >
+            Vestige
+          </div>
+
+          {/* Subtitle with white text inside an elegant frosted crimson capsule badge */}
+          <div
+            key={`${activeHero.cat}-${slideCycle}`}
+            style={{
+              display: "inline-flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              columnGap: "10px",
+              rowGap: "2px",
+              marginTop: compactHero ? "14px" : "18px",
+              padding: compactHero ? "6px 16px" : "8px 22px",
+              background: "rgba(143, 14, 31, 0.88)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              borderRadius: "999px",
+              border: "1px solid rgba(255, 255, 255, 0.28)",
+              boxShadow: "0 6px 20px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(255, 255, 255, 0.2) inset",
+              color: "#FFFFFF",
+              animation: "category-text-fade 0.45s ease forwards",
+            }}
+          >
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                fontFamily: FONTS.script,
+                fontSize: compactHero ? "24px" : "32px",
+                lineHeight: 1,
+                color: "rgba(255, 255, 255, 0.9)",
+              }}
+            >
+              Twenty years of
+            </span>
+            <span
+              style={{
+                whiteSpace: "nowrap",
+                fontFamily: FONTS.script,
+                fontSize: compactHero ? "24px" : "32px",
+                lineHeight: 1,
+                color: "#FFFFFF",
+                fontWeight: 600,
+                textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)",
+              }}
+            >
+              {categoryTitle.toLowerCase()}
+            </span>
+          </div>
+        </div>
+
+        {/* Navigation — Mobile Hamburger at Top-Right, Desktop Navigation Capsules at Bottom-Right */}
         {compactHero ? (
           <div
             style={{
               position: "absolute",
               top: 0,
-              left: 0,
               right: 0,
               padding: "20px 16px 0",
               zIndex: 10,
@@ -206,13 +306,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           <nav
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
+              bottom: "36px",
+              right: "48px",
               display: "flex",
               alignItems: "center",
-              gap: "40px",
-              padding: "32px 48px",
+              gap: "20px",
               zIndex: 10,
             }}
           >
@@ -241,7 +339,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           style={{
             position: "absolute",
             bottom: compactHero ? "24px" : "36px",
-            left: compactHero ? "50%" : "44px",
+            left: compactHero ? "50%" : "48px",
             transform: compactHero ? "translateX(-50%)" : "none",
             display: "flex",
             alignItems: "center",
@@ -303,76 +401,6 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               </button>
             );
           })}
-        </div>
-
-        {/* Responsive signature and category lockup */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: compactHero ? "24px" : "auto",
-            bottom: compactHero ? "auto" : "clamp(32px, 4vw, 56px)",
-            left: compactHero ? "16px" : "auto",
-            right: compactHero ? "auto" : "4%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: compactHero ? "flex-start" : "flex-end",
-            color: "var(--color-crimson)",
-            maxWidth: compactHero ? "calc(100vw - 32px)" : "min(92vw, 960px)",
-            pointerEvents: "none",
-            zIndex: 6,
-          }}
-        >
-          {/* Wordmark with full line-height to give the cursive descenders breathing room */}
-          <div
-            style={{
-              fontFamily: FONTS.script,
-              fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(130px, 15vw, 240px)",
-              lineHeight: 1,
-              textShadow: VESTIGE_WORDMARK_SHADOW,
-              userSelect: "none",
-            }}
-          >
-            Vestige
-          </div>
-
-          {/* Subtitle with ample clearance below the 'g' descender loop, in matching fluid lowercase script */}
-          <div
-            key={`${activeHero.cat}-${slideCycle}`}
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: compactHero ? "flex-start" : "flex-end",
-              alignItems: "baseline",
-              columnGap: compactHero ? "8px" : "12px",
-              rowGap: "2px",
-              marginTop: compactHero ? "28px" : "clamp(32px, 4.5vw, 64px)",
-              textAlign: compactHero ? "left" : "right",
-              textShadow: VESTIGE_TEXT_SHADOW,
-              animation: "category-text-fade 0.45s ease forwards",
-            }}
-          >
-            <span
-              style={{
-                whiteSpace: "nowrap",
-                fontFamily: FONTS.script,
-                fontSize: compactHero ? "28px" : "clamp(34px, 3.4vw, 52px)",
-                lineHeight: 1,
-              }}
-            >
-              Twenty years of
-            </span>
-            <span
-              style={{
-                whiteSpace: "nowrap",
-                fontFamily: FONTS.script,
-                fontSize: compactHero ? "28px" : "clamp(34px, 3.4vw, 52px)",
-                lineHeight: 1,
-              }}
-            >
-              {categoryTitle.toLowerCase()}
-            </span>
-          </div>
         </div>
       </div>
     </main>
