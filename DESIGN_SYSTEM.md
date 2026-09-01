@@ -97,9 +97,11 @@ export const VESTIGE_TEXT_SHADOW = [
   - `HERO_IMAGE_POSITIONS` specifies tailored `objectPosition` values for desktop.
   - `HERO_MOBILE_POSITIONS` provides responsive override crops for mobile screens.
 - **Slide Indicators (Progress Pills)**:
-  - Active capsule: `28px × 10px`, `1.5px solid var(--color-crimson)`, `background: rgba(10,10,11,0.6)`.
-  - Progress fill: Pure `#FFFFFF` animating via `@keyframes hero-progress` over 7000ms.
-  - Inactive dots: `10px × 10px`, `1.5px solid var(--color-crimson)`.
+  - **Desktop / Laptop Placement**: Anchored to **bottom-left** (`bottom: 36px, left: 44px`) to create balanced asymmetry with the bottom-right "Vestige" lockup and prevent text collisions on constrained laptop viewports.
+  - **Mobile Placement**: Centered horizontally at `bottom: 24px`.
+  - **Frosted Glass Container**: `backdropFilter: "blur(10px)"`, `background: "rgba(10, 10, 12, 0.45)"`, `borderRadius: "999px"`, `border: "1px solid rgba(255, 255, 255, 0.18)"`.
+  - **Active Capsule**: `52px × 13px` (desktop) / `44px × 12px` (mobile) with animated pure `#FFFFFF` progress fill and `2px solid var(--color-crimson)` border.
+  - **Inactive Dots**: `13px × 13px` (desktop) / `12px × 12px` (mobile) with `1.5px solid rgba(200, 20, 44, 0.75)`.
 
 ### 5.2 Mobile Hamburger Menu (`MobileMenu.tsx`)
 - **Structure**: Pixel-perfect vector SVG (`viewBox="0 0 26 20"` with `strokeWidth="2.5"`).

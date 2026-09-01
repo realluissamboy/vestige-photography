@@ -240,53 +240,69 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           aria-label="Featured photography slides"
           style={{
             position: "absolute",
-            bottom: compactHero ? "28px" : "34px",
-            left: "50%",
-            transform: "translateX(-50%)",
+            bottom: compactHero ? "24px" : "36px",
+            left: compactHero ? "50%" : "44px",
+            transform: compactHero ? "translateX(-50%)" : "none",
             display: "flex",
             alignItems: "center",
-            gap: "10px",
+            gap: compactHero ? "8px" : "10px",
+            padding: compactHero ? "6px 14px" : "7px 16px",
+            background: "rgba(10, 10, 12, 0.45)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            borderRadius: "999px",
+            border: "1px solid rgba(255, 255, 255, 0.18)",
+            boxShadow: "0 6px 20px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(255, 255, 255, 0.1) inset",
             zIndex: 7,
           }}
         >
-          {HERO_SLIDES.map((image, index) => (
-            <button
-              key={image.id}
-              type="button"
-              aria-label={`Show ${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat}`}
-              aria-current={index === activeSlide}
-              onClick={() => goToSlide(index)}
-              style={{
-                position: "relative",
-                width: index === activeSlide ? "28px" : "10px",
-                height: "10px",
-                borderRadius: "999px",
-                border: "1.5px solid var(--color-crimson)",
-                background: "rgba(10,10,11,0.6)",
-                boxShadow: "0 1px 2px rgba(255, 255, 255, 0.35), 0 2px 4px rgba(0, 0, 0, 0.35)",
-                cursor: "pointer",
-                padding: 0,
-                overflow: "hidden",
-                transition: "width 0.25s ease, background 0.25s ease, box-shadow 0.25s ease",
-              }}
-            >
-              {index === activeSlide && (
-                <span
-                  key={`${image.id}-${slideCycle}`}
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "#FFFFFF",
-                    transform: "scaleX(0)",
-                    transformOrigin: "left center",
-                    animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
-                    willChange: "transform",
-                  }}
-                />
-              )}
-            </button>
-          ))}
+          {HERO_SLIDES.map((image, index) => {
+            const isActive = index === activeSlide;
+            const pillHeight = compactHero ? "12px" : "13px";
+            const activeWidth = compactHero ? "44px" : "52px";
+            const inactiveWidth = compactHero ? "12px" : "13px";
+
+            return (
+              <button
+                key={image.id}
+                type="button"
+                aria-label={`Show ${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat}`}
+                aria-current={isActive}
+                onClick={() => goToSlide(index)}
+                style={{
+                  position: "relative",
+                  width: isActive ? activeWidth : inactiveWidth,
+                  height: pillHeight,
+                  borderRadius: "999px",
+                  border: isActive ? "2px solid var(--color-crimson)" : "1.5px solid rgba(200, 20, 44, 0.75)",
+                  background: isActive ? "rgba(10, 10, 11, 0.6)" : "rgba(255, 255, 255, 0.25)",
+                  boxShadow: isActive
+                    ? "0 0 10px rgba(200, 20, 44, 0.4), 0 2px 4px rgba(0, 0, 0, 0.4)"
+                    : "0 1px 3px rgba(0, 0, 0, 0.3)",
+                  cursor: "pointer",
+                  padding: 0,
+                  overflow: "hidden",
+                  transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
+                }}
+              >
+                {isActive && (
+                  <span
+                    key={`${image.id}-${slideCycle}`}
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "#FFFFFF",
+                      transform: "scaleX(0)",
+                      transformOrigin: "left center",
+                      animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
+                      willChange: "transform",
+                    }}
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {/* Responsive signature and category lockup */}
@@ -295,7 +311,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           style={{
             position: "absolute",
             top: compactHero ? "24px" : "auto",
-            bottom: compactHero ? "auto" : "56px",
+            bottom: compactHero ? "auto" : "clamp(32px, 4vw, 56px)",
             left: compactHero ? "16px" : "auto",
             right: compactHero ? "auto" : "4%",
             display: "flex",
@@ -311,7 +327,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           <div
             style={{
               fontFamily: FONTS.script,
-              fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(160px, 17vw, 250px)",
+              fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(130px, 15vw, 240px)",
               lineHeight: 1,
               textShadow: VESTIGE_WORDMARK_SHADOW,
               userSelect: "none",
@@ -330,7 +346,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               alignItems: "baseline",
               columnGap: compactHero ? "8px" : "12px",
               rowGap: "2px",
-              marginTop: compactHero ? "32px" : "68px",
+              marginTop: compactHero ? "28px" : "clamp(32px, 4.5vw, 64px)",
               textAlign: compactHero ? "left" : "right",
               textShadow: VESTIGE_TEXT_SHADOW,
               animation: "category-text-fade 0.45s ease forwards",
@@ -340,7 +356,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "28px" : "52px",
+                fontSize: compactHero ? "28px" : "clamp(34px, 3.4vw, 52px)",
                 lineHeight: 1,
               }}
             >
@@ -350,7 +366,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "28px" : "52px",
+                fontSize: compactHero ? "28px" : "clamp(34px, 3.4vw, 52px)",
                 lineHeight: 1,
               }}
             >
