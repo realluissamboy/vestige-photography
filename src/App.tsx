@@ -28,10 +28,12 @@ export default function App() {
         document.body.style.overscrollBehavior = "none";
       } else {
         document.documentElement.style.overflow = "";
-        document.documentElement.style.height = "";
+        document.documentElement.style.overflowY = "auto";
+        document.documentElement.style.height = "auto";
         document.body.style.overflow = "";
-        document.body.style.height = "";
-        document.body.style.overscrollBehavior = "";
+        document.body.style.overflowY = "auto";
+        document.body.style.height = "auto";
+        document.body.style.overscrollBehavior = "auto";
       }
     }
   }, [activePage]);

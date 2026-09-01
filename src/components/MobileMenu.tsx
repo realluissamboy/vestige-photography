@@ -42,8 +42,8 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
 
     return () => {
       if (typeof document !== "undefined") {
-        document.body.style.overflow = prevBodyOverflow;
-        document.documentElement.style.overflow = prevDocOverflow;
+        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
       }
       window.removeEventListener("keydown", handleKeyDown);
     };

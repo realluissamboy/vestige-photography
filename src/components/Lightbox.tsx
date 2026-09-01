@@ -78,8 +78,8 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
 
     return () => {
       if (typeof document !== "undefined") {
-        document.body.style.overflow = prevBodyOverflow;
-        document.documentElement.style.overflow = prevDocOverflow;
+        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
       }
       document.removeEventListener("keydown", handleKeyDown);
       // Restore focus on close

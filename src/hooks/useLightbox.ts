@@ -11,20 +11,13 @@ export function useLightbox(): UseLightboxResult {
   const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
 
   useEffect(() => {
-    if (!lightboxImage) {
-      if (typeof document !== "undefined") {
-        document.body.style.overflow = "";
-      }
-      return;
-    }
+    if (!lightboxImage) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightboxImage(null);
     };
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
     };
   }, [lightboxImage]);
 
