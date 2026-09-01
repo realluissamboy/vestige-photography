@@ -164,16 +164,17 @@ export default function Portfolio({
                     color: isSelected ? "#FFFFFF" : "var(--color-ink)",
                     border: "none",
                     borderRadius: "6px",
-                    padding: "6px 14px",
-                    minHeight: "32px",
+                    padding: "4px 14px",
+                    minHeight: "34px",
                     cursor: "pointer",
                     whiteSpace: "nowrap",
                     boxShadow: isSelected ? `0 2px 8px ${catColor}55` : "none",
                     transform: isSelected ? "scale(1.03)" : "scale(1)",
                     transition: "all 0.2s ease",
+                    overflow: "visible",
                   }}
                 >
-                  <span style={{ fontFamily: FONTS.script, fontSize: "16px", lineHeight: 1 }}>
+                  <span style={{ fontFamily: FONTS.script, fontSize: "17px", lineHeight: 1.35, display: "inline-block", padding: "1px 0" }}>
                     {shortLabel}
                   </span>
                 </button>
@@ -508,16 +509,27 @@ export default function Portfolio({
                       color: isSelected ? "#FFFFFF" : "var(--color-ink)",
                       border: "none",
                       borderRadius: "6px",
-                      padding: "6px 2px",
-                      minHeight: "34px",
+                      padding: "4px 2px",
+                      minHeight: "38px",
                       cursor: "pointer",
                       boxSizing: "border-box",
                       boxShadow: isSelected ? `0 2px 8px ${catColor}55` : "none",
                       transform: isSelected ? "scale(1.02)" : "scale(1)",
                       transition: "all 0.2s ease",
+                      overflow: "visible",
                     }}
                   >
-                    <span style={{ fontFamily: FONTS.script, fontSize: "14px", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
+                    <span
+                      style={{
+                        fontFamily: FONTS.script,
+                        fontSize: "15px",
+                        lineHeight: 1.35,
+                        display: "inline-block",
+                        whiteSpace: "nowrap",
+                        padding: "2px 0",
+                        overflow: "visible",
+                      }}
+                    >
                       {shortLabel}
                     </span>
                   </button>
