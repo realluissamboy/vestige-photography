@@ -19,7 +19,8 @@
     "noFallthroughCasesInSwitch": true,
 
     "noEmit": true,
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "types": ["vite/client"]
   },
   "include": ["src"]
 }

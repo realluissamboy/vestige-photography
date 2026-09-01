@@ -47,13 +47,13 @@ const HERO_PORTRAIT_POSITIONS: Record<number, string> = {
 
 const HERO_LANDSCAPE_POSITIONS: Record<number, string> = {
   1: "50% 20%",
-  9: "50% 24%",
-  18: "50% 20%",
-  19: "50% 18%",  // Model face, hair, and upper gold jumpsuit in full frame
-  21: "50% 22%",  // Pink victory rolls, face, vanity mirror in full frame
-  25: "50% 24%",  // Model face and car hood/grille in full frame
-  34: "50% 22%",  // Burlesque boa, face, makeup, green accents in full frame
-  36: "72% 28%",  // Tiki lounge, cocktail, face and hair in full frame
+  9: "50% 28%",
+  18: "50% 25%",
+  19: "50% 42%",  // Model face, smile, gold top, golden lamp, and chair perfectly centered
+  21: "50% 38%",  // Pink victory rolls, face, vanity mirror, lace gown perfectly centered
+  25: "50% 25%",  // White fedora, face, car door, watch, rings in full frame
+  34: "50% 20%",  // Burlesque smile, hair waves, green gloves & boa in full frame
+  36: "65% 58%",  // Model face, red dress, hair, background tiki lantern in full frame
 };
 
 const SLIDE_DURATION = 7000;
@@ -514,7 +514,141 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             );
           })}
         </div>
+
+        {/* Framing Calibration Tool (visible in dev mode or with ?debug=1) */}
+        {(typeof window !== "undefined" && (import.meta.env.DEV || window.location.search.includes("debug"))) && (
+          <FramingDebugBadge
+            activeSlide={activeHero}
+            mode={isShortLandscape ? "Landscape" : isMobilePortrait ? "Portrait" : "Desktop"}
+            pos={isShortLandscape
+              ? (HERO_LANDSCAPE_POSITIONS[activeHero.id] ?? "50% 22%")
+              : isMobilePortrait
+              ? (HERO_PORTRAIT_POSITIONS[activeHero.id] ?? HERO_DESKTOP_POSITIONS[activeHero.id] ?? "50% 50%")
+              : (HERO_DESKTOP_POSITIONS[activeHero.id] ?? activeHero.focus ?? "50% 50%")}
+            slideIndex={activeSlide}
+            totalSlides={HERO_SLIDES.length}
+            onPrev={prevSlide}
+            onNext={nextSlide}
+          />
+        )}
       </div>
     </main>
+  );
+}
+
+interface FramingDebugProps {
+  activeSlide: GalleryImage;
+  mode: string;
+  pos: string;
+  slideIndex: number;
+  totalSlides: number;
+  onPrev: () => void;
+  onNext: () => void;
+}
+
+function FramingDebugBadge({ activeSlide, mode, pos, slideIndex, totalSlides, onPrev, onNext }: FramingDebugProps) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        bottom: "8px",
+        left: "8px",
+        zIndex: 50,
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        fontSize: "12px",
+      }}
+    >
+      {!open ? (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          style={{
+            background: "rgba(10, 10, 12, 0.8)",
+            color: "#FAF8F4",
+            border: "1px solid rgba(205, 38, 68, 0.6)",
+            borderRadius: "6px",
+            padding: "4px 8px",
+            cursor: "pointer",
+            fontSize: "11px",
+            backdropFilter: "blur(6px)",
+            opacity: 0.7,
+            transition: "opacity 0.2s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
+        >
+          🎯 Framing Info
+        </button>
+      ) : (
+        <div
+          style={{
+            background: "rgba(10, 10, 12, 0.92)",
+            color: "#FAF8F4",
+            border: "1px solid rgba(205, 38, 68, 0.8)",
+            borderRadius: "8px",
+            padding: "10px 14px",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+            backdropFilter: "blur(10px)",
+            maxWidth: "320px",
+            lineHeight: 1.4,
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+            <strong style={{ color: "#CD2644", fontSize: "12px" }}>Framing Calibration</strong>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#FAF8F4",
+                cursor: "pointer",
+                padding: "0 4px",
+                fontSize: "14px",
+              }}
+            >
+              ✕
+            </button>
+          </div>
+          <div><strong>Slide:</strong> {activeSlide.cat} (ID {activeSlide.id}, {slideIndex + 1}/{totalSlides})</div>
+          <div><strong>Mode:</strong> {mode} ({typeof window !== "undefined" ? `${window.innerWidth}x${window.innerHeight}` : ""})</div>
+          <div><strong>Position:</strong> <code style={{ color: "#FDFEFD", background: "rgba(205, 38, 68, 0.4)", padding: "1px 4px", borderRadius: "3px" }}>{pos}</code></div>
+          <div style={{ display: "flex", gap: "6px", marginTop: "8px" }}>
+            <button
+              type="button"
+              onClick={onPrev}
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.2)",
+                borderRadius: "4px",
+                padding: "2px 8px",
+                cursor: "pointer",
+                fontSize: "11px",
+              }}
+            >
+              ‹ Prev
+            </button>
+            <button
+              type="button"
+              onClick={onNext}
+              style={{
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.2)",
+                borderRadius: "4px",
+                padding: "2px 8px",
+                cursor: "pointer",
+                fontSize: "11px",
+              }}
+            >
+              Next ›
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
