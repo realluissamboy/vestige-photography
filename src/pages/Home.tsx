@@ -23,7 +23,7 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
   10: "50% 30%",
   12: "65% 40%",
   14: "58% 70%",
-  18: "20% 5%",
+  18: "50% 32%",
   19: "50% 50%",
   25: "50% 38%",
   26: "50% 50%",
@@ -34,9 +34,9 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
 };
 
 const HERO_MOBILE_POSITIONS: Record<number, string> = {
-  1: "50% 60%",   // Modern Pin-Up: full silhouette, legs & shoes
+  1: "50% 60%",
   9: "50% 65%",   // Tiki-Rockabilly: full chair and floor base
-  18: "50% 20%",
+  18: "50% 50%",  // Modern Pin-Up (Outlaw2): centered full pose, tattoos & hat
   19: "50% 65%",  // Vintage-Glamour: full velvet couch and pose
   25: "50% 62%",  // Classic Cars: full vehicle tires and ground
   34: "50% 82%",  // Modern Burlesque: full green heels, feet, feather boa & floor
