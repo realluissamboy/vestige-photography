@@ -34,13 +34,13 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
 };
 
 const HERO_MOBILE_POSITIONS: Record<number, string> = {
-  1: "50% 38%",
-  9: "50% 50%",
-  18: "50% 15%",
-  19: "50% 50%",
-  25: "50% 48%",
-  34: "50% 40%",
-  36: "65% 55%",
+  1: "50% 60%",   // Modern Pin-Up: full silhouette, legs & shoes
+  9: "50% 65%",   // Tiki-Rockabilly: full chair and floor base
+  18: "50% 20%",
+  19: "50% 65%",  // Vintage-Glamour: full velvet couch and pose
+  25: "50% 62%",  // Classic Cars: full vehicle tires and ground
+  34: "50% 82%",  // Modern Burlesque: full green heels, feet, feather boa & floor
+  36: "65% 65%",  // Modern Tiki
 };
 
 const SLIDE_DURATION = 7000;
