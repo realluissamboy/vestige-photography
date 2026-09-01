@@ -222,32 +222,32 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             zIndex: 6,
           }}
         >
-          {/* Wordmark with white glow and crimson depth shadows */}
+          {/* Wordmark in #CD2644 with deep dimensional lighting */}
           <div
             style={{
               fontFamily: FONTS.script,
               fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(120px, 13vw, 200px)",
               lineHeight: 1,
-              color: "#FFFFFF",
-              textShadow: "0 2px 6px rgba(0, 0, 0, 0.8), 0 4px 18px rgba(200, 20, 44, 0.85), 0 0 32px rgba(200, 20, 44, 0.5)",
+              color: "#CD2644",
+              textShadow: "0 2px 4px rgba(0, 0, 0, 0.85), 0 4px 16px rgba(0, 0, 0, 0.5), 0 -1px 2px rgba(255, 255, 255, 0.35)",
               userSelect: "none",
             }}
           >
             Vestige
           </div>
 
-          {/* Subtitle in pure organic white script without any container pill or bold weight */}
+          {/* Subtitle in #FDFEFD with increased font size and clean shadow */}
           <div
             key={`${activeHero.cat}-${slideCycle}`}
             style={{
               display: "flex",
               flexWrap: "wrap",
               alignItems: "baseline",
-              columnGap: compactHero ? "8px" : "12px",
+              columnGap: compactHero ? "10px" : "16px",
               rowGap: "2px",
-              marginTop: compactHero ? "16px" : "24px",
-              color: "#FFFFFF",
-              textShadow: "0 2px 6px rgba(0, 0, 0, 0.85), 0 3px 14px rgba(200, 20, 44, 0.75), 0 0 24px rgba(200, 20, 44, 0.4)",
+              marginTop: compactHero ? "14px" : "20px",
+              color: "#FDFEFD",
+              textShadow: "0 2px 6px rgba(0, 0, 0, 0.9), 0 4px 18px rgba(0, 0, 0, 0.65)",
               animation: "category-text-fade 0.45s ease forwards",
             }}
           >
@@ -255,7 +255,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "26px" : "clamp(32px, 3.2vw, 48px)",
+                fontSize: compactHero ? "clamp(30px, 6.5vw, 38px)" : "clamp(42px, 4.2vw, 64px)",
                 lineHeight: 1,
                 fontWeight: 400,
               }}
@@ -266,7 +266,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "26px" : "clamp(32px, 3.2vw, 48px)",
+                fontSize: compactHero ? "clamp(30px, 6.5vw, 38px)" : "clamp(42px, 4.2vw, 64px)",
                 lineHeight: 1,
                 fontWeight: 400,
               }}
