@@ -749,36 +749,7 @@ export default function Portfolio({
               </div>
             </div>
 
-            {/* Bottom Session Booking CTA */}
-            <div style={{ marginTop: "24px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-              <a
-                href="https://ig.me/m/susanavestige"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: "linear-gradient(135deg, #CD2644 0%, #A01932 100%)",
-                  color: "#FFFFFF",
-                  fontFamily: FONTS.display,
-                  fontStyle: "italic",
-                  fontWeight: 700,
-                  fontSize: "12px",
-                  letterSpacing: "1.4px",
-                  textTransform: "uppercase",
-                  padding: "10px 24px",
-                  borderRadius: "999px",
-                  textDecoration: "none",
-                  boxShadow: "0 4px 16px rgba(205, 38, 68, 0.4)",
-                }}
-              >
-                <span>Book a Session</span>
-                <span style={{ fontSize: "14px", fontStyle: "normal" }}>→</span>
-              </a>
-            </div>
-
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "24px" }}>
               <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
             </div>
           </div>
