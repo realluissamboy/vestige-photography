@@ -7,15 +7,16 @@ import { SOCIALS } from "../data/navigation";
 export interface PageFooterProps {
   visible: boolean;
   isMobile: boolean;
+  showBrandVoice?: boolean;
   navStyleDark?: (label: string, isActive: boolean) => CSSProperties;
 }
 
-export default function PageFooter({ visible, isMobile }: PageFooterProps) {
+export default function PageFooter({ visible, isMobile, showBrandVoice = false }: PageFooterProps) {
   return (
     <footer
       style={{
         textAlign: "center",
-        padding: isMobile ? "40px 20px 36px" : "56px 24px 44px",
+        padding: isMobile ? "24px 16px 24px" : "36px 24px 28px",
         borderTop: `1px solid ${COLORS.stone}44`,
         opacity: visible ? 1 : 0,
         transition: "opacity 0.8s ease 0.6s",
@@ -25,8 +26,8 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: isMobile ? "24px" : "36px",
-          marginBottom: "20px",
+          gap: isMobile ? "20px" : "32px",
+          marginBottom: "14px",
           flexWrap: "wrap",
           alignItems: "center",
         }}
@@ -40,7 +41,7 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
             aria-label={s.label}
             style={{
               fontFamily: FONTS.script,
-              fontSize: isMobile ? "26px" : "32px",
+              fontSize: isMobile ? "24px" : "30px",
               color: "var(--color-crimson)",
               textDecoration: "none",
               display: "inline-flex",
@@ -63,8 +64,8 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
           fontFamily: FONTS.display,
           fontStyle: "italic",
           fontWeight: 600,
-          fontSize: "12px",
-          letterSpacing: "4px",
+          fontSize: "11px",
+          letterSpacing: "3px",
           textTransform: "uppercase",
           color: COLORS.plum,
           margin: 0,
@@ -72,32 +73,34 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
       >
         © Vestige Photography 2026
       </p>
+      {showBrandVoice && (
+        <p
+          style={{
+            fontFamily: FONTS.body,
+            fontStyle: "italic",
+            fontSize: "12px",
+            color: COLORS.plum,
+            margin: "10px auto 0",
+            opacity: 0.8,
+            maxWidth: "640px",
+            lineHeight: 1.5,
+            textAlign: "center",
+          }}
+        >
+          Brand voice informed by <em>Vestige: Twenty Years of Modern Pin-Up</em> (Wonk Press, 2025).
+          <br />
+          Book design by Carrie A. Smith.
+        </p>
+      )}
       <p
         style={{
-          fontFamily: FONTS.body,
-          fontStyle: "italic",
-          fontSize: "13px",
-          color: COLORS.plum,
-          margin: "12px auto 0",
-          opacity: 0.8,
-          maxWidth: "640px",
-          lineHeight: 1.6,
-          textAlign: "center",
-        }}
-      >
-        Brand voice informed by <em>Vestige: Twenty Years of Modern Pin-Up</em> (Wonk Press, 2025).
-        <br />
-        Book design by Carrie A. Smith.
-      </p>
-      <p
-        style={{
-          fontSize: "10px",
-          letterSpacing: "2.5px",
+          fontSize: "9.5px",
+          letterSpacing: "2px",
           textTransform: "uppercase",
           fontFamily: FONTS.display,
           fontStyle: "italic",
           color: COLORS.plum,
-          margin: "14px 0 0 0",
+          margin: "10px 0 0 0",
           opacity: 0.75,
         }}
       >

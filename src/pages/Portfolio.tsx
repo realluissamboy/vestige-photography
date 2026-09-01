@@ -236,7 +236,7 @@ export default function Portfolio({
         Portfolio
       </h1>
 
-      <div style={{ minHeight: isMobile && displayedCategory === null ? (isLandscapeMobile ? "calc(100dvh - 44px)" : "calc(100dvh - 80px)") : "60vh" }}>
+      <div style={{ minHeight: isLandscapeMobile && displayedCategory === null ? "calc(100dvh - 48px)" : "auto" }}>
       {displayedCategory === null ? (
         isLandscapeMobile ? (
           /* Landscape Mobile: Hero Spotlight (Left 58%) + Curated Filmstrip Reel (Right 42%) */
@@ -476,7 +476,7 @@ export default function Portfolio({
           </div>
         ) : isMobile ? (
           /* Portrait Mobile: Studio Spotlight + 6-Tile Collection Grid (Matching Landscape Experience) */
-          <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 16px max(70px, calc(env(safe-area-inset-bottom, 0px) + 50px))" }}>
+          <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 16px 20px" }}>
             {/* Top Category Switcher Tabs */}
             <div
               style={{
@@ -778,13 +778,13 @@ export default function Portfolio({
               </a>
             </div>
 
-            <div style={{ marginTop: "32px" }}>
+            <div style={{ marginTop: "20px" }}>
               <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
             </div>
           </div>
         ) : (
           /* Desktop Monograph Catalog Grid */
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px 40px 80px" }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "24px 40px 40px" }}>
             {PORTFOLIO_CATEGORIES.map((cat, rowIdx) => {
               const catPhotos = GALLERY_IMAGES.filter((img) => img.cat === cat);
               const color = CATEGORY_COLORS[cat] ?? "";
@@ -978,12 +978,12 @@ export default function Portfolio({
 
       </div>
 
-      {(!isMobile || displayedCategory !== null) && (
+      {displayedCategory !== null && (
         <>
           <section
             style={{
               textAlign: "center",
-              padding: "0 24px 120px",
+              padding: isMobile ? "0 20px 32px" : "0 24px 44px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",

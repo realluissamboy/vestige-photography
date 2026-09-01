@@ -239,7 +239,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
       <section
         style={{
           textAlign: "center",
-          padding: "0 24px 120px",
+          padding: isMobile ? "0 20px 36px" : "0 24px 50px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -253,7 +253,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         </div>
       </section>
 
-      <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
+      <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} showBrandVoice={true} />
     </main>
   );
 }
