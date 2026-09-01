@@ -312,18 +312,24 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
             style={{
               background: CATEGORY_COLORS[displayedCategory] ?? "",
               color: COLORS.cream,
-              padding: isMobile ? "36px 20px 48px" : "48px 40px 64px",
+              padding: isMobile ? "36px 20px 44px" : "48px 40px 60px",
               textAlign: "center",
               position: "relative",
             }}
           >
-            <div style={{ marginBottom: isMobile ? "18px" : "24px" }}>
+            <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "44px" : "62px", lineHeight: 0.9, opacity: 0.9 }}>
+              a study in
+            </div>
+            <h2 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
+              {CATEGORY_TITLES[displayedCategory] ?? ""}
+            </h2>
+            <div style={{ marginTop: isMobile ? "18px" : "24px" }}>
               <button
                 onClick={handleBackToPortfolio}
                 aria-label="Back to Portfolio overview"
                 style={{
                   fontFamily: FONTS.script,
-                  fontSize: isMobile ? "26px" : "32px",
+                  fontSize: isMobile ? "28px" : "34px",
                   color: "#FFFFFF",
                   background: "transparent",
                   border: "none",
@@ -353,12 +359,6 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
                 ← Back to Portfolio
               </button>
             </div>
-            <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "44px" : "62px", lineHeight: 0.9, opacity: 0.9 }}>
-              a study in
-            </div>
-            <h2 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
-              {CATEGORY_TITLES[displayedCategory] ?? ""}
-            </h2>
           </section>
           <div
             style={{

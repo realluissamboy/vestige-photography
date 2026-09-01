@@ -119,7 +119,7 @@ export const VESTIGE_TEXT_SHADOW = [
 - **Category Overview**: 4-column balanced grid on desktop, editorial 2-column split cards on mobile.
 - **Drill-In Gallery**:
   - Category banner with display typography and instant auto-scroll to top.
-  - **Top Navigation Link**: `← Back to Portfolio` rendered at the top of the header banner in pure white (`#FFFFFF`) with subtle underline and hover lift.
+  - **Navigation Link**: `← Back to Portfolio` rendered directly beneath the category title heading in pure white (`#FFFFFF`) with subtle underline and hover lift.
 - **Universal Reset**: Clicking "Portfolio" from header or menu resets drilled-in category view back to overview.
 - **Lightbox (`Lightbox.tsx`)**:
   - Rendered directly into `document.body` via `createPortal` for 100% true viewport centering and isolation from ancestor CSS transforms.
