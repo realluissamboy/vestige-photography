@@ -355,10 +355,10 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                   width: isActive ? activeWidth : inactiveWidth,
                   height: pillHeight,
                   borderRadius: "999px",
-                  border: isActive ? "2px solid #FFFFFF" : "1.5px solid rgba(255, 255, 255, 0.75)",
-                  background: isActive ? "rgba(10, 10, 12, 0.45)" : "rgba(255, 255, 255, 0.25)",
+                  border: isActive ? "2px solid #CD2644" : "1.5px solid rgba(205, 38, 68, 0.75)",
+                  background: isActive ? "rgba(10, 10, 12, 0.6)" : "rgba(205, 38, 68, 0.25)",
                   boxShadow: isActive
-                    ? "0 0 12px rgba(255, 255, 255, 0.4), 0 2px 6px rgba(0, 0, 0, 0.6)"
+                    ? "0 0 12px rgba(205, 38, 68, 0.5), 0 2px 6px rgba(0, 0, 0, 0.6)"
                     : "0 2px 5px rgba(0, 0, 0, 0.5)",
                   cursor: "pointer",
                   padding: 0,
@@ -373,7 +373,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                     style={{
                       position: "absolute",
                       inset: 0,
-                      background: "var(--color-crimson)",
+                      background: "#FDFEFD",
                       transform: "scaleX(0)",
                       transformOrigin: "left center",
                       animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,

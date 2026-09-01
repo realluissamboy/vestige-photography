@@ -106,8 +106,8 @@ export const VESTIGE_TEXT_SHADOW = [
   - **Desktop / Laptop Placement**: Centered horizontally in the lower-middle (`bottom: 36px, left: 50%`).
   - **Mobile Placement**: Centered horizontally at `bottom: 24px`.
   - **Unboxed Float**: Clean organic placement directly on the photograph with zero outer container box.
-  - **Active Capsule**: `52px × 13px` (desktop) / `44px × 12px` (mobile), `2px solid #FFFFFF` white border, with animated crimson (`#CD2644`) progress fill.
-  - **Inactive Dots**: `13px × 13px` (desktop) / `12px × 12px` (mobile), `1.5px solid rgba(255, 255, 255, 0.75)` white border with semi-transparent white glass fill.
+  - **Active Capsule**: `52px × 13px` (desktop) / `44px × 12px` (mobile), `2px solid #CD2644` crimson border, with animated porcelain white (`#FDFEFD`) progress fill.
+  - **Inactive Dots**: `13px × 13px` (desktop) / `12px × 12px` (mobile), `1.5px solid rgba(205, 38, 68, 0.75)` crimson border with semi-transparent crimson tint.
 
 ### 5.2 Mobile Hamburger Menu (`MobileMenu.tsx`)
 - **Structure**: Pixel-perfect vector SVG (`viewBox="0 0 26 20"` with `strokeWidth="2.5"`).
