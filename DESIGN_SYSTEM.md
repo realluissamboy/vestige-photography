@@ -51,7 +51,7 @@ Defined in `src/theme/colors.ts` and `src/styles/tokens.css`.
 ### Category Signature Palette & Sequence Covers
 | Sequence # | Category Name | Color Token | Hex Code | Verified Cover Photo ID |
 | :---: | :--- | :--- | :--- | :--- |
-| **1** | Modern Pin-Up | `crimson` | `#CD2644` | ID: 18 (*Outlaw2*) |
+| **1** | Modern Pin-Up | `crimson` | `#CD2644` | ID: 21 (*R2C0A8596*) |
 | **2** | Classic Cars & Kulture | `kulture` | `#5D7F9A` | ID: 25 (*Classic Cars*) |
 | **3** | Modern Burlesque | `rose` | `#C47F7A` | ID: 34 (*Feather Fan*) |
 | **4** | Tiki & Rockabilly | `tiki` | `#317B73` | ID: 36 (*2C0A0890*) |
