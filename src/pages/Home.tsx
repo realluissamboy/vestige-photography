@@ -491,8 +491,6 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             {HERO_SLIDES.map((image, index) => {
               const isActive = index === activeSlide;
               const title = CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat;
-              const num = String(index + 1).padStart(2, "0");
-
               if (isActive) {
                 /* Active Expanded Pill with Animated Progress Bar */
                 return (
@@ -509,7 +507,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                       background: "rgba(205, 38, 68, 0.25)",
                       border: "1.5px solid #CD2644",
                       borderRadius: "999px",
-                      padding: isMobilePortrait ? "4px 8px" : isShortLandscape ? "6px 14px" : "8px 18px",
+                      padding: isMobilePortrait ? "4px 10px" : isShortLandscape ? "6px 16px" : "8px 20px",
                       cursor: "pointer",
                       boxShadow: "0 0 16px rgba(205, 38, 68, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4)",
                       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -518,26 +516,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                       overflow: "hidden",
                     }}
                   >
-                    {/* Number badge */}
-                    <span
-                      style={{
-                        fontFamily: FONTS.display,
-                        fontStyle: "italic",
-                        fontSize: isMobilePortrait ? "8.5px" : isShortLandscape ? "11px" : "12px",
-                        fontWeight: 700,
-                        letterSpacing: "0.5px",
-                        color: "#FDFEFD",
-                        opacity: 0.85,
-                      }}
-                    >
-                      {num}
-                    </span>
-
                     {/* Category Title */}
                     <span
                       style={{
                         fontFamily: FONTS.script,
-                        fontSize: isMobilePortrait ? "14px" : isShortLandscape ? "19px" : "23px",
+                        fontSize: isMobilePortrait ? "15px" : isShortLandscape ? "20px" : "24px",
                         lineHeight: 1,
                         color: "#FDFEFD",
                         textShadow: "0 0 12px rgba(205, 38, 68, 0.9)",
