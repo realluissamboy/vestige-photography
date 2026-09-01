@@ -228,22 +228,22 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             zIndex: 6,
           }}
         >
-          {/* Wordmark in #CD2644 with very light, subtle white shadow for gentle separation */}
+          {/* Wordmark in #FDFEFD white with deep crisp contrast shadow */}
           <div
             style={{
               fontFamily: FONTS.script,
               fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(120px, 13vw, 200px)",
               lineHeight: 1,
-              color: "#CD2644",
+              color: "#FDFEFD",
               textShadow:
-                "1px 1px 2px rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.2)",
+                "0 2px 6px rgba(0, 0, 0, 0.85), 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 32px rgba(205, 38, 68, 0.4)",
               userSelect: "none",
             }}
           >
             Vestige
           </div>
 
-          {/* Subtitle in #FDFEFD with increased font size and clean shadow */}
+          {/* Subtitle in #CD2644 crimson with clean separation shadow */}
           <div
             key={`${activeHero.cat}-${slideCycle}`}
             style={{
@@ -253,8 +253,9 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               columnGap: compactHero ? "10px" : "16px",
               rowGap: "2px",
               marginTop: compactHero ? "14px" : "20px",
-              color: "#FDFEFD",
-              textShadow: "0 2px 6px rgba(0, 0, 0, 0.9), 0 4px 18px rgba(0, 0, 0, 0.65)",
+              color: "#CD2644",
+              textShadow:
+                "1px 1px 2px rgba(255, 255, 255, 0.5), 0 2px 8px rgba(0, 0, 0, 0.65)",
               animation: "category-text-fade 0.45s ease forwards",
             }}
           >
