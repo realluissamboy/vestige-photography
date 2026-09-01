@@ -110,7 +110,9 @@ export const VESTIGE_TEXT_SHADOW = [
 
 ### 5.3 Portfolio Page (`Portfolio.tsx`)
 - **Category Overview**: 4-column balanced grid on desktop, editorial 2-column split cards on mobile.
-- **Drill-In Gallery**: Category banner with display typography and smooth auto-scroll to top.
+- **Drill-In Gallery**:
+  - Category banner with display typography and instant auto-scroll to top.
+  - **Top Navigation Link**: `← Back to Portfolio` rendered at the top of the header banner in pure white (`#FFFFFF`) with subtle underline and hover lift.
 - **Universal Reset**: Clicking "Portfolio" from header or menu resets drilled-in category view back to overview.
 - **Lightbox (`Lightbox.tsx`)**:
   - Rendered directly into `document.body` via `createPortal` for 100% true viewport centering and isolation from ancestor CSS transforms.
@@ -123,14 +125,12 @@ export const VESTIGE_TEXT_SHADOW = [
 
 ---
 
-## 6. Motion & Page Transitions
+## 6. Motion & Navigation Architecture
 
 ### 6.1 Route Page Transitions (`App.tsx`)
-- **Transition Duration**: `280ms`.
-- **Easing Curve**: `cubic-bezier(0.4, 0, 0.2, 1)`.
-- **Behavior**: Outgoing view dissolves (`opacity: 1 -> 0`) and gently descends (`translateY(0 -> 4px)`), scroll position instantly resets to `top: 0`, and incoming view smoothly glides into place.
+- **Immediate Navigation**: Zero artificial blank-out delay or opacity flickering.
+- **Behavior**: Direct, instantaneous rendering on click with instant scroll reset to top, ensuring rock-solid stability across desktop and mobile.
 
-### 6.2 Category Drill-In Transitions (`Portfolio.tsx`)
-- **Transition Duration**: `200ms`.
-- **Easing Curve**: `cubic-bezier(0.4, 0, 0.2, 1)`.
+### 6.2 Category Drill-In Navigation (`Portfolio.tsx`)
+- **Immediate Switching**: Zero delay when entering a category or returning to the portfolio overview.
 - **Behavior**: Overview tiles dissolve into category header and masonry gallery with instant scroll to top.

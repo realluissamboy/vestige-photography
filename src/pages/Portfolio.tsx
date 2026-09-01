@@ -34,7 +34,6 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
 
   const [displayedCategory, setDisplayedCategory] = React.useState<Category | null>(portfolioCategory);
-  const [isCategoryTransitioning, setIsCategoryTransitioning] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (typeof document !== "undefined") {
@@ -43,36 +42,19 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
   }, []);
 
   const handleSelectCategory = (cat: Category) => {
-    if (cat === displayedCategory) return;
-    setIsCategoryTransitioning(true);
-    setTimeout(() => {
-      setPortfolioCategory(cat);
-      setDisplayedCategory(cat);
-      if (typeof window !== "undefined") {
-        window.scrollTo({ top: 0, behavior: "instant" });
-      }
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          setIsCategoryTransitioning(false);
-        }, 30);
-      });
-    }, 200);
+    setPortfolioCategory(cat);
+    setDisplayedCategory(cat);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
   };
 
   const handleBackToPortfolio = () => {
-    setIsCategoryTransitioning(true);
-    setTimeout(() => {
-      setPortfolioCategory(null);
-      setDisplayedCategory(null);
-      if (typeof window !== "undefined") {
-        window.scrollTo({ top: 0, behavior: "instant" });
-      }
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          setIsCategoryTransitioning(false);
-        }, 30);
-      });
-    }, 200);
+    setPortfolioCategory(null);
+    setDisplayedCategory(null);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
   };
 
   const currentCategoryImages = displayedCategory
@@ -119,13 +101,7 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
         Portfolio
       </h1>
 
-      <div
-        style={{
-          opacity: isCategoryTransitioning ? 0 : 1,
-          transform: isCategoryTransitioning ? "translateY(6px) scale(0.996)" : "translateY(0) scale(1)",
-          transition: "opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-      >
+      <div style={{ minHeight: "60vh" }}>
       {displayedCategory === null ? (
         /* Book-style colored section tiles */
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: isMobile ? "16px 20px 60px" : "32px 40px 80px" }}>
@@ -336,10 +312,47 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
             style={{
               background: CATEGORY_COLORS[displayedCategory] ?? "",
               color: COLORS.cream,
-              padding: isMobile ? "48px 20px" : "72px 40px",
+              padding: isMobile ? "36px 20px 48px" : "48px 40px 64px",
               textAlign: "center",
+              position: "relative",
             }}
           >
+            <div style={{ marginBottom: isMobile ? "18px" : "24px" }}>
+              <button
+                onClick={handleBackToPortfolio}
+                aria-label="Back to Portfolio overview"
+                style={{
+                  fontFamily: FONTS.script,
+                  fontSize: isMobile ? "26px" : "32px",
+                  color: "#FFFFFF",
+                  background: "transparent",
+                  border: "none",
+                  borderBottom: "1.5px solid rgba(255, 255, 255, 0.65)",
+                  padding: "0 0 2px 0",
+                  cursor: "pointer",
+                  minHeight: "44px",
+                  lineHeight: 1,
+                  textShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
+                  opacity: 0.95,
+                  transition: "opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = "1";
+                  e.currentTarget.style.transform = "translateX(-2px)";
+                  e.currentTarget.style.borderBottomColor = "#FFFFFF";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = "0.95";
+                  e.currentTarget.style.transform = "translateX(0)";
+                  e.currentTarget.style.borderBottomColor = "rgba(255, 255, 255, 0.65)";
+                }}
+              >
+                ← Back to Portfolio
+              </button>
+            </div>
             <div style={{ fontFamily: FONTS.script, fontSize: isMobile ? "44px" : "62px", lineHeight: 0.9, opacity: 0.9 }}>
               a study in
             </div>

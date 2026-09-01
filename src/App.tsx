@@ -8,12 +8,8 @@ const Home = React.lazy(() => import("./pages/Home"));
 const Portfolio = React.lazy(() => import("./pages/Portfolio"));
 const About = React.lazy(() => import("./pages/About"));
 
-const TRANSITION_DURATION = 280; // ms
-
 export default function App() {
   const [activePage, setActivePage] = useState<PageKey>("home");
-  const [displayedPage, setDisplayedPage] = useState<PageKey>("home");
-  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [navHover, setNavHover] = useState<string | null>(null);
   const isMobile = useIsMobile();
@@ -22,35 +18,18 @@ export default function App() {
     if (typeof document !== "undefined") {
       document.body.style.overflow = "";
     }
-    const t = setTimeout(() => setMounted(true), 40);
-    return () => clearTimeout(t);
+    setMounted(true);
   }, []);
 
   const handleSetPage = useCallback((newPage: PageKey) => {
     if (typeof document !== "undefined") {
       document.body.style.overflow = "";
     }
-    if (newPage === activePage) {
-      if (typeof window !== "undefined") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      return;
-    }
-    setIsTransitioning(true);
     setActivePage(newPage);
-
-    setTimeout(() => {
-      setDisplayedPage(newPage);
-      if (typeof window !== "undefined") {
-        window.scrollTo({ top: 0, behavior: "instant" });
-      }
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          setIsTransitioning(false);
-        }, 30);
-      });
-    }, TRANSITION_DURATION);
-  }, [activePage]);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, []);
 
   const navStyleDark = (link: string, isActive: boolean): CSSProperties => ({
     fontFamily: FONTS.display,
@@ -73,14 +52,13 @@ export default function App() {
       style={{
         background: "var(--color-parchment)",
         minHeight: "100vh",
-        opacity: mounted && !isTransitioning ? 1 : 0,
-        transform: mounted && !isTransitioning ? "translateY(0) scale(1)" : "translateY(4px) scale(0.996)",
-        transition: `opacity ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1), transform ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+        opacity: mounted ? 1 : 0,
+        transition: "opacity 0.2s ease",
       }}
     >
       <Suspense fallback={<div style={{ minHeight: "100vh", background: "var(--color-parchment)" }} />}>
         {/* HOME PAGE */}
-        {displayedPage === "home" && (
+        {activePage === "home" && (
           <Home
             heroVisible={true}
             isMobile={isMobile}
@@ -91,7 +69,7 @@ export default function App() {
         )}
 
         {/* ABOUT PAGE */}
-        {displayedPage === "about" && (
+        {activePage === "about" && (
           <About
             aboutVisible={true}
             setPage={handleSetPage}
@@ -102,7 +80,7 @@ export default function App() {
         )}
 
         {/* PORTFOLIO PAGE */}
-        {displayedPage === "portfolio" && (
+        {activePage === "portfolio" && (
           <Portfolio
             setPage={handleSetPage}
             isMobile={isMobile}
