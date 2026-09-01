@@ -330,25 +330,21 @@ export default function Portfolio({
               </div>
             </div>
 
-            {/* Right Side: Curated Thumbnail Filmstrip Grid */}
+            {/* Right Side: Curated 6-Tile Grid (5 Photos + 6th "View More" Card) — Zero Scrolling */}
             <div
               aria-label={`${activePreviewTitle} thumbnails`}
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                gridAutoRows: "min-content",
+                gridTemplateRows: "repeat(2, 1fr)",
                 gap: "8px",
                 height: "100%",
-                overflowY: "auto",
-                WebkitOverflowScrolling: "touch",
-                scrollbarWidth: "none",
-                paddingRight: "4px",
-                paddingBottom: "12px",
-                alignContent: "start",
                 boxSizing: "border-box",
+                overflow: "hidden",
               }}
             >
-              {activePreviewPhotos.map((img: GalleryImage, idx: number) => {
+              {/* First 5 Photos in Collection */}
+              {activePreviewPhotos.slice(0, 5).map((img: GalleryImage, idx: number) => {
                 const isSpotlight = img.id === activeSpotlightImage?.id;
 
                 return (
@@ -367,7 +363,7 @@ export default function Portfolio({
                     style={{
                       position: "relative",
                       width: "100%",
-                      aspectRatio: "1 / 1",
+                      height: "100%",
                       borderRadius: "6px",
                       overflow: "hidden",
                       cursor: "pointer",
@@ -398,6 +394,78 @@ export default function Portfolio({
                   </div>
                 );
               })}
+
+              {/* 6th Tile: "View More" Card leading to full gallery */}
+              <div
+                onClick={() => handleSelectCategory(previewCategory)}
+                role="button"
+                tabIndex={0}
+                aria-label={`View full ${activePreviewTitle} gallery`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelectCategory(previewCategory);
+                  }
+                }}
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "6px",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  boxSizing: "border-box",
+                  background: activePreviewColor,
+                  color: "var(--color-cream)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  padding: "6px",
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+                  transition: "transform 0.2s ease, opacity 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.02)";
+                  e.currentTarget.style.opacity = "0.95";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.opacity = "1";
+                }}
+              >
+                <div style={{ fontFamily: FONTS.script, fontSize: "18px", lineHeight: 1, opacity: 0.9 }}>
+                  explore
+                </div>
+                <div
+                  style={{
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    fontWeight: 800,
+                    fontSize: "13px",
+                    letterSpacing: "0.5px",
+                    lineHeight: 1.1,
+                    marginTop: "2px",
+                    color: "#FFFFFF",
+                  }}
+                >
+                  View More
+                </div>
+                <div
+                  style={{
+                    fontSize: "8.5px",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    opacity: 0.85,
+                    marginTop: "2px",
+                  }}
+                >
+                  +{Math.max(0, activePreviewPhotos.length - 5)} Photos
+                </div>
+              </div>
             </div>
           </div>
         ) : isMobile ? (
