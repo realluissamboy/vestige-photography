@@ -159,12 +159,12 @@ export default function Portfolio({
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "5px",
+                    justifyContent: "center",
                     background: isSelected ? catColor : "rgba(0, 0, 0, 0.06)",
                     color: isSelected ? "#FFFFFF" : "var(--color-ink)",
                     border: "none",
                     borderRadius: "6px",
-                    padding: "6px 12px",
+                    padding: "6px 14px",
                     minHeight: "32px",
                     cursor: "pointer",
                     whiteSpace: "nowrap",
@@ -173,10 +173,7 @@ export default function Portfolio({
                     transition: "all 0.2s ease",
                   }}
                 >
-                  <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "10px", fontWeight: 700, opacity: isSelected ? 0.9 : 0.6 }}>
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span style={{ fontFamily: FONTS.script, fontSize: "15px", lineHeight: 1 }}>
+                  <span style={{ fontFamily: FONTS.script, fontSize: "16px", lineHeight: 1 }}>
                     {shortLabel}
                   </span>
                 </button>
@@ -505,16 +502,14 @@ export default function Portfolio({
                     }}
                     style={{
                       display: "flex",
-                      flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "2px",
                       background: isSelected ? catColor : "rgba(0, 0, 0, 0.06)",
                       color: isSelected ? "#FFFFFF" : "var(--color-ink)",
                       border: "none",
                       borderRadius: "6px",
-                      padding: "5px 2px",
-                      minHeight: "36px",
+                      padding: "6px 2px",
+                      minHeight: "34px",
                       cursor: "pointer",
                       boxSizing: "border-box",
                       boxShadow: isSelected ? `0 2px 8px ${catColor}55` : "none",
@@ -522,10 +517,7 @@ export default function Portfolio({
                       transition: "all 0.2s ease",
                     }}
                   >
-                    <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "8.5px", fontWeight: 700, opacity: isSelected ? 0.9 : 0.6, lineHeight: 1 }}>
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span style={{ fontFamily: FONTS.script, fontSize: "13px", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
+                    <span style={{ fontFamily: FONTS.script, fontSize: "14px", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
                       {shortLabel}
                     </span>
                   </button>
