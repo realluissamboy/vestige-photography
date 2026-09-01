@@ -516,72 +516,168 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           </>
         )}
 
-        {/* Slide Indicators / Navigation Dots — Centered in Lower Middle */}
-        <div
-          aria-label="Featured photography slides"
-          style={{
-            position: "absolute",
-            bottom: isShortLandscape
-              ? "max(8px, calc(env(safe-area-inset-bottom, 0px) + 6px))"
-              : isCompact
-              ? "max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px))"
-              : "36px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            display: "flex",
-            alignItems: "center",
-            gap: isShortLandscape ? "6px" : isCompact ? "10px" : "12px",
-            zIndex: 7,
-          }}
-        >
-          {HERO_SLIDES.map((image, index) => {
-            const isActive = index === activeSlide;
-            const pillHeight = isShortLandscape ? "7px" : isCompact ? "12px" : "13px";
-            const activeWidth = isShortLandscape ? "26px" : isCompact ? "44px" : "52px";
-            const inactiveWidth = isShortLandscape ? "7px" : isCompact ? "12px" : "13px";
+        {/* Navigation & Indicators — Landscape Preview Dock vs Portrait/Desktop Progress Pills */}
+        {isShortLandscape ? (
+          <div
+            aria-label="Photography categories preview"
+            style={{
+              position: "absolute",
+              bottom: "max(10px, calc(env(safe-area-inset-bottom, 0px) + 8px))",
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              maxWidth: "calc(100vw - 120px)",
+              overflowX: "auto",
+              padding: "4px 8px",
+              scrollbarWidth: "none",
+              zIndex: 7,
+            }}
+          >
+            {HERO_SLIDES.map((image, index) => {
+              const isActive = index === activeSlide;
+              const title = CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat;
 
-            return (
-              <button
-                key={image.id}
-                type="button"
-                aria-label={`Show ${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat}`}
-                aria-current={isActive}
-                onClick={() => goToSlide(index)}
-                style={{
-                  position: "relative",
-                  width: isActive ? activeWidth : inactiveWidth,
-                  height: pillHeight,
-                  borderRadius: "999px",
-                  border: isActive ? "2px solid #CD2644" : "1.5px solid rgba(205, 38, 68, 0.75)",
-                  background: isActive ? "rgba(10, 10, 12, 0.6)" : "rgba(205, 38, 68, 0.25)",
-                  boxShadow: isActive
-                    ? "0 0 12px rgba(205, 38, 68, 0.5), 0 2px 6px rgba(0, 0, 0, 0.6)"
-                    : "0 2px 5px rgba(0, 0, 0, 0.5)",
-                  cursor: "pointer",
-                  padding: 0,
-                  overflow: "hidden",
-                  transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
-                }}
-              >
-                {isActive && (
-                  <span
-                    key={`${image.id}-${slideCycle}`}
-                    aria-hidden="true"
+              return (
+                <button
+                  key={image.id}
+                  type="button"
+                  onClick={() => {
+                    if (isActive) {
+                      setPage("portfolio");
+                    } else {
+                      goToSlide(index);
+                    }
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    background: isActive ? "rgba(10, 10, 12, 0.88)" : "rgba(10, 10, 12, 0.55)",
+                    backdropFilter: "blur(10px)",
+                    border: isActive ? "1.5px solid #CD2644" : "1px solid rgba(255, 255, 255, 0.2)",
+                    borderRadius: "8px",
+                    padding: "4px 10px 4px 4px",
+                    cursor: "pointer",
+                    boxShadow: isActive
+                      ? "0 0 16px rgba(205, 38, 68, 0.5), 0 4px 14px rgba(0, 0, 0, 0.6)"
+                      : "0 2px 6px rgba(0, 0, 0, 0.4)",
+                    transform: isActive ? "scale(1.05)" : "scale(1)",
+                    transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+                    whiteSpace: "nowrap",
+                    flexShrink: 0,
+                  }}
+                >
+                  {/* Thumbnail Preview */}
+                  <div
                     style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "#FDFEFD",
-                      transform: "scaleX(0)",
-                      transformOrigin: "left center",
-                      animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
-                      willChange: "transform",
+                      width: "34px",
+                      height: "34px",
+                      borderRadius: "5px",
+                      overflow: "hidden",
+                      position: "relative",
+                      border: isActive ? "1px solid rgba(205, 38, 68, 0.9)" : "1px solid rgba(255, 255, 255, 0.2)",
+                      flexShrink: 0,
                     }}
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
+                  >
+                    <img
+                      src={image.src}
+                      alt=""
+                      aria-hidden="true"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: HERO_LANDSCAPE_POSITIONS[image.id] ?? "50% 20%",
+                      }}
+                    />
+                  </div>
+
+                  {/* Category Title */}
+                  <div style={{ textAlign: "left", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                    <div
+                      style={{
+                        fontFamily: FONTS.script,
+                        fontSize: "17px",
+                        lineHeight: 1,
+                        color: isActive ? "#FDFEFD" : "rgba(250, 248, 244, 0.75)",
+                        textShadow: isActive ? "0 0 8px rgba(205, 38, 68, 0.85)" : "none",
+                      }}
+                    >
+                      {title}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+          /* Slide Indicators / Navigation Dots — Centered in Lower Middle */
+          <div
+            aria-label="Featured photography slides"
+            style={{
+              position: "absolute",
+              bottom: isCompact
+                ? "max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px))"
+                : "36px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex",
+              alignItems: "center",
+              gap: isCompact ? "10px" : "12px",
+              zIndex: 7,
+            }}
+          >
+            {HERO_SLIDES.map((image, index) => {
+              const isActive = index === activeSlide;
+              const pillHeight = isCompact ? "12px" : "13px";
+              const activeWidth = isCompact ? "44px" : "52px";
+              const inactiveWidth = isCompact ? "12px" : "13px";
+
+              return (
+                <button
+                  key={image.id}
+                  type="button"
+                  aria-label={`Show ${CATEGORY_TITLES[image.cat as keyof typeof CATEGORY_TITLES] ?? image.cat}`}
+                  aria-current={isActive}
+                  onClick={() => goToSlide(index)}
+                  style={{
+                    position: "relative",
+                    width: isActive ? activeWidth : inactiveWidth,
+                    height: pillHeight,
+                    borderRadius: "999px",
+                    border: isActive ? "2px solid #CD2644" : "1.5px solid rgba(205, 38, 68, 0.75)",
+                    background: isActive ? "rgba(10, 10, 12, 0.6)" : "rgba(205, 38, 68, 0.25)",
+                    boxShadow: isActive
+                      ? "0 0 12px rgba(205, 38, 68, 0.5), 0 2px 6px rgba(0, 0, 0, 0.6)"
+                      : "0 2px 5px rgba(0, 0, 0, 0.5)",
+                    cursor: "pointer",
+                    padding: 0,
+                    overflow: "hidden",
+                    transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
+                  }}
+                >
+                  {isActive && (
+                    <span
+                      key={`${image.id}-${slideCycle}`}
+                      aria-hidden="true"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "#FDFEFD",
+                        transform: "scaleX(0)",
+                        transformOrigin: "left center",
+                        animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,
+                        willChange: "transform",
+                      }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Framing Calibration Tool (visible in dev mode or with ?debug=1) */}
         {(typeof window !== "undefined" && (import.meta.env.DEV || window.location.search.includes("debug"))) && (
