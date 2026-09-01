@@ -103,7 +103,7 @@ export default function Portfolio({
       {isLandscapeMobile && displayedCategory === null ? (
         <header
           style={{
-            height: "44px",
+            height: "48px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -133,7 +133,7 @@ export default function Portfolio({
             Vestige
           </button>
 
-          {/* Center: Minimalist Category Pills */}
+          {/* Center: Square Category Cards (No Outlines, Substantial Touch Area) */}
           <div
             style={{
               display: "flex",
@@ -159,23 +159,24 @@ export default function Portfolio({
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "4px",
-                    background: isSelected ? catColor : "rgba(245, 240, 232, 0.85)",
+                    gap: "5px",
+                    background: isSelected ? catColor : "rgba(0, 0, 0, 0.06)",
                     color: isSelected ? "#FFFFFF" : "var(--color-ink)",
-                    border: isSelected ? "1.5px solid rgba(255, 255, 255, 0.85)" : "1px solid rgba(0, 0, 0, 0.15)",
-                    borderRadius: "999px",
-                    padding: "3px 8px",
+                    border: "none",
+                    borderRadius: "6px",
+                    padding: "6px 12px",
+                    minHeight: "32px",
                     cursor: "pointer",
                     whiteSpace: "nowrap",
-                    boxShadow: isSelected ? `0 2px 8px ${catColor}55` : "0 1px 3px rgba(0, 0, 0, 0.06)",
-                    transform: isSelected ? "scale(1.02)" : "scale(1)",
+                    boxShadow: isSelected ? `0 2px 8px ${catColor}55` : "none",
+                    transform: isSelected ? "scale(1.03)" : "scale(1)",
                     transition: "all 0.2s ease",
                   }}
                 >
-                  <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "8.5px", opacity: isSelected ? 0.9 : 0.65 }}>
+                  <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "10px", fontWeight: 700, opacity: isSelected ? 0.9 : 0.6 }}>
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span style={{ fontFamily: FONTS.script, fontSize: "12px", lineHeight: 1 }}>
+                  <span style={{ fontFamily: FONTS.script, fontSize: "15px", lineHeight: 1 }}>
                     {shortLabel}
                   </span>
                 </button>
@@ -191,7 +192,7 @@ export default function Portfolio({
               rel="noopener noreferrer"
               style={{
                 background: "#CD2644",
-                border: "1px solid rgba(255, 255, 255, 0.4)",
+                border: "none",
                 color: "#FFFFFF",
                 fontFamily: FONTS.display,
                 fontStyle: "italic",
@@ -199,11 +200,16 @@ export default function Portfolio({
                 fontSize: "11px",
                 letterSpacing: "1.2px",
                 textTransform: "uppercase",
-                padding: "4px 14px",
-                borderRadius: "999px",
+                padding: "6px 14px",
+                minHeight: "32px",
+                boxSizing: "border-box",
+                borderRadius: "6px",
                 textDecoration: "none",
                 boxShadow: "0 2px 8px rgba(205, 38, 68, 0.4)",
                 whiteSpace: "nowrap",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
               Book a Session
