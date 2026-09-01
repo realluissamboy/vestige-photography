@@ -48,12 +48,12 @@ const HERO_PORTRAIT_POSITIONS: Record<number, string> = {
 const HERO_LANDSCAPE_POSITIONS: Record<number, string> = {
   1: "50% 20%",
   9: "50% 28%",
-  18: "50% 25%",
-  19: "50% 53%",  // Gold jumpsuit model: head sits ~10% from the top with full upper body, table & chair
-  21: "50% 44%",  // Pink victory rolls model: flowers & rolls sit ~10% from the top
-  25: "50% 28%",  // White fedora model: crown of hat sits ~10% from the top
-  34: "50% 26%",  // Burlesque model: hair waves sit ~10% from the top
-  36: "65% 66%",  // Tiki model: styled hair sits ~10% from the top
+  18: "50% 22%",
+  19: "50% 42%",  // Gold jumpsuit: generous headroom showing chandelier fronds and painting above head
+  21: "50% 38%",  // Pink victory rolls: natural headroom showing ornate mirror crest and satin drapes
+  25: "50% 20%",  // Classic cars / fedora: natural headroom showing vintage car roof and glass
+  34: "50% 20%",  // Burlesque: natural headroom showing crystal chandelier and gilded mirror
+  36: "65% 56%",  // Modern tiki: natural headroom showing patterned canopy and ambient rafter lighting
 };
 
 const SLIDE_DURATION = 7000;
