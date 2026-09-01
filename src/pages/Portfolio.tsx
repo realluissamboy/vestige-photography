@@ -876,13 +876,13 @@ export default function Portfolio({
               background: CATEGORY_COLORS[displayedCategory] ?? "",
               color: COLORS.cream,
               padding: isLandscapeMobile
-                ? "10px 16px"
+                ? "8px 16px"
                 : isMobile
-                ? "12px 16px 14px"
-                : "20px 32px 24px",
+                ? "10px 16px 12px"
+                : "16px 32px 18px",
               textAlign: "center",
               position: "relative",
-              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
+              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
             }}
           >
             <div
@@ -890,97 +890,48 @@ export default function Portfolio({
                 maxWidth: "1200px",
                 margin: "0 auto",
                 display: "flex",
-                flexDirection: isMobile && !isLandscapeMobile ? "column" : "row",
                 alignItems: "center",
-                justifyContent: "space-between",
-                gap: isMobile ? "6px" : "16px",
+                justifyContent: "center",
+                gap: "10px",
+                flexWrap: "wrap",
               }}
             >
-              {/* Back to Portfolio Button */}
-              <button
-                onClick={handleBackToPortfolio}
-                aria-label="Back to Portfolio overview"
+              <span
                 style={{
                   fontFamily: FONTS.script,
-                  fontSize: isLandscapeMobile ? "18px" : isMobile ? "20px" : "24px",
-                  color: "#FFFFFF",
-                  background: "transparent",
-                  border: "none",
-                  borderBottom: "1.5px solid rgba(255, 255, 255, 0.65)",
-                  padding: "0 0 2px 0",
-                  cursor: "pointer",
-                  minHeight: "32px",
+                  fontSize: isLandscapeMobile ? "20px" : isMobile ? "22px" : "32px",
                   lineHeight: 1,
-                  textShadow: "0 2px 6px rgba(0, 0, 0, 0.35)",
-                  opacity: 0.95,
-                  transition: "opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = "1";
-                  e.currentTarget.style.transform = "translateX(-2px)";
-                  e.currentTarget.style.borderBottomColor = "#FFFFFF";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = "0.95";
-                  e.currentTarget.style.transform = "translateX(0)";
-                  e.currentTarget.style.borderBottomColor = "rgba(255, 255, 255, 0.65)";
+                  opacity: 0.9,
                 }}
               >
-                ← Back to Portfolio
-              </button>
-
-              {/* Category Title Lockup */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  justifyContent: "center",
-                  gap: "8px",
-                  flexWrap: "wrap",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: FONTS.script,
-                    fontSize: isLandscapeMobile ? "20px" : isMobile ? "22px" : "30px",
-                    lineHeight: 1,
-                    opacity: 0.9,
-                  }}
-                >
-                  a study in
-                </span>
-                <h2
-                  style={{
-                    fontFamily: FONTS.display,
-                    fontStyle: "italic",
-                    fontWeight: 800,
-                    fontSize: isLandscapeMobile ? "22px" : isMobile ? "24px" : "36px",
-                    letterSpacing: "-0.5px",
-                    lineHeight: 1,
-                    margin: 0,
-                  }}
-                >
-                  {CATEGORY_TITLES[displayedCategory] ?? ""}
-                </h2>
-              </div>
-
-              {/* Photo Count Pill */}
-              <div
+                a study in
+              </span>
+              <h2
                 style={{
                   fontFamily: FONTS.display,
                   fontStyle: "italic",
-                  fontSize: "11px",
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  opacity: 0.85,
-                  display: isMobile && !isLandscapeMobile ? "none" : "block",
+                  fontWeight: 800,
+                  fontSize: isLandscapeMobile ? "22px" : isMobile ? "26px" : "38px",
+                  letterSpacing: "-0.5px",
+                  lineHeight: 1,
+                  margin: 0,
                 }}
               >
-                {currentCategoryImages.length} Photographs
-              </div>
+                {CATEGORY_TITLES[displayedCategory] ?? ""}
+              </h2>
+              <span
+                style={{
+                  fontFamily: FONTS.display,
+                  fontStyle: "italic",
+                  fontSize: isMobile ? "10px" : "11px",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  opacity: 0.75,
+                  marginLeft: "4px",
+                }}
+              >
+                • {currentCategoryImages.length} Photographs
+              </span>
             </div>
           </section>
           <div
@@ -1015,6 +966,138 @@ export default function Portfolio({
 
       {displayedCategory !== null && (
         <>
+          {(() => {
+            const currentIndex = PORTFOLIO_CATEGORIES.indexOf(displayedCategory);
+            const validIndex = currentIndex >= 0 ? currentIndex : 0;
+            const nextCategory = (PORTFOLIO_CATEGORIES[(validIndex + 1) % PORTFOLIO_CATEGORIES.length] ?? "Burlesque") as Category;
+            const nextCategoryTitle = CATEGORY_TITLES[nextCategory] ?? "";
+            const nextCategoryColor = CATEGORY_COLORS[nextCategory] ?? "var(--color-crimson)";
+
+            return (
+              <section
+                style={{
+                  maxWidth: "960px",
+                  margin: "8px auto 32px",
+                  padding: "0 16px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: isMobile && !isLandscapeMobile ? "1fr" : "1fr 1.2fr",
+                    gap: "12px",
+                    alignItems: "stretch",
+                  }}
+                >
+                  {/* Left Card: Return to All Collections */}
+                  <button
+                    type="button"
+                    onClick={handleBackToPortfolio}
+                    aria-label="Return to all collections"
+                    style={{
+                      background: "rgba(0, 0, 0, 0.04)",
+                      border: `1px solid ${COLORS.stone}66`,
+                      borderRadius: "8px",
+                      padding: isMobile ? "16px 18px" : "20px 24px",
+                      textAlign: "left",
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      gap: "4px",
+                      transition: "all 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "rgba(0, 0, 0, 0.07)";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(0, 0, 0, 0.04)";
+                      e.currentTarget.style.transform = "translateY(0)";
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: FONTS.display,
+                        fontStyle: "italic",
+                        fontSize: "10px",
+                        letterSpacing: "2.5px",
+                        textTransform: "uppercase",
+                        color: "var(--color-ink)",
+                        opacity: 0.6,
+                      }}
+                    >
+                      Portfolio Overview
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: FONTS.script,
+                        fontSize: isMobile ? "22px" : "26px",
+                        color: "var(--color-crimson)",
+                        lineHeight: 1.1,
+                      }}
+                    >
+                      ← All Collections
+                    </span>
+                  </button>
+
+                  {/* Right Card: Explore Next Study */}
+                  <button
+                    type="button"
+                    onClick={() => handleSelectCategory(nextCategory)}
+                    aria-label={`Explore next collection: ${nextCategoryTitle}`}
+                    style={{
+                      background: nextCategoryColor,
+                      color: "#FFFFFF",
+                      border: "none",
+                      borderRadius: "8px",
+                      padding: isMobile ? "16px 18px" : "20px 24px",
+                      textAlign: isMobile && !isLandscapeMobile ? "left" : "right",
+                      cursor: "pointer",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: isMobile && !isLandscapeMobile ? "flex-start" : "flex-end",
+                      gap: "4px",
+                      boxShadow: `0 4px 16px ${nextCategoryColor}33`,
+                      transition: "all 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "0.94";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                      e.currentTarget.style.transform = "translateY(0)";
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: FONTS.display,
+                        fontStyle: "italic",
+                        fontSize: "10px",
+                        letterSpacing: "2.5px",
+                        textTransform: "uppercase",
+                        opacity: 0.85,
+                      }}
+                    >
+                      Next Collection
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: FONTS.script,
+                        fontSize: isMobile ? "22px" : "26px",
+                        lineHeight: 1.1,
+                      }}
+                    >
+                      {nextCategoryTitle.startsWith("Modern ") ? nextCategoryTitle : `Modern ${nextCategoryTitle}`} →
+                    </span>
+                  </button>
+                </div>
+              </section>
+            );
+          })()}
+
           <section
             style={{
               textAlign: "center",
