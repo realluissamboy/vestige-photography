@@ -16,7 +16,7 @@ const HIGH_RES_HERO_SOURCES: Record<number, string> = {
 };
 
 const HERO_IMAGE_POSITIONS: Record<number, string> = {
-  1: "50% 20%",
+  1: "50% 35%",
   5: "50% 50%",
   6: "50% 72%",
   9: "50% 58%",
