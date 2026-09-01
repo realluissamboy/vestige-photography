@@ -15,7 +15,7 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
     <footer
       style={{
         textAlign: "center",
-        padding: isMobile ? "40px 20px 32px" : "48px 24px 40px",
+        padding: isMobile ? "40px 20px 36px" : "56px 24px 44px",
         borderTop: `1px solid ${COLORS.stone}44`,
         opacity: visible ? 1 : 0,
         transition: "opacity 0.8s ease 0.6s",
@@ -40,7 +40,7 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
             aria-label={s.label}
             style={{
               fontFamily: FONTS.script,
-              fontSize: isMobile ? "28px" : "36px",
+              fontSize: isMobile ? "26px" : "32px",
               color: "var(--color-crimson)",
               textDecoration: "none",
               display: "inline-flex",
@@ -91,12 +91,14 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
       </p>
       <p
         style={{
-          fontSize: "9px",
-          letterSpacing: "3px",
+          fontSize: "10px",
+          letterSpacing: "2.5px",
           textTransform: "uppercase",
+          fontFamily: FONTS.display,
+          fontStyle: "italic",
           color: COLORS.plum,
-          margin: "12px 0 0 0",
-          opacity: 0.7,
+          margin: "14px 0 0 0",
+          opacity: 0.75,
         }}
       >
         Built by Samboy |{" "}

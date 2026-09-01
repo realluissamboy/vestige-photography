@@ -776,9 +776,10 @@ export default function Portfolio({
                 <span>Book a Session</span>
                 <span style={{ fontSize: "14px", fontStyle: "normal" }}>→</span>
               </a>
-              <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "var(--color-ink)", opacity: 0.5 }}>
-                Vestige Photography • Susana
-              </div>
+            </div>
+
+            <div style={{ marginTop: "32px" }}>
+              <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
             </div>
           </div>
         ) : (
@@ -886,6 +887,10 @@ export default function Portfolio({
                 </div>
               );
             })}
+
+            <div style={{ marginTop: "40px" }}>
+              <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
+            </div>
           </div>
         )
       ) : (
