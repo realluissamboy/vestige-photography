@@ -238,24 +238,18 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             Vestige
           </div>
 
-          {/* Subtitle with white text inside an elegant frosted crimson capsule badge */}
+          {/* Subtitle in pure organic white script without any container pill or bold weight */}
           <div
             key={`${activeHero.cat}-${slideCycle}`}
             style={{
-              display: "inline-flex",
+              display: "flex",
               flexWrap: "wrap",
-              alignItems: "center",
-              columnGap: "10px",
+              alignItems: "baseline",
+              columnGap: compactHero ? "8px" : "12px",
               rowGap: "2px",
-              marginTop: compactHero ? "14px" : "18px",
-              padding: compactHero ? "6px 16px" : "8px 22px",
-              background: "rgba(143, 14, 31, 0.88)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              borderRadius: "999px",
-              border: "1px solid rgba(255, 255, 255, 0.28)",
-              boxShadow: "0 6px 20px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(255, 255, 255, 0.2) inset",
+              marginTop: compactHero ? "16px" : "24px",
               color: "#FFFFFF",
+              textShadow: "0 2px 6px rgba(0, 0, 0, 0.85), 0 3px 14px rgba(200, 20, 44, 0.75), 0 0 24px rgba(200, 20, 44, 0.4)",
               animation: "category-text-fade 0.45s ease forwards",
             }}
           >
@@ -263,9 +257,9 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "24px" : "32px",
+                fontSize: compactHero ? "26px" : "clamp(32px, 3.2vw, 48px)",
                 lineHeight: 1,
-                color: "rgba(255, 255, 255, 0.9)",
+                fontWeight: 400,
               }}
             >
               Twenty years of
@@ -274,11 +268,9 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "24px" : "32px",
+                fontSize: compactHero ? "26px" : "clamp(32px, 3.2vw, 48px)",
                 lineHeight: 1,
-                color: "#FFFFFF",
-                fontWeight: 600,
-                textShadow: "0 1px 4px rgba(0, 0, 0, 0.4)",
+                fontWeight: 400,
               }}
             >
               {categoryTitle.toLowerCase()}
