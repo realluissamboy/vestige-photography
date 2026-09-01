@@ -455,7 +455,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             bottom: isShortLandscape
               ? "max(12px, calc(env(safe-area-inset-bottom, 0px) + 8px))"
               : isMobilePortrait
-              ? "max(18px, calc(env(safe-area-inset-bottom, 0px) + 14px))"
+              ? "max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px))"
               : "36px",
             left: 0,
             right: 0,
@@ -464,7 +464,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             alignItems: "center",
             zIndex: 7,
             pointerEvents: "none",
-            padding: "0 8px",
+            padding: "0 6px",
           }}
         >
           {/* Unified Floating Category Dock */}
@@ -473,15 +473,18 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             style={{
               display: "flex",
               alignItems: "center",
-              gap: isMobilePortrait ? "5px" : isShortLandscape ? "8px" : "12px",
-              background: "rgba(10, 10, 12, 0.65)",
+              gap: isMobilePortrait ? "4px" : isShortLandscape ? "8px" : "12px",
+              background: "rgba(10, 10, 12, 0.7)",
               backdropFilter: "blur(14px)",
-              padding: isMobilePortrait ? "5px 8px" : isShortLandscape ? "6px 10px" : "8px 14px",
+              padding: isMobilePortrait ? "4px 6px" : isShortLandscape ? "6px 10px" : "8px 14px",
               borderRadius: "999px",
               border: "1px solid rgba(255, 255, 255, 0.2)",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.5)",
               pointerEvents: "auto",
-              maxWidth: "min(98vw, 920px)",
+              maxWidth: "calc(100vw - 12px)",
+              overflowX: "auto",
+              WebkitOverflowScrolling: "touch",
+              scrollbarWidth: "none",
               boxSizing: "border-box",
             }}
           >
@@ -506,7 +509,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                       background: "rgba(205, 38, 68, 0.25)",
                       border: "1.5px solid #CD2644",
                       borderRadius: "999px",
-                      padding: isMobilePortrait ? "5px 10px" : isShortLandscape ? "6px 14px" : "8px 18px",
+                      padding: isMobilePortrait ? "4px 8px" : isShortLandscape ? "6px 14px" : "8px 18px",
                       cursor: "pointer",
                       boxShadow: "0 0 16px rgba(205, 38, 68, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4)",
                       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -520,7 +523,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                       style={{
                         fontFamily: FONTS.display,
                         fontStyle: "italic",
-                        fontSize: isMobilePortrait ? "9.5px" : isShortLandscape ? "11px" : "12px",
+                        fontSize: isMobilePortrait ? "8.5px" : isShortLandscape ? "11px" : "12px",
                         fontWeight: 700,
                         letterSpacing: "0.5px",
                         color: "#FDFEFD",
@@ -534,7 +537,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                     <span
                       style={{
                         fontFamily: FONTS.script,
-                        fontSize: isMobilePortrait ? "16px" : isShortLandscape ? "19px" : "23px",
+                        fontSize: isMobilePortrait ? "14px" : isShortLandscape ? "19px" : "23px",
                         lineHeight: 1,
                         color: "#FDFEFD",
                         textShadow: "0 0 12px rgba(205, 38, 68, 0.9)",
@@ -563,7 +566,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               }
 
               /* Inactive Compact Thumbnail Tile */
-              const thumbSize = isMobilePortrait ? "28px" : isShortLandscape ? "34px" : "40px";
+              const thumbSize = isMobilePortrait ? "24px" : isShortLandscape ? "34px" : "40px";
 
               return (
                 <button
@@ -617,7 +620,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             <div
               style={{
                 width: "1px",
-                height: isMobilePortrait ? "18px" : isShortLandscape ? "20px" : "24px",
+                height: isMobilePortrait ? "16px" : isShortLandscape ? "20px" : "24px",
                 background: "rgba(255, 255, 255, 0.2)",
                 margin: "0 1px",
                 flexShrink: 0,
@@ -637,13 +640,13 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                 background: "linear-gradient(135deg, #CD2644 0%, #A01932 100%)",
                 border: "1px solid rgba(255, 255, 255, 0.35)",
                 borderRadius: "999px",
-                padding: isMobilePortrait ? "5px 10px" : isShortLandscape ? "6px 14px" : "8px 18px",
+                padding: isMobilePortrait ? "4px 8px" : isShortLandscape ? "6px 14px" : "8px 18px",
                 color: "#FFFFFF",
                 fontFamily: FONTS.display,
                 fontStyle: "italic",
                 fontWeight: 700,
-                fontSize: isMobilePortrait ? "10px" : isShortLandscape ? "11px" : "13px",
-                letterSpacing: "1px",
+                fontSize: isMobilePortrait ? "9.5px" : isShortLandscape ? "11px" : "13px",
+                letterSpacing: "0.8px",
                 textTransform: "uppercase",
                 textDecoration: "none",
                 whiteSpace: "nowrap",
@@ -662,7 +665,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               }}
             >
               <span>Book a Session</span>
-              <span style={{ fontSize: isMobilePortrait ? "11px" : isShortLandscape ? "13px" : "15px", fontStyle: "normal" }}>→</span>
+              <span style={{ fontSize: isMobilePortrait ? "10px" : isShortLandscape ? "13px" : "15px", fontStyle: "normal" }}>→</span>
             </a>
           </div>
         </div>

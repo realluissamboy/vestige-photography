@@ -476,7 +476,7 @@ export default function Portfolio({
           </div>
         ) : isMobile ? (
           /* Portrait Mobile: Studio Spotlight + 6-Tile Collection Grid (Matching Landscape Experience) */
-          <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 16px 40px" }}>
+          <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 16px max(70px, calc(env(safe-area-inset-bottom, 0px) + 50px))" }}>
             {/* Top Category Switcher Tabs */}
             <div
               style={{
