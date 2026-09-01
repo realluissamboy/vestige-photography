@@ -276,7 +276,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           </div>
         </div>
 
-        {/* Navigation — Mobile Hamburger at Top-Right, Desktop Navigation Capsules at Bottom-Right */}
+        {/* Navigation — Mobile Hamburger at Top-Right, Desktop Navigation at Top-Right */}
         {compactHero ? (
           <div
             style={{
@@ -296,7 +296,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           <nav
             style={{
               position: "absolute",
-              bottom: "36px",
+              top: "36px",
               right: "48px",
               display: "flex",
               alignItems: "center",
@@ -323,14 +323,14 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           </nav>
         )}
 
-        {/* Slide Indicators / Navigation Dots */}
+        {/* Slide Indicators / Navigation Dots — Centered in Lower Middle */}
         <div
           aria-label="Featured photography slides"
           style={{
             position: "absolute",
             bottom: compactHero ? "24px" : "36px",
-            left: compactHero ? "50%" : "48px",
-            transform: compactHero ? "translateX(-50%)" : "none",
+            left: "50%",
+            transform: "translateX(-50%)",
             display: "flex",
             alignItems: "center",
             gap: compactHero ? "10px" : "12px",

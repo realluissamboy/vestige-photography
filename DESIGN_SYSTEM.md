@@ -40,42 +40,44 @@ Defined in `src/theme/colors.ts` and `src/styles/tokens.css`.
 | Color Token | Hex Code | Purpose / Application |
 | :--- | :--- | :--- |
 | `parchment` | `#EFE9D9` | Warm archival paper background across all pages |
-| `cream` | `#F5F0E8` | Light text on dark photo areas and slide progress fill |
+| `cream` | `#F5F0E8` | Light text on dark photo areas |
+| `subtitleWhite` | `#FDFEFD` | Porcelain white for floating hero subtitles and navigation links |
 | `ink` | `#1A1A1B` | Primary high-contrast text color on parchment |
 | `obsidian` | `#1A1A1A` | Deep charcoal for quotes and lightbox backdrops |
-| `crimson` | `#C8142C` | Signature brand crimson for wordmarks, nav links, CTA button, and borders |
+| `crimson` | `#CD2644` | Signature brand magenta-crimson for title wordmarks, CTA buttons, and accents |
 | `muted` | `#6B5B4A` | Secondary text & subtitles (**WCAG AA compliant ≥4.5:1** on parchment) |
 | `stoneDivider` | `#9E8C79` | Archival dividers and borders (**≥3:1 contrast** on parchment) |
 
 ### Category Signature Palette & Sequence Covers
-| Category | Token | Hex Code | Category Cover Image (`id`) |
-| :--- | :--- | :--- | :--- |
-| Modern Pin-Up | `crimson` | `#C8142C` | *Jade Wall* (`id: 1`) |
-| Modern Kulture | `kulture` | `#5D7F9A` | `R2C0A2950` (`id: 25`) |
-| Modern Burlesque | `plum` | `#8B6F7C` | `r2C0A4286` (`id: 34`) |
-| Modern Tiki | `tiki` | `#317B73` | *Avalon Monet* (`id: 9`) |
-| Modern Glamour | `rose` | `#C47F7A` | `R2C0A1609` (`id: 19`) |
+| Sequence # | Category Name | Color Token | Hex Code | Verified Cover Photo ID |
+| :---: | :--- | :--- | :--- | :--- |
+| **1** | Modern Pin-Up | `crimson` | `#CD2644` | ID: 1 (*Jade Wall*) |
+| **2** | Classic Cars & Kulture | `kulture` | `#5D7F9A` | ID: 25 (*Classic Cars*) |
+| **3** | Modern Burlesque | `rose` | `#C47F7A` | ID: 34 (*Feather Fan*) |
+| **4** | Tiki & Rockabilly | `tiki` | `#317B73` | ID: 9 (*Avalon Monet*) |
+| **5** | Vintage Glamour | `plum` | `#8B6F7C` | ID: 19 (*Red Velvet*) |
 
 ---
 
-## 4. 3D Elevation & Text Lighting Effects
+## 4. 3D Bevel & Text Shadow Systems
 
 Defined in `src/theme/effects.ts`.
 
-Multi-layered 3D bevel and specular lighting ensures crimson and cream typography pops off photographic textures without feeling like flat labels or harsh glows:
-
-```ts
-// 3D Bevel Extrusion + Top Specular Highlight + Ambient Depth
+### 4.1 Wordmark 3D Physical Lighting (`VESTIGE_WORDMARK_SHADOW`)
+```typescript
 export const VESTIGE_WORDMARK_SHADOW = [
-  "0 -1px 1px rgba(255, 255, 255, 0.45)",  // Top specular highlight rim
-  "0 0 2px rgba(255, 255, 255, 0.35)",    // Soft light catch
-  "0 1px 0 #8f0e1f",                      // Extrusion step 1
-  "0 2px 0 #7a0c1b",                      // Extrusion step 2
-  "0 3px 0 #650a16",                      // Extrusion step 3
-  "0 4px 10px rgba(0, 0, 0, 0.5)",        // Contact drop shadow
-  "0 8px 24px rgba(0, 0, 0, 0.35)",       // Ambient soft shadow
+  "0 -1px 1px rgba(255, 255, 255, 0.45)",
+  "0 0 2px rgba(255, 255, 255, 0.35)",
+  "0 1px 0 #8f0e1f",
+  "0 2px 0 #7a0c1b",
+  "0 3px 0 #650a16",
+  "0 4px 10px rgba(0, 0, 0, 0.5)",
+  "0 8px 24px rgba(0, 0, 0, 0.35)",
 ].join(", ");
+```
 
+### 4.2 Standard UI 3D Text Shadow (`VESTIGE_TEXT_SHADOW`)
+```typescript
 export const VESTIGE_TEXT_SHADOW = [
   "0 -1px 1px rgba(255, 255, 255, 0.4)",
   "0 0 2px rgba(255, 255, 255, 0.3)",
@@ -97,14 +99,14 @@ export const VESTIGE_TEXT_SHADOW = [
   - `HERO_IMAGE_POSITIONS` specifies tailored `objectPosition` values for desktop.
   - `HERO_MOBILE_POSITIONS` provides responsive override crops for mobile screens.
 - **Layout Architecture (Desktop)**:
-  - **Top-Left**: "Vestige" cursive signature and unbolded "Twenty years of [category]" subtitle in pure luminous white (`#FFFFFF`) with multi-layer crimson depth shadows.
-  - **Bottom-Right**: "Portfolio" and "About" unboxed cursive navigation links in pure white with hover lift.
-  - **Bottom-Left**: Floating slide indicators with white outlines and crimson progress fill (`bottom: 36px, left: 48px`).
+  - **Top-Left**: "Vestige" cursive signature in `#CD2644` and unbolded "Twenty years of [category]" subtitle in porcelain white (`#FDFEFD`).
+  - **Top-Right**: "Portfolio" and "About" unboxed cursive navigation links in porcelain white (`#FDFEFD`) with hover lift.
+  - **Lower-Middle**: Floating slide indicators centered horizontally at `bottom: 36px` (`left: 50%, transform: translateX(-50%)`).
 - **Slide Indicators (Progress Bars)**:
-  - **Desktop / Laptop Placement**: Anchored to **bottom-left** (`bottom: 36px, left: 48px`).
+  - **Desktop / Laptop Placement**: Centered horizontally in the lower-middle (`bottom: 36px, left: 50%`).
   - **Mobile Placement**: Centered horizontally at `bottom: 24px`.
   - **Unboxed Float**: Clean organic placement directly on the photograph with zero outer container box.
-  - **Active Capsule**: `52px × 13px` (desktop) / `44px × 12px` (mobile), `2px solid #FFFFFF` white border, with animated crimson (`var(--color-crimson)`) progress fill.
+  - **Active Capsule**: `52px × 13px` (desktop) / `44px × 12px` (mobile), `2px solid #FFFFFF` white border, with animated crimson (`#CD2644`) progress fill.
   - **Inactive Dots**: `13px × 13px` (desktop) / `12px × 12px` (mobile), `1.5px solid rgba(255, 255, 255, 0.75)` white border with semi-transparent white glass fill.
 
 ### 5.2 Mobile Hamburger Menu (`MobileMenu.tsx`)
