@@ -23,13 +23,14 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
   };
 
   useEffect(() => {
-    if (!open) {
-      if (typeof document !== "undefined") {
-        document.body.style.overflow = "";
-      }
-      return;
+    if (!open) return;
+
+    const prevBodyOverflow = typeof document !== "undefined" ? document.body.style.overflow : "";
+    const prevDocOverflow = typeof document !== "undefined" ? document.documentElement.style.overflow : "";
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     }
-    document.body.style.overflow = "hidden";
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -40,7 +41,10 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = "";
+      if (typeof document !== "undefined") {
+        document.body.style.overflow = prevBodyOverflow;
+        document.documentElement.style.overflow = prevDocOverflow;
+      }
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [open]);

@@ -15,16 +15,28 @@ export default function App() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "";
-    }
     setMounted(true);
   }, []);
 
-  const handleSetPage = useCallback((newPage: PageKey) => {
+  useEffect(() => {
     if (typeof document !== "undefined") {
-      document.body.style.overflow = "";
+      if (activePage === "home") {
+        document.documentElement.style.overflow = "hidden";
+        document.documentElement.style.height = "100%";
+        document.body.style.overflow = "hidden";
+        document.body.style.height = "100%";
+        document.body.style.overscrollBehavior = "none";
+      } else {
+        document.documentElement.style.overflow = "";
+        document.documentElement.style.height = "";
+        document.body.style.overflow = "";
+        document.body.style.height = "";
+        document.body.style.overscrollBehavior = "";
+      }
     }
+  }, [activePage]);
+
+  const handleSetPage = useCallback((newPage: PageKey) => {
     setActivePage(newPage);
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "instant" });
@@ -47,16 +59,21 @@ export default function App() {
     transition: "opacity 0.3s ease, color 0.3s ease",
   });
 
+  const isHomePage = activePage === "home";
+
   return (
     <div
       style={{
         background: "var(--color-parchment)",
-        minHeight: "100vh",
+        height: isHomePage ? "100dvh" : undefined,
+        maxHeight: isHomePage ? "100dvh" : undefined,
+        minHeight: isHomePage ? undefined : "100dvh",
+        overflow: isHomePage ? "hidden" : undefined,
         opacity: mounted ? 1 : 0,
         transition: "opacity 0.2s ease",
       }}
     >
-      <Suspense fallback={<div style={{ minHeight: "100vh", background: "var(--color-parchment)" }} />}>
+      <Suspense fallback={<div style={{ minHeight: "100dvh", background: "var(--color-parchment)" }} />}>
         {/* HOME PAGE */}
         {activePage === "home" && (
           <Home

@@ -115,6 +115,37 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
+  // Touch swipe navigation for mobile
+  const touchStartX = React.useRef<number | null>(null);
+  const touchStartY = React.useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    if (touch) {
+      touchStartX.current = touch.clientX;
+      touchStartY.current = touch.clientY;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    const deltaX = touch.clientX - touchStartX.current;
+    const deltaY = touch.clientY - touchStartY.current;
+
+    // Trigger horizontal swipe navigation if swipe is predominantly horizontal and >= 40px
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) {
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   const navLinkStyle = (link: string): React.CSSProperties => ({
     fontFamily: FONTS.script,
     fontSize: compactHero ? "28px" : "48px",
@@ -137,9 +168,15 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
     <main
       style={{
         background: "var(--color-parchment)",
+        height: "100%",
         minHeight: "100dvh",
+        maxHeight: "100dvh",
+        width: "100%",
+        overflow: "hidden",
+        overscrollBehavior: "none",
         fontFamily: FONTS.body,
         color: "var(--color-ink)",
+        position: "relative",
       }}
     >
       <h1 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
@@ -148,13 +185,18 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
 
       {/* Full-bleed hero with floating nav + script wordmark */}
       <div
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         style={{
           position: "relative",
           width: "100%",
-          height: "100dvh",
+          height: "100%",
+          minHeight: "100dvh",
+          maxHeight: "100dvh",
           overflow: "hidden",
           opacity: heroVisible ? 1 : 0,
           transition: "opacity 1.6s ease",
+          touchAction: "pan-x",
         }}
       >
         {HERO_SLIDES.map((image, index) => {
@@ -191,7 +233,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             top: 0,
             left: 0,
             right: 0,
-            height: compactHero ? "240px" : "260px",
+            height: compactHero ? "max(240px, calc(env(safe-area-inset-top, 0px) + 200px))" : "260px",
             pointerEvents: "none",
             background:
               "linear-gradient(to bottom, rgba(10,10,11,0.5) 0%, rgba(10,10,11,0.2) 60%, rgba(10,10,11,0) 100%)",
@@ -207,7 +249,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             bottom: 0,
             left: 0,
             right: 0,
-            height: compactHero ? "120px" : "180px",
+            height: compactHero ? "max(140px, calc(env(safe-area-inset-bottom, 0px) + 120px))" : "180px",
             pointerEvents: "none",
             background:
               "linear-gradient(to top, rgba(10,10,11,0.4) 0%, rgba(10,10,11,0.08) 60%, rgba(10,10,11,0) 100%)",
@@ -220,8 +262,8 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           aria-hidden="true"
           style={{
             position: "absolute",
-            top: compactHero ? "20px" : "36px",
-            left: compactHero ? "16px" : "48px",
+            top: compactHero ? "max(20px, env(safe-area-inset-top, 20px))" : "36px",
+            left: compactHero ? "max(16px, env(safe-area-inset-left, 16px))" : "48px",
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
@@ -293,7 +335,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               position: "absolute",
               top: 0,
               right: 0,
-              padding: "20px 16px 0",
+              padding: "max(20px, env(safe-area-inset-top, 20px)) max(16px, env(safe-area-inset-right, 16px)) 0",
               zIndex: 10,
               display: "flex",
               alignItems: "center",
@@ -338,7 +380,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           aria-label="Featured photography slides"
           style={{
             position: "absolute",
-            bottom: compactHero ? "24px" : "36px",
+            bottom: compactHero ? "max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px))" : "36px",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",

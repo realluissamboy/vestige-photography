@@ -52,12 +52,6 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
     transition: "border-color 0.2s ease, opacity 0.2s ease",
   };
 
-  React.useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "";
-    }
-  }, []);
-
   return (
     <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />

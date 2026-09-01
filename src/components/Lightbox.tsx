@@ -23,6 +23,13 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
     // Store the currently focused element so we can restore it on close
     triggerRef.current = document.activeElement as HTMLElement;
 
+    const prevBodyOverflow = typeof document !== "undefined" ? document.body.style.overflow : "";
+    const prevDocOverflow = typeof document !== "undefined" ? document.documentElement.style.overflow : "";
+    if (typeof document !== "undefined") {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
@@ -70,6 +77,10 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      if (typeof document !== "undefined") {
+        document.body.style.overflow = prevBodyOverflow;
+        document.documentElement.style.overflow = prevDocOverflow;
+      }
       document.removeEventListener("keydown", handleKeyDown);
       // Restore focus on close
       if (triggerRef.current && typeof triggerRef.current.focus === "function") {
