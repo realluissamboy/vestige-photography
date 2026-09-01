@@ -34,7 +34,13 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
 };
 
 const HERO_MOBILE_POSITIONS: Record<number, string> = {
-  18: "70% 5%",
+  1: "50% 38%",
+  9: "50% 50%",
+  18: "50% 15%",
+  19: "50% 50%",
+  25: "50% 48%",
+  34: "50% 40%",
+  36: "65% 55%",
 };
 
 const SLIDE_DURATION = 7000;
@@ -129,7 +135,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
     <main
       style={{
         background: "var(--color-parchment)",
-        minHeight: "100vh",
+        minHeight: "100dvh",
         fontFamily: FONTS.body,
         color: "var(--color-ink)",
       }}
@@ -143,7 +149,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
         style={{
           position: "relative",
           width: "100%",
-          height: "100vh",
+          height: "100dvh",
           overflow: "hidden",
           opacity: heroVisible ? 1 : 0,
           transition: "opacity 1.6s ease",
@@ -199,10 +205,10 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             bottom: 0,
             left: 0,
             right: 0,
-            height: "180px",
+            height: compactHero ? "120px" : "180px",
             pointerEvents: "none",
             background:
-              "linear-gradient(to top, rgba(10,10,11,0.5) 0%, rgba(10,10,11,0.15) 60%, rgba(10,10,11,0) 100%)",
+              "linear-gradient(to top, rgba(10,10,11,0.4) 0%, rgba(10,10,11,0.08) 60%, rgba(10,10,11,0) 100%)",
             zIndex: 4,
           }}
         />
