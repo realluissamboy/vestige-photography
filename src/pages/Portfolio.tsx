@@ -336,6 +336,7 @@ export default function Portfolio({
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                gridAutoRows: "min-content",
                 gap: "8px",
                 height: "100%",
                 overflowY: "auto",
@@ -366,7 +367,7 @@ export default function Portfolio({
                     style={{
                       position: "relative",
                       width: "100%",
-                      aspectRatio: "3/4",
+                      aspectRatio: "1 / 1",
                       borderRadius: "6px",
                       overflow: "hidden",
                       cursor: "pointer",
