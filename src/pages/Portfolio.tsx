@@ -477,22 +477,21 @@ export default function Portfolio({
         ) : isMobile ? (
           /* Portrait Mobile: Studio Spotlight + 6-Tile Collection Grid (Matching Landscape Experience) */
           <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 16px 20px" }}>
-            {/* Top Category Switcher Tabs */}
+            {/* Top Category Switcher Tabs — 5 Equal Columns, 100% Visible with Zero Scrolling */}
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                overflowX: "auto",
-                scrollbarWidth: "none",
-                padding: "2px 0 14px",
-                WebkitOverflowScrolling: "touch",
+                display: "grid",
+                gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+                gap: "4px",
+                width: "100%",
+                padding: "2px 0 12px",
+                boxSizing: "border-box",
               }}
             >
               {PORTFOLIO_CATEGORIES.map((cat, index) => {
                 const isSelected = cat === previewCategory;
                 const catTitle = CATEGORY_TITLES[cat] ?? "";
-                const shortLabel = catTitle.replace(/^Modern\s/, "");
+                const shortLabel = catTitle.replace(/^Modern\s/, "").replace(/^Classic\s/, "");
                 const catColor = CATEGORY_COLORS[cat] ?? "var(--color-crimson)";
 
                 return (
@@ -505,27 +504,28 @@ export default function Portfolio({
                       if (firstPhoto) setSpotlightImageId(firstPhoto.id);
                     }}
                     style={{
-                      flexShrink: 0,
                       display: "flex",
+                      flexDirection: "column",
                       alignItems: "center",
-                      gap: "6px",
+                      justifyContent: "center",
+                      gap: "2px",
                       background: isSelected ? catColor : "rgba(0, 0, 0, 0.06)",
                       color: isSelected ? "#FFFFFF" : "var(--color-ink)",
                       border: "none",
                       borderRadius: "6px",
-                      padding: "7px 14px",
-                      minHeight: "34px",
+                      padding: "5px 2px",
+                      minHeight: "36px",
                       cursor: "pointer",
-                      whiteSpace: "nowrap",
-                      boxShadow: isSelected ? `0 2px 10px ${catColor}55` : "none",
+                      boxSizing: "border-box",
+                      boxShadow: isSelected ? `0 2px 8px ${catColor}55` : "none",
                       transform: isSelected ? "scale(1.02)" : "scale(1)",
                       transition: "all 0.2s ease",
                     }}
                   >
-                    <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "10px", fontWeight: 700, opacity: isSelected ? 0.9 : 0.6 }}>
+                    <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "8.5px", fontWeight: 700, opacity: isSelected ? 0.9 : 0.6, lineHeight: 1 }}>
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span style={{ fontFamily: FONTS.script, fontSize: "16px", lineHeight: 1 }}>
+                    <span style={{ fontFamily: FONTS.script, fontSize: "13px", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>
                       {shortLabel}
                     </span>
                   </button>
