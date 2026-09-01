@@ -1,11 +1,11 @@
 import React, { type CSSProperties } from "react";
-import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
 import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import type { PageKey } from "../data/navigation";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
 import Button from "../components/Button";
+import { useResponsiveViewport } from "../hooks/useIsMobile";
 
 export interface AboutProps {
   aboutVisible: boolean;
@@ -16,9 +16,11 @@ export interface AboutProps {
 }
 
 export default function About({ aboutVisible, setPage, isMobile, navStyleDark, setNavHover }: AboutProps) {
+  const { isLandscapeMobile, isMobilePortrait } = useResponsiveViewport();
+
   const sectionLabel: CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isMobile ? "40px" : "54px",
+    fontSize: isLandscapeMobile ? "34px" : isMobile ? "40px" : "54px",
     color: "var(--color-crimson)",
     marginBottom: "2px",
     lineHeight: 1,
@@ -26,21 +28,21 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
   };
   const sectionHeading: CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isMobile ? "30px" : "38px",
+    fontSize: isLandscapeMobile ? "26px" : isMobile ? "30px" : "38px",
     fontWeight: 400,
     fontStyle: "normal",
     color: "var(--color-ink)",
-    margin: "4px 0 24px",
+    margin: isLandscapeMobile ? "2px 0 14px" : "4px 0 24px",
     lineHeight: 1.15,
   };
-  const narrowSectionPadding = isMobile ? "0 20px 64px" : "0 40px 96px";
+  const narrowSectionPadding = isLandscapeMobile ? "0 24px 40px" : isMobile ? "0 20px 64px" : "0 40px 96px";
   const bodyText: CSSProperties = {
     fontFamily: FONTS.body,
-    fontSize: isMobile ? "18px" : "20px",
+    fontSize: isLandscapeMobile ? "16px" : isMobile ? "18px" : "20px",
     fontWeight: 400,
-    lineHeight: 1.75,
+    lineHeight: isLandscapeMobile ? 1.6 : 1.75,
     color: "var(--color-ink)",
-    margin: "0 0 20px",
+    margin: isLandscapeMobile ? "0 0 14px" : "0 0 20px",
   };
 
   const linkStyle: CSSProperties = {
@@ -64,7 +66,7 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         setNavHover={setNavHover}
         isMobile={isMobile}
       />
-      <div style={{ height: isMobile ? "40px" : "64px" }} />
+      <div style={{ height: isLandscapeMobile ? "20px" : isMobile ? "40px" : "64px" }} />
 
       {/* Opening: headshot + philosophy */}
       <section
@@ -73,8 +75,8 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
           margin: "0 auto",
           padding: narrowSectionPadding,
           display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : "minmax(280px, 1fr) 1.5fr",
-          gap: isMobile ? "36px" : "72px",
+          gridTemplateColumns: isMobilePortrait ? "1fr" : "minmax(220px, 1fr) 1.5fr",
+          gap: isLandscapeMobile ? "28px" : isMobile ? "36px" : "72px",
           alignItems: "center",
           opacity: aboutVisible ? 1 : 0,
           transition: "opacity 1s ease 0.3s",

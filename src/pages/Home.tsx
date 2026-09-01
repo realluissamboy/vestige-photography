@@ -49,11 +49,11 @@ const HERO_LANDSCAPE_POSITIONS: Record<number, string> = {
   1: "50% 20%",
   9: "50% 28%",
   18: "50% 25%",
-  19: "50% 42%",  // Model face, smile, gold top, golden lamp, and chair perfectly centered
-  21: "50% 38%",  // Pink victory rolls, face, vanity mirror, lace gown perfectly centered
-  25: "50% 25%",  // White fedora, face, car door, watch, rings in full frame
-  34: "50% 20%",  // Burlesque smile, hair waves, green gloves & boa in full frame
-  36: "65% 58%",  // Model face, red dress, hair, background tiki lantern in full frame
+  19: "50% 53%",  // Gold jumpsuit model: head sits ~10% from the top with full upper body, table & chair
+  21: "50% 44%",  // Pink victory rolls model: flowers & rolls sit ~10% from the top
+  25: "50% 28%",  // White fedora model: crown of hat sits ~10% from the top
+  34: "50% 26%",  // Burlesque model: hair waves sit ~10% from the top
+  36: "65% 66%",  // Tiki model: styled hair sits ~10% from the top
 };
 
 const SLIDE_DURATION = 7000;
@@ -446,6 +446,74 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               {PAGE_LINKS[1].label}
             </button>
           </nav>
+        )}
+
+        {/* Side Thumb Controls for Landscape Mode */}
+        {isShortLandscape && (
+          <>
+            <button
+              type="button"
+              aria-label="Previous slide"
+              onClick={prevSlide}
+              style={{
+                position: "absolute",
+                left: "max(12px, env(safe-area-inset-left, 12px))",
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: "rgba(10, 10, 12, 0.45)",
+                backdropFilter: "blur(6px)",
+                border: "1px solid rgba(255, 255, 255, 0.25)",
+                color: "#FDFEFD",
+                fontSize: "22px",
+                lineHeight: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 10,
+                boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
+                transition: "background 0.2s ease, transform 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(205, 38, 68, 0.75)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(10, 10, 12, 0.45)")}
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              aria-label="Next slide"
+              onClick={nextSlide}
+              style={{
+                position: "absolute",
+                right: "max(12px, env(safe-area-inset-right, 12px))",
+                top: "50%",
+                transform: "translateY(-50%)",
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                background: "rgba(10, 10, 12, 0.45)",
+                backdropFilter: "blur(6px)",
+                border: "1px solid rgba(255, 255, 255, 0.25)",
+                color: "#FDFEFD",
+                fontSize: "22px",
+                lineHeight: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 10,
+                boxShadow: "0 2px 10px rgba(0,0,0,0.5)",
+                transition: "background 0.2s ease, transform 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(205, 38, 68, 0.75)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(10, 10, 12, 0.45)")}
+            >
+              ›
+            </button>
+          </>
         )}
 
         {/* Slide Indicators / Navigation Dots — Centered in Lower Middle */}

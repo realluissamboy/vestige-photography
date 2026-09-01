@@ -4,6 +4,7 @@ import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
 import { VESTIGE_WORDMARK_SHADOW, VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import MobileMenu from "./MobileMenu";
+import { useResponsiveViewport } from "../hooks/useIsMobile";
 
 export interface PageHeaderProps {
   page: PageKey;
@@ -17,6 +18,8 @@ export interface PageHeaderProps {
 }
 
 export default function PageHeader({ page, subtitle, visible, setPage, isMobile, onResetPortfolio }: PageHeaderProps) {
+  const { isLandscapeMobile } = useResponsiveViewport();
+
   const handleNavClick = (targetPage: PageKey) => {
     if (targetPage === "portfolio" && onResetPortfolio) {
       onResetPortfolio();
@@ -28,7 +31,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile,
     <button
       style={{
         fontFamily: FONTS.script,
-        fontSize: isMobile ? "32px" : "44px",
+        fontSize: isMobile ? (isLandscapeMobile ? "28px" : "32px") : "44px",
         color: "var(--color-crimson)",
         cursor: "pointer",
         border: "none",
@@ -57,7 +60,9 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile,
             display: "grid",
             gridTemplateColumns: "44px 1fr 44px",
             alignItems: "center",
-            padding: "24px 16px 0",
+            padding: isLandscapeMobile
+              ? "max(12px, env(safe-area-inset-top, 12px)) max(16px, env(safe-area-inset-right, 16px)) 0"
+              : "max(24px, env(safe-area-inset-top, 24px)) 16px 0",
             opacity: visible ? 1 : 0,
             transition: "opacity 0.8s ease",
           }}
@@ -66,7 +71,7 @@ export default function PageHeader({ page, subtitle, visible, setPage, isMobile,
           <span
             style={{
               fontFamily: FONTS.script,
-              fontSize: "42px",
+              fontSize: isLandscapeMobile ? "36px" : "42px",
               color: "var(--color-crimson)",
               cursor: "pointer",
               lineHeight: 1,
