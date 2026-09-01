@@ -79,6 +79,31 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
   const compactHero = useCompactHero() || isMobile;
   const activeHero: GalleryImage = HERO_SLIDES[activeSlide] ?? HERO_SLIDES[0] ?? GALLERY_IMAGES[0]!;
 
+  // The homepage is a fixed photographic canvas, not a scrollable document.
+  // Locking both scrolling roots prevents iOS Safari's rubber-band scroll from
+  // exposing the parchment page background when its browser chrome collapses.
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlOverflow = html.style.overflow;
+    const previousHtmlOverscroll = html.style.overscrollBehavior;
+    const previousBodyOverflow = body.style.overflow;
+    const previousBodyOverscroll = body.style.overscrollBehavior;
+
+    html.style.overflow = "hidden";
+    html.style.overscrollBehavior = "none";
+    body.style.overflow = "hidden";
+    body.style.overscrollBehavior = "none";
+    window.scrollTo(0, 0);
+
+    return () => {
+      html.style.overflow = previousHtmlOverflow;
+      html.style.overscrollBehavior = previousHtmlOverscroll;
+      body.style.overflow = previousBodyOverflow;
+      body.style.overscrollBehavior = previousBodyOverscroll;
+    };
+  }, []);
+
   const goToSlide = useCallback((index: number) => {
     setActiveSlide(index);
     setSlideCycle((cycle) => cycle + 1);
@@ -136,8 +161,12 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
   return (
     <main
       style={{
-        background: "var(--color-parchment)",
-        minHeight: "100dvh",
+        position: "fixed",
+        inset: 0,
+        width: "100%",
+        height: "100dvh",
+        background: "#0A0A0B",
+        overflow: "hidden",
         fontFamily: FONTS.body,
         color: "var(--color-ink)",
       }}
@@ -151,7 +180,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
         style={{
           position: "relative",
           width: "100%",
-          height: "100dvh",
+          height: "100%",
           overflow: "hidden",
           opacity: heroVisible ? 1 : 0,
           transition: "opacity 1.6s ease",
@@ -220,7 +249,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           aria-hidden="true"
           style={{
             position: "absolute",
-            top: compactHero ? "20px" : "36px",
+            top: compactHero ? "max(20px, calc(env(safe-area-inset-top) + 8px))" : "36px",
             left: compactHero ? "16px" : "48px",
             display: "flex",
             flexDirection: "column",
@@ -291,7 +320,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           <div
             style={{
               position: "absolute",
-              top: 0,
+              top: "max(0px, env(safe-area-inset-top))",
               right: 0,
               padding: "20px 16px 0",
               zIndex: 10,
@@ -338,7 +367,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           aria-label="Featured photography slides"
           style={{
             position: "absolute",
-            bottom: compactHero ? "24px" : "36px",
+            bottom: compactHero ? "max(24px, calc(env(safe-area-inset-bottom) + 20px))" : "36px",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
