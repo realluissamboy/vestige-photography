@@ -619,14 +619,14 @@ export default function Portfolio({
               </div>
             </div>
 
-            {/* Curated 6-Tile Grid (5 Photos + 6th "View More" Card) */}
+            {/* Curated 6-Tile Grid (5 Photos + 6th "View More" Card) — Taller 3:4 Proportions */}
             <div
               aria-label={`${activePreviewTitle} thumbnails`}
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-                gap: "8px",
-                marginTop: "12px",
+                gap: "10px",
+                marginTop: "14px",
               }}
             >
               {/* First 5 Photos in Collection */}
@@ -649,13 +649,13 @@ export default function Portfolio({
                     style={{
                       position: "relative",
                       width: "100%",
-                      aspectRatio: "1 / 1",
+                      aspectRatio: "3/4",
                       borderRadius: "6px",
                       overflow: "hidden",
                       cursor: "pointer",
                       boxSizing: "border-box",
                       border: isSpotlight ? `2.5px solid ${activePreviewColor}` : "1px solid rgba(0, 0, 0, 0.12)",
-                      boxShadow: isSpotlight ? `0 0 10px ${activePreviewColor}77` : "0 2px 6px rgba(0, 0, 0, 0.08)",
+                      boxShadow: isSpotlight ? `0 0 12px ${activePreviewColor}77` : "0 2px 8px rgba(0, 0, 0, 0.08)",
                       transform: isSpotlight ? "scale(0.97)" : "scale(1)",
                       transition: "all 0.2s ease",
                       background: "var(--color-cream)",
@@ -696,7 +696,7 @@ export default function Portfolio({
                 style={{
                   position: "relative",
                   width: "100%",
-                  aspectRatio: "1 / 1",
+                  aspectRatio: "3/4",
                   borderRadius: "6px",
                   overflow: "hidden",
                   cursor: "pointer",
@@ -708,12 +708,12 @@ export default function Portfolio({
                   alignItems: "center",
                   justifyContent: "center",
                   textAlign: "center",
-                  padding: "8px",
-                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+                  padding: "10px 6px",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                   transition: "transform 0.2s ease, opacity 0.2s ease",
                 }}
               >
-                <div style={{ fontFamily: FONTS.script, fontSize: "20px", lineHeight: 1, opacity: 0.9 }}>
+                <div style={{ fontFamily: FONTS.script, fontSize: "22px", lineHeight: 1, opacity: 0.9 }}>
                   explore
                 </div>
                 <div
@@ -721,10 +721,10 @@ export default function Portfolio({
                     fontFamily: FONTS.display,
                     fontStyle: "italic",
                     fontWeight: 800,
-                    fontSize: "13px",
+                    fontSize: "14px",
                     letterSpacing: "0.5px",
                     lineHeight: 1.1,
-                    marginTop: "2px",
+                    marginTop: "3px",
                     color: "#FFFFFF",
                   }}
                 >
@@ -732,17 +732,52 @@ export default function Portfolio({
                 </div>
                 <div
                   style={{
-                    fontSize: "9px",
-                    letterSpacing: "1px",
+                    fontSize: "9.5px",
+                    letterSpacing: "1.2px",
                     textTransform: "uppercase",
                     fontFamily: FONTS.display,
                     fontStyle: "italic",
                     opacity: 0.85,
-                    marginTop: "3px",
+                    marginTop: "4px",
                   }}
                 >
                   +{Math.max(0, activePreviewPhotos.length - 5)} Photos
                 </div>
+                <div style={{ marginTop: "6px", fontSize: "13px", opacity: 0.9 }}>
+                  →
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Session Booking CTA */}
+            <div style={{ marginTop: "24px", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+              <a
+                href="https://ig.me/m/susanavestige"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: "linear-gradient(135deg, #CD2644 0%, #A01932 100%)",
+                  color: "#FFFFFF",
+                  fontFamily: FONTS.display,
+                  fontStyle: "italic",
+                  fontWeight: 700,
+                  fontSize: "12px",
+                  letterSpacing: "1.4px",
+                  textTransform: "uppercase",
+                  padding: "10px 24px",
+                  borderRadius: "999px",
+                  textDecoration: "none",
+                  boxShadow: "0 4px 16px rgba(205, 38, 68, 0.4)",
+                }}
+              >
+                <span>Book a Session</span>
+                <span style={{ fontSize: "14px", fontStyle: "normal" }}>→</span>
+              </a>
+              <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "var(--color-ink)", opacity: 0.5 }}>
+                Vestige Photography • Susana
               </div>
             </div>
           </div>
