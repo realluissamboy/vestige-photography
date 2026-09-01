@@ -475,107 +475,275 @@ export default function Portfolio({
             </div>
           </div>
         ) : isMobile ? (
-          /* Portrait Mobile: Book-style Monograph Tiles */
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "16px 20px 60px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              {PORTFOLIO_CATEGORIES.map((cat) => {
-                const catPhotos = GALLERY_IMAGES.filter((img) => img.cat === cat);
-                const color = CATEGORY_COLORS[cat] ?? "";
-                const title = CATEGORY_TITLES[cat] ?? "";
-                const coverPhoto = catPhotos[0];
+          /* Portrait Mobile: Studio Spotlight + 6-Tile Collection Grid (Matching Landscape Experience) */
+          <div style={{ maxWidth: "600px", margin: "0 auto", padding: "0 16px 40px" }}>
+            {/* Top Category Switcher Tabs */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                overflowX: "auto",
+                scrollbarWidth: "none",
+                padding: "2px 0 14px",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {PORTFOLIO_CATEGORIES.map((cat, index) => {
+                const isSelected = cat === previewCategory;
+                const catTitle = CATEGORY_TITLES[cat] ?? "";
+                const shortLabel = catTitle.replace(/^Modern\s/, "");
+                const catColor = CATEGORY_COLORS[cat] ?? "var(--color-crimson)";
+
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => {
+                      setPreviewCategory(cat);
+                      const firstPhoto = GALLERY_IMAGES.find((img) => img.cat === cat);
+                      if (firstPhoto) setSpotlightImageId(firstPhoto.id);
+                    }}
+                    style={{
+                      flexShrink: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      background: isSelected ? catColor : "rgba(0, 0, 0, 0.06)",
+                      color: isSelected ? "#FFFFFF" : "var(--color-ink)",
+                      border: "none",
+                      borderRadius: "6px",
+                      padding: "7px 14px",
+                      minHeight: "34px",
+                      cursor: "pointer",
+                      whiteSpace: "nowrap",
+                      boxShadow: isSelected ? `0 2px 10px ${catColor}55` : "none",
+                      transform: isSelected ? "scale(1.02)" : "scale(1)",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "10px", fontWeight: 700, opacity: isSelected ? 0.9 : 0.6 }}>
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span style={{ fontFamily: FONTS.script, fontSize: "16px", lineHeight: 1 }}>
+                      {shortLabel}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Main Hero Spotlight Frame */}
+            <div
+              onClick={() => activeSpotlightImage && openLightbox(activeSpotlightImage)}
+              role="button"
+              tabIndex={0}
+              aria-label={`View ${activeSpotlightImage?.label || activePreviewTitle} full size in Lightbox`}
+              onKeyDown={(e) => {
+                if ((e.key === "Enter" || e.key === " ") && activeSpotlightImage) {
+                  e.preventDefault();
+                  openLightbox(activeSpotlightImage);
+                }
+              }}
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "4/5",
+                maxHeight: "360px",
+                borderRadius: "8px",
+                overflow: "hidden",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.14)",
+                cursor: "pointer",
+                background: "var(--color-cream)",
+                border: "1px solid rgba(0, 0, 0, 0.12)",
+              }}
+            >
+              {activeSpotlightImage && (
+                <img
+                  key={activeSpotlightImage.id}
+                  src={activeSpotlightImage.src}
+                  alt={activeSpotlightImage.label}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: activeSpotlightImage.focus || "50% 25%",
+                    transition: "opacity 0.25s ease",
+                  }}
+                />
+              )}
+
+              {/* Spotlight Ambient Overlay Bar */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: "linear-gradient(to top, rgba(10, 10, 12, 0.85) 0%, transparent 100%)",
+                  padding: "20px 16px 12px",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <div style={{ fontFamily: FONTS.script, fontSize: "26px", color: "#FAF8F4", lineHeight: 1 }}>
+                    {activePreviewTitle}
+                  </div>
+                  <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "11px", color: "rgba(255, 255, 255, 0.75)", letterSpacing: "1px", marginTop: "2px" }}>
+                    {activeSpotlightIndex + 1} of {activePreviewPhotos.length} Photographs
+                  </div>
+                </div>
+
+                <span
+                  style={{
+                    background: "rgba(255, 255, 255, 0.25)",
+                    backdropFilter: "blur(6px)",
+                    color: "#FFFFFF",
+                    fontSize: "10px",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    fontWeight: 700,
+                    padding: "4px 9px",
+                    borderRadius: "4px",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                  }}
+                >
+                  Tap to Enlarge ⛶
+                </span>
+              </div>
+            </div>
+
+            {/* Curated 6-Tile Grid (5 Photos + 6th "View More" Card) */}
+            <div
+              aria-label={`${activePreviewTitle} thumbnails`}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                gap: "8px",
+                marginTop: "12px",
+              }}
+            >
+              {/* First 5 Photos in Collection */}
+              {activePreviewPhotos.slice(0, 5).map((img: GalleryImage, idx: number) => {
+                const isSpotlight = img.id === activeSpotlightImage?.id;
 
                 return (
                   <div
-                    key={cat}
-                    onClick={() => handleSelectCategory(cat)}
+                    key={img.id}
+                    onClick={() => setSpotlightImageId(img.id)}
                     role="button"
                     tabIndex={0}
-                    aria-label={`View ${title} gallery`}
+                    aria-label={`Spotlight photo ${idx + 1}`}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
-                        handleSelectCategory(cat);
+                        setSpotlightImageId(img.id);
                       }
                     }}
                     style={{
-                      display: "grid",
-                      gridTemplateColumns: "1.15fr 1fr",
-                      borderRadius: "4px",
+                      position: "relative",
+                      width: "100%",
+                      aspectRatio: "1 / 1",
+                      borderRadius: "6px",
                       overflow: "hidden",
-                      boxShadow: "0 8px 24px rgba(0,0,0,0.14)",
                       cursor: "pointer",
-                      minHeight: "154px",
-                      background: color,
-                      transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                      boxSizing: "border-box",
+                      border: isSpotlight ? `2.5px solid ${activePreviewColor}` : "1px solid rgba(0, 0, 0, 0.12)",
+                      boxShadow: isSpotlight ? `0 0 10px ${activePreviewColor}77` : "0 2px 6px rgba(0, 0, 0, 0.08)",
+                      transform: isSpotlight ? "scale(0.97)" : "scale(1)",
+                      transition: "all 0.2s ease",
+                      background: "var(--color-cream)",
                     }}
                   >
-                    {/* Left: Featured Cover Photo */}
-                    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: "154px", overflow: "hidden" }}>
-                      {coverPhoto && (
-                        <img
-                          src={coverPhoto.src}
-                          alt={coverPhoto.label}
-                          loading="lazy"
-                          style={{
-                            position: "absolute",
-                            inset: 0,
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            objectPosition: coverPhoto.focus || "50% 20%",
-                          }}
-                        />
-                      )}
-                    </div>
-
-                    {/* Right: Colored Typography Plate */}
-                    <div
+                    <img
+                      src={img.src}
+                      alt={img.label}
+                      loading="lazy"
                       style={{
-                        background: color,
-                        color: "var(--color-cream)",
-                        padding: "20px 14px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
+                        position: "absolute",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        display: "block",
+                        objectFit: "cover",
+                        objectPosition: img.focus || "50% 25%",
+                        filter: isSpotlight ? "brightness(1)" : "brightness(0.85)",
+                        transition: "filter 0.2s ease",
                       }}
-                    >
-                      <div style={{ fontFamily: FONTS.script, fontSize: "40px", lineHeight: 0.85, opacity: 0.92 }}>
-                        {title.startsWith("Modern ") ? "modern" : "a modern"}
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: FONTS.display,
-                          fontStyle: "italic",
-                          fontWeight: 800,
-                          fontSize: "24px",
-                          letterSpacing: "-0.5px",
-                          lineHeight: 1.05,
-                          marginTop: "4px",
-                        }}
-                      >
-                        {title.replace(/^Modern\s/, "")}
-                      </div>
-                      <div
-                        style={{
-                          marginTop: "10px",
-                          fontSize: "11px",
-                          letterSpacing: "2.5px",
-                          textTransform: "uppercase",
-                          fontFamily: FONTS.display,
-                          fontStyle: "italic",
-                          opacity: 0.85,
-                          borderBottom: "1px solid rgba(245,240,232,0.4)",
-                          paddingBottom: "1px",
-                        }}
-                      >
-                        View {catPhotos.length} Photos →
-                      </div>
-                    </div>
+                    />
                   </div>
                 );
               })}
+
+              {/* 6th Tile: "View More" Card leading to full gallery */}
+              <div
+                onClick={() => handleSelectCategory(previewCategory)}
+                role="button"
+                tabIndex={0}
+                aria-label={`View full ${activePreviewTitle} gallery`}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelectCategory(previewCategory);
+                  }
+                }}
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "1 / 1",
+                  borderRadius: "6px",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  boxSizing: "border-box",
+                  background: activePreviewColor,
+                  color: "var(--color-cream)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  padding: "8px",
+                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
+                  transition: "transform 0.2s ease, opacity 0.2s ease",
+                }}
+              >
+                <div style={{ fontFamily: FONTS.script, fontSize: "20px", lineHeight: 1, opacity: 0.9 }}>
+                  explore
+                </div>
+                <div
+                  style={{
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    fontWeight: 800,
+                    fontSize: "13px",
+                    letterSpacing: "0.5px",
+                    lineHeight: 1.1,
+                    marginTop: "2px",
+                    color: "#FFFFFF",
+                  }}
+                >
+                  View More
+                </div>
+                <div
+                  style={{
+                    fontSize: "9px",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    opacity: 0.85,
+                    marginTop: "3px",
+                  }}
+                >
+                  +{Math.max(0, activePreviewPhotos.length - 5)} Photos
+                </div>
+              </div>
             </div>
           </div>
         ) : (
