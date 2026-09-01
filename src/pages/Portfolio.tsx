@@ -2,7 +2,8 @@ import React from "react";
 import type { CSSProperties } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
-import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
+import { VESTIGE_TEXT_SHADOW, VESTIGE_WORDMARK_SHADOW } from "../theme/effects";
+import MobileMenu from "../components/MobileMenu";
 import {
   GALLERY_IMAGES,
   CATEGORY_COLORS,
@@ -43,6 +44,8 @@ export default function Portfolio({
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
 
   const [displayedCategory, setDisplayedCategory] = React.useState<Category | null>(portfolioCategory);
+  const [previewCategory, setPreviewCategory] = React.useState<Category>("Burlesque");
+  const [spotlightImageId, setSpotlightImageId] = React.useState<number | null>(null);
 
   const handleSelectCategory = (cat: Category) => {
     setPortfolioCategory(cat);
@@ -84,39 +87,308 @@ export default function Portfolio({
         }
       : undefined;
 
+  const activePreviewPhotos = GALLERY_IMAGES.filter((img) => img.cat === previewCategory);
+  const activeSpotlightImage =
+    activePreviewPhotos.find((img) => img.id === spotlightImageId) || activePreviewPhotos[0];
+  const activeSpotlightIndex = activePreviewPhotos.findIndex((img) => img.id === activeSpotlightImage?.id);
+  const activePreviewCover = activePreviewPhotos[0];
+  const activePreviewTitle = CATEGORY_TITLES[previewCategory] ?? "";
+  const activePreviewColor = CATEGORY_COLORS[previewCategory] ?? "#CD2644";
+
   return (
     <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
-      <PageHeader
-        page="portfolio"
-        visible={galleryVisible}
-        setPage={setPage}
-        onResetPortfolio={handleBackToPortfolio}
-        navStyleDark={navStyleDark}
-        setNavHover={setNavHover}
-        isMobile={isMobile}
-      />
+      {/* Unified 44px Top Bar on Landscape Mobile vs Standard PageHeader */}
+      {isLandscapeMobile && displayedCategory === null ? (
+        <header
+          style={{
+            height: "44px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 max(16px, env(safe-area-inset-right, 16px)) 0 max(16px, env(safe-area-inset-left, 16px))",
+            background: "var(--color-parchment)",
+            borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+            zIndex: 10,
+            flexShrink: 0,
+          }}
+        >
+          {/* Left: Vestige Wordmark */}
+          <button
+            type="button"
+            onClick={() => setPage("home")}
+            style={{
+              background: "none",
+              border: "none",
+              fontFamily: FONTS.script,
+              fontSize: "30px",
+              color: "var(--color-crimson)",
+              cursor: "pointer",
+              lineHeight: 1,
+              padding: 0,
+              textShadow: VESTIGE_WORDMARK_SHADOW,
+            }}
+          >
+            Vestige
+          </button>
 
-      <div style={{ height: isMobile ? "24px" : "40px" }} />
+          {/* Center: Minimalist Category Pills */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            {PORTFOLIO_CATEGORIES.map((cat, index) => {
+              const isSelected = cat === previewCategory;
+              const catTitle = CATEGORY_TITLES[cat] ?? "";
+              const shortLabel = catTitle.replace(/^Modern\s/, "");
+              const catColor = CATEGORY_COLORS[cat] ?? "var(--color-crimson)";
+
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => {
+                    setPreviewCategory(cat);
+                    const firstPhoto = GALLERY_IMAGES.find((img) => img.cat === cat);
+                    if (firstPhoto) setSpotlightImageId(firstPhoto.id);
+                  }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    background: isSelected ? catColor : "rgba(245, 240, 232, 0.85)",
+                    color: isSelected ? "#FFFFFF" : "var(--color-ink)",
+                    border: isSelected ? "1.5px solid rgba(255, 255, 255, 0.85)" : "1px solid rgba(0, 0, 0, 0.15)",
+                    borderRadius: "999px",
+                    padding: "3px 10px",
+                    cursor: "pointer",
+                    whiteSpace: "nowrap",
+                    boxShadow: isSelected ? `0 2px 8px ${catColor}55` : "0 1px 3px rgba(0, 0, 0, 0.06)",
+                    transform: isSelected ? "scale(1.03)" : "scale(1)",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  <span style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "9px", opacity: isSelected ? 0.9 : 0.65 }}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span style={{ fontFamily: FONTS.script, fontSize: "14px", lineHeight: 1 }}>
+                    {shortLabel}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right: Book CTA + Hamburger Menu */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <a
+              href="https://ig.me/m/susanavestige"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: "#CD2644",
+                border: "1px solid rgba(255, 255, 255, 0.4)",
+                color: "#FFFFFF",
+                fontFamily: FONTS.display,
+                fontStyle: "italic",
+                fontWeight: 700,
+                fontSize: "11px",
+                letterSpacing: "1.2px",
+                textTransform: "uppercase",
+                padding: "4px 14px",
+                borderRadius: "999px",
+                textDecoration: "none",
+                boxShadow: "0 2px 8px rgba(205, 38, 68, 0.4)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Book a Session
+            </a>
+            <MobileMenu variant="solid" setPage={setPage} onResetPortfolio={handleBackToPortfolio} />
+          </div>
+        </header>
+      ) : (
+        <>
+          <PageHeader
+            page="portfolio"
+            visible={galleryVisible}
+            setPage={setPage}
+            onResetPortfolio={handleBackToPortfolio}
+            navStyleDark={navStyleDark}
+            setNavHover={setNavHover}
+            isMobile={isMobile}
+          />
+          <div style={{ height: isMobile ? "12px" : "40px" }} />
+        </>
+      )}
 
       <h1 style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
         Portfolio
       </h1>
 
-      <div style={{ minHeight: "60vh" }}>
+      <div style={{ minHeight: isMobile && displayedCategory === null ? (isLandscapeMobile ? "calc(100dvh - 44px)" : "calc(100dvh - 80px)") : "60vh" }}>
       {displayedCategory === null ? (
-        /* Book-style colored section tiles */
-        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: isLandscapeMobile ? "12px 20px 48px" : isMobile ? "16px 20px 60px" : "32px 40px 80px" }}>
-          {isMobile ? (
+        isLandscapeMobile ? (
+          /* Landscape Mobile: Hero Spotlight (Left 58%) + Curated Filmstrip Reel (Right 42%) */
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.2fr 1fr",
+              gap: "12px",
+              height: "calc(100dvh - 54px)",
+              maxHeight: "420px",
+              padding: "6px max(14px, env(safe-area-inset-right, 14px)) max(8px, env(safe-area-inset-bottom, 8px)) max(14px, env(safe-area-inset-left, 14px))",
+              boxSizing: "border-box",
+              overflow: "hidden",
+            }}
+          >
+            {/* Left Side: Large Hero Spotlight Frame */}
             <div
+              onClick={() => activeSpotlightImage && openLightbox(activeSpotlightImage)}
+              role="button"
+              tabIndex={0}
+              aria-label={`View ${activeSpotlightImage?.label || activePreviewTitle} full size in Lightbox`}
+              onKeyDown={(e) => {
+                if ((e.key === "Enter" || e.key === " ") && activeSpotlightImage) {
+                  e.preventDefault();
+                  openLightbox(activeSpotlightImage);
+                }
+              }}
               style={{
-                display: isLandscapeMobile ? "grid" : "flex",
-                flexDirection: "column",
-                gridTemplateColumns: isLandscapeMobile ? "repeat(2, 1fr)" : undefined,
-                gap: isLandscapeMobile ? "16px" : "16px",
+                position: "relative",
+                height: "100%",
+                borderRadius: "8px",
+                overflow: "hidden",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.14)",
+                cursor: "pointer",
+                background: "var(--color-cream)",
+                border: "1px solid rgba(0, 0, 0, 0.12)",
               }}
             >
+              {activeSpotlightImage && (
+                <img
+                  key={activeSpotlightImage.id}
+                  src={activeSpotlightImage.src}
+                  alt={activeSpotlightImage.label}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: activeSpotlightImage.focus || "50% 25%",
+                    transition: "opacity 0.25s ease",
+                  }}
+                />
+              )}
+
+              {/* Spotlight Ambient Overlay Bar */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: "linear-gradient(to top, rgba(10, 10, 12, 0.85) 0%, transparent 100%)",
+                  padding: "16px 14px 10px",
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div>
+                  <div style={{ fontFamily: FONTS.script, fontSize: "22px", color: "#FAF8F4", lineHeight: 1 }}>
+                    {activePreviewTitle}
+                  </div>
+                  <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontSize: "11px", color: "rgba(255, 255, 255, 0.75)", letterSpacing: "1px", marginTop: "2px" }}>
+                    {activeSpotlightIndex + 1} of {activePreviewPhotos.length} Photographs
+                  </div>
+                </div>
+
+                <span
+                  style={{
+                    background: "rgba(255, 255, 255, 0.25)",
+                    backdropFilter: "blur(6px)",
+                    color: "#FFFFFF",
+                    fontSize: "10px",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    fontWeight: 700,
+                    padding: "3px 8px",
+                    borderRadius: "4px",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                  }}
+                >
+                  Tap to Enlarge ⛶
+                </span>
+              </div>
+            </div>
+
+            {/* Right Side: Curated Thumbnail Filmstrip Grid */}
+            <div
+              aria-label={`${activePreviewTitle} thumbnails`}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: "6px",
+                height: "100%",
+                overflowY: "auto",
+                scrollbarWidth: "none",
+                paddingRight: "2px",
+                alignContent: "start",
+              }}
+            >
+              {activePreviewPhotos.map((img: GalleryImage, idx: number) => {
+                const isSpotlight = img.id === activeSpotlightImage?.id;
+
+                return (
+                  <button
+                    key={img.id}
+                    type="button"
+                    onClick={() => setSpotlightImageId(img.id)}
+                    aria-label={`Spotlight photo ${idx + 1}`}
+                    style={{
+                      position: "relative",
+                      aspectRatio: img.ratio === "landscape" ? "3/2" : "3/4",
+                      borderRadius: "5px",
+                      overflow: "hidden",
+                      cursor: "pointer",
+                      padding: 0,
+                      border: isSpotlight ? `2px solid ${activePreviewColor}` : "1px solid rgba(0, 0, 0, 0.12)",
+                      boxShadow: isSpotlight ? `0 0 10px ${activePreviewColor}66` : "0 2px 6px rgba(0, 0, 0, 0.08)",
+                      transform: isSpotlight ? "scale(0.97)" : "scale(1)",
+                      transition: "all 0.2s ease",
+                      background: "var(--color-cream)",
+                    }}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.label}
+                      loading="lazy"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        objectPosition: img.focus || "50% 25%",
+                        filter: isSpotlight ? "brightness(1)" : "brightness(0.85)",
+                        transition: "filter 0.2s ease",
+                      }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : isMobile ? (
+          /* Portrait Mobile: Book-style Monograph Tiles */
+          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "16px 20px 60px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               {PORTFOLIO_CATEGORIES.map((cat) => {
                 const catPhotos = GALLERY_IMAGES.filter((img) => img.cat === cat);
                 const color = CATEGORY_COLORS[cat] ?? "";
@@ -139,18 +411,17 @@ export default function Portfolio({
                     style={{
                       display: "grid",
                       gridTemplateColumns: "1.15fr 1fr",
-                      borderRadius: "3px",
+                      borderRadius: "4px",
                       overflow: "hidden",
                       boxShadow: "0 8px 24px rgba(0,0,0,0.14)",
                       cursor: "pointer",
-                      marginBottom: isLandscapeMobile ? 0 : "16px",
-                      minHeight: isLandscapeMobile ? "130px" : "154px",
+                      minHeight: "154px",
                       background: color,
                       transition: "transform 0.25s ease, box-shadow 0.25s ease",
                     }}
                   >
                     {/* Left: Featured Cover Photo */}
-                    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: isLandscapeMobile ? "130px" : "154px", overflow: "hidden" }}>
+                    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: "154px", overflow: "hidden" }}>
                       {coverPhoto && (
                         <img
                           src={coverPhoto.src}
@@ -173,7 +444,7 @@ export default function Portfolio({
                       style={{
                         background: color,
                         color: "var(--color-cream)",
-                        padding: isLandscapeMobile ? "14px 10px" : "20px 14px",
+                        padding: "20px 14px",
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -181,7 +452,7 @@ export default function Portfolio({
                         textAlign: "center",
                       }}
                     >
-                      <div style={{ fontFamily: FONTS.script, fontSize: isLandscapeMobile ? "32px" : "40px", lineHeight: 0.85, opacity: 0.92 }}>
+                      <div style={{ fontFamily: FONTS.script, fontSize: "40px", lineHeight: 0.85, opacity: 0.92 }}>
                         {title.startsWith("Modern ") ? "modern" : "a modern"}
                       </div>
                       <div
@@ -189,7 +460,7 @@ export default function Portfolio({
                           fontFamily: FONTS.display,
                           fontStyle: "italic",
                           fontWeight: 800,
-                          fontSize: isLandscapeMobile ? "20px" : "24px",
+                          fontSize: "24px",
                           letterSpacing: "-0.5px",
                           lineHeight: 1.05,
                           marginTop: "4px",
@@ -199,8 +470,8 @@ export default function Portfolio({
                       </div>
                       <div
                         style={{
-                          marginTop: isLandscapeMobile ? "6px" : "10px",
-                          fontSize: isLandscapeMobile ? "10px" : "11px",
+                          marginTop: "10px",
+                          fontSize: "11px",
                           letterSpacing: "2.5px",
                           textTransform: "uppercase",
                           fontFamily: FONTS.display,
@@ -217,8 +488,11 @@ export default function Portfolio({
                 );
               })}
             </div>
-          ) : (
-            PORTFOLIO_CATEGORIES.map((cat, rowIdx) => {
+          </div>
+        ) : (
+          /* Desktop Monograph Catalog Grid */
+          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px 40px 80px" }}>
+            {PORTFOLIO_CATEGORIES.map((cat, rowIdx) => {
               const catPhotos = GALLERY_IMAGES.filter((img) => img.cat === cat);
               const color = CATEGORY_COLORS[cat] ?? "";
               const title = CATEGORY_TITLES[cat] ?? "";
@@ -319,9 +593,9 @@ export default function Portfolio({
                   {cells}
                 </div>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )
       ) : (
         /* Drilled-in Category View — band header */
         <>
@@ -407,22 +681,26 @@ export default function Portfolio({
 
       </div>
 
-      <section
-        style={{
-          textAlign: "center",
-          padding: "0 24px 120px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "14px",
-        }}
-      >
-        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-          <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
-        </div>
-      </section>
+      {(!isMobile || displayedCategory !== null) && (
+        <>
+          <section
+            style={{
+              textAlign: "center",
+              padding: "0 24px 120px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "14px",
+            }}
+          >
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+              <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
+            </div>
+          </section>
 
-      <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
+          <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
+        </>
+      )}
 
       <Lightbox
         image={lightboxImage}
