@@ -243,9 +243,8 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             Vestige
           </div>
 
-          {/* Subtitle in #FDFEFD white with matching crimson depth shadow */}
+          {/* Subtitle in #FDFEFD white: "Twenty years of" is 100% persistent and static */}
           <div
-            key={`${activeHero.cat}-${slideCycle}`}
             style={{
               display: "flex",
               flexWrap: "wrap",
@@ -256,7 +255,6 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               color: "#FDFEFD",
               textShadow:
                 "0 2px 4px rgba(0, 0, 0, 0.75), 0 3px 12px rgba(205, 38, 68, 0.85), 0 0 20px rgba(205, 38, 68, 0.5)",
-              animation: "category-text-fade 0.45s ease forwards",
             }}
           >
             <span
@@ -271,12 +269,14 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               Twenty years of
             </span>
             <span
+              key={`${activeHero.cat}-${slideCycle}`}
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
                 fontSize: compactHero ? "clamp(30px, 6.5vw, 38px)" : "clamp(42px, 4.2vw, 64px)",
                 lineHeight: 1,
                 fontWeight: 400,
+                animation: "category-text-fade 0.35s ease forwards",
               }}
             >
               {categoryTitle.toLowerCase()}
