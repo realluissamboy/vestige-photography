@@ -403,35 +403,6 @@ export default function Portfolio({ setPage, isMobile, navStyleDark, setNavHover
         <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
           <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
         </div>
-
-        {displayedCategory !== null && (
-          <button
-            onClick={handleBackToPortfolio}
-            style={{
-              marginTop: "4px",
-              fontFamily: FONTS.script,
-              fontSize: isMobile ? "26px" : "32px",
-              color: "var(--color-crimson)",
-              background: "transparent",
-              border: "none",
-              borderBottom: "1.5px solid var(--color-crimson)",
-              paddingBottom: "2px",
-              cursor: "pointer",
-              minHeight: "44px",
-              lineHeight: 1,
-              textShadow: VESTIGE_TEXT_SHADOW,
-              transition: "opacity 0.2s ease, transform 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-1px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
-          >
-            Back to Portfolio
-          </button>
-        )}
       </section>
 
       <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
