@@ -875,33 +875,43 @@ export default function Portfolio({
             style={{
               background: CATEGORY_COLORS[displayedCategory] ?? "",
               color: COLORS.cream,
-              padding: isLandscapeMobile ? "24px 20px 28px" : isMobile ? "36px 20px 44px" : "48px 40px 60px",
+              padding: isLandscapeMobile
+                ? "10px 16px"
+                : isMobile
+                ? "12px 16px 14px"
+                : "20px 32px 24px",
               textAlign: "center",
               position: "relative",
+              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.12)",
             }}
           >
-            <div style={{ fontFamily: FONTS.script, fontSize: isLandscapeMobile ? "36px" : isMobile ? "44px" : "62px", lineHeight: 0.9, opacity: 0.9 }}>
-              a study in
-            </div>
-            <h2 style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: isLandscapeMobile ? "44px" : isMobile ? "56px" : "92px", letterSpacing: "-2px", lineHeight: 1, marginTop: "4px", margin: "4px 0 0 0" }}>
-              {CATEGORY_TITLES[displayedCategory] ?? ""}
-            </h2>
-            <div style={{ marginTop: isLandscapeMobile ? "12px" : isMobile ? "18px" : "24px" }}>
+            <div
+              style={{
+                maxWidth: "1200px",
+                margin: "0 auto",
+                display: "flex",
+                flexDirection: isMobile && !isLandscapeMobile ? "column" : "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: isMobile ? "6px" : "16px",
+              }}
+            >
+              {/* Back to Portfolio Button */}
               <button
                 onClick={handleBackToPortfolio}
                 aria-label="Back to Portfolio overview"
                 style={{
                   fontFamily: FONTS.script,
-                  fontSize: isLandscapeMobile ? "24px" : isMobile ? "28px" : "34px",
+                  fontSize: isLandscapeMobile ? "18px" : isMobile ? "20px" : "24px",
                   color: "#FFFFFF",
                   background: "transparent",
                   border: "none",
                   borderBottom: "1.5px solid rgba(255, 255, 255, 0.65)",
                   padding: "0 0 2px 0",
                   cursor: "pointer",
-                  minHeight: "44px",
+                  minHeight: "32px",
                   lineHeight: 1,
-                  textShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
+                  textShadow: "0 2px 6px rgba(0, 0, 0, 0.35)",
                   opacity: 0.95,
                   transition: "opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease",
                   display: "inline-flex",
@@ -921,16 +931,66 @@ export default function Portfolio({
               >
                 ← Back to Portfolio
               </button>
+
+              {/* Category Title Lockup */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  justifyContent: "center",
+                  gap: "8px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: FONTS.script,
+                    fontSize: isLandscapeMobile ? "20px" : isMobile ? "22px" : "30px",
+                    lineHeight: 1,
+                    opacity: 0.9,
+                  }}
+                >
+                  a study in
+                </span>
+                <h2
+                  style={{
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    fontWeight: 800,
+                    fontSize: isLandscapeMobile ? "22px" : isMobile ? "24px" : "36px",
+                    letterSpacing: "-0.5px",
+                    lineHeight: 1,
+                    margin: 0,
+                  }}
+                >
+                  {CATEGORY_TITLES[displayedCategory] ?? ""}
+                </h2>
+              </div>
+
+              {/* Photo Count Pill */}
+              <div
+                style={{
+                  fontFamily: FONTS.display,
+                  fontStyle: "italic",
+                  fontSize: "11px",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                  opacity: 0.85,
+                  display: isMobile && !isLandscapeMobile ? "none" : "block",
+                }}
+              >
+                {currentCategoryImages.length} Photographs
+              </div>
             </div>
           </section>
           <div
             style={{
               maxWidth: "1200px",
               margin: "0 auto",
-              padding: isLandscapeMobile ? "20px 16px 48px" : isMobile ? "32px 16px 60px" : "64px 40px 80px",
+              padding: isLandscapeMobile ? "14px 12px 36px" : isMobile ? "16px 12px 40px" : "36px 32px 60px",
               display: "grid",
               gridTemplateColumns: isLandscapeMobile ? "repeat(3, 1fr)" : isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
-              gap: isLandscapeMobile ? "12px" : isMobile ? "14px" : "20px",
+              gap: isLandscapeMobile ? "10px" : isMobile ? "12px" : "20px",
               alignItems: "start",
             }}
           >
