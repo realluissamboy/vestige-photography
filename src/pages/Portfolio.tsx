@@ -29,6 +29,7 @@ export interface PortfolioProps {
   isMobile: boolean;
   navStyleDark: (label: string, isActive: boolean) => CSSProperties;
   setNavHover: (p: string | null) => void;
+  onBookSession?: (category?: string) => void;
 }
 
 export default function Portfolio({
@@ -37,6 +38,7 @@ export default function Portfolio({
   isMobile,
   navStyleDark,
   setNavHover,
+  onBookSession,
 }: PortfolioProps) {
   const { isLandscapeMobile } = useResponsiveViewport();
   const { portfolioCategory, setPortfolioCategory, galleryVisible } =
@@ -184,10 +186,9 @@ export default function Portfolio({
 
           {/* Right: Book CTA + Hamburger Menu */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <a
-              href="https://ig.me/m/susanavestige"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => onBookSession?.(portfolioCategory ? CATEGORY_TITLES[portfolioCategory] : undefined)}
               style={{
                 background: "#CD2644",
                 border: "none",
@@ -208,10 +209,11 @@ export default function Portfolio({
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
+                cursor: "pointer",
               }}
             >
               Book a Session
-            </a>
+            </button>
             <MobileMenu variant="solid" setPage={setPage} onResetPortfolio={handleBackToPortfolio} />
           </div>
         </header>
@@ -1109,7 +1111,9 @@ export default function Portfolio({
             }}
           >
             <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-              <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
+              <Button onClick={() => onBookSession?.(portfolioCategory ? CATEGORY_TITLES[portfolioCategory] : undefined)} isMobile={isMobile}>
+                Book a Session
+              </Button>
             </div>
           </section>
 

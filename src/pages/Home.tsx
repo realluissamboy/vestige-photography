@@ -111,9 +111,17 @@ export interface HomeProps {
   setPage: (p: PageKey) => void;
   navHover: string | null;
   setNavHover: (link: string | null) => void;
+  onBookSession?: () => void;
 }
 
-export default function Home({ heroVisible, isMobile, setPage, navHover, setNavHover }: HomeProps) {
+export default function Home({
+  heroVisible,
+  isMobile,
+  setPage,
+  navHover,
+  setNavHover,
+  onBookSession,
+}: HomeProps) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [slideCycle, setSlideCycle] = useState(0);
   const { isShortLandscape, isMobilePortrait, compactHero } = useHeroLayout();
@@ -611,10 +619,9 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             />
 
             {/* Call-to-Action: Book a Session */}
-            <a
-              href="https://ig.me/m/susanavestige"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={onBookSession}
               style={{
                 position: "relative",
                 display: "flex",
@@ -649,7 +656,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             >
               <span>Book a Session</span>
               <span style={{ fontSize: isMobilePortrait ? "10px" : isShortLandscape ? "13px" : "15px", fontStyle: "normal" }}>→</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>

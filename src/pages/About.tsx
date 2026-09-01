@@ -13,9 +13,17 @@ export interface AboutProps {
   isMobile: boolean;
   navStyleDark: (label: string, isActive: boolean) => CSSProperties;
   setNavHover: (p: string | null) => void;
+  onBookSession?: () => void;
 }
 
-export default function About({ aboutVisible, setPage, isMobile, navStyleDark, setNavHover }: AboutProps) {
+export default function About({
+  aboutVisible,
+  setPage,
+  isMobile,
+  navStyleDark,
+  setNavHover,
+  onBookSession,
+}: AboutProps) {
   const { isLandscapeMobile, isMobilePortrait } = useResponsiveViewport();
 
   const sectionLabel: CSSProperties = {
@@ -249,7 +257,9 @@ export default function About({ aboutVisible, setPage, isMobile, navStyleDark, s
         }}
       >
         <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-          <Button href="https://ig.me/m/susanavestige" target="_blank" rel="noopener noreferrer" isMobile={isMobile}>Book a Session</Button>
+          <Button onClick={onBookSession} isMobile={isMobile}>
+            Book a Session
+          </Button>
         </div>
       </section>
 

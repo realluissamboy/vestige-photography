@@ -3,6 +3,7 @@ import { COLORS } from "./theme/colors";
 import { FONTS } from "./theme/fonts";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { type PageKey } from "./data/navigation";
+import BookingModal from "./components/BookingModal";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Portfolio = React.lazy(() => import("./pages/Portfolio"));
@@ -12,6 +13,8 @@ export default function App() {
   const [activePage, setActivePage] = useState<PageKey>("home");
   const [mounted, setMounted] = useState<boolean>(false);
   const [navHover, setNavHover] = useState<string | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState<boolean>(false);
+  const [bookingInitialCategory, setBookingInitialCategory] = useState<string | undefined>(undefined);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -43,6 +46,15 @@ export default function App() {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
+  }, []);
+
+  const handleOpenBooking = useCallback((category?: string) => {
+    setBookingInitialCategory(category);
+    setIsBookingOpen(true);
+  }, []);
+
+  const handleCloseBooking = useCallback(() => {
+    setIsBookingOpen(false);
   }, []);
 
   const navStyleDark = (link: string, isActive: boolean): CSSProperties => ({
@@ -84,6 +96,7 @@ export default function App() {
             setPage={handleSetPage}
             navHover={navHover}
             setNavHover={setNavHover}
+            onBookSession={handleOpenBooking}
           />
         )}
 
@@ -95,6 +108,7 @@ export default function App() {
             isMobile={isMobile}
             navStyleDark={navStyleDark}
             setNavHover={setNavHover}
+            onBookSession={handleOpenBooking}
           />
         )}
 
@@ -105,9 +119,17 @@ export default function App() {
             isMobile={isMobile}
             navStyleDark={navStyleDark}
             setNavHover={setNavHover}
+            onBookSession={handleOpenBooking}
           />
         )}
       </Suspense>
+
+      {/* BOOKING MODAL */}
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={handleCloseBooking}
+        initialCategory={bookingInitialCategory}
+      />
     </div>
   );
 }
