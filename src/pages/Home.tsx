@@ -15,7 +15,7 @@ const HIGH_RES_HERO_SOURCES: Record<number, string> = {
   36: "/hero-slides/modern-tiki.webp",
 };
 
-const HERO_IMAGE_POSITIONS: Record<number, string> = {
+const HERO_DESKTOP_POSITIONS: Record<number, string> = {
   1: "50% 35%",
   5: "50% 50%",
   6: "50% 72%",
@@ -24,44 +24,85 @@ const HERO_IMAGE_POSITIONS: Record<number, string> = {
   12: "65% 40%",
   14: "58% 70%",
   18: "50% 32%",
-  19: "50% 50%",
-  21: "50% 35%",
+  19: "50% 30%",
+  21: "50% 32%",
   25: "50% 38%",
   26: "50% 50%",
   34: "50% 28%",
-  36: "78% 72%",
+  36: "75% 55%",
   43: "50% 50%",
   50: "50% 65%",
 };
 
-const HERO_MOBILE_POSITIONS: Record<number, string> = {
+const HERO_PORTRAIT_POSITIONS: Record<number, string> = {
   1: "50% 60%",
   9: "50% 65%",   // Tiki-Rockabilly: full chair and floor base
   18: "50% 50%",  // Outlaw2: centered full pose, tattoos & hat
-  19: "50% 65%",  // Vintage-Glamour: full velvet couch and pose
-  21: "50% 50%",  // Modern Pin-Up (R2C0A8596): centered full studio pose
-  25: "50% 62%",  // Classic Cars: full vehicle tires and ground
-  34: "50% 82%",  // Modern Burlesque: full green heels, feet, feather boa & floor
+  19: "50% 55%",  // Vintage-Glamour: model and chair
+  21: "50% 50%",  // Modern Pin-Up: centered full studio pose
+  25: "50% 60%",  // Classic Cars: vehicle and model
+  34: "50% 70%",  // Modern Burlesque: full pose
   36: "65% 65%",  // Modern Tiki
 };
 
-const SLIDE_DURATION = 7000;
-const COMPACT_HERO_QUERY = "(max-width: 900px), (orientation: landscape) and (max-height: 500px)";
+const HERO_LANDSCAPE_POSITIONS: Record<number, string> = {
+  1: "50% 20%",
+  9: "50% 24%",
+  18: "50% 20%",
+  19: "50% 18%",  // Model face, hair, and upper gold jumpsuit in full frame
+  21: "50% 22%",  // Pink victory rolls, face, vanity mirror in full frame
+  25: "50% 24%",  // Model face and car hood/grille in full frame
+  34: "50% 22%",  // Burlesque boa, face, makeup, green accents in full frame
+  36: "72% 28%",  // Tiki lounge, cocktail, face and hair in full frame
+};
 
-function useCompactHero(): boolean {
-  const [compact, setCompact] = useState(
-    typeof window !== "undefined" ? window.matchMedia(COMPACT_HERO_QUERY).matches : false,
-  );
+const SLIDE_DURATION = 7000;
+
+interface ViewportLayout {
+  isShortLandscape: boolean;
+  isMobilePortrait: boolean;
+  compactHero: boolean;
+}
+
+function useHeroLayout(): ViewportLayout {
+  const [layout, setLayout] = useState<ViewportLayout>(() => {
+    if (typeof window === "undefined") {
+      return { isShortLandscape: false, isMobilePortrait: false, compactHero: false };
+    }
+    const isShortLandscape = window.matchMedia("(orientation: landscape) and (max-height: 550px)").matches;
+    const isMobilePortrait = window.matchMedia("(max-width: 768px) and (orientation: portrait)").matches;
+    const compactHero = window.matchMedia("(max-width: 900px), (orientation: landscape) and (max-height: 550px)").matches;
+    return { isShortLandscape, isMobilePortrait, compactHero };
+  });
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia(COMPACT_HERO_QUERY);
-    const onChange = (event: MediaQueryListEvent) => setCompact(event.matches);
-    setCompact(mediaQuery.matches);
-    mediaQuery.addEventListener("change", onChange);
-    return () => mediaQuery.removeEventListener("change", onChange);
+    const update = () => {
+      const isShortLandscape = window.matchMedia("(orientation: landscape) and (max-height: 550px)").matches;
+      const isMobilePortrait = window.matchMedia("(max-width: 768px) and (orientation: portrait)").matches;
+      const compactHero = window.matchMedia("(max-width: 900px), (orientation: landscape) and (max-height: 550px)").matches;
+      setLayout({ isShortLandscape, isMobilePortrait, compactHero });
+    };
+
+    const mediaShort = window.matchMedia("(orientation: landscape) and (max-height: 550px)");
+    const mediaPort = window.matchMedia("(max-width: 768px) and (orientation: portrait)");
+    const mediaCompact = window.matchMedia("(max-width: 900px), (orientation: landscape) and (max-height: 550px)");
+
+    mediaShort.addEventListener("change", update);
+    mediaPort.addEventListener("change", update);
+    mediaCompact.addEventListener("change", update);
+    window.addEventListener("resize", update);
+    window.addEventListener("orientationchange", update);
+
+    return () => {
+      mediaShort.removeEventListener("change", update);
+      mediaPort.removeEventListener("change", update);
+      mediaCompact.removeEventListener("change", update);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("orientationchange", update);
+    };
   }, []);
 
-  return compact;
+  return layout;
 }
 
 export interface HomeProps {
@@ -75,8 +116,8 @@ export interface HomeProps {
 export default function Home({ heroVisible, isMobile, setPage, navHover, setNavHover }: HomeProps) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [slideCycle, setSlideCycle] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const compactHero = useCompactHero() || isMobile;
+  const { isShortLandscape, isMobilePortrait, compactHero } = useHeroLayout();
+  const isCompact = compactHero || isMobile;
   const activeHero: GalleryImage = HERO_SLIDES[activeSlide] ?? HERO_SLIDES[0] ?? GALLERY_IMAGES[0]!;
 
   const goToSlide = useCallback((index: number) => {
@@ -148,7 +189,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
 
   const navLinkStyle = (link: string): React.CSSProperties => ({
     fontFamily: FONTS.script,
-    fontSize: compactHero ? "28px" : "48px",
+    fontSize: isCompact ? "28px" : "48px",
     color: "#FFFFFF",
     cursor: "pointer",
     border: "none",
@@ -201,9 +242,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
       >
         {HERO_SLIDES.map((image, index) => {
           const isCurrent = index === activeSlide;
-          const pos = (compactHero && HERO_MOBILE_POSITIONS[image.id])
-            ? HERO_MOBILE_POSITIONS[image.id]!
-            : (HERO_IMAGE_POSITIONS[image.id] ?? image.focus ?? "50% 50%");
+          const pos = isShortLandscape
+            ? (HERO_LANDSCAPE_POSITIONS[image.id] ?? "50% 22%")
+            : isMobilePortrait
+            ? (HERO_PORTRAIT_POSITIONS[image.id] ?? HERO_DESKTOP_POSITIONS[image.id] ?? "50% 50%")
+            : (HERO_DESKTOP_POSITIONS[image.id] ?? image.focus ?? "50% 50%");
 
           return (
             <img
@@ -233,7 +276,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             top: 0,
             left: 0,
             right: 0,
-            height: compactHero ? "max(240px, calc(env(safe-area-inset-top, 0px) + 200px))" : "260px",
+            height: isShortLandscape
+              ? "max(90px, calc(env(safe-area-inset-top, 0px) + 70px))"
+              : isCompact
+              ? "max(240px, calc(env(safe-area-inset-top, 0px) + 200px))"
+              : "260px",
             pointerEvents: "none",
             background:
               "linear-gradient(to bottom, rgba(10,10,11,0.5) 0%, rgba(10,10,11,0.2) 60%, rgba(10,10,11,0) 100%)",
@@ -249,7 +296,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             bottom: 0,
             left: 0,
             right: 0,
-            height: compactHero ? "max(140px, calc(env(safe-area-inset-bottom, 0px) + 120px))" : "180px",
+            height: isShortLandscape
+              ? "max(50px, calc(env(safe-area-inset-bottom, 0px) + 40px))"
+              : isCompact
+              ? "max(140px, calc(env(safe-area-inset-bottom, 0px) + 120px))"
+              : "180px",
             pointerEvents: "none",
             background:
               "linear-gradient(to top, rgba(10,10,11,0.4) 0%, rgba(10,10,11,0.08) 60%, rgba(10,10,11,0) 100%)",
@@ -262,12 +313,20 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           aria-hidden="true"
           style={{
             position: "absolute",
-            top: compactHero ? "max(20px, env(safe-area-inset-top, 20px))" : "36px",
-            left: compactHero ? "max(16px, env(safe-area-inset-left, 16px))" : "48px",
+            top: isShortLandscape
+              ? "max(10px, env(safe-area-inset-top, 10px))"
+              : isCompact
+              ? "max(20px, env(safe-area-inset-top, 20px))"
+              : "36px",
+            left: isShortLandscape
+              ? "max(16px, env(safe-area-inset-left, 16px))"
+              : isCompact
+              ? "max(16px, env(safe-area-inset-left, 16px))"
+              : "48px",
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
-            maxWidth: compactHero ? "calc(100vw - 32px)" : "min(92vw, 960px)",
+            maxWidth: isShortLandscape ? "calc(100vw - 80px)" : isCompact ? "calc(100vw - 32px)" : "min(92vw, 960px)",
             pointerEvents: "none",
             zIndex: 6,
           }}
@@ -276,7 +335,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           <div
             style={{
               fontFamily: FONTS.script,
-              fontSize: compactHero ? "clamp(72px, 13vw, 96px)" : "clamp(120px, 13vw, 200px)",
+              fontSize: isShortLandscape
+                ? "clamp(36px, 9.5vh, 48px)"
+                : isMobilePortrait
+                ? "clamp(64px, 13vw, 88px)"
+                : "clamp(120px, 13vw, 200px)",
               lineHeight: 1,
               color: "#FDFEFD",
               textShadow:
@@ -293,9 +356,9 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               display: "flex",
               flexWrap: "wrap",
               alignItems: "baseline",
-              columnGap: compactHero ? "10px" : "16px",
+              columnGap: isShortLandscape ? "6px" : isCompact ? "10px" : "16px",
               rowGap: "2px",
-              marginTop: compactHero ? "14px" : "20px",
+              marginTop: isShortLandscape ? "2px" : isCompact ? "12px" : "20px",
               color: "#FDFEFD",
               textShadow:
                 "0 2px 4px rgba(0, 0, 0, 0.75), 0 3px 12px rgba(205, 38, 68, 0.85), 0 0 20px rgba(205, 38, 68, 0.5)",
@@ -305,7 +368,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "clamp(30px, 6.5vw, 38px)" : "clamp(42px, 4.2vw, 64px)",
+                fontSize: isShortLandscape
+                  ? "clamp(16px, 4.2vh, 22px)"
+                  : isMobilePortrait
+                  ? "clamp(26px, 6.2vw, 34px)"
+                  : "clamp(42px, 4.2vw, 64px)",
                 lineHeight: 1,
                 fontWeight: 400,
               }}
@@ -317,7 +384,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               style={{
                 whiteSpace: "nowrap",
                 fontFamily: FONTS.script,
-                fontSize: compactHero ? "clamp(30px, 6.5vw, 38px)" : "clamp(42px, 4.2vw, 64px)",
+                fontSize: isShortLandscape
+                  ? "clamp(16px, 4.2vh, 22px)"
+                  : isMobilePortrait
+                  ? "clamp(26px, 6.2vw, 34px)"
+                  : "clamp(42px, 4.2vw, 64px)",
                 lineHeight: 1,
                 fontWeight: 400,
                 animation: "category-text-fade 0.35s ease forwards",
@@ -329,13 +400,15 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
         </div>
 
         {/* Navigation — Mobile Hamburger at Top-Right, Desktop Navigation at Top-Right */}
-        {compactHero ? (
+        {isCompact ? (
           <div
             style={{
               position: "absolute",
               top: 0,
               right: 0,
-              padding: "max(20px, env(safe-area-inset-top, 20px)) max(16px, env(safe-area-inset-right, 16px)) 0",
+              padding: isShortLandscape
+                ? "max(10px, env(safe-area-inset-top, 10px)) max(16px, env(safe-area-inset-right, 16px)) 0"
+                : "max(20px, env(safe-area-inset-top, 20px)) max(16px, env(safe-area-inset-right, 16px)) 0",
               zIndex: 10,
               display: "flex",
               alignItems: "center",
@@ -380,20 +453,24 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
           aria-label="Featured photography slides"
           style={{
             position: "absolute",
-            bottom: compactHero ? "max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px))" : "36px",
+            bottom: isShortLandscape
+              ? "max(8px, calc(env(safe-area-inset-bottom, 0px) + 6px))"
+              : isCompact
+              ? "max(24px, calc(env(safe-area-inset-bottom, 0px) + 20px))"
+              : "36px",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
             alignItems: "center",
-            gap: compactHero ? "10px" : "12px",
+            gap: isShortLandscape ? "6px" : isCompact ? "10px" : "12px",
             zIndex: 7,
           }}
         >
           {HERO_SLIDES.map((image, index) => {
             const isActive = index === activeSlide;
-            const pillHeight = compactHero ? "12px" : "13px";
-            const activeWidth = compactHero ? "44px" : "52px";
-            const inactiveWidth = compactHero ? "12px" : "13px";
+            const pillHeight = isShortLandscape ? "7px" : isCompact ? "12px" : "13px";
+            const activeWidth = isShortLandscape ? "26px" : isCompact ? "44px" : "52px";
+            const inactiveWidth = isShortLandscape ? "7px" : isCompact ? "12px" : "13px";
 
             return (
               <button

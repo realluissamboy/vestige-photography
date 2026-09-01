@@ -115,8 +115,9 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            gap: "12px",
-            padding: "24px",
+            gap: "8px",
+            padding: "max(20px, env(safe-area-inset-top, 20px)) 24px max(20px, env(safe-area-inset-bottom, 20px))",
+            overflowY: "auto",
             animation: "vestige-fade 0.25s ease",
           }}
         >
@@ -126,8 +127,8 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
             onClick={() => handleOpenChange(false)}
             style={{
               position: "absolute",
-              top: "20px",
-              right: "16px",
+              top: "max(14px, env(safe-area-inset-top, 14px))",
+              right: "max(16px, env(safe-area-inset-right, 16px))",
               width: "44px",
               height: "44px",
               display: "flex",
@@ -153,13 +154,13 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
               onClick={() => handleNav(link.page)}
               style={{
                 fontFamily: FONTS.script,
-                fontSize: link.isWordmark ? "64px" : "48px",
+                fontSize: link.isWordmark ? "clamp(44px, 8vh, 64px)" : "clamp(30px, 6vh, 48px)",
                 color: "var(--color-crimson)",
                 textShadow: VESTIGE_TEXT_SHADOW,
                 background: "transparent",
                 border: "none",
-                padding: "8px 24px",
-                minHeight: "48px",
+                padding: "6px 24px",
+                minHeight: "44px",
                 cursor: "pointer",
                 lineHeight: 1,
               }}
@@ -170,7 +171,7 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
 
           <div
             style={{
-              marginTop: "32px",
+              marginTop: "clamp(12px, 3vh, 32px)",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -186,15 +187,15 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
                 aria-label={s.label}
                 style={{
                   fontFamily: FONTS.script,
-                  fontSize: "32px",
+                  fontSize: "clamp(22px, 4.5vh, 32px)",
                   color: "var(--color-cream)",
                   textShadow: VESTIGE_TEXT_SHADOW,
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
-                  padding: "8px 16px",
-                  minHeight: "44px",
+                  padding: "6px 16px",
+                  minHeight: "40px",
                   lineHeight: 1,
                 }}
               >
