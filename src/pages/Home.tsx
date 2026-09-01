@@ -333,14 +333,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
             transform: compactHero ? "translateX(-50%)" : "none",
             display: "flex",
             alignItems: "center",
-            gap: compactHero ? "8px" : "10px",
-            padding: compactHero ? "6px 14px" : "7px 16px",
-            background: "rgba(10, 10, 12, 0.45)",
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            borderRadius: "999px",
-            border: "1px solid rgba(255, 255, 255, 0.18)",
-            boxShadow: "0 6px 20px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(255, 255, 255, 0.1) inset",
+            gap: compactHero ? "10px" : "12px",
             zIndex: 7,
           }}
         >
@@ -362,11 +355,11 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                   width: isActive ? activeWidth : inactiveWidth,
                   height: pillHeight,
                   borderRadius: "999px",
-                  border: isActive ? "2px solid var(--color-crimson)" : "1.5px solid rgba(200, 20, 44, 0.75)",
-                  background: isActive ? "rgba(10, 10, 11, 0.6)" : "rgba(255, 255, 255, 0.25)",
+                  border: isActive ? "2px solid #FFFFFF" : "1.5px solid rgba(255, 255, 255, 0.75)",
+                  background: isActive ? "rgba(10, 10, 12, 0.45)" : "rgba(255, 255, 255, 0.25)",
                   boxShadow: isActive
-                    ? "0 0 10px rgba(200, 20, 44, 0.4), 0 2px 4px rgba(0, 0, 0, 0.4)"
-                    : "0 1px 3px rgba(0, 0, 0, 0.3)",
+                    ? "0 0 12px rgba(255, 255, 255, 0.4), 0 2px 6px rgba(0, 0, 0, 0.6)"
+                    : "0 2px 5px rgba(0, 0, 0, 0.5)",
                   cursor: "pointer",
                   padding: 0,
                   overflow: "hidden",
@@ -380,7 +373,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
                     style={{
                       position: "absolute",
                       inset: 0,
-                      background: "#FFFFFF",
+                      background: "var(--color-crimson)",
                       transform: "scaleX(0)",
                       transformOrigin: "left center",
                       animation: `hero-progress ${SLIDE_DURATION}ms linear forwards`,

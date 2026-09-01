@@ -99,13 +99,13 @@ export const VESTIGE_TEXT_SHADOW = [
 - **Layout Architecture (Desktop)**:
   - **Top-Left**: "Vestige" cursive signature and unbolded "Twenty years of [category]" subtitle in pure luminous white (`#FFFFFF`) with multi-layer crimson depth shadows.
   - **Bottom-Right**: "Portfolio" and "About" unboxed cursive navigation links in pure white with hover lift.
-  - **Bottom-Left**: Floating frosted glass slide indicators (`bottom: 36px, left: 48px`).
-- **Slide Indicators (Progress Pills)**:
+  - **Bottom-Left**: Floating slide indicators with white outlines and crimson progress fill (`bottom: 36px, left: 48px`).
+- **Slide Indicators (Progress Bars)**:
   - **Desktop / Laptop Placement**: Anchored to **bottom-left** (`bottom: 36px, left: 48px`).
   - **Mobile Placement**: Centered horizontally at `bottom: 24px`.
-  - **Frosted Glass Container**: `backdropFilter: "blur(10px)"`, `background: "rgba(10, 10, 12, 0.45)"`, `borderRadius: "999px"`, `border: "1px solid rgba(255, 255, 255, 0.18)"`.
-  - **Active Capsule**: `52px × 13px` (desktop) / `44px × 12px` (mobile) with animated pure `#FFFFFF` progress fill and `2px solid var(--color-crimson)` border.
-  - **Inactive Dots**: `13px × 13px` (desktop) / `12px × 12px` (mobile) with `1.5px solid rgba(200, 20, 44, 0.75)`.
+  - **Unboxed Float**: Clean organic placement directly on the photograph with zero outer container box.
+  - **Active Capsule**: `52px × 13px` (desktop) / `44px × 12px` (mobile), `2px solid #FFFFFF` white border, with animated crimson (`var(--color-crimson)`) progress fill.
+  - **Inactive Dots**: `13px × 13px` (desktop) / `12px × 12px` (mobile), `1.5px solid rgba(255, 255, 255, 0.75)` white border with semi-transparent white glass fill.
 
 ### 5.2 Mobile Hamburger Menu (`MobileMenu.tsx`)
 - **Structure**: Pixel-perfect vector SVG (`viewBox="0 0 26 20"` with `strokeWidth="2.5"`).
