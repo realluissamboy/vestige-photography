@@ -335,33 +335,44 @@ export default function Portfolio({
               aria-label={`${activePreviewTitle} thumbnails`}
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "6px",
+                gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                gap: "8px",
                 height: "100%",
                 overflowY: "auto",
+                WebkitOverflowScrolling: "touch",
                 scrollbarWidth: "none",
-                paddingRight: "2px",
+                paddingRight: "4px",
+                paddingBottom: "12px",
                 alignContent: "start",
+                boxSizing: "border-box",
               }}
             >
               {activePreviewPhotos.map((img: GalleryImage, idx: number) => {
                 const isSpotlight = img.id === activeSpotlightImage?.id;
 
                 return (
-                  <button
+                  <div
                     key={img.id}
-                    type="button"
                     onClick={() => setSpotlightImageId(img.id)}
+                    role="button"
+                    tabIndex={0}
                     aria-label={`Spotlight photo ${idx + 1}`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSpotlightImageId(img.id);
+                      }
+                    }}
                     style={{
                       position: "relative",
-                      aspectRatio: img.ratio === "landscape" ? "3/2" : "3/4",
-                      borderRadius: "5px",
+                      width: "100%",
+                      aspectRatio: "3/4",
+                      borderRadius: "6px",
                       overflow: "hidden",
                       cursor: "pointer",
-                      padding: 0,
-                      border: isSpotlight ? `2px solid ${activePreviewColor}` : "1px solid rgba(0, 0, 0, 0.12)",
-                      boxShadow: isSpotlight ? `0 0 10px ${activePreviewColor}66` : "0 2px 6px rgba(0, 0, 0, 0.08)",
+                      boxSizing: "border-box",
+                      border: isSpotlight ? `2.5px solid ${activePreviewColor}` : "1px solid rgba(0, 0, 0, 0.12)",
+                      boxShadow: isSpotlight ? `0 0 10px ${activePreviewColor}77` : "0 2px 6px rgba(0, 0, 0, 0.08)",
                       transform: isSpotlight ? "scale(0.97)" : "scale(1)",
                       transition: "all 0.2s ease",
                       background: "var(--color-cream)",
@@ -372,15 +383,18 @@ export default function Portfolio({
                       alt={img.label}
                       loading="lazy"
                       style={{
+                        position: "absolute",
+                        inset: 0,
                         width: "100%",
                         height: "100%",
+                        display: "block",
                         objectFit: "cover",
                         objectPosition: img.focus || "50% 25%",
                         filter: isSpotlight ? "brightness(1)" : "brightness(0.85)",
                         transition: "filter 0.2s ease",
                       }}
                     />
-                  </button>
+                  </div>
                 );
               })}
             </div>
