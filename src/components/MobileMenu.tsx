@@ -80,12 +80,14 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
           height="20"
           viewBox="0 0 26 20"
           fill="none"
-          stroke="var(--color-crimson)"
+          stroke={variant === "overlay" ? "#FFFFFF" : "var(--color-crimson)"}
           strokeWidth="2.5"
           strokeLinecap="round"
           style={{
             display: "block",
-            filter: VESTIGE_ICON_SHADOW,
+            filter: variant === "overlay"
+              ? "drop-shadow(0 2px 4px rgba(0,0,0,0.85)) drop-shadow(0 0 10px rgba(200,20,44,0.6))"
+              : VESTIGE_ICON_SHADOW,
           }}
           aria-hidden="true"
         >

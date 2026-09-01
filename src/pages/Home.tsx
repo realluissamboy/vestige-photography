@@ -109,18 +109,16 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
 
   const navLinkStyle = (link: string): React.CSSProperties => ({
     fontFamily: FONTS.script,
-    fontSize: compactHero ? "26px" : "36px",
+    fontSize: compactHero ? "28px" : "48px",
     color: "#FFFFFF",
     cursor: "pointer",
-    border: "1px solid rgba(255, 255, 255, 0.25)",
-    background: "var(--color-crimson)",
-    padding: compactHero ? "6px 18px" : "10px 28px",
-    borderRadius: "999px",
-    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(200, 20, 44, 0.3)",
-    opacity: navHover === link ? 1 : 0.92,
-    transform: navHover === link ? "translateY(-2px) scale(1.02)" : "translateY(0) scale(1)",
-    transition: "opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease",
-    textShadow: "0 1px 3px rgba(0, 0, 0, 0.4)",
+    border: "none",
+    background: "none",
+    padding: "4px 0",
+    opacity: navHover === link ? 1 : 0.88,
+    transform: navHover === link ? "translateY(-2px)" : "translateY(0)",
+    transition: "opacity 0.25s ease, transform 0.25s ease",
+    textShadow: "0 2px 6px rgba(0, 0, 0, 0.85), 0 3px 14px rgba(200, 20, 44, 0.75), 0 0 24px rgba(200, 20, 44, 0.4)",
     lineHeight: 1,
   });
 
@@ -302,7 +300,7 @@ export default function Home({ heroVisible, isMobile, setPage, navHover, setNavH
               right: "48px",
               display: "flex",
               alignItems: "center",
-              gap: "20px",
+              gap: "44px",
               zIndex: 10,
             }}
           >
