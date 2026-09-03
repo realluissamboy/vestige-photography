@@ -47,17 +47,27 @@ export default function MonographAboutSection({
         position: "relative",
         zIndex: 10,
         boxShadow: "0 -24px 60px rgba(0, 0, 0, 0.45)",
+        minHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        boxSizing: "border-box",
         padding: isLandscapeMobile
-          ? "36px 20px 20px"
+          ? "28px 20px 16px"
           : isMobile
-          ? "48px 20px 24px"
-          : "64px 36px 28px",
+          ? "40px 20px 20px"
+          : "48px 36px 20px",
       }}
     >
       <div
         style={{
           maxWidth: "1060px",
+          width: "100%",
           margin: "0 auto",
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
           boxSizing: "border-box",
         }}
       >
