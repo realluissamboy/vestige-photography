@@ -17,7 +17,6 @@ export interface HomeProps {
 }
 
 const HIGH_RES_HERO_SOURCES: Record<number, string> = {
-  34: "/hero-slides/modern-burlesque.webp",
   36: "/hero-slides/modern-tiki.webp",
 };
 
@@ -64,11 +63,11 @@ export default function Home({
         overflowX: "hidden",
       }}
     >
-      {/* 1. Primary Homepage Cover — The 3rd image in Modern Pin-Up (woman on couch with neon green wall and yellow dress) without portfolio link */}
+      {/* 1. Primary Homepage Cover — The woman with the green dress from Burlesque without portfolio link */}
       <MonographDisciplineSection
         id="homepage-cover"
         title="Vestige"
-        imageSrc="/portfolio/pinup-green-wall.webp"
+        imageSrc="/hero-slides/modern-burlesque.webp"
         imageAlt="Vestige Photography — Twenty years of modern pin-up"
         imageFocus="50% 25%"
         isCover={true}
