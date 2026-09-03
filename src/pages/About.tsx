@@ -176,30 +176,23 @@ export default function About({
           </p>
         </div>
 
-        {/* The Roots */}
+        {/* The Heritage (combined roots & heritage) */}
         <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
-          <p style={sectionLabel}>The Roots</p>
+          <p style={sectionLabel}>The Heritage</p>
           <p style={bodyText}>
             Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
             sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
             the stage. That edge never left her work. It is what keeps a pin-up image from
-            tipping into pastiche: the grit beneath the gloss.
-          </p>
-        </div>
-
-        {/* The Heritage */}
-        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
-          <p style={sectionLabel}>The Heritage</p>
-          <p style={bodyText}>
-            Of Mexican and Colombian descent and raised in San Diego, Susana grew up
-            between languages, border towns, and the overlapping subcultures of Southern
-            California. Her portraits carry that layered sense of place &mdash; classic cars,
-            Tiki lounges, and mid-century glamour read less as costume and more as inheritance.
+            tipping into pastiche: the grit beneath the gloss. Of Mexican and Colombian descent
+            and raised in San Diego, Susana grew up between languages, border towns, and the
+            overlapping subcultures of Southern California. Her portraits carry that layered
+            sense of place &mdash; classic cars, Tiki lounges, and mid-century glamour read
+            less as costume and more as inheritance.
           </p>
         </div>
 
         {/* The Accomplishments */}
-        <div style={{ width: "100%", marginBottom: isMobile ? "44px" : "60px" }}>
+        <div style={{ width: "100%", marginBottom: isMobile ? "40px" : "56px" }}>
           <p style={sectionLabel}>The Accomplishments</p>
           <p style={bodyText}>
             Susana is the author of{" "}
@@ -234,11 +227,12 @@ export default function About({
           </p>
         </div>
 
-        {/* CTA */}
+        {/* CTA at the bottom */}
         <div
           style={{
             textAlign: "center",
             paddingTop: isMobile ? "12px" : "20px",
+            marginBottom: isMobile ? "32px" : "48px",
             display: "flex",
             justifyContent: "center",
           }}
@@ -247,9 +241,18 @@ export default function About({
             Book a Session
           </Button>
         </div>
-      </article>
 
-      <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} showBrandVoice={true} />
+        {/* Integrated Compact Horizontal Footer */}
+        <div
+          style={{
+            width: "100%",
+            borderTop: "1px solid rgba(158, 140, 121, 0.25)",
+            paddingTop: "6px",
+          }}
+        >
+          <PageFooter visible={aboutVisible} isMobile={isMobile} showBrandVoice={true} />
+        </div>
+      </article>
     </main>
   );
 }

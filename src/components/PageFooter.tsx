@@ -15,21 +15,88 @@ export default function PageFooter({ visible, isMobile, showBrandVoice = false }
   return (
     <footer
       style={{
-        textAlign: "center",
-        padding: isMobile ? "24px 16px 24px" : "36px 24px 28px",
-        borderTop: `1px solid ${COLORS.stone}44`,
+        width: "100%",
+        boxSizing: "border-box",
+        padding: isMobile ? "12px 8px 14px" : "14px 16px",
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: isMobile ? "8px" : "16px",
         opacity: visible ? 1 : 0,
-        transition: "opacity 0.8s ease 0.6s",
+        transition: "opacity 0.8s ease 0.4s",
       }}
     >
+      {/* Left: Copyright & Built By */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          flexWrap: "wrap",
+          justifyContent: isMobile ? "center" : "flex-start",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: FONTS.display,
+            fontStyle: "italic",
+            fontWeight: 600,
+            fontSize: isMobile ? "10px" : "11px",
+            letterSpacing: "2.5px",
+            textTransform: "uppercase",
+            color: COLORS.plum,
+          }}
+        >
+          © Vestige Photography 2026
+        </span>
+        <span style={{ color: `${COLORS.stone}77`, fontSize: "11px" }}>·</span>
+        <span
+          style={{
+            fontSize: isMobile ? "9.5px" : "10px",
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            fontFamily: FONTS.display,
+            fontStyle: "italic",
+            color: COLORS.plum,
+            opacity: 0.85,
+          }}
+        >
+          Built by{" "}
+          <a
+            href="https://www.luissamboy.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "inherit", textDecoration: "none", borderBottom: "1px solid currentColor" }}
+          >
+            Samboy
+          </a>
+        </span>
+      </div>
+
+      {/* Center: Brand Voice Note (Compact inline) */}
+      {showBrandVoice && (
+        <span
+          style={{
+            fontFamily: FONTS.body,
+            fontStyle: "italic",
+            fontSize: isMobile ? "10.5px" : "11.5px",
+            color: COLORS.plum,
+            opacity: 0.75,
+            textAlign: "center",
+          }}
+        >
+          <em>Vestige</em> (Wonk Press, 2025) · Book design by Carrie A. Smith
+        </span>
+      )}
+
+      {/* Right: Social Links Inline */}
       <nav
         style={{
           display: "flex",
-          justifyContent: "center",
-          gap: isMobile ? "20px" : "32px",
-          marginBottom: "14px",
-          flexWrap: "wrap",
           alignItems: "center",
+          gap: isMobile ? "16px" : "20px",
+          justifyContent: isMobile ? "center" : "flex-end",
         }}
       >
         {SOCIALS.map((s) => (
@@ -40,80 +107,34 @@ export default function PageFooter({ visible, isMobile, showBrandVoice = false }
             rel="noopener noreferrer"
             aria-label={s.label}
             style={{
-              fontFamily: FONTS.script,
-              fontSize: isMobile ? "24px" : "30px",
-              color: "var(--color-crimson)",
+              fontFamily: FONTS.display,
+              fontStyle: "italic",
+              fontWeight: 600,
+              fontSize: isMobile ? "10.5px" : "11.5px",
+              letterSpacing: "1.5px",
+              textTransform: "uppercase",
+              color: "var(--color-crimson, #CD2644)",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
-              gap: "8px",
-              lineHeight: 1,
-              opacity: 0.9,
-              transition: "opacity 0.25s ease, transform 0.25s ease",
+              gap: "5px",
+              opacity: 0.85,
+              transition: "opacity 0.2s ease, transform 0.2s ease",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.9")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = "1";
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = "0.85";
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
           >
             {s.svg}
-            {s.label}
+            <span>{s.label}</span>
           </a>
         ))}
       </nav>
-      <p
-        style={{
-          fontFamily: FONTS.display,
-          fontStyle: "italic",
-          fontWeight: 600,
-          fontSize: "11px",
-          letterSpacing: "3px",
-          textTransform: "uppercase",
-          color: COLORS.plum,
-          margin: 0,
-        }}
-      >
-        © Vestige Photography 2026
-      </p>
-      {showBrandVoice && (
-        <p
-          style={{
-            fontFamily: FONTS.body,
-            fontStyle: "italic",
-            fontSize: "12px",
-            color: COLORS.plum,
-            margin: "10px auto 0",
-            opacity: 0.8,
-            maxWidth: "640px",
-            lineHeight: 1.5,
-            textAlign: "center",
-          }}
-        >
-          Brand voice informed by <em>Vestige: Twenty Years of Modern Pin-Up</em> (Wonk Press, 2025).
-          <br />
-          Book design by Carrie A. Smith.
-        </p>
-      )}
-      <p
-        style={{
-          fontSize: "9.5px",
-          letterSpacing: "2px",
-          textTransform: "uppercase",
-          fontFamily: FONTS.display,
-          fontStyle: "italic",
-          color: COLORS.plum,
-          margin: "10px 0 0 0",
-          opacity: 0.75,
-        }}
-      >
-        Built by Samboy |{" "}
-        <a
-          href="https://www.luissamboy.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "inherit", textDecoration: "none", borderBottom: "1px solid currentColor" }}
-        >
-          www.luissamboy.com
-        </a>
-      </p>
     </footer>
   );
 }

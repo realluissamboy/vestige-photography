@@ -1,7 +1,6 @@
 import React from "react";
 import MonographDisciplineSection from "../components/MonographDisciplineSection";
 import MonographAboutSection from "../components/MonographAboutSection";
-import PageFooter from "../components/PageFooter";
 import {
   CATEGORY_TITLES,
   CATEGORY_COLORS,
@@ -93,11 +92,8 @@ export default function Home({
         />
       ))}
 
-      {/* 3. Integrated Susana Andrea Story Section */}
+      {/* 3. Integrated Susana Andrea Story Section with CTA and Compact Footer */}
       <MonographAboutSection onBookSession={onBookSession} />
-
-      {/* 4. Monograph Page Footer with Colophon */}
-      <PageFooter visible={true} isMobile={isMobile} showBrandVoice={true} />
     </main>
   );
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { FONTS } from "../theme/fonts";
 import { useResponsiveViewport } from "../hooks/useIsMobile";
 import Button from "./Button";
+import PageFooter from "./PageFooter";
 
 export interface MonographAboutSectionProps {
   onBookSession?: () => void;
@@ -47,10 +48,10 @@ export default function MonographAboutSection({
         zIndex: 10,
         boxShadow: "0 -24px 60px rgba(0, 0, 0, 0.45)",
         padding: isLandscapeMobile
-          ? "40px 20px 60px"
+          ? "40px 20px 24px"
           : isMobile
-          ? "54px 20px 80px"
-          : "80px 32px 110px",
+          ? "54px 20px 28px"
+          : "80px 32px 36px",
       }}
     >
       <div
@@ -144,30 +145,23 @@ export default function MonographAboutSection({
           </p>
         </div>
 
-        {/* The Roots */}
+        {/* The Heritage (combined roots & heritage) */}
         <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
-          <p style={sectionLabel}>The Roots</p>
+          <p style={sectionLabel}>The Heritage</p>
           <p style={bodyText}>
             Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
             sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
             the stage. That edge never left her work. It is what keeps a pin-up image from
-            tipping into pastiche: the grit beneath the gloss.
-          </p>
-        </div>
-
-        {/* The Heritage */}
-        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
-          <p style={sectionLabel}>The Heritage</p>
-          <p style={bodyText}>
-            Of Mexican and Colombian descent and raised in San Diego, Susana grew up
-            between languages, border towns, and the overlapping subcultures of Southern
-            California. Her portraits carry that layered sense of place &mdash; classic cars,
-            Tiki lounges, and mid-century glamour read less as costume and more as inheritance.
+            tipping into pastiche: the grit beneath the gloss. Of Mexican and Colombian descent
+            and raised in San Diego, Susana grew up between languages, border towns, and the
+            overlapping subcultures of Southern California. Her portraits carry that layered
+            sense of place &mdash; classic cars, Tiki lounges, and mid-century glamour read
+            less as costume and more as inheritance.
           </p>
         </div>
 
         {/* The Accomplishments */}
-        <div style={{ width: "100%", marginBottom: isMobile ? "44px" : "60px" }}>
+        <div style={{ width: "100%", marginBottom: isMobile ? "40px" : "56px" }}>
           <p style={sectionLabel}>The Accomplishments</p>
           <p style={bodyText}>
             Susana is the author of{" "}
@@ -184,11 +178,12 @@ export default function MonographAboutSection({
           </p>
         </div>
 
-        {/* Single Call to Action */}
+        {/* Single Call to Action at the bottom */}
         <div
           style={{
             textAlign: "center",
             paddingTop: isMobile ? "12px" : "20px",
+            marginBottom: isMobile ? "32px" : "48px",
             display: "flex",
             justifyContent: "center",
           }}
@@ -196,6 +191,17 @@ export default function MonographAboutSection({
           <Button isMobile={isMobile} onClick={onBookSession}>
             Book a Session
           </Button>
+        </div>
+
+        {/* Integrated Compact Horizontal Footer */}
+        <div
+          style={{
+            width: "100%",
+            borderTop: "1px solid rgba(158, 140, 121, 0.25)",
+            paddingTop: "6px",
+          }}
+        >
+          <PageFooter visible={true} isMobile={isMobile} showBrandVoice={true} />
         </div>
       </div>
     </section>
