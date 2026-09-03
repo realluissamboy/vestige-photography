@@ -234,6 +234,86 @@ export default function Portfolio({
             <MobileMenu variant="solid" setPage={setPage} onResetPortfolio={handleBackToPortfolio} />
           </div>
         </header>
+      ) : onReturnToMonograph ? (
+        <header
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 20,
+            background: "rgba(239, 233, 217, 0.96)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            borderBottom: "1px solid rgba(158, 140, 121, 0.35)",
+            padding: isMobile ? "10px 16px" : "14px 32px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            boxShadow: "0 2px 12px rgba(0, 0, 0, 0.06)",
+          }}
+        >
+          {/* Navigation Button: Back to Homepage */}
+          <button
+            type="button"
+            onClick={handleBackToPortfolio}
+            aria-label="Back to Homepage"
+            style={{
+              background: "none",
+              border: "none",
+              padding: "6px 0",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              color: "var(--color-crimson, #CD2644)",
+              transition: "transform 0.2s ease, opacity 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateX(-3px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateX(0)";
+            }}
+          >
+            <span style={{ fontSize: isMobile ? "18px" : "20px", lineHeight: 1 }}>←</span>
+            <span
+              style={{
+                fontFamily: FONTS.display,
+                fontStyle: "italic",
+                fontWeight: 700,
+                fontSize: isMobile ? "12px" : "14px",
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                color: "var(--color-ink, #1A1A1B)",
+              }}
+            >
+              Back to Homepage
+            </span>
+          </button>
+
+          {/* Right: Book a Session CTA */}
+          <button
+            type="button"
+            onClick={() => onBookSession?.(displayedCategory ? CATEGORY_TITLES[displayedCategory] : undefined)}
+            style={{
+              background: "var(--color-crimson, #CD2644)",
+              border: "none",
+              color: "#FFFFFF",
+              fontFamily: FONTS.display,
+              fontStyle: "italic",
+              fontWeight: 700,
+              fontSize: isMobile ? "10.5px" : "12px",
+              letterSpacing: "1.2px",
+              textTransform: "uppercase",
+              padding: isMobile ? "6px 14px" : "8px 18px",
+              borderRadius: "6px",
+              cursor: "pointer",
+              boxShadow: "0 2px 8px rgba(205, 38, 68, 0.35)",
+              transition: "opacity 0.2s ease",
+            }}
+          >
+            Book a Session
+          </button>
+        </header>
       ) : (
         <>
           <PageHeader
@@ -1056,7 +1136,7 @@ export default function Portfolio({
                         lineHeight: 1.1,
                       }}
                     >
-                      {onReturnToMonograph ? "← Return to Monograph" : "← All Collections"}
+                      {onReturnToMonograph ? "← Back to Homepage" : "← All Collections"}
                     </span>
                   </button>
 

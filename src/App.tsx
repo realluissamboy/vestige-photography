@@ -16,54 +16,66 @@ export default function App() {
   const [navHover, setNavHover] = useState<string | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState<boolean>(false);
   const [bookingInitialCategory, setBookingInitialCategory] = useState<string | undefined>(undefined);
+  
+  // Smooth slide-over portfolio state
+  const [isPortfolioActive, setIsPortfolioActive] = useState<boolean>(false);
+  const [portfolioSlideOpen, setPortfolioSlideOpen] = useState<boolean>(false);
   const [portfolioCategory, setPortfolioCategory] = useState<Category | null>(null);
-  const [monographScrollY, setMonographScrollY] = useState<number>(0);
+  
   const isMobile = useIsMobile();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Ensure free natural scrolling across the monograph and subpages
+  // Natural scroll handling
   useEffect(() => {
     if (typeof document !== "undefined") {
-      document.documentElement.style.overflow = "";
-      document.documentElement.style.overflowY = "auto";
-      document.documentElement.style.height = "auto";
-      document.body.style.overflow = "";
-      document.body.style.overflowY = "auto";
-      document.body.style.height = "auto";
-      document.body.style.overscrollBehavior = "auto";
+      if (portfolioSlideOpen) {
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+      } else {
+        document.documentElement.style.overflow = "";
+        document.documentElement.style.overflowY = "auto";
+        document.documentElement.style.height = "auto";
+        document.body.style.overflow = "";
+        document.body.style.overflowY = "auto";
+        document.body.style.height = "auto";
+        document.body.style.overscrollBehavior = "auto";
+      }
     }
-  }, []);
+  }, [portfolioSlideOpen]);
 
   const handleSetPage = useCallback((newPage: PageKey) => {
     setActivePage(newPage);
+    if (newPage !== "portfolio") {
+      setPortfolioSlideOpen(false);
+      setIsPortfolioActive(false);
+    }
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   }, []);
 
+  // Smooth slide-in from right taking over the viewport
   const handleViewPortfolio = useCallback((category: Category) => {
-    if (typeof window !== "undefined") {
-      setMonographScrollY(window.scrollY);
-    }
     setPortfolioCategory(category);
-    setActivePage("portfolio");
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "instant" });
-    }
+    setIsPortfolioActive(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setPortfolioSlideOpen(true);
+      });
+    });
   }, []);
 
+  // Smooth slide-out back to the homepage
   const handleReturnToMonograph = useCallback(() => {
-    setActivePage("home");
-    setPortfolioCategory(null);
-    if (typeof window !== "undefined") {
-      setTimeout(() => {
-        window.scrollTo({ top: monographScrollY, behavior: "smooth" });
-      }, 60);
-    }
-  }, [monographScrollY]);
+    setPortfolioSlideOpen(false);
+    setTimeout(() => {
+      setIsPortfolioActive(false);
+      setPortfolioCategory(null);
+    }, 460);
+  }, []);
 
   const handleOpenBooking = useCallback((category?: string) => {
     setBookingInitialCategory(category);
@@ -100,7 +112,7 @@ export default function App() {
       }}
     >
       <Suspense fallback={<div style={{ minHeight: "100dvh", background: "var(--color-parchment, #EFE9D9)" }} />}>
-        {/* HOME / MONOGRAPH PAGE */}
+        {/* HOMEPAGE MONOGRAPH (Stays mounted during portfolio slide-over) */}
         {activePage === "home" && (
           <Home
             onBookSession={handleOpenBooking}
@@ -109,7 +121,7 @@ export default function App() {
           />
         )}
 
-        {/* ABOUT PAGE */}
+        {/* STANDALONE ABOUT PAGE */}
         {activePage === "about" && (
           <About
             aboutVisible={true}
@@ -121,8 +133,8 @@ export default function App() {
           />
         )}
 
-        {/* PORTFOLIO DRILL-IN PAGE */}
-        {activePage === "portfolio" && (
+        {/* STANDALONE PORTFOLIO (Fallback when navigated directly) */}
+        {activePage === "portfolio" && !isPortfolioActive && (
           <Portfolio
             setPage={handleSetPage}
             isMobile={isMobile}
@@ -130,9 +142,44 @@ export default function App() {
             setNavHover={setNavHover}
             onBookSession={handleOpenBooking}
             initialCategory={portfolioCategory}
-            onReturnToMonograph={handleReturnToMonograph}
+            onReturnToMonograph={() => handleSetPage("home")}
           />
         )}
+
+        {/* SMOOTH SLIDE-IN PORTFOLIO VIEWPORT TAKEOVER */}
+        <div
+          className="portfolio-slide-over-takeover"
+          aria-hidden={!isPortfolioActive}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100dvh",
+            background: "var(--color-parchment, #EFE9D9)",
+            zIndex: 1000,
+            overflowY: "auto",
+            overflowX: "hidden",
+            transform: portfolioSlideOpen ? "translateX(0)" : "translateX(100%)",
+            transition: "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
+            boxShadow: portfolioSlideOpen ? "-20px 0 60px rgba(0, 0, 0, 0.5)" : "none",
+            pointerEvents: portfolioSlideOpen ? "auto" : "none",
+            visibility: isPortfolioActive ? "visible" : "hidden",
+            willChange: "transform",
+          }}
+        >
+          {isPortfolioActive && (
+            <Portfolio
+              setPage={handleSetPage}
+              isMobile={isMobile}
+              navStyleDark={navStyleDark}
+              setNavHover={setNavHover}
+              onBookSession={handleOpenBooking}
+              initialCategory={portfolioCategory}
+              onReturnToMonograph={handleReturnToMonograph}
+            />
+          )}
+        </div>
       </Suspense>
 
       {/* BOOKING MODAL */}
