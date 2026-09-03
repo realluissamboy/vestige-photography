@@ -321,7 +321,12 @@ export default function Portfolio({
                     if (onReturnToMonograph) {
                       onReturnToMonograph();
                     }
-                    setPage("about");
+                    setTimeout(() => {
+                      const el = document.getElementById("about-susana");
+                      if (el) {
+                        el.scrollIntoView({ behavior: "smooth" });
+                      }
+                    }, 250);
                   } else {
                     handleSelectCategory(nextCat);
                   }

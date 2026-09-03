@@ -8,10 +8,8 @@ import BookingModal from "./components/BookingModal";
 
 const Home = React.lazy(() => import("./pages/Home"));
 const Portfolio = React.lazy(() => import("./pages/Portfolio"));
-const About = React.lazy(() => import("./pages/About"));
 
 export default function App() {
-  const [activePage, setActivePage] = useState<PageKey>("home");
   const [mounted, setMounted] = useState<boolean>(false);
   const [navHover, setNavHover] = useState<string | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState<boolean>(false);
@@ -46,16 +44,35 @@ export default function App() {
     }
   }, [portfolioSlideOpen]);
 
+  // Single-page navigation: scrolls directly to the section with no separate subpages
   const handleSetPage = useCallback((newPage: PageKey) => {
-    setActivePage(newPage);
-    if (newPage !== "portfolio") {
+    if (portfolioSlideOpen) {
       setPortfolioSlideOpen(false);
-      setIsPortfolioActive(false);
+      setTimeout(() => {
+        setIsPortfolioActive(false);
+        setPortfolioCategory(null);
+      }, 460);
     }
     if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "instant" });
+      if (newPage === "about") {
+        setTimeout(() => {
+          const el = document.getElementById("about-susana");
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 120);
+      } else if (newPage === "portfolio") {
+        setTimeout(() => {
+          const el = document.getElementById("category-01");
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 120);
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
-  }, []);
+  }, [portfolioSlideOpen]);
 
   // Smooth slide-in from right taking over the viewport
   const handleViewPortfolio = useCallback((category: Category) => {
@@ -112,39 +129,12 @@ export default function App() {
       }}
     >
       <Suspense fallback={<div style={{ minHeight: "100dvh", background: "var(--color-parchment, #EFE9D9)" }} />}>
-        {/* HOMEPAGE MONOGRAPH (Stays mounted during portfolio slide-over) */}
-        {activePage === "home" && (
-          <Home
-            onBookSession={handleOpenBooking}
-            onViewPortfolio={handleViewPortfolio}
-            isMobile={isMobile}
-          />
-        )}
-
-        {/* STANDALONE ABOUT PAGE */}
-        {activePage === "about" && (
-          <About
-            aboutVisible={true}
-            setPage={handleSetPage}
-            isMobile={isMobile}
-            navStyleDark={navStyleDark}
-            setNavHover={setNavHover}
-            onBookSession={handleOpenBooking}
-          />
-        )}
-
-        {/* STANDALONE PORTFOLIO (Fallback when navigated directly) */}
-        {activePage === "portfolio" && !isPortfolioActive && (
-          <Portfolio
-            setPage={handleSetPage}
-            isMobile={isMobile}
-            navStyleDark={navStyleDark}
-            setNavHover={setNavHover}
-            onBookSession={handleOpenBooking}
-            initialCategory={portfolioCategory}
-            onReturnToMonograph={() => handleSetPage("home")}
-          />
-        )}
+        {/* HOMEPAGE MONOGRAPH — The sole page for the entire site */}
+        <Home
+          onBookSession={handleOpenBooking}
+          onViewPortfolio={handleViewPortfolio}
+          isMobile={isMobile}
+        />
 
         {/* SMOOTH SLIDE-IN PORTFOLIO VIEWPORT TAKEOVER */}
         <div

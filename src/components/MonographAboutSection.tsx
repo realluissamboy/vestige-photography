@@ -198,7 +198,26 @@ export default function MonographAboutSection({
                 >
                   <em>Vestige: Twenty Years of Modern Pin-Up</em>
                 </a>{" "}
-                (Wonk Press, 2025), a 200-page monograph documenting two decades of work.
+                (Wonk Press, 2025), a 200-page monograph documenting two decades of work, and{" "}
+                <a
+                  href="https://schifferbooks.com/products/kittens-kulture"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={linkStyle}
+                >
+                  <em>Kittens and Kulture</em>
+                </a>{" "}
+                (Schiffer Publishing), and editor of{" "}
+                <a
+                  href="https://www.instagram.com/thevelvetgazette/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={linkStyle}
+                >
+                  <em>The Velvet Gazette</em>
+                </a>
+                , a quarterly publication on vintage style, burlesque, and the women who keep
+                those traditions alive.
               </p>
             </div>
 
