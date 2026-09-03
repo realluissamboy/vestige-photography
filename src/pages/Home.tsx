@@ -1,5 +1,4 @@
 import React from "react";
-import MonographHero from "../components/MonographHero";
 import MonographDisciplineSection from "../components/MonographDisciplineSection";
 import MonographAboutSection from "../components/MonographAboutSection";
 import PageFooter from "../components/PageFooter";
@@ -12,7 +11,7 @@ export interface HomeProps {
   isMobile: boolean;
 }
 
-interface DisciplineItem {
+interface CategorySlideConfig {
   key: Category;
   title: string;
   imageSrc: string;
@@ -21,7 +20,7 @@ interface DisciplineItem {
   colorAccent: string;
 }
 
-const DISCIPLINES: DisciplineItem[] = [
+const CATEGORIES: CategorySlideConfig[] = [
   {
     key: "Vintage-Glamour",
     title: CATEGORY_TITLES["Vintage-Glamour"], // "Modern Glamour"
@@ -78,29 +77,27 @@ export default function Home({
         overflowX: "hidden",
       }}
     >
-      {/* 1. Topmost Hero with High-Contrast Placard */}
-      <MonographHero />
-
-      {/* 2. The Five Disciplines in Curated Monograph Sequence */}
-      {DISCIPLINES.map((discipline, index) => (
+      {/* Curated Monograph Categories — Starting directly with Modern Glamour */}
+      {CATEGORIES.map((category, index) => (
         <MonographDisciplineSection
-          key={discipline.key}
-          id={`discipline-0${index + 1}`}
-          disciplineNumber={index + 1}
-          categoryKey={discipline.key}
-          title={discipline.title}
-          imageSrc={discipline.imageSrc}
-          imageAlt={discipline.imageAlt}
-          imageFocus={discipline.imageFocus}
-          colorAccent={discipline.colorAccent}
+          key={category.key}
+          id={`category-0${index + 1}`}
+          categoryKey={category.key}
+          title={category.title}
+          imageSrc={category.imageSrc}
+          imageAlt={category.imageAlt}
+          imageFocus={category.imageFocus}
+          colorAccent={category.colorAccent}
+          isFirst={index === 0}
           onViewPortfolio={onViewPortfolio}
+          zIndex={index + 1}
         />
       ))}
 
-      {/* 3. Integrated Susana Andrea Story Section */}
+      {/* Integrated Susana Andrea Story Section */}
       <MonographAboutSection onBookSession={onBookSession} />
 
-      {/* 4. Monograph Page Footer with Colophon */}
+      {/* Monograph Page Footer with Colophon */}
       <PageFooter visible={true} isMobile={isMobile} showBrandVoice={true} />
     </main>
   );

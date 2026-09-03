@@ -7,36 +7,36 @@ import { useResponsiveViewport } from "../hooks/useIsMobile";
 
 export interface MonographDisciplineSectionProps {
   id: string;
-  disciplineNumber: number; // 1 to 5
   categoryKey: Category;
   title: string; // Exact title from CATEGORY_TITLES
   imageSrc: string;
   imageAlt: string;
   imageFocus?: string;
   colorAccent?: string;
+  isFirst?: boolean;
   onViewPortfolio: (category: Category) => void;
+  zIndex: number;
 }
 
 export default function MonographDisciplineSection({
   id,
-  disciplineNumber,
   categoryKey,
   title,
   imageSrc,
   imageAlt,
   imageFocus = "50% 35%",
   colorAccent = COLORS.crimson,
+  isFirst = false,
   onViewPortfolio,
+  zIndex,
 }: MonographDisciplineSectionProps) {
   const { containerRef, targetRef } = useDirectParallax(0.16);
   const { isMobile, isMobilePortrait, isLandscapeMobile } = useResponsiveViewport();
 
-  const formattedNumber = `0${disciplineNumber}`.slice(-2);
-
   return (
     <div
       className="discipline-section-wrapper"
-      style={{ zIndex: disciplineNumber + 1 }}
+      style={{ zIndex }}
     >
       <section
         id={id}
@@ -69,8 +69,8 @@ export default function MonographDisciplineSection({
             top: 0,
             left: 0,
             right: 0,
-            height: isMobile ? "220px" : "280px",
-            background: "linear-gradient(to bottom, rgba(10,10,12,0.65) 0%, rgba(10,10,12,0.15) 60%, transparent 100%)",
+            height: isMobile ? "240px" : "300px",
+            background: "linear-gradient(to bottom, rgba(10,10,12,0.68) 0%, rgba(10,10,12,0.15) 65%, transparent 100%)",
             zIndex: 2,
             pointerEvents: "none",
           }}
@@ -89,7 +89,7 @@ export default function MonographDisciplineSection({
           }}
         />
 
-        {/* Top Header: Discipline Badge & Script Title */}
+        {/* Top Header: Brand Wordmark (on first section) OR Category Title */}
         <div
           style={{
             position: "relative",
@@ -97,69 +97,137 @@ export default function MonographDisciplineSection({
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-start",
-            maxWidth: "90vw",
+            maxWidth: "min(92vw, 960px)",
           }}
         >
-          {/* Chapter Identifier Badge */}
+          {isFirst ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              {/* Primary "Vestige" Signature */}
+              <h1
+                style={{
+                  fontFamily: FONTS.script,
+                  fontSize: isLandscapeMobile
+                    ? "clamp(44px, 11vh, 60px)"
+                    : isMobilePortrait
+                    ? "clamp(64px, 14vw, 92px)"
+                    : "clamp(100px, 11vw, 160px)",
+                  lineHeight: 0.95,
+                  color: "#FDFEFD",
+                  textShadow:
+                    "0 2px 4px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(205, 38, 68, 0.85), 0 0 24px rgba(205, 38, 68, 0.6), 0 0 40px rgba(205, 38, 68, 0.35)",
+                  margin: 0,
+                  userSelect: "none",
+                }}
+              >
+                Vestige
+              </h1>
+
+              {/* Subtitle */}
+              <p
+                style={{
+                  fontFamily: FONTS.script,
+                  fontSize: isLandscapeMobile
+                    ? "clamp(18px, 4.2vh, 22px)"
+                    : isMobilePortrait
+                    ? "clamp(24px, 5.5vw, 32px)"
+                    : "clamp(34px, 3.4vw, 48px)",
+                  color: "#FDFEFD",
+                  margin: isLandscapeMobile ? "4px 0 0" : isMobile ? "8px 0 0" : "14px 0 0",
+                  lineHeight: 1.1,
+                  fontWeight: 400,
+                  textShadow:
+                    "0 2px 4px rgba(0, 0, 0, 0.75), 0 3px 12px rgba(205, 38, 68, 0.85), 0 0 20px rgba(205, 38, 68, 0.5)",
+                }}
+              >
+                Twenty years of modern pin-up
+              </p>
+
+              {/* Founder Tagline */}
+              <p
+                style={{
+                  fontFamily: FONTS.display,
+                  fontSize: isMobile ? "9.5px" : "11px",
+                  letterSpacing: "3px",
+                  textTransform: "uppercase",
+                  color: "rgba(255, 255, 255, 0.92)",
+                  fontWeight: 700,
+                  margin: isMobile ? "6px 0 0" : "10px 0 0",
+                  textShadow: "0 2px 6px rgba(0,0,0,0.85)",
+                }}
+              >
+                Photography by Susana Andrea
+              </p>
+            </div>
+          ) : (
+            <h2
+              style={{
+                fontFamily: FONTS.script,
+                fontSize: isLandscapeMobile
+                  ? "clamp(38px, 9.5vh, 52px)"
+                  : isMobilePortrait
+                  ? "clamp(52px, 13vw, 76px)"
+                  : "clamp(88px, 8.5vw, 130px)",
+                lineHeight: 1,
+                color: "#FDFEFD",
+                margin: 0,
+                textShadow:
+                  "0 2px 6px rgba(0,0,0,0.85), 0 4px 18px rgba(200,20,44,0.75), 0 0 28px rgba(200,20,44,0.45)",
+                userSelect: "none",
+              }}
+            >
+              {title}
+            </h2>
+          )}
+        </div>
+
+        {/* First Section Subtle Scroll Cue */}
+        {isFirst && (
           <div
             style={{
-              display: "inline-flex",
+              position: "absolute",
+              bottom: isLandscapeMobile ? "8px" : isMobile ? "14px" : "28px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              zIndex: 5,
+              display: "flex",
+              flexDirection: "column",
               alignItems: "center",
-              gap: "8px",
-              background: "rgba(10, 10, 12, 0.75)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              border: "1px solid rgba(255, 255, 255, 0.25)",
-              borderRadius: "999px",
-              padding: isMobile ? "4px 10px" : "6px 14px",
-              marginBottom: isMobile ? "8px" : "14px",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.3)",
+              gap: "4px",
+              color: "#FFFFFF",
+              opacity: 0.85,
+              pointerEvents: "none",
+              textShadow: "0 2px 6px rgba(0,0,0,0.85)",
             }}
           >
-            <span
-              style={{
-                width: "6px",
-                height: "6px",
-                borderRadius: "50%",
-                background: colorAccent,
-                boxShadow: `0 0 8px ${colorAccent}`,
-                display: "inline-block",
-              }}
-            />
             <span
               style={{
                 fontFamily: FONTS.display,
-                fontSize: isMobile ? "9.5px" : "11px",
+                fontSize: "9px",
                 letterSpacing: "2.5px",
                 textTransform: "uppercase",
                 fontWeight: 700,
-                color: "#FFFFFF",
               }}
             >
-              {formattedNumber} / 05
+              Scroll
+            </span>
+            <span
+              style={{
+                fontSize: "16px",
+                lineHeight: 1,
+                color: "var(--color-crimson, #CD2644)",
+                animation: "vestige-fade 1.6s ease-in-out infinite alternate",
+              }}
+            >
+              ↓
             </span>
           </div>
-
-          {/* Category Title */}
-          <h2
-            style={{
-              fontFamily: FONTS.script,
-              fontSize: isLandscapeMobile
-                ? "clamp(38px, 9.5vh, 52px)"
-                : isMobilePortrait
-                ? "clamp(52px, 13vw, 76px)"
-                : "clamp(88px, 8.5vw, 130px)",
-              lineHeight: 1,
-              color: "#FDFEFD",
-              margin: 0,
-              textShadow:
-                "0 2px 6px rgba(0,0,0,0.85), 0 4px 18px rgba(200,20,44,0.75), 0 0 28px rgba(200,20,44,0.45)",
-              userSelect: "none",
-            }}
-          >
-            {title}
-          </h2>
-        </div>
+        )}
 
         {/* Lower-Right: Anchored "View [CATEGORY_TITLE] Portfolio" CTA */}
         <div
