@@ -193,40 +193,15 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
           </p>
         </div>
 
-        {/* Commission CTA */}
+        {/* Single Call to Action */}
         <div
           style={{
             textAlign: "center",
-            padding: isMobile ? "32px 16px" : "48px 24px",
-            background: "rgba(0, 0, 0, 0.02)",
-            borderRadius: "4px",
-            border: "1px solid rgba(158, 140, 121, 0.25)",
+            paddingTop: isMobile ? "20px" : "32px",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <h3
-            style={{
-              fontFamily: FONTS.script,
-              fontSize: isMobile ? "36px" : "50px",
-              color: "var(--color-crimson, #CD2644)",
-              margin: "0 0 12px",
-              lineHeight: 1.1,
-              textShadow: VESTIGE_TEXT_SHADOW,
-            }}
-          >
-            Commission a Session
-          </h3>
-          <p
-            style={{
-              fontFamily: FONTS.body,
-              fontSize: isMobile ? "16px" : "19px",
-              color: "var(--color-ink, #1A1A1B)",
-              maxWidth: "540px",
-              margin: "0 auto 24px",
-              lineHeight: 1.6,
-            }}
-          >
-            Susana accepts select portrait commissions and editorial assignments.
-          </p>
           <Button isMobile={isMobile} onClick={onBookSession}>
             Book a Session
           </Button>
