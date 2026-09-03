@@ -290,7 +290,7 @@ export default function MonographAboutSection({
                 justifyContent: isMobilePortrait ? "center" : "flex-start",
               }}
             >
-              <Button isMobile={isMobile} onClick={onBookSession}>
+              <Button isMobile={isMobile} onClick={() => onBookSession?.()}>
                 Book a Session
               </Button>
             </div>

@@ -259,7 +259,7 @@ export default function About({
                 justifyContent: isMobilePortrait ? "center" : "flex-start",
               }}
             >
-              <Button onClick={onBookSession} isMobile={isMobile}>
+              <Button onClick={() => onBookSession?.()} isMobile={isMobile}>
                 Book a Session
               </Button>
             </div>

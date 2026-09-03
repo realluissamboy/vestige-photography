@@ -45,8 +45,8 @@ export default function BookingModal({
   const triggerRef = useRef<HTMLElement | null>(null);
 
   // Normalize initialCategory if passed from short or full category key
-  const resolveCategory = (cat?: string): string => {
-    if (!cat) return "Modern Pin-Up";
+  const resolveCategory = (cat?: unknown): string => {
+    if (typeof cat !== "string" || !cat.trim()) return "Modern Pin-Up";
     if (GENRE_OPTIONS.includes(cat)) return cat;
     const found = GENRE_OPTIONS.find(
       (g) => g.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(g.toLowerCase())
@@ -72,7 +72,7 @@ export default function BookingModal({
 
   // Sync initialCategory if passed
   useEffect(() => {
-    if (initialCategory) {
+    if (typeof initialCategory === "string" && initialCategory.trim()) {
       const resolved = resolveCategory(initialCategory);
       if (!selectedGenres.includes(resolved)) {
         setSelectedGenres([resolved]);
@@ -216,7 +216,11 @@ export default function BookingModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="booking-modal-title"
-      onClick={onClose}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose();
+        }
+      }}
       style={{
         position: "fixed",
         top: 0,
@@ -228,7 +232,7 @@ export default function BookingModal({
         background: "rgba(20, 18, 16, 0.78)",
         backdropFilter: "blur(5px)",
         WebkitBackdropFilter: "blur(5px)",
-        zIndex: 99999,
+        zIndex: 999999,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

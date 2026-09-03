@@ -94,8 +94,8 @@ export default function App() {
     }, 460);
   }, []);
 
-  const handleOpenBooking = useCallback((category?: string) => {
-    setBookingInitialCategory(category);
+  const handleOpenBooking = useCallback((category?: unknown) => {
+    setBookingInitialCategory(typeof category === "string" ? category : undefined);
     setIsBookingOpen(true);
   }, []);
 
