@@ -22,35 +22,18 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
         flexDirection: isMobile ? "column" : "row",
         alignItems: isMobile ? "center" : "flex-end",
         justifyContent: "space-between",
-        gap: isMobile ? "10px" : "16px",
+        gap: isMobile ? "12px" : "16px",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.8s ease 0.4s",
       }}
     >
-      {/* Left: Copyright */}
-      <div style={{ textAlign: isMobile ? "center" : "left" }}>
-        <span
-          style={{
-            fontFamily: FONTS.display,
-            fontStyle: "italic",
-            fontWeight: 600,
-            fontSize: isMobile ? "10px" : "11px",
-            letterSpacing: "2.5px",
-            textTransform: "uppercase",
-            color: COLORS.plum,
-          }}
-        >
-          © Vestige Photography 2026
-        </span>
-      </div>
-
-      {/* Right: Social Links with Built by Samboy underneath */}
+      {/* Left: Susana's Social Media Links Above Copyright */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          alignItems: isMobile ? "center" : "flex-end",
-          gap: "4px",
+          alignItems: isMobile ? "center" : "flex-start",
+          gap: "6px",
         }}
       >
         <nav
@@ -97,50 +80,64 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
           ))}
         </nav>
 
-        <div
+        <span
           style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: isMobile ? "center" : "flex-end",
-            gap: "2px",
-            marginTop: "2px",
+            fontFamily: FONTS.display,
+            fontStyle: "italic",
+            fontWeight: 600,
+            fontSize: isMobile ? "10px" : "11px",
+            letterSpacing: "2.5px",
+            textTransform: "uppercase",
+            color: COLORS.plum,
           }}
         >
-          <span
-            style={{
-              fontSize: isMobile ? "9px" : "9.5px",
-              letterSpacing: "1.5px",
-              textTransform: "uppercase",
-              fontFamily: FONTS.display,
-              fontStyle: "italic",
-              color: COLORS.plum,
-              opacity: 0.8,
-            }}
-          >
-            built by samboy
-          </span>
-          <a
-            href="https://www.luissamboy.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontSize: isMobile ? "8.5px" : "9px",
-              letterSpacing: "1.5px",
-              textTransform: "lowercase",
-              fontFamily: FONTS.display,
-              fontStyle: "italic",
-              color: COLORS.plum,
-              opacity: 0.7,
-              textDecoration: "none",
-              borderBottom: "1px solid currentColor",
-              transition: "opacity 0.2s ease",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
-          >
-            www.luissamboy.com
-          </a>
-        </div>
+          © Vestige Photography 2026
+        </span>
+      </div>
+
+      {/* Right: Built by Samboy with URL underneath */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: isMobile ? "center" : "flex-end",
+          gap: "2px",
+        }}
+      >
+        <span
+          style={{
+            fontSize: isMobile ? "9px" : "9.5px",
+            letterSpacing: "1.5px",
+            textTransform: "uppercase",
+            fontFamily: FONTS.display,
+            fontStyle: "italic",
+            color: COLORS.plum,
+            opacity: 0.8,
+          }}
+        >
+          built by samboy
+        </span>
+        <a
+          href="https://www.luissamboy.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontSize: isMobile ? "8.5px" : "9px",
+            letterSpacing: "1.5px",
+            textTransform: "lowercase",
+            fontFamily: FONTS.display,
+            fontStyle: "italic",
+            color: COLORS.plum,
+            opacity: 0.7,
+            textDecoration: "none",
+            borderBottom: "1px solid currentColor",
+            transition: "opacity 0.2s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
+        >
+          www.luissamboy.com
+        </a>
       </div>
     </footer>
   );
