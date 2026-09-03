@@ -1,38 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 /**
- * Detects if user requested reduced motion
+ * High-performance parallax hook that mutates DOM styles directly in requestAnimationFrame,
+ * bypassing React re-renders completely during scroll for 60-120fps buttery smoothness.
  */
-export function usePrefersReducedMotion(): boolean {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+export function useDirectParallax(speed: number = 0.16) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const targetRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setPrefersReducedMotion(mq.matches);
-
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  return prefersReducedMotion;
-}
-
-/**
- * Hook for section-level scroll progress with requestAnimationFrame throttling.
- * Returns a ref to attach to the container and the current normalized parallax offset (pixels).
- */
-export function useSectionParallax(speed: number = 0.25) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [offsetY, setOffsetY] = useState(0);
-  const reducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => {
-    if (reducedMotion || typeof window === "undefined") {
-      setOffsetY(0);
-      return;
-    }
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
 
     let rafId: number | null = null;
     let isVisible = false;
@@ -40,49 +19,46 @@ export function useSectionParallax(speed: number = 0.25) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry?.isIntersecting ?? false;
-        if (isVisible) {
-          updatePosition();
-        }
+        if (isVisible) scheduleUpdate();
       },
-      { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: "20% 0px 20% 0px" }
+      { threshold: [0, 0.2, 0.5, 0.8, 1], rootMargin: "30% 0px 30% 0px" }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
 
-    const updatePosition = () => {
-      if (!ref.current || !isVisible) return;
-      const rect = ref.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      // Center of element relative to center of viewport
+    const updateTransform = () => {
+      if (!containerRef.current || !targetRef.current || !isVisible) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
       const elementCenter = rect.top + rect.height / 2;
-      const viewportCenter = viewportHeight / 2;
-      const distanceFromCenter = elementCenter - viewportCenter;
-
-      const calcOffset = Math.round(distanceFromCenter * speed);
-      setOffsetY(calcOffset);
+      const diff = elementCenter - viewportCenter;
+      
+      // Calculate smooth parallax offset
+      const offset = Math.round(diff * speed);
+      targetRef.current.style.transform = `translate3d(0, ${offset}px, 0) scale(1.05)`;
     };
 
-    const handleScroll = () => {
+    const scheduleUpdate = () => {
       if (rafId) return;
       rafId = requestAnimationFrame(() => {
-        updatePosition();
+        updateTransform();
         rafId = null;
       });
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
-    updatePosition();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate, { passive: true });
+    scheduleUpdate();
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [speed, reducedMotion]);
+  }, [speed]);
 
-  return { ref, offsetY, reducedMotion };
+  return { containerRef, targetRef };
 }

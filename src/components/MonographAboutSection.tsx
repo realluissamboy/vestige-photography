@@ -60,6 +60,8 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
           ? "64px 20px 80px"
           : "100px 48px 120px",
         position: "relative",
+        zIndex: 10,
+        boxShadow: "0 -24px 60px rgba(0, 0, 0, 0.45)",
       }}
     >
       {/* Editorial Spread: Headshot + Philosophy */}

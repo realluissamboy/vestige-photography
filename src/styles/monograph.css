@@ -1,4 +1,9 @@
-/* Monograph Stylesheet — Seamless Full-Bleed Scroll & Parallax */
+/* Monograph Stylesheet — Seamless Full-Bleed Sticky Curtain Scroll & Parallax */
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
 
 /* 1. Hero High-Contrast Editorial Placard */
 .monograph-hero-placard {
@@ -27,27 +32,41 @@
   }
 }
 
-/* 2. Full-Bleed Discipline Sections */
-.discipline-section {
+/* 2. Full-Bleed Sticky Curtain Discipline Sections */
+.discipline-section-wrapper {
   position: relative;
   width: 100%;
   height: 100vh;
-  min-height: 600px;
+  height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+
+.discipline-section {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 560px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
+  box-shadow: 0 -24px 60px rgba(0, 0, 0, 0.65);
 }
 
 .discipline-bg-wrapper {
   position: absolute;
-  inset: -12% 0;
+  inset: -10% 0;
   width: 100%;
-  height: 124%;
+  height: 120%;
   will-change: transform;
   pointer-events: none;
   z-index: 1;
+  transform: translate3d(0, 0, 0) scale(1.05);
+  transition: transform 0.1s linear;
 }
 
 .discipline-bg-image {
@@ -55,28 +74,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-/* Modern CSS Scroll-driven animations with feature detection */
-@supports ((animation-timeline: view()) and (animation-range: entry)) {
-  .discipline-section {
-    view-timeline: --section-timeline block;
-  }
-
-  .discipline-bg-wrapper {
-    animation: discipline-scroll-anim linear both;
-    animation-timeline: --section-timeline;
-    animation-range: entry 0% exit 100%;
-  }
-
-  @keyframes discipline-scroll-anim {
-    from {
-      transform: translate3d(0, -8%, 0);
-    }
-    to {
-      transform: translate3d(0, 8%, 0);
-    }
-  }
 }
 
 /* 3. Lower-Right Portfolio Action Button */
@@ -126,8 +123,13 @@
 
 /* 4. Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+    scroll-snap-type: none !important;
+  }
   .discipline-bg-wrapper {
     animation: none !important;
     transform: none !important;
+    transition: none !important;
   }
 }
