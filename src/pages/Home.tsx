@@ -64,13 +64,13 @@ export default function Home({
         overflowX: "hidden",
       }}
     >
-      {/* 1. Primary Homepage Cover — The 3rd image in Modern Pin-Up (Jade Wall) without portfolio link */}
+      {/* 1. Primary Homepage Cover — The 3rd image in Modern Pin-Up (woman on couch with neon green wall and yellow dress) without portfolio link */}
       <MonographDisciplineSection
         id="homepage-cover"
         title="Vestige"
-        imageSrc="/hero.webp"
+        imageSrc="/portfolio/pinup-green-wall.webp"
         imageAlt="Vestige Photography — Twenty years of modern pin-up"
-        imageFocus="50% 35%"
+        imageFocus="50% 25%"
         isCover={true}
         showPortfolioLink={false}
         zIndex={1}
