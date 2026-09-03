@@ -76,35 +76,37 @@ export default function About({
       />
       <div style={{ height: isLandscapeMobile ? "20px" : isMobile ? "40px" : "64px" }} />
 
-      {/* Opening: headshot + philosophy */}
+      {/* Opening: headshot at top + philosophy underneath */}
       <section
         style={{
-          maxWidth: "1100px",
-          minHeight: isMobile ? "calc(100dvh - 80px)" : "calc(100dvh - 120px)",
+          maxWidth: "840px",
+          minHeight: isMobile ? "calc(100dvh - 80px)" : "calc(100dvh - 100px)",
           margin: "0 auto",
           padding: narrowSectionPadding,
-          display: "grid",
-          gridTemplateColumns: isMobilePortrait ? "1fr" : "minmax(220px, 320px) 1.5fr",
-          gap: isLandscapeMobile ? "20px" : isMobile ? "24px" : "64px",
+          display: "flex",
+          flexDirection: "column",
           alignItems: "center",
+          textAlign: "center",
+          gap: isLandscapeMobile ? "12px" : isMobile ? "16px" : "20px",
+          justifyContent: "center",
           opacity: aboutVisible ? 1 : 0,
           transition: "opacity 1s ease 0.3s",
         }}
       >
         <div
           style={{
-            maxWidth: isMobile ? "240px" : "320px",
-            margin: isMobile ? "0 auto" : 0,
-            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <div
             style={{
               overflow: "hidden",
-              borderRadius: "2px",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.18)",
+              borderRadius: "4px",
+              boxShadow: "0 16px 36px rgba(0,0,0,0.18)",
               border: "1px solid rgba(158, 140, 121, 0.3)",
-              maxHeight: isLandscapeMobile ? "44vh" : isMobilePortrait ? "32vh" : "50vh",
+              maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
             }}
           >
             <img
@@ -112,20 +114,20 @@ export default function About({
               alt="Susana Andrea, founder of Vestige Photography"
               style={{
                 display: "block",
-                width: "100%",
-                height: "100%",
-                maxHeight: isLandscapeMobile ? "44vh" : isMobilePortrait ? "32vh" : "50vh",
-                objectFit: "cover",
+                width: "auto",
+                height: "auto",
+                maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
+                objectFit: "contain",
               }}
             />
           </div>
           <p
             style={{
               fontFamily: FONTS.script,
-              fontSize: isMobile ? "32px" : "42px",
+              fontSize: isMobile ? "26px" : "34px",
               color: "var(--color-crimson)",
               textAlign: "center",
-              marginTop: "12px",
+              marginTop: "8px",
               marginBottom: 0,
               lineHeight: 1,
               textShadow: VESTIGE_TEXT_SHADOW,
@@ -135,22 +137,23 @@ export default function About({
           </p>
         </div>
 
-        <div>
+        <div style={{ maxWidth: "760px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <p style={sectionLabel}>The Philosophy</p>
           <div
             style={{
               borderLeft: "3px solid var(--color-crimson)",
-              paddingLeft: isMobile ? "16px" : "24px",
-              margin: "12px 0 28px",
+              paddingLeft: isMobile ? "14px" : "20px",
+              margin: isMobile ? "8px 0 14px" : "10px 0 16px",
+              textAlign: "left",
             }}
           >
             <p
               style={{
                 fontFamily: FONTS.cormorant,
-                fontSize: isMobile ? "24px" : "30px",
+                fontSize: isMobile ? "20px" : "26px",
                 fontWeight: 400,
                 fontStyle: "italic",
-                lineHeight: 1.45,
+                lineHeight: 1.4,
                 color: "var(--color-obsidian)",
                 margin: 0,
               }}
@@ -158,7 +161,7 @@ export default function About({
               &ldquo;My job is pose coaching, not posing. The camera just records the moment a woman finally believes what the room already sees.&rdquo;
             </p>
           </div>
-          <p style={bodyText}>
+          <p style={{ ...bodyText, textAlign: "center", margin: 0 }}>
             Susana Andrea is the photographer and founder behind Vestige. For twenty years
             she has built a practice around one idea: that a great portrait is an act of
             confidence, coaxed out rather than performed.

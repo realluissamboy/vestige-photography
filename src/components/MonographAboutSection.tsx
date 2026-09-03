@@ -13,7 +13,7 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
 
   const sectionLabel: React.CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isLandscapeMobile ? "28px" : isMobile ? "32px" : "44px",
+    fontSize: isLandscapeMobile ? "26px" : isMobile ? "30px" : "40px",
     color: "var(--color-crimson, #CD2644)",
     marginBottom: "2px",
     lineHeight: 1,
@@ -58,7 +58,7 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
         boxShadow: "0 -24px 60px rgba(0, 0, 0, 0.45)",
       }}
     >
-      {/* 1. Viewport 100vh Opening Spread: Susana's Portrait + The Philosophy */}
+      {/* 1. Viewport 100vh Opening Spread: Susana's Portrait at Top + The Philosophy Below */}
       <div
         style={{
           minHeight: "100vh",
@@ -66,49 +66,47 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
           width: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
           alignItems: "center",
+          justifyContent: "space-between",
           position: "relative",
           boxSizing: "border-box",
           padding: isLandscapeMobile
-            ? "16px 20px 32px"
+            ? "16px 20px 20px"
             : isMobile
-            ? "24px 20px 40px"
-            : "48px 48px 56px",
+            ? "28px 20px 24px"
+            : "44px 32px 32px",
           scrollSnapAlign: "start",
         }}
       >
         <div
           style={{
-            maxWidth: "1120px",
+            maxWidth: "820px",
             width: "100%",
-            display: "grid",
-            gridTemplateColumns: isMobilePortrait ? "1fr" : "minmax(220px, 320px) 1.4fr",
-            gap: isLandscapeMobile ? "20px" : isMobile ? "20px" : "56px",
+            display: "flex",
+            flexDirection: "column",
             alignItems: "center",
+            textAlign: "center",
+            margin: "0 auto",
+            flex: 1,
             justifyContent: "center",
+            gap: isLandscapeMobile ? "8px" : isMobile ? "12px" : "16px",
           }}
         >
-          {/* Left Column: Portrait */}
+          {/* Top: Susana's Portrait & Founder Signature */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              maxWidth: isMobile ? "220px" : "320px",
-              margin: "0 auto",
-              width: "100%",
             }}
           >
             <div
               style={{
                 overflow: "hidden",
-                borderRadius: "3px",
-                boxShadow: "0 20px 48px rgba(0, 0, 0, 0.22)",
+                borderRadius: "4px",
+                boxShadow: "0 16px 36px rgba(0, 0, 0, 0.18)",
                 border: "1px solid rgba(158, 140, 121, 0.4)",
-                maxHeight: isLandscapeMobile ? "44vh" : isMobilePortrait ? "30vh" : "50vh",
-                display: "flex",
-                justifyContent: "center",
+                maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
               }}
             >
               <img
@@ -116,21 +114,20 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
                 alt="Susana Andrea, founder of Vestige Photography"
                 style={{
                   display: "block",
-                  width: "100%",
-                  height: "100%",
-                  maxHeight: isLandscapeMobile ? "44vh" : isMobilePortrait ? "30vh" : "50vh",
-                  objectFit: "cover",
-                  objectPosition: "50% 25%",
+                  width: "auto",
+                  height: "auto",
+                  maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
+                  objectFit: "contain",
                 }}
               />
             </div>
             <p
               style={{
                 fontFamily: FONTS.script,
-                fontSize: isLandscapeMobile ? "22px" : isMobile ? "26px" : "36px",
+                fontSize: isLandscapeMobile ? "20px" : isMobile ? "24px" : "32px",
                 color: "var(--color-crimson, #CD2644)",
                 textAlign: "center",
-                marginTop: isMobile ? "8px" : "12px",
+                marginTop: isMobile ? "6px" : "8px",
                 marginBottom: 0,
                 lineHeight: 1,
                 textShadow: VESTIGE_TEXT_SHADOW,
@@ -140,27 +137,36 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
             </p>
           </div>
 
-          {/* Right Column: The Philosophy */}
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          {/* Underneath: The Philosophy */}
+          <div
+            style={{
+              maxWidth: "760px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <p style={sectionLabel}>The Philosophy</p>
             <div
               style={{
                 borderLeft: "3px solid var(--color-crimson, #CD2644)",
-                paddingLeft: isMobile ? "14px" : "22px",
-                margin: isMobile ? "8px 0 16px" : "12px 0 20px",
+                paddingLeft: isMobile ? "12px" : "18px",
+                margin: isMobile ? "6px 0 10px" : "8px 0 14px",
+                textAlign: "left",
               }}
             >
               <blockquote
                 style={{
                   fontFamily: FONTS.cormorant,
                   fontSize: isLandscapeMobile
-                    ? "clamp(18px, 3.8vh, 22px)"
+                    ? "clamp(16px, 3.4vh, 20px)"
                     : isMobilePortrait
-                    ? "clamp(18px, 4.4vw, 22px)"
-                    : "clamp(24px, 2.3vw, 30px)",
+                    ? "clamp(16px, 4.1vw, 20px)"
+                    : "clamp(21px, 2.1vw, 27px)",
                   fontWeight: 400,
                   fontStyle: "italic",
-                  lineHeight: 1.4,
+                  lineHeight: 1.35,
                   color: "var(--color-obsidian, #1A1A1A)",
                   margin: 0,
                 }}
@@ -172,12 +178,13 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
               style={{
                 ...bodyText,
                 fontSize: isLandscapeMobile
-                  ? "14px"
+                  ? "13px"
                   : isMobilePortrait
-                  ? "15px"
-                  : "18px",
-                lineHeight: 1.6,
+                  ? "14px"
+                  : "16.5px",
+                lineHeight: 1.5,
                 margin: 0,
+                textAlign: "center",
               }}
             >
               Susana Andrea is the photographer and founder behind Vestige. For twenty years
@@ -187,13 +194,9 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
           </div>
         </div>
 
-        {/* Scroll Indicator for Remainder */}
+        {/* Bottom Scroll Indicator for Remainder */}
         <div
           style={{
-            position: "absolute",
-            bottom: isLandscapeMobile ? "8px" : isMobile ? "12px" : "24px",
-            left: "50%",
-            transform: "translateX(-50%)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -201,6 +204,7 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
             color: "var(--color-ink, #1A1A1B)",
             opacity: 0.75,
             pointerEvents: "none",
+            paddingTop: "6px",
           }}
         >
           <span
