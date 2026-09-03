@@ -15,14 +15,11 @@ export default function MonographAboutSection({
   const { isMobile, isMobilePortrait, isLandscapeMobile } = useResponsiveViewport();
 
   const sectionLabel: React.CSSProperties = {
-    fontFamily: FONTS.display,
-    fontStyle: "italic",
-    fontWeight: 700,
-    fontSize: isMobile ? "11px" : "13px",
-    letterSpacing: "3px",
-    textTransform: "uppercase",
+    fontFamily: FONTS.script,
+    fontSize: isLandscapeMobile ? "32px" : isMobile ? "38px" : "48px",
     color: "var(--color-crimson, #CD2644)",
-    marginBottom: "8px",
+    marginBottom: isMobile ? "4px" : "8px",
+    lineHeight: 1.1,
     textShadow: VESTIGE_TEXT_SHADOW,
   };
 
