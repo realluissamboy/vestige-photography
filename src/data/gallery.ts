@@ -98,9 +98,9 @@ export const RATIOS: Record<Ratio, { paddingBottom: string }> = {
 export const STAGGER_OFFSETS: number[] = [0, 40, 16, 56, 8, 48, 24, 60];
 
 export const PORTFOLIO_CATEGORIES: Category[] = [
-  "Burlesque",
   "Pin-Up",
   "Vintage-Glamour",
+  "Burlesque",
   "Tiki-Rockabilly",
   "Classic Cars",
 ];

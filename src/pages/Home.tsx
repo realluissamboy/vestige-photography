@@ -21,12 +21,13 @@ const HIGH_RES_HERO_SOURCES: Record<number, string> = {
   36: "/hero-slides/modern-tiki.webp",
 };
 
+// Curated order: modern pin-up first, followed by glamour, burlesque, tiki, and kulture
 const CATEGORY_ORDER: Category[] = [
-  "Vintage-Glamour", // Modern Glamour
   "Pin-Up",          // Modern Pin-Up
-  "Classic Cars",    // Modern Kulture
+  "Vintage-Glamour", // Modern Glamour
   "Burlesque",       // Modern Burlesque
   "Tiki-Rockabilly", // Modern Tiki
+  "Classic Cars",    // Modern Kulture
 ];
 
 // Dynamically resolve the exact first image of each category in the portfolio
@@ -63,7 +64,19 @@ export default function Home({
         overflowX: "hidden",
       }}
     >
-      {/* Curated Categories — Directly rendering the first image of each portfolio category */}
+      {/* 1. Primary Homepage Cover — The 3rd image in Modern Pin-Up (Jade Wall) without portfolio link */}
+      <MonographDisciplineSection
+        id="homepage-cover"
+        title="Vestige"
+        imageSrc="/hero.webp"
+        imageAlt="Vestige Photography — Twenty years of modern pin-up"
+        imageFocus="50% 35%"
+        isCover={true}
+        showPortfolioLink={false}
+        zIndex={1}
+      />
+
+      {/* 2. Curated Categories — Starting with Modern Pin-Up, then Glamour, Burlesque, Tiki, and Kulture */}
       {CATEGORIES.map((category, index) => (
         <MonographDisciplineSection
           key={category.key}
@@ -74,16 +87,17 @@ export default function Home({
           imageAlt={category.imageAlt}
           imageFocus={category.imageFocus}
           colorAccent={category.colorAccent}
-          isFirst={index === 0}
+          isCover={false}
+          showPortfolioLink={true}
           onViewPortfolio={onViewPortfolio}
-          zIndex={index + 1}
+          zIndex={index + 2}
         />
       ))}
 
-      {/* Integrated Susana Andrea Story Section */}
+      {/* 3. Integrated Susana Andrea Story Section */}
       <MonographAboutSection onBookSession={onBookSession} />
 
-      {/* Monograph Page Footer with Colophon */}
+      {/* 4. Monograph Page Footer with Colophon */}
       <PageFooter visible={true} isMobile={isMobile} showBrandVoice={true} />
     </main>
   );

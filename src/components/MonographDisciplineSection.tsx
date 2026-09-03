@@ -7,14 +7,15 @@ import { useResponsiveViewport } from "../hooks/useIsMobile";
 
 export interface MonographDisciplineSectionProps {
   id: string;
-  categoryKey: Category;
-  title: string; // Exact title from CATEGORY_TITLES
+  categoryKey?: Category;
+  title: string;
   imageSrc: string;
   imageAlt: string;
   imageFocus?: string;
   colorAccent?: string;
-  isFirst?: boolean;
-  onViewPortfolio: (category: Category) => void;
+  isCover?: boolean; // If true, displays Vestige brand lockup & scroll cue, NO portfolio button
+  showPortfolioLink?: boolean;
+  onViewPortfolio?: (category: Category) => void;
   zIndex: number;
 }
 
@@ -26,12 +27,15 @@ export default function MonographDisciplineSection({
   imageAlt,
   imageFocus = "50% 35%",
   colorAccent = COLORS.crimson,
-  isFirst = false,
+  isCover = false,
+  showPortfolioLink = true,
   onViewPortfolio,
   zIndex,
 }: MonographDisciplineSectionProps) {
   const { containerRef, targetRef } = useDirectParallax(0.16);
   const { isMobile, isMobilePortrait, isLandscapeMobile } = useResponsiveViewport();
+
+  const shouldShowButton = !isCover && showPortfolioLink && onViewPortfolio && categoryKey;
 
   return (
     <div
@@ -42,7 +46,7 @@ export default function MonographDisciplineSection({
         id={id}
         ref={containerRef}
         className="discipline-section"
-        aria-label={`${title} Collection`}
+        aria-label={isCover ? "Vestige Photography Homepage" : `${title} Collection`}
         style={{
           padding: isLandscapeMobile
             ? "16px 20px"
@@ -89,7 +93,7 @@ export default function MonographDisciplineSection({
           }}
         />
 
-        {/* Top Header: Brand Wordmark (on first section) OR Category Title */}
+        {/* Top Header: Brand Wordmark (on homepage cover) OR Category Title */}
         <div
           style={{
             position: "relative",
@@ -100,7 +104,7 @@ export default function MonographDisciplineSection({
             maxWidth: "min(92vw, 960px)",
           }}
         >
-          {isFirst ? (
+          {isCover ? (
             <div
               style={{
                 display: "flex",
@@ -186,8 +190,8 @@ export default function MonographDisciplineSection({
           )}
         </div>
 
-        {/* First Section Subtle Scroll Cue */}
-        {isFirst && (
+        {/* Homepage Cover Scroll Cue */}
+        {isCover && (
           <div
             style={{
               position: "absolute",
@@ -214,7 +218,7 @@ export default function MonographDisciplineSection({
                 fontWeight: 700,
               }}
             >
-              Scroll
+              Scroll to Explore
             </span>
             <span
               style={{
@@ -229,41 +233,43 @@ export default function MonographDisciplineSection({
           </div>
         )}
 
-        {/* Lower-Right: Anchored "View [CATEGORY_TITLE] Portfolio" CTA */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 5,
-            alignSelf: "flex-end",
-            marginBottom: isLandscapeMobile ? "4px" : isMobile ? "8px" : "16px",
-          }}
-        >
-          <button
-            type="button"
-            className="discipline-portfolio-btn"
-            onClick={() => onViewPortfolio(categoryKey)}
-            aria-label={`View ${title} Portfolio`}
+        {/* Lower-Right: Anchored "View [CATEGORY_TITLE] Portfolio" CTA (Only shown for categories) */}
+        {shouldShowButton && (
+          <div
             style={{
-              borderColor: "rgba(255, 255, 255, 0.4)",
+              position: "relative",
+              zIndex: 5,
+              alignSelf: "flex-end",
+              marginBottom: isLandscapeMobile ? "4px" : isMobile ? "8px" : "16px",
             }}
           >
-            <span
+            <button
+              type="button"
+              className="discipline-portfolio-btn"
+              onClick={() => onViewPortfolio(categoryKey)}
+              aria-label={`View ${title} Portfolio`}
               style={{
-                fontFamily: FONTS.display,
-                fontStyle: "italic",
-                fontWeight: 700,
-                fontSize: isMobile ? "12px" : "14px",
-                letterSpacing: "1px",
-                textTransform: "uppercase",
+                borderColor: "rgba(255, 255, 255, 0.4)",
               }}
             >
-              View {title} Portfolio
-            </span>
-            <span className="arrow-icon" style={{ fontSize: isMobile ? "13px" : "16px" }}>
-              →
-            </span>
-          </button>
-        </div>
+              <span
+                style={{
+                  fontFamily: FONTS.display,
+                  fontStyle: "italic",
+                  fontWeight: 700,
+                  fontSize: isMobile ? "12px" : "14px",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                }}
+              >
+                View {title} Portfolio
+              </span>
+              <span className="arrow-icon" style={{ fontSize: isMobile ? "13px" : "16px" }}>
+                →
+              </span>
+            </button>
+          </div>
+        )}
       </section>
     </div>
   );
