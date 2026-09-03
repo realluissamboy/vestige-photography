@@ -3,6 +3,7 @@ import { FONTS } from "../theme/fonts";
 import { useResponsiveViewport } from "../hooks/useIsMobile";
 import Button from "./Button";
 import PageFooter from "./PageFooter";
+import { SOCIALS } from "../data/navigation";
 
 export interface MonographAboutSectionProps {
   onBookSession?: () => void;
@@ -132,6 +133,52 @@ export default function MonographAboutSection({
             >
               Susana Andrea, founder
             </p>
+
+            {/* Susana's Social Media Links */}
+            <nav
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "16px",
+                marginTop: "10px",
+              }}
+            >
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  style={{
+                    fontFamily: FONTS.display,
+                    fontStyle: "italic",
+                    fontWeight: 600,
+                    fontSize: isMobile ? "11px" : "12px",
+                    letterSpacing: "1.5px",
+                    textTransform: "uppercase",
+                    color: "var(--color-crimson, #CD2644)",
+                    textDecoration: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "5px",
+                    opacity: 0.9,
+                    transition: "opacity 0.2s ease, transform 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.opacity = "1";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.opacity = "0.9";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  {s.svg}
+                  <span>{s.label}</span>
+                </a>
+              ))}
+            </nav>
           </div>
 
           {/* Right Column: The Narrative and Call to Action */}

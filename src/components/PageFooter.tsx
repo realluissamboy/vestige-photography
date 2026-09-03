@@ -2,7 +2,6 @@ import React from "react";
 import type { CSSProperties } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
-import { SOCIALS } from "../data/navigation";
 
 export interface PageFooterProps {
   visible: boolean;
@@ -22,64 +21,13 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
         flexDirection: isMobile ? "column" : "row",
         alignItems: isMobile ? "center" : "flex-end",
         justifyContent: "space-between",
-        gap: isMobile ? "12px" : "16px",
+        gap: isMobile ? "10px" : "16px",
         opacity: visible ? 1 : 0,
         transition: "opacity 0.8s ease 0.4s",
       }}
     >
-      {/* Left: Susana's Social Media Links Above Copyright */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: isMobile ? "center" : "flex-start",
-          gap: "6px",
-        }}
-      >
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: isMobile ? "16px" : "18px",
-          }}
-        >
-          {SOCIALS.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.label}
-              style={{
-                fontFamily: FONTS.display,
-                fontStyle: "italic",
-                fontWeight: 600,
-                fontSize: isMobile ? "10.5px" : "11.5px",
-                letterSpacing: "1.5px",
-                textTransform: "uppercase",
-                color: "var(--color-crimson, #CD2644)",
-                textDecoration: "none",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "5px",
-                opacity: 0.9,
-                transition: "opacity 0.2s ease, transform 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "1";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "0.9";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              {s.svg}
-              <span>{s.label}</span>
-            </a>
-          ))}
-        </nav>
-
+      {/* Left: Copyright */}
+      <div style={{ textAlign: isMobile ? "center" : "left" }}>
         <span
           style={{
             fontFamily: FONTS.display,
