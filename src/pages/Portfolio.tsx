@@ -34,6 +34,183 @@ export interface PortfolioProps {
   onReturnToMonograph?: () => void;
 }
 
+interface CategoryGalleryViewProps {
+  category: Category;
+  isMobile: boolean;
+  isMobilePortrait: boolean;
+  isLandscapeMobile: boolean;
+  openLightbox: (img: GalleryImage) => void;
+}
+
+function CategoryGalleryView({
+  category,
+  isMobile,
+  isMobilePortrait,
+  isLandscapeMobile,
+  openLightbox,
+}: CategoryGalleryViewProps) {
+  const images = GALLERY_IMAGES.filter((img) => img.cat === category);
+  const count = images.length;
+  let cols = 3;
+  let rows = 2;
+
+  if (isMobilePortrait) {
+    if (count <= 6) { cols = 2; rows = 3; }
+    else if (count <= 9) { cols = 3; rows = 3; }
+    else if (count <= 12) { cols = 3; rows = 4; }
+    else { cols = 3; rows = Math.ceil(count / 3); }
+  } else if (isLandscapeMobile) {
+    if (count <= 6) { cols = 3; rows = 2; }
+    else if (count <= 8) { cols = 4; rows = 2; }
+    else if (count <= 10) { cols = 5; rows = 2; }
+    else if (count <= 12) { cols = 6; rows = 2; }
+    else { cols = 6; rows = 3; }
+  } else {
+    // Desktop & Tablet
+    if (count <= 6) { cols = 3; rows = 2; }
+    else if (count <= 8) { cols = 4; rows = 2; }
+    else if (count <= 9) { cols = 3; rows = 3; }
+    else if (count <= 12) { cols = 4; rows = 3; }
+    else { cols = 6; rows = 3; }
+  }
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        boxSizing: "border-box",
+        background: "var(--color-parchment, #EFE9D9)",
+      }}
+    >
+      {/* Category Band Header */}
+      <section
+        style={{
+          background: CATEGORY_COLORS[category] ?? "",
+          color: COLORS.cream,
+          padding: isLandscapeMobile ? "4px 16px" : isMobile ? "6px 16px" : "8px 32px",
+          textAlign: "center",
+          position: "relative",
+          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
+          flexShrink: 0,
+          boxSizing: "border-box",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "10px",
+            flexWrap: "wrap",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: FONTS.script,
+              fontSize: isLandscapeMobile ? "18px" : isMobile ? "20px" : "28px",
+              lineHeight: 1,
+              opacity: 0.9,
+            }}
+          >
+            a study in
+          </span>
+          <h2
+            style={{
+              fontFamily: FONTS.display,
+              fontStyle: "italic",
+              fontWeight: 800,
+              fontSize: isLandscapeMobile ? "20px" : isMobile ? "24px" : "32px",
+              letterSpacing: "-0.5px",
+              lineHeight: 1,
+              margin: 0,
+            }}
+          >
+            {CATEGORY_TITLES[category] ?? ""}
+          </h2>
+        </div>
+      </section>
+
+      {/* Non-Scrolling Viewport-Fitted Photo Grid (Strictly locked within 100vh) */}
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          width: "100%",
+          boxSizing: "border-box",
+          padding: isMobile ? "6px 10px 8px" : "10px 20px 12px",
+          display: "grid",
+          gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+          gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
+          gap: isMobile ? "6px" : "10px",
+          overflow: "hidden",
+        }}
+      >
+        {images.map((img: GalleryImage, i: number) => (
+          <div
+            key={img.id}
+            onClick={() => openLightbox(img)}
+            role="button"
+            tabIndex={0}
+            aria-label={`View photo ${img.label} in full size`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openLightbox(img);
+              }
+            }}
+            style={{
+              position: "relative",
+              width: "100%",
+              height: "100%",
+              minHeight: 0,
+              minWidth: 0,
+              cursor: "pointer",
+              borderRadius: "4px",
+              overflow: "hidden",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.14)",
+              border: "1px solid rgba(158, 140, 121, 0.25)",
+              background: "var(--color-cream)",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "scale(1.025)";
+              e.currentTarget.style.zIndex = "10";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.25)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.zIndex = "1";
+              e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.14)";
+            }}
+          >
+            <img
+              src={img.src}
+              alt={img.label}
+              loading={i < 8 ? "eager" : "lazy"}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                display: "block",
+                objectFit: "cover",
+                objectPosition: img.focus || "50% 25%",
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Portfolio({
   portfolioVisible,
   setPage,
@@ -62,12 +239,44 @@ export default function Portfolio({
     }
   }, [initialCategory, setPortfolioCategory]);
 
+  // Slide transition state for switching between collections
+  const [incomingCategory, setIncomingCategory] = React.useState<Category | null>(null);
+  const [isSliding, setIsSliding] = React.useState<boolean>(false);
+  const [slidePhase, setSlidePhase] = React.useState<"idle" | "enter" | "active">("idle");
+  const slideTimeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (slideTimeoutRef.current) {
+        clearTimeout(slideTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleSelectCategory = (cat: Category) => {
-    setPortfolioCategory(cat);
-    setDisplayedCategory(cat);
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "instant" });
+    if (isSliding || cat === displayedCategory) return;
+
+    if (slideTimeoutRef.current) {
+      clearTimeout(slideTimeoutRef.current);
     }
+
+    setIncomingCategory(cat);
+    setIsSliding(true);
+    setSlidePhase("enter");
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setSlidePhase("active");
+      });
+    });
+
+    slideTimeoutRef.current = setTimeout(() => {
+      setPortfolioCategory(cat);
+      setDisplayedCategory(cat);
+      setIncomingCategory(null);
+      setIsSliding(false);
+      setSlidePhase("idle");
+    }, 460);
   };
 
   const handleBackToPortfolio = () => {
@@ -304,7 +513,8 @@ export default function Portfolio({
 
           {/* Right: View Next Collection CTA OR About Page when reaching final category */}
           {(() => {
-            const currentIndex = displayedCategory ? PORTFOLIO_CATEGORIES.indexOf(displayedCategory) : 0;
+            const activeForBtn = incomingCategory ?? displayedCategory;
+            const currentIndex = activeForBtn ? PORTFOLIO_CATEGORIES.indexOf(activeForBtn) : 0;
             const validIndex = currentIndex >= 0 ? currentIndex : 0;
             const isLastCategory = validIndex === PORTFOLIO_CATEGORIES.length - 1;
             const nextCat = PORTFOLIO_CATEGORIES[(validIndex + 1) % PORTFOLIO_CATEGORIES.length] as Category;
@@ -316,7 +526,9 @@ export default function Portfolio({
             return (
               <button
                 type="button"
+                disabled={isSliding}
                 onClick={() => {
+                  if (isSliding) return;
                   if (isLastCategory) {
                     if (onReturnToMonograph) {
                       onReturnToMonograph();
@@ -344,21 +556,26 @@ export default function Portfolio({
                   textTransform: "uppercase",
                   padding: isMobile ? "7px 14px" : "8px 18px",
                   borderRadius: "999px",
-                  cursor: "pointer",
+                  cursor: isSliding ? "default" : "pointer",
                   boxShadow: `0 2px 10px ${btnColor}55`,
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "6px",
-                  transition: "all 0.2s ease",
+                  transition: "all 0.3s ease",
                   whiteSpace: "nowrap",
+                  opacity: isSliding ? 0.75 : 1,
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateX(2px)";
-                  e.currentTarget.style.opacity = "0.95";
+                  if (!isSliding) {
+                    e.currentTarget.style.transform = "translateX(2px)";
+                    e.currentTarget.style.opacity = "0.95";
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateX(0)";
-                  e.currentTarget.style.opacity = "1";
+                  if (!isSliding) {
+                    e.currentTarget.style.transform = "translateX(0)";
+                    e.currentTarget.style.opacity = "1";
+                  }
                 }}
               >
                 <span>{isLastCategory ? "About Susana Andrea" : "View next collection"}</span>
@@ -1032,157 +1249,69 @@ export default function Portfolio({
           </div>
         )
       ) : (
-        /* Drilled-in Category View — band header */
-        <>
-          <section
+        /* Drilled-in Category View with smooth slide transition */
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            overflow: "hidden",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {/* 1. Outgoing / Current Category Slide */}
+          <div
             style={{
-              background: CATEGORY_COLORS[displayedCategory] ?? "",
-              color: COLORS.cream,
-              padding: isLandscapeMobile ? "4px 16px" : isMobile ? "6px 16px" : "8px 32px",
-              textAlign: "center",
-              position: "relative",
-              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
-              flexShrink: 0,
-              boxSizing: "border-box",
+              position: isSliding ? "absolute" : "relative",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              transform: isSliding && slidePhase === "active" ? "translateX(-30%)" : "translateX(0)",
+              opacity: isSliding && slidePhase === "active" ? 0.6 : 1,
+              transition: isSliding ? "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease" : "none",
+              willChange: isSliding ? "transform, opacity" : "auto",
+              pointerEvents: isSliding && slidePhase === "active" ? "none" : "auto",
             }}
           >
+            <CategoryGalleryView
+              category={displayedCategory}
+              isMobile={isMobile}
+              isMobilePortrait={isMobilePortrait}
+              isLandscapeMobile={isLandscapeMobile}
+              openLightbox={openLightbox}
+            />
+          </div>
+
+          {/* 2. Incoming Category Slide (slides in from right taking over) */}
+          {isSliding && incomingCategory && (
             <div
               style={{
-                maxWidth: "1200px",
-                margin: "0 auto",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                flexWrap: "wrap",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: 2,
+                boxShadow: "-20px 0 60px rgba(0, 0, 0, 0.5)",
+                transform: slidePhase === "active" ? "translateX(0)" : "translateX(100%)",
+                transition: "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
+                willChange: "transform",
+                pointerEvents: slidePhase === "active" ? "auto" : "none",
               }}
             >
-              <span
-                style={{
-                  fontFamily: FONTS.script,
-                  fontSize: isLandscapeMobile ? "18px" : isMobile ? "20px" : "28px",
-                  lineHeight: 1,
-                  opacity: 0.9,
-                }}
-              >
-                a study in
-              </span>
-              <h2
-                style={{
-                  fontFamily: FONTS.display,
-                  fontStyle: "italic",
-                  fontWeight: 800,
-                  fontSize: isLandscapeMobile ? "20px" : isMobile ? "24px" : "32px",
-                  letterSpacing: "-0.5px",
-                  lineHeight: 1,
-                  margin: 0,
-                }}
-              >
-                {CATEGORY_TITLES[displayedCategory] ?? ""}
-              </h2>
+              <CategoryGalleryView
+                category={incomingCategory}
+                isMobile={isMobile}
+                isMobilePortrait={isMobilePortrait}
+                isLandscapeMobile={isLandscapeMobile}
+                openLightbox={openLightbox}
+              />
             </div>
-          </section>
-
-          {/* Non-Scrolling Viewport-Fitted Photo Grid (Strictly locked within 100vh) */}
-          {(() => {
-            const count = currentCategoryImages.length;
-            let cols = 3;
-            let rows = 2;
-
-            if (isMobilePortrait) {
-              if (count <= 6) { cols = 2; rows = 3; }
-              else if (count <= 9) { cols = 3; rows = 3; }
-              else if (count <= 12) { cols = 3; rows = 4; }
-              else { cols = 3; rows = Math.ceil(count / 3); }
-            } else if (isLandscapeMobile) {
-              if (count <= 6) { cols = 3; rows = 2; }
-              else if (count <= 8) { cols = 4; rows = 2; }
-              else if (count <= 10) { cols = 5; rows = 2; }
-              else if (count <= 12) { cols = 6; rows = 2; }
-              else { cols = 6; rows = 3; }
-            } else {
-              // Desktop & Tablet
-              if (count <= 6) { cols = 3; rows = 2; }
-              else if (count <= 8) { cols = 4; rows = 2; }
-              else if (count <= 9) { cols = 3; rows = 3; }
-              else if (count <= 12) { cols = 4; rows = 3; }
-              else { cols = 6; rows = 3; }
-            }
-
-            return (
-              <div
-                style={{
-                  flex: 1,
-                  minHeight: 0,
-                  width: "100%",
-                  boxSizing: "border-box",
-                  padding: isMobile ? "6px 10px 8px" : "10px 20px 12px",
-                  display: "grid",
-                  gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-                  gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
-                  gap: isMobile ? "6px" : "10px",
-                  overflow: "hidden",
-                }}
-              >
-                {currentCategoryImages.map((img: GalleryImage, i) => (
-                  <div
-                    key={img.id}
-                    onClick={() => openLightbox(img)}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`View photo ${img.label} in full size`}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        openLightbox(img);
-                      }
-                    }}
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      height: "100%",
-                      minHeight: 0,
-                      minWidth: 0,
-                      cursor: "pointer",
-                      borderRadius: "4px",
-                      overflow: "hidden",
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.14)",
-                      border: "1px solid rgba(158, 140, 121, 0.25)",
-                      background: "var(--color-cream)",
-                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "scale(1.025)";
-                      e.currentTarget.style.zIndex = "10";
-                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.25)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "scale(1)";
-                      e.currentTarget.style.zIndex = "1";
-                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.14)";
-                    }}
-                  >
-                    <img
-                      src={img.src}
-                      alt={img.label}
-                      loading={i < 8 ? "eager" : "lazy"}
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        display: "block",
-                        objectFit: "cover",
-                        objectPosition: img.focus || "50% 25%",
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
-        </>
+          )}
+        </div>
       )}
 
       </div>
