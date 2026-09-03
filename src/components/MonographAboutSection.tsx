@@ -1,41 +1,43 @@
 import React from "react";
 import { FONTS } from "../theme/fonts";
-import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
-import Button from "./Button";
 import { useResponsiveViewport } from "../hooks/useIsMobile";
+import Button from "./Button";
 
-interface MonographAboutSectionProps {
+export interface MonographAboutSectionProps {
   onBookSession?: () => void;
 }
 
-export default function MonographAboutSection({ onBookSession }: MonographAboutSectionProps) {
+const VESTIGE_TEXT_SHADOW = "0 1px 2px rgba(0, 0, 0, 0.12)";
+
+export default function MonographAboutSection({
+  onBookSession,
+}: MonographAboutSectionProps) {
   const { isMobile, isMobilePortrait, isLandscapeMobile } = useResponsiveViewport();
 
   const sectionLabel: React.CSSProperties = {
-    fontFamily: FONTS.script,
-    fontSize: isLandscapeMobile ? "26px" : isMobile ? "30px" : "40px",
+    fontFamily: FONTS.display,
+    fontStyle: "italic",
+    fontWeight: 700,
+    fontSize: isMobile ? "11px" : "13px",
+    letterSpacing: "3px",
+    textTransform: "uppercase",
     color: "var(--color-crimson, #CD2644)",
-    marginBottom: "2px",
-    lineHeight: 1,
+    marginBottom: "8px",
     textShadow: VESTIGE_TEXT_SHADOW,
   };
-
 
   const bodyText: React.CSSProperties = {
     fontFamily: FONTS.body,
     fontSize: isLandscapeMobile ? "15px" : isMobile ? "17px" : "19px",
-    fontWeight: 400,
-    lineHeight: isLandscapeMobile ? 1.6 : 1.75,
-    color: "var(--color-ink, #1A1A1B)",
-    margin: isLandscapeMobile ? "0 0 12px" : "0 0 18px",
+    lineHeight: 1.65,
+    color: "var(--color-obsidian, #1A1A1A)",
+    margin: 0,
   };
 
   const linkStyle: React.CSSProperties = {
     color: "var(--color-crimson, #CD2644)",
-    fontWeight: 600,
-    textDecoration: "none",
-    borderBottom: "1px solid rgba(200, 20, 44, 0.4)",
-    paddingBottom: "1px",
+    textDecoration: "underline",
+    textUnderlineOffset: "3px",
   };
 
   return (
@@ -47,195 +49,106 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
         position: "relative",
         zIndex: 10,
         boxShadow: "0 -24px 60px rgba(0, 0, 0, 0.45)",
+        padding: isLandscapeMobile
+          ? "40px 20px 60px"
+          : isMobile
+          ? "54px 20px 80px"
+          : "80px 32px 110px",
       }}
     >
-      {/* 1. Viewport 100vh Opening Spread: Susana's Portrait at Top + The Philosophy Below */}
-      <div
-        style={{
-          minHeight: "100vh",
-          height: "100dvh",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "relative",
-          boxSizing: "border-box",
-          padding: isLandscapeMobile
-            ? "16px 20px 20px"
-            : isMobile
-            ? "28px 20px 24px"
-            : "44px 32px 32px",
-          scrollSnapAlign: "start",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "820px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            margin: "0 auto",
-            flex: 1,
-            justifyContent: "center",
-            gap: isLandscapeMobile ? "8px" : isMobile ? "12px" : "16px",
-          }}
-        >
-          {/* Top: Susana's Portrait & Founder Signature */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{
-                overflow: "hidden",
-                borderRadius: "4px",
-                boxShadow: "0 16px 36px rgba(0, 0, 0, 0.18)",
-                border: "1px solid rgba(158, 140, 121, 0.4)",
-                maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
-              }}
-            >
-              <img
-                src="/susana headshot.webp"
-                alt="Susana Andrea, founder of Vestige Photography"
-                style={{
-                  display: "block",
-                  width: "auto",
-                  height: "auto",
-                  maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
-                  objectFit: "contain",
-                }}
-              />
-            </div>
-            <p
-              style={{
-                fontFamily: FONTS.script,
-                fontSize: isLandscapeMobile ? "20px" : isMobile ? "24px" : "32px",
-                color: "var(--color-crimson, #CD2644)",
-                textAlign: "center",
-                marginTop: isMobile ? "6px" : "8px",
-                marginBottom: 0,
-                lineHeight: 1,
-                textShadow: VESTIGE_TEXT_SHADOW,
-              }}
-            >
-              Susana Andrea, founder
-            </p>
-          </div>
-
-          {/* Underneath: The Philosophy */}
-          <div
-            style={{
-              maxWidth: "760px",
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <p style={sectionLabel}>The Philosophy</p>
-            <div
-              style={{
-                borderLeft: "3px solid var(--color-crimson, #CD2644)",
-                paddingLeft: isMobile ? "12px" : "18px",
-                margin: isMobile ? "6px 0 10px" : "8px 0 14px",
-                textAlign: "left",
-              }}
-            >
-              <blockquote
-                style={{
-                  fontFamily: FONTS.cormorant,
-                  fontSize: isLandscapeMobile
-                    ? "clamp(16px, 3.4vh, 20px)"
-                    : isMobilePortrait
-                    ? "clamp(16px, 4.1vw, 20px)"
-                    : "clamp(21px, 2.1vw, 27px)",
-                  fontWeight: 400,
-                  fontStyle: "italic",
-                  lineHeight: 1.35,
-                  color: "var(--color-obsidian, #1A1A1A)",
-                  margin: 0,
-                }}
-              >
-                &ldquo;My job is pose coaching, not posing. The camera just records the moment a woman finally believes what the room already sees.&rdquo;
-              </blockquote>
-            </div>
-            <p
-              style={{
-                ...bodyText,
-                fontSize: isLandscapeMobile
-                  ? "13px"
-                  : isMobilePortrait
-                  ? "14px"
-                  : "16.5px",
-                lineHeight: 1.5,
-                margin: 0,
-                textAlign: "center",
-              }}
-            >
-              Susana Andrea is the photographer and founder behind Vestige. For twenty years
-              she has built a practice around one idea: that a great portrait is an act of
-              confidence, coaxed out rather than performed.
-            </p>
-          </div>
-        </div>
-
-        {/* Bottom Scroll Indicator for Remainder */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "4px",
-            color: "var(--color-ink, #1A1A1B)",
-            opacity: 0.75,
-            pointerEvents: "none",
-            paddingTop: "6px",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: FONTS.display,
-              fontSize: "9px",
-              letterSpacing: "2.5px",
-              textTransform: "uppercase",
-              fontWeight: 700,
-            }}
-          >
-            Scroll for More
-          </span>
-          <span
-            style={{
-              fontSize: "15px",
-              lineHeight: 1,
-              color: "var(--color-crimson, #CD2644)",
-              animation: "vestige-fade 1.6s ease-in-out infinite alternate",
-            }}
-          >
-            ↓
-          </span>
-        </div>
-      </div>
-
-      {/* 2. The Remainder of the Story (Roots, Heritage, In Print, CTA) */}
       <div
         style={{
           maxWidth: "800px",
           margin: "0 auto",
-          borderTop: "1px solid rgba(158, 140, 121, 0.3)",
-          padding: isLandscapeMobile
-            ? "36px 20px 48px"
-            : isMobile
-            ? "48px 20px 64px"
-            : "72px 32px 96px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          boxSizing: "border-box",
         }}
       >
-        <div style={{ marginBottom: isMobile ? "36px" : "48px" }}>
+        {/* Top: Susana's Portrait & Founder Signature */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginBottom: isMobile ? "28px" : "40px",
+          }}
+        >
+          <div
+            style={{
+              overflow: "hidden",
+              borderRadius: "4px",
+              boxShadow: "0 16px 36px rgba(0, 0, 0, 0.18)",
+              border: "1px solid rgba(158, 140, 121, 0.4)",
+              maxHeight: isLandscapeMobile ? "200px" : isMobilePortrait ? "220px" : "280px",
+            }}
+          >
+            <img
+              src="/susana headshot.webp"
+              alt="Susana Andrea, founder of Vestige Photography"
+              style={{
+                display: "block",
+                width: "auto",
+                height: "auto",
+                maxHeight: isLandscapeMobile ? "200px" : isMobilePortrait ? "220px" : "280px",
+                objectFit: "contain",
+              }}
+            />
+          </div>
+          <p
+            style={{
+              fontFamily: FONTS.script,
+              fontSize: isLandscapeMobile ? "24px" : isMobile ? "28px" : "36px",
+              color: "var(--color-crimson, #CD2644)",
+              textAlign: "center",
+              margin: "10px 0 0",
+              lineHeight: 1,
+              textShadow: VESTIGE_TEXT_SHADOW,
+            }}
+          >
+            Susana Andrea, founder
+          </p>
+        </div>
+
+        {/* The Philosophy */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
+          <p style={sectionLabel}>The Philosophy</p>
+          <div
+            style={{
+              borderLeft: "3px solid var(--color-crimson, #CD2644)",
+              paddingLeft: isMobile ? "16px" : "24px",
+              margin: "12px 0 16px",
+              textAlign: "left",
+            }}
+          >
+            <blockquote
+              style={{
+                fontFamily: FONTS.cormorant,
+                fontSize: isLandscapeMobile
+                  ? "clamp(17px, 3.4vh, 22px)"
+                  : isMobilePortrait
+                  ? "clamp(18px, 4.5vw, 24px)"
+                  : "clamp(22px, 2.2vw, 28px)",
+                fontWeight: 400,
+                fontStyle: "italic",
+                lineHeight: 1.4,
+                color: "var(--color-obsidian, #1A1A1A)",
+                margin: 0,
+              }}
+            >
+              &ldquo;My job is pose coaching, not posing. The camera just records the moment a woman finally believes what the room already sees.&rdquo;
+            </blockquote>
+          </div>
+          <p style={bodyText}>
+            Susana Andrea is the photographer and founder behind Vestige. For twenty years
+            she has built a practice around one idea: that a great portrait is an act of
+            confidence, coaxed out rather than performed.
+          </p>
+        </div>
+
+        {/* The Roots */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
           <p style={sectionLabel}>The Roots</p>
           <p style={bodyText}>
             Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
@@ -245,7 +158,8 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
           </p>
         </div>
 
-        <div style={{ marginBottom: isMobile ? "36px" : "48px" }}>
+        {/* The Heritage */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
           <p style={sectionLabel}>The Heritage</p>
           <p style={bodyText}>
             Of Mexican and Colombian descent and raised in San Diego, Susana grew up
@@ -255,7 +169,8 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
           </p>
         </div>
 
-        <div style={{ marginBottom: isMobile ? "44px" : "60px" }}>
+        {/* The Accomplishments */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "44px" : "60px" }}>
           <p style={sectionLabel}>The Accomplishments</p>
           <p style={bodyText}>
             Susana is the author of{" "}
@@ -276,7 +191,7 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
         <div
           style={{
             textAlign: "center",
-            paddingTop: isMobile ? "20px" : "32px",
+            paddingTop: isMobile ? "12px" : "20px",
             display: "flex",
             justifyContent: "center",
           }}

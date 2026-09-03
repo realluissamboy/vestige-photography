@@ -27,21 +27,24 @@ export default function About({
   const { isLandscapeMobile, isMobilePortrait } = useResponsiveViewport();
 
   const sectionLabel: CSSProperties = {
-    fontFamily: FONTS.script,
-    fontSize: isLandscapeMobile ? "34px" : isMobile ? "40px" : "54px",
-    color: "var(--color-crimson)",
-    marginBottom: "2px",
-    lineHeight: 1,
+    fontFamily: FONTS.display,
+    fontStyle: "italic",
+    fontWeight: 700,
+    fontSize: isMobile ? "11px" : "13px",
+    letterSpacing: "3px",
+    textTransform: "uppercase",
+    color: "var(--color-crimson, #CD2644)",
+    marginBottom: "8px",
     textShadow: VESTIGE_TEXT_SHADOW,
   };
-  const narrowSectionPadding = isLandscapeMobile ? "0 24px 40px" : isMobile ? "0 20px 64px" : "0 40px 96px";
+
   const bodyText: CSSProperties = {
     fontFamily: FONTS.body,
-    fontSize: isLandscapeMobile ? "16px" : isMobile ? "18px" : "20px",
+    fontSize: isLandscapeMobile ? "15px" : isMobile ? "17px" : "19px",
     fontWeight: 400,
-    lineHeight: isLandscapeMobile ? 1.6 : 1.75,
-    color: "var(--color-ink)",
-    margin: isLandscapeMobile ? "0 0 14px" : "0 0 20px",
+    lineHeight: 1.65,
+    color: "var(--color-obsidian, #1A1A1A)",
+    margin: 0,
   };
 
   const linkStyle: CSSProperties = {
@@ -54,8 +57,18 @@ export default function About({
   };
 
   return (
-    <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+    <main
+      style={{
+        background: "var(--color-parchment)",
+        minHeight: "100vh",
+        fontFamily: FONTS.body,
+        color: "var(--color-ink)",
+      }}
+    >
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap"
+        rel="stylesheet"
+      />
 
       <PageHeader
         page="about"
@@ -65,39 +78,42 @@ export default function About({
         setNavHover={setNavHover}
         isMobile={isMobile}
       />
-      <div style={{ height: isLandscapeMobile ? "20px" : isMobile ? "40px" : "64px" }} />
+      <div style={{ height: isLandscapeMobile ? "20px" : isMobile ? "36px" : "56px" }} />
 
-      {/* Opening: headshot at top + philosophy underneath */}
-      <section
+      {/* United Single Story Container */}
+      <article
         style={{
-          maxWidth: "840px",
-          minHeight: isMobile ? "calc(100dvh - 80px)" : "calc(100dvh - 100px)",
+          maxWidth: "800px",
           margin: "0 auto",
-          padding: narrowSectionPadding,
+          padding: isLandscapeMobile
+            ? "0 20px 48px"
+            : isMobile
+            ? "0 20px 64px"
+            : "0 32px 96px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          textAlign: "center",
-          gap: isLandscapeMobile ? "12px" : isMobile ? "16px" : "20px",
-          justifyContent: "center",
           opacity: aboutVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.3s",
+          transition: "opacity 0.8s ease 0.2s",
+          boxSizing: "border-box",
         }}
       >
+        {/* Top: Portrait and Founder Signature */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            marginBottom: isMobile ? "28px" : "40px",
           }}
         >
           <div
             style={{
               overflow: "hidden",
               borderRadius: "4px",
-              boxShadow: "0 16px 36px rgba(0,0,0,0.18)",
-              border: "1px solid rgba(158, 140, 121, 0.3)",
-              maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
+              boxShadow: "0 16px 36px rgba(0, 0, 0, 0.18)",
+              border: "1px solid rgba(158, 140, 121, 0.4)",
+              maxHeight: isLandscapeMobile ? "200px" : isMobilePortrait ? "220px" : "280px",
             }}
           >
             <img
@@ -107,7 +123,7 @@ export default function About({
                 display: "block",
                 width: "auto",
                 height: "auto",
-                maxHeight: isLandscapeMobile ? "24vh" : isMobilePortrait ? "22vh" : "28vh",
+                maxHeight: isLandscapeMobile ? "200px" : isMobilePortrait ? "220px" : "280px",
                 objectFit: "contain",
               }}
             />
@@ -115,11 +131,10 @@ export default function About({
           <p
             style={{
               fontFamily: FONTS.script,
-              fontSize: isMobile ? "26px" : "34px",
-              color: "var(--color-crimson)",
+              fontSize: isLandscapeMobile ? "24px" : isMobile ? "28px" : "36px",
+              color: "var(--color-crimson, #CD2644)",
               textAlign: "center",
-              marginTop: "8px",
-              marginBottom: 0,
+              margin: "10px 0 0",
               lineHeight: 1,
               textShadow: VESTIGE_TEXT_SHADOW,
             }}
@@ -128,142 +143,116 @@ export default function About({
           </p>
         </div>
 
-        <div style={{ maxWidth: "760px", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        {/* The Philosophy */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
           <p style={sectionLabel}>The Philosophy</p>
           <div
             style={{
-              borderLeft: "3px solid var(--color-crimson)",
-              paddingLeft: isMobile ? "14px" : "20px",
-              margin: isMobile ? "8px 0 14px" : "10px 0 16px",
+              borderLeft: "3px solid var(--color-crimson, #CD2644)",
+              paddingLeft: isMobile ? "16px" : "24px",
+              margin: "12px 0 16px",
               textAlign: "left",
             }}
           >
-            <p
+            <blockquote
               style={{
                 fontFamily: FONTS.cormorant,
-                fontSize: isMobile ? "20px" : "26px",
+                fontSize: isLandscapeMobile
+                  ? "clamp(17px, 3.4vh, 22px)"
+                  : isMobilePortrait
+                  ? "clamp(18px, 4.5vw, 24px)"
+                  : "clamp(22px, 2.2vw, 28px)",
                 fontWeight: 400,
                 fontStyle: "italic",
                 lineHeight: 1.4,
-                color: "var(--color-obsidian)",
+                color: "var(--color-obsidian, #1A1A1A)",
                 margin: 0,
               }}
             >
               &ldquo;My job is pose coaching, not posing. The camera just records the moment a woman finally believes what the room already sees.&rdquo;
-            </p>
+            </blockquote>
           </div>
-          <p style={{ ...bodyText, textAlign: "center", margin: 0 }}>
+          <p style={bodyText}>
             Susana Andrea is the photographer and founder behind Vestige. For twenty years
             she has built a practice around one idea: that a great portrait is an act of
             confidence, coaxed out rather than performed.
           </p>
         </div>
-      </section>
 
-      {/* The Roots */}
-      <section
-        style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          padding: narrowSectionPadding,
-          opacity: aboutVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.4s",
-        }}
-      >
-        <p style={sectionLabel}>The Roots</p>
-        <p style={bodyText}>
-          Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
-          sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
-          the stage. That edge never left her work. It is what keeps a pin-up image from
-          tipping into pastiche: the grit beneath the gloss.
-        </p>
-      </section>
+        {/* The Roots */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
+          <p style={sectionLabel}>The Roots</p>
+          <p style={bodyText}>
+            Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
+            sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
+            the stage. That edge never left her work. It is what keeps a pin-up image from
+            tipping into pastiche: the grit beneath the gloss.
+          </p>
+        </div>
 
-      {/* The Heritage */}
-      <section
-        style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          padding: narrowSectionPadding,
-          opacity: aboutVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.5s",
-        }}
-      >
-        <p style={sectionLabel}>The Heritage</p>
-        <p style={bodyText}>
-          Of Mexican and Colombian descent and raised in San Diego, Susana grew up
-          between languages, border towns, and the overlapping subcultures of Southern
-          California. Her portraits carry that layered sense of place &mdash; classic cars,
-          Tiki lounges, and mid-century glamour read less as costume and more as inheritance.
-        </p>
-      </section>
+        {/* The Heritage */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "36px" : "48px" }}>
+          <p style={sectionLabel}>The Heritage</p>
+          <p style={bodyText}>
+            Of Mexican and Colombian descent and raised in San Diego, Susana grew up
+            between languages, border towns, and the overlapping subcultures of Southern
+            California. Her portraits carry that layered sense of place &mdash; classic cars,
+            Tiki lounges, and mid-century glamour read less as costume and more as inheritance.
+          </p>
+        </div>
 
-      {/* The Accomplishments */}
-      <section
-        style={{
-          maxWidth: "800px",
-          margin: "0 auto",
-          padding: narrowSectionPadding,
-          opacity: aboutVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.6s",
-        }}
-      >
-        <p style={sectionLabel}>The Accomplishments</p>
-        <p style={bodyText}>
-          Susana is the author of{" "}
-          <a
-            href="https://www.wonkpress.com/products/vestige-twenty-years-of-modern-pin-up"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={linkStyle}
-          >
-            <em>Vestige: Twenty Years of Modern Pin-Up</em>
-          </a>{" "}
-          (Wonk Press) and{" "}
-          <a
-            href="https://schifferbooks.com/products/kittens-kulture"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={linkStyle}
-          >
-            <em>Kittens and Kulture</em>
-          </a>{" "}
-          (Schiffer Publishing), and editor of{" "}
-          <a
-            href="https://www.instagram.com/thevelvetgazette/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={linkStyle}
-          >
-            <em>The Velvet Gazette</em>
-          </a>
-          , a quarterly publication on vintage style, burlesque, and the women who keep
-          those traditions alive.
-        </p>
-      </section>
+        {/* The Accomplishments */}
+        <div style={{ width: "100%", marginBottom: isMobile ? "44px" : "60px" }}>
+          <p style={sectionLabel}>The Accomplishments</p>
+          <p style={bodyText}>
+            Susana is the author of{" "}
+            <a
+              href="https://www.wonkpress.com/products/vestige-twenty-years-of-modern-pin-up"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={linkStyle}
+            >
+              <em>Vestige: Twenty Years of Modern Pin-Up</em>
+            </a>{" "}
+            (Wonk Press) and{" "}
+            <a
+              href="https://schifferbooks.com/products/kittens-kulture"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={linkStyle}
+            >
+              <em>Kittens and Kulture</em>
+            </a>{" "}
+            (Schiffer Publishing), and editor of{" "}
+            <a
+              href="https://www.instagram.com/thevelvetgazette/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={linkStyle}
+            >
+              <em>The Velvet Gazette</em>
+            </a>
+            , a quarterly publication on vintage style, burlesque, and the women who keep
+            those traditions alive.
+          </p>
+        </div>
 
-      {/* CTA */}
-      <section
-        style={{
-          textAlign: "center",
-          padding: isMobile ? "0 20px 36px" : "0 24px 50px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "14px",
-          opacity: aboutVisible ? 1 : 0,
-          transition: "opacity 1s ease 0.7s",
-        }}
-      >
-        <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+        {/* CTA */}
+        <div
+          style={{
+            textAlign: "center",
+            paddingTop: isMobile ? "12px" : "20px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           <Button onClick={onBookSession} isMobile={isMobile}>
             Book a Session
           </Button>
         </div>
-      </section>
+      </article>
 
       <PageFooter visible={aboutVisible} navStyleDark={navStyleDark} isMobile={isMobile} showBrandVoice={true} />
     </main>
   );
 }
-
