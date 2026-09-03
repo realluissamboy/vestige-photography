@@ -44,7 +44,7 @@ export default function Portfolio({
   initialCategory,
   onReturnToMonograph,
 }: PortfolioProps) {
-  const { isLandscapeMobile } = useResponsiveViewport();
+  const { isLandscapeMobile, isMobilePortrait } = useResponsiveViewport();
   const { portfolioCategory, setPortfolioCategory, galleryVisible } =
     usePortfolioState("portfolio");
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
@@ -54,17 +54,6 @@ export default function Portfolio({
   );
   const [previewCategory, setPreviewCategory] = React.useState<Category>("Burlesque");
   const [spotlightImageId, setSpotlightImageId] = React.useState<number | null>(null);
-  const reelRef = React.useRef<HTMLDivElement | null>(null);
-
-  const scrollReel = (direction: "left" | "right") => {
-    if (reelRef.current) {
-      const scrollAmount = reelRef.current.clientWidth * 0.75;
-      reelRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   React.useEffect(() => {
     if (initialCategory !== undefined) {
@@ -76,9 +65,6 @@ export default function Portfolio({
   const handleSelectCategory = (cat: Category) => {
     setPortfolioCategory(cat);
     setDisplayedCategory(cat);
-    if (reelRef.current) {
-      reelRef.current.scrollLeft = 0;
-    }
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
@@ -1071,166 +1057,102 @@ export default function Portfolio({
             </div>
           </section>
 
-          {/* Horizontal Viewport-Fitted Gallery Reel (Does not exceed 100 viewport) */}
-          <div
-            style={{
-              position: "relative",
-              flex: 1,
-              width: "100%",
-              overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              minHeight: 0,
-            }}
-          >
-            {/* Left Nav Arrow */}
-            <button
-              type="button"
-              onClick={() => scrollReel("left")}
-              aria-label="Scroll gallery left"
-              style={{
-                position: "absolute",
-                left: isMobile ? "8px" : "16px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                zIndex: 10,
-                background: "rgba(239, 233, 217, 0.92)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(158, 140, 121, 0.4)",
-                borderRadius: "50%",
-                width: isMobile ? "36px" : "44px",
-                height: isMobile ? "36px" : "44px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
-                fontSize: isMobile ? "18px" : "22px",
-                color: "var(--color-crimson, #CD2644)",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(-50%) scale(1)";
-              }}
-            >
-              ‹
-            </button>
+          {/* Non-Scrolling Viewport-Fitted Photo Grid (All photos visible without scrolling) */}
+          {(() => {
+            const count = currentCategoryImages.length;
+            let cols = 3;
+            let rows = 2;
 
-            {/* Horizontal Filmstrip */}
-            <div
-              ref={reelRef}
-              onWheel={(e) => {
-                if (reelRef.current && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-                  reelRef.current.scrollLeft += e.deltaY;
-                }
-              }}
-              style={{
-                width: "100%",
-                height: "100%",
-                boxSizing: "border-box",
-                display: "flex",
-                alignItems: "center",
-                gap: isMobile ? "14px" : "24px",
-                padding: isMobile ? "12px 18px" : "18px 48px",
-                overflowX: "auto",
-                overflowY: "hidden",
-                scrollSnapType: "x proximity",
-                WebkitOverflowScrolling: "touch",
-              }}
-            >
-              {currentCategoryImages.map((img: GalleryImage, i) => (
-                <div
-                  key={img.id}
-                  onClick={() => openLightbox(img)}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`View photo ${img.label} in full size`}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      openLightbox(img);
-                    }
-                  }}
-                  style={{
-                    height: "calc(100% - 10px)",
-                    maxHeight: "100%",
-                    width: "auto",
-                    flexShrink: 0,
-                    cursor: "pointer",
-                    borderRadius: "4px",
-                    overflow: "hidden",
-                    boxShadow: "0 10px 28px rgba(0, 0, 0, 0.18)",
-                    border: "1px solid rgba(158, 140, 121, 0.3)",
-                    background: "var(--color-cream)",
-                    scrollSnapAlign: "center",
-                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "scale(1.02)";
-                    e.currentTarget.style.boxShadow = "0 14px 36px rgba(0, 0, 0, 0.28)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                    e.currentTarget.style.boxShadow = "0 10px 28px rgba(0, 0, 0, 0.18)";
-                  }}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.label}
-                    loading={i < 4 ? "eager" : "lazy"}
-                    style={{
-                      height: "100%",
-                      width: "auto",
-                      display: "block",
-                      objectFit: "contain",
+            if (isMobilePortrait) {
+              if (count <= 6) { cols = 2; rows = 3; }
+              else if (count <= 9) { cols = 3; rows = 3; }
+              else if (count <= 12) { cols = 3; rows = 4; }
+              else { cols = 3; rows = Math.ceil(count / 3); }
+            } else if (isLandscapeMobile) {
+              if (count <= 6) { cols = 3; rows = 2; }
+              else if (count <= 8) { cols = 4; rows = 2; }
+              else if (count <= 10) { cols = 5; rows = 2; }
+              else if (count <= 12) { cols = 6; rows = 2; }
+              else { cols = 6; rows = 3; }
+            } else {
+              // Desktop & Tablet
+              if (count <= 6) { cols = 3; rows = 2; }
+              else if (count <= 8) { cols = 4; rows = 2; }
+              else if (count <= 9) { cols = 3; rows = 3; }
+              else if (count <= 12) { cols = 4; rows = 3; }
+              else { cols = 6; rows = 3; }
+            }
+
+            return (
+              <div
+                style={{
+                  flex: 1,
+                  minHeight: 0,
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: isMobile ? "8px 12px 10px" : "12px 24px 16px",
+                  display: "grid",
+                  gridTemplateColumns: `repeat(${cols}, 1fr)`,
+                  gridTemplateRows: `repeat(${rows}, 1fr)`,
+                  gap: isMobile ? "6px" : "10px",
+                  overflow: "hidden",
+                }}
+              >
+                {currentCategoryImages.map((img: GalleryImage, i) => (
+                  <div
+                    key={img.id}
+                    onClick={() => openLightbox(img)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View photo ${img.label} in full size`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        openLightbox(img);
+                      }
                     }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Right Nav Arrow */}
-            <button
-              type="button"
-              onClick={() => scrollReel("right")}
-              aria-label="Scroll gallery right"
-              style={{
-                position: "absolute",
-                right: isMobile ? "8px" : "16px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                zIndex: 10,
-                background: "rgba(239, 233, 217, 0.92)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(158, 140, 121, 0.4)",
-                borderRadius: "50%",
-                width: isMobile ? "36px" : "44px",
-                height: isMobile ? "36px" : "44px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
-                fontSize: isMobile ? "18px" : "22px",
-                color: "var(--color-crimson, #CD2644)",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(-50%) scale(1)";
-              }}
-            >
-              ›
-            </button>
-          </div>
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      minHeight: 0,
+                      minWidth: 0,
+                      cursor: "pointer",
+                      borderRadius: "4px",
+                      overflow: "hidden",
+                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.14)",
+                      border: "1px solid rgba(158, 140, 121, 0.25)",
+                      background: "var(--color-cream)",
+                      position: "relative",
+                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.025)";
+                      e.currentTarget.style.zIndex = "10";
+                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(0, 0, 0, 0.25)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                      e.currentTarget.style.zIndex = "1";
+                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.14)";
+                    }}
+                  >
+                    <img
+                      src={img.src}
+                      alt={img.label}
+                      loading={i < 8 ? "eager" : "lazy"}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        display: "block",
+                        objectFit: "cover",
+                        objectPosition: img.focus || "50% 25%",
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
         </>
       )}
 
