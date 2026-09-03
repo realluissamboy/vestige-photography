@@ -20,15 +20,6 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
     textShadow: VESTIGE_TEXT_SHADOW,
   };
 
-  const sectionHeading: React.CSSProperties = {
-    fontFamily: FONTS.script,
-    fontSize: isLandscapeMobile ? "24px" : isMobile ? "28px" : "36px",
-    fontWeight: 400,
-    fontStyle: "normal",
-    color: "var(--color-ink, #1A1A1B)",
-    margin: isLandscapeMobile ? "2px 0 12px" : "4px 0 20px",
-    lineHeight: 1.15,
-  };
 
   const bodyText: React.CSSProperties = {
     fontFamily: FONTS.body,
@@ -246,7 +237,6 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
       >
         <div style={{ marginBottom: isMobile ? "36px" : "48px" }}>
           <p style={sectionLabel}>The Roots</p>
-          <h3 style={sectionHeading}>From the Pit to the Portrait</h3>
           <p style={bodyText}>
             Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
             sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
@@ -257,7 +247,6 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
 
         <div style={{ marginBottom: isMobile ? "36px" : "48px" }}>
           <p style={sectionLabel}>The Heritage</p>
-          <h3 style={sectionHeading}>San Diego, by Way of Everywhere</h3>
           <p style={bodyText}>
             Of Mexican and Colombian descent and raised in San Diego, Susana grew up
             between languages, border towns, and the overlapping subcultures of Southern
@@ -268,7 +257,6 @@ export default function MonographAboutSection({ onBookSession }: MonographAboutS
 
         <div style={{ marginBottom: isMobile ? "44px" : "60px" }}>
           <p style={sectionLabel}>The Accomplishments</p>
-          <h3 style={sectionHeading}>In Print</h3>
           <p style={bodyText}>
             Susana is the author of{" "}
             <a

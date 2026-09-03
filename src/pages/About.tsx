@@ -34,15 +34,6 @@ export default function About({
     lineHeight: 1,
     textShadow: VESTIGE_TEXT_SHADOW,
   };
-  const sectionHeading: CSSProperties = {
-    fontFamily: FONTS.script,
-    fontSize: isLandscapeMobile ? "26px" : isMobile ? "30px" : "38px",
-    fontWeight: 400,
-    fontStyle: "normal",
-    color: "var(--color-ink)",
-    margin: isLandscapeMobile ? "2px 0 14px" : "4px 0 24px",
-    lineHeight: 1.15,
-  };
   const narrowSectionPadding = isLandscapeMobile ? "0 24px 40px" : isMobile ? "0 20px 64px" : "0 40px 96px";
   const bodyText: CSSProperties = {
     fontFamily: FONTS.body,
@@ -180,7 +171,6 @@ export default function About({
         }}
       >
         <p style={sectionLabel}>The Roots</p>
-        <h1 style={sectionHeading}>From the Pit to the Portrait</h1>
         <p style={bodyText}>
           Susana came up shooting the San Diego and Phoenix punk and metal scenes &mdash;
           sweating photographers' pits, smoke-filled clubs, and the unvarnished honesty of
@@ -200,7 +190,6 @@ export default function About({
         }}
       >
         <p style={sectionLabel}>The Heritage</p>
-        <h2 style={sectionHeading}>San Diego, by Way of Everywhere</h2>
         <p style={bodyText}>
           Of Mexican and Colombian descent and raised in San Diego, Susana grew up
           between languages, border towns, and the overlapping subcultures of Southern
@@ -220,7 +209,6 @@ export default function About({
         }}
       >
         <p style={sectionLabel}>The Accomplishments</p>
-        <h2 style={sectionHeading}>In Print</h2>
         <p style={bodyText}>
           Susana is the author of{" "}
           <a
