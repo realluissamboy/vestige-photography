@@ -17,17 +17,21 @@ export default function MonographAboutSection({
 
   const sectionLabel: React.CSSProperties = {
     fontFamily: FONTS.script,
-    fontSize: isLandscapeMobile ? "30px" : isMobile ? "34px" : "44px",
+    fontSize: isLandscapeMobile
+      ? "36px"
+      : isMobilePortrait
+      ? "40px"
+      : "clamp(46px, 3.8vw, 62px)",
     color: "var(--color-crimson, #CD2644)",
-    marginBottom: isMobile ? "2px" : "6px",
-    lineHeight: 1.1,
+    marginBottom: isMobile ? "4px" : "8px",
+    lineHeight: 1.05,
     textShadow: VESTIGE_TEXT_SHADOW,
   };
 
   const bodyText: React.CSSProperties = {
     fontFamily: FONTS.body,
-    fontSize: isLandscapeMobile ? "14.5px" : isMobile ? "16.5px" : "18px",
-    lineHeight: 1.6,
+    fontSize: isLandscapeMobile ? "15px" : isMobile ? "16.5px" : "18px",
+    lineHeight: 1.65,
     color: "var(--color-obsidian, #1A1A1A)",
     margin: 0,
   };
@@ -78,9 +82,9 @@ export default function MonographAboutSection({
             gridTemplateColumns: isMobilePortrait
               ? "1fr"
               : isLandscapeMobile
-              ? "minmax(200px, 240px) 1.5fr"
-              : "minmax(240px, 300px) 1.5fr",
-            gap: isLandscapeMobile ? "24px" : isMobile ? "24px" : "52px",
+              ? "minmax(200px, 250px) 1.5fr"
+              : "minmax(260px, 320px) 1.4fr",
+            gap: isLandscapeMobile ? "24px" : isMobile ? "24px" : "56px",
             alignItems: "start",
           }}
         >
@@ -101,7 +105,7 @@ export default function MonographAboutSection({
                 boxShadow: "0 20px 48px rgba(0, 0, 0, 0.2)",
                 border: "1px solid rgba(158, 140, 121, 0.4)",
                 width: isMobilePortrait ? "190px" : "100%",
-                maxWidth: "280px",
+                maxWidth: "320px",
               }}
             >
               <img
@@ -118,7 +122,7 @@ export default function MonographAboutSection({
             <p
               style={{
                 fontFamily: FONTS.script,
-                fontSize: isLandscapeMobile ? "24px" : isMobilePortrait ? "26px" : "34px",
+                fontSize: isLandscapeMobile ? "26px" : isMobilePortrait ? "28px" : "38px",
                 color: "var(--color-crimson, #CD2644)",
                 textAlign: "center",
                 margin: "12px 0 0",
@@ -135,15 +139,15 @@ export default function MonographAboutSection({
             {/* The Philosophy */}
             <div
               style={{
-                marginBottom: isLandscapeMobile ? "20px" : isMobile ? "24px" : "28px",
+                marginBottom: isLandscapeMobile ? "22px" : isMobile ? "26px" : "32px",
               }}
             >
               <p style={sectionLabel}>The Philosophy</p>
               <div
                 style={{
                   borderLeft: "3px solid var(--color-crimson, #CD2644)",
-                  paddingLeft: isMobile ? "14px" : "18px",
-                  margin: "8px 0 12px",
+                  paddingLeft: isMobile ? "14px" : "20px",
+                  margin: "8px 0 14px",
                   textAlign: "left",
                 }}
               >
@@ -151,13 +155,13 @@ export default function MonographAboutSection({
                   style={{
                     fontFamily: FONTS.cormorant,
                     fontSize: isLandscapeMobile
-                      ? "clamp(15px, 2.8vh, 18px)"
+                      ? "clamp(16px, 3vh, 19px)"
                       : isMobilePortrait
-                      ? "clamp(16px, 4vw, 20px)"
-                      : "clamp(19px, 1.8vw, 23px)",
+                      ? "clamp(17px, 4.2vw, 21px)"
+                      : "clamp(20px, 2vw, 25px)",
                     fontWeight: 400,
                     fontStyle: "italic",
-                    lineHeight: 1.4,
+                    lineHeight: 1.42,
                     color: "var(--color-obsidian, #1A1A1A)",
                     margin: 0,
                   }}
