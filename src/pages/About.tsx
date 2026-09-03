@@ -80,11 +80,12 @@ export default function About({
       <section
         style={{
           maxWidth: "1100px",
+          minHeight: isMobile ? "calc(100dvh - 80px)" : "calc(100dvh - 120px)",
           margin: "0 auto",
           padding: narrowSectionPadding,
           display: "grid",
-          gridTemplateColumns: isMobilePortrait ? "1fr" : "minmax(220px, 1fr) 1.5fr",
-          gap: isLandscapeMobile ? "28px" : isMobile ? "36px" : "72px",
+          gridTemplateColumns: isMobilePortrait ? "1fr" : "minmax(220px, 320px) 1.5fr",
+          gap: isLandscapeMobile ? "20px" : isMobile ? "24px" : "64px",
           alignItems: "center",
           opacity: aboutVisible ? 1 : 0,
           transition: "opacity 1s ease 0.3s",
@@ -92,7 +93,7 @@ export default function About({
       >
         <div
           style={{
-            maxWidth: isMobile ? "320px" : "none",
+            maxWidth: isMobile ? "240px" : "320px",
             margin: isMobile ? "0 auto" : 0,
             width: "100%",
           }}
@@ -103,12 +104,19 @@ export default function About({
               borderRadius: "2px",
               boxShadow: "0 24px 60px rgba(0,0,0,0.18)",
               border: "1px solid rgba(158, 140, 121, 0.3)",
+              maxHeight: isLandscapeMobile ? "44vh" : isMobilePortrait ? "32vh" : "50vh",
             }}
           >
             <img
               src="/susana headshot.webp"
               alt="Susana Andrea, founder of Vestige Photography"
-              style={{ display: "block", width: "100%", height: "auto" }}
+              style={{
+                display: "block",
+                width: "100%",
+                height: "100%",
+                maxHeight: isLandscapeMobile ? "44vh" : isMobilePortrait ? "32vh" : "50vh",
+                objectFit: "cover",
+              }}
             />
           </div>
           <p
