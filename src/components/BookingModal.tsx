@@ -14,9 +14,9 @@ export interface BookingModalProps {
 const GENRE_OPTIONS = [
   "Modern Pin-Up",
   "Modern Glamour",
-  "Modern Midcentury",
-  "Modern Kulture",
+  "Modern Burlesque",
   "Modern Tiki",
+  "Modern Kulture",
   "Editorial / Custom",
 ];
 
@@ -28,9 +28,10 @@ const TIMELINE_OPTIONS = [
 ];
 
 const LOCATION_OPTIONS = [
-  "San Diego Studio",
-  "On-Location / Travel",
-  "Not Sure Yet",
+  "On location",
+  "Travel",
+  "Other",
+  "Not sure yet",
 ];
 
 export default function BookingModal({
@@ -43,12 +44,22 @@ export default function BookingModal({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
 
+  // Normalize initialCategory if passed from short or full category key
+  const resolveCategory = (cat?: string): string => {
+    if (!cat) return "Modern Pin-Up";
+    if (GENRE_OPTIONS.includes(cat)) return cat;
+    const found = GENRE_OPTIONS.find(
+      (g) => g.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(g.toLowerCase())
+    );
+    return found || "Modern Pin-Up";
+  };
+
   // Form State
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [selectedGenres, setSelectedGenres] = useState<string[]>(
-    initialCategory ? [initialCategory] : ["Modern Pin-Up"]
+    initialCategory ? [resolveCategory(initialCategory)] : ["Modern Pin-Up"]
   );
   const [timeline, setTimeline] = useState(TIMELINE_OPTIONS[0]);
   const [locationPref, setLocationPref] = useState(LOCATION_OPTIONS[0]);
@@ -61,8 +72,11 @@ export default function BookingModal({
 
   // Sync initialCategory if passed
   useEffect(() => {
-    if (initialCategory && !selectedGenres.includes(initialCategory)) {
-      setSelectedGenres([initialCategory]);
+    if (initialCategory) {
+      const resolved = resolveCategory(initialCategory);
+      if (!selectedGenres.includes(resolved)) {
+        setSelectedGenres([resolved]);
+      }
     }
   }, [initialCategory]);
 
@@ -144,8 +158,8 @@ export default function BookingModal({
     e.preventDefault();
     setErrorMessage(null);
 
-    if (!fullName.trim() || !email.trim()) {
-      setErrorMessage("Please provide both your name and email address.");
+    if (!fullName.trim() || !phone.trim()) {
+      setErrorMessage("Please provide both your name and phone number.");
       return;
     }
 
@@ -350,8 +364,8 @@ export default function BookingModal({
                 margin: "0 auto",
               }}
             >
-              Your session inquiry is in Susana’s hands. She will review your vision and reply to{" "}
-              <strong>{email}</strong> within <strong>24–48 hours</strong> to discuss concepts,
+              Your session inquiry is in Susana’s hands. She will review your vision and reach out to{" "}
+              <strong>{phone.trim() || email.trim()}</strong> within <strong>24–48 hours</strong> to discuss concepts,
               dates, and styling.
             </p>
 
@@ -466,7 +480,7 @@ export default function BookingModal({
               />
             </div>
 
-            {/* Field 2: Email & Phone */}
+            {/* Field 2: Phone & Email (Phone required, Email optional - positions swapped) */}
             <div
               style={{
                 display: "grid",
@@ -476,16 +490,16 @@ export default function BookingModal({
               }}
             >
               <div>
-                <label htmlFor="booking-email" style={labelStyle}>
-                  Email Address <span style={{ color: COLORS.crimson }}>*</span>
+                <label htmlFor="booking-phone" style={labelStyle}>
+                  Phone Number <span style={{ color: COLORS.crimson }}>*</span>
                 </label>
                 <input
-                  id="booking-email"
-                  type="email"
+                  id="booking-phone"
+                  type="tel"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@example.com"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="(619) 555-0199"
                   style={inputStyle}
                   onFocus={(e) => (e.target.style.borderColor = COLORS.crimson)}
                   onBlur={(e) => (e.target.style.borderColor = COLORS.stone)}
@@ -493,15 +507,15 @@ export default function BookingModal({
               </div>
 
               <div>
-                <label htmlFor="booking-phone" style={labelStyle}>
-                  Phone Number <span style={{ opacity: 0.5, fontStyle: "normal" }}>(optional)</span>
+                <label htmlFor="booking-email" style={labelStyle}>
+                  Email Address <span style={{ opacity: 0.5, fontStyle: "normal" }}>(optional)</span>
                 </label>
                 <input
-                  id="booking-phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="(619) 555-0199"
+                  id="booking-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@example.com"
                   style={inputStyle}
                   onFocus={(e) => (e.target.style.borderColor = COLORS.crimson)}
                   onBlur={(e) => (e.target.style.borderColor = COLORS.stone)}
