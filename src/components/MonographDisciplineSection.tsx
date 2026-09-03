@@ -42,7 +42,7 @@ export default function MonographDisciplineSection({
         id={id}
         ref={containerRef}
         className="discipline-section"
-        aria-label={`${title} Discipline`}
+        aria-label={`${title} Collection`}
         style={{
           padding: isLandscapeMobile
             ? "16px 20px"
@@ -136,7 +136,7 @@ export default function MonographDisciplineSection({
                 color: "#FFFFFF",
               }}
             >
-              Discipline {formattedNumber} / 05
+              {formattedNumber} / 05
             </span>
           </div>
 

@@ -35,11 +35,11 @@ export default function MonographHero() {
         {/* Background Hero Photo with Direct-DOM Parallax Glide */}
         <div ref={targetRef} className="discipline-bg-wrapper">
           <img
-            src="/hero.webp"
+            src="/hero-slides/modern-burlesque.webp"
             alt="Vestige Monograph Cover"
             className="discipline-bg-image"
             style={{
-              objectPosition: isLandscapeMobile ? "50% 25%" : "50% 35%",
+              objectPosition: isLandscapeMobile ? "50% 20%" : "50% 28%",
             }}
           />
         </div>
@@ -140,7 +140,7 @@ export default function MonographHero() {
         <button
           type="button"
           onClick={handleScrollDown}
-          aria-label="Scroll to The Five Disciplines"
+          aria-label="Scroll to explore"
           style={{
             position: "absolute",
             bottom: isLandscapeMobile ? "12px" : "28px",
@@ -169,7 +169,7 @@ export default function MonographHero() {
               opacity: 0.9,
             }}
           >
-            The Five Disciplines
+            Scroll to Explore
           </span>
           <span
             style={{
