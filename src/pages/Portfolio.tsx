@@ -302,21 +302,33 @@ export default function Portfolio({
             </span>
           </button>
 
-          {/* Right: View Next Collection CTA */}
+          {/* Right: View Next Collection CTA OR About Page when reaching final category */}
           {(() => {
             const currentIndex = displayedCategory ? PORTFOLIO_CATEGORIES.indexOf(displayedCategory) : 0;
             const validIndex = currentIndex >= 0 ? currentIndex : 0;
+            const isLastCategory = validIndex === PORTFOLIO_CATEGORIES.length - 1;
             const nextCat = PORTFOLIO_CATEGORIES[(validIndex + 1) % PORTFOLIO_CATEGORIES.length] as Category;
             const nextCatTitle = CATEGORY_TITLES[nextCat] ?? "";
-            const nextCatColor = CATEGORY_COLORS[nextCat] ?? "var(--color-crimson, #CD2644)";
+            const btnColor = isLastCategory
+              ? "var(--color-crimson, #CD2644)"
+              : (CATEGORY_COLORS[nextCat] ?? "var(--color-crimson, #CD2644)");
 
             return (
               <button
                 type="button"
-                onClick={() => handleSelectCategory(nextCat)}
-                aria-label={`View next collection: ${nextCatTitle}`}
+                onClick={() => {
+                  if (isLastCategory) {
+                    if (onReturnToMonograph) {
+                      onReturnToMonograph();
+                    }
+                    setPage("about");
+                  } else {
+                    handleSelectCategory(nextCat);
+                  }
+                }}
+                aria-label={isLastCategory ? "About Susana Andrea" : `View next collection: ${nextCatTitle}`}
                 style={{
-                  background: nextCatColor,
+                  background: btnColor,
                   border: "none",
                   color: "#FFFFFF",
                   fontFamily: FONTS.display,
@@ -328,7 +340,7 @@ export default function Portfolio({
                   padding: isMobile ? "7px 14px" : "8px 18px",
                   borderRadius: "999px",
                   cursor: "pointer",
-                  boxShadow: `0 2px 10px ${nextCatColor}55`,
+                  boxShadow: `0 2px 10px ${btnColor}55`,
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "6px",
@@ -344,7 +356,7 @@ export default function Portfolio({
                   e.currentTarget.style.opacity = "1";
                 }}
               >
-                <span>View next collection</span>
+                <span>{isLastCategory ? "About Susana Andrea" : "View next collection"}</span>
                 <span style={{ fontSize: "14px" }}>→</span>
               </button>
             );
@@ -369,7 +381,18 @@ export default function Portfolio({
         Portfolio
       </h1>
 
-      <div style={{ minHeight: isLandscapeMobile && displayedCategory === null ? "calc(100dvh - 48px)" : "auto" }}>
+      <div
+        style={{
+          flex: displayedCategory !== null ? 1 : undefined,
+          minHeight: displayedCategory !== null ? 0 : isLandscapeMobile && displayedCategory === null ? "calc(100dvh - 48px)" : "auto",
+          height: displayedCategory !== null ? "calc(100dvh - 48px)" : "auto",
+          maxHeight: displayedCategory !== null ? "calc(100dvh - 48px)" : "none",
+          display: displayedCategory !== null ? "flex" : "block",
+          flexDirection: displayedCategory !== null ? "column" : undefined,
+          overflow: displayedCategory !== null ? "hidden" : "visible",
+          boxSizing: "border-box",
+        }}
+      >
       {displayedCategory === null ? (
         isLandscapeMobile ? (
           /* Landscape Mobile: Hero Spotlight (Left 58%) + Curated Filmstrip Reel (Right 42%) */
@@ -1010,14 +1033,12 @@ export default function Portfolio({
             style={{
               background: CATEGORY_COLORS[displayedCategory] ?? "",
               color: COLORS.cream,
-              padding: isLandscapeMobile
-                ? "8px 16px"
-                : isMobile
-                ? "10px 16px 12px"
-                : "16px 32px 18px",
+              padding: isLandscapeMobile ? "4px 16px" : isMobile ? "6px 16px" : "8px 32px",
               textAlign: "center",
               position: "relative",
               boxShadow: "0 4px 16px rgba(0, 0, 0, 0.1)",
+              flexShrink: 0,
+              boxSizing: "border-box",
             }}
           >
             <div
@@ -1034,7 +1055,7 @@ export default function Portfolio({
               <span
                 style={{
                   fontFamily: FONTS.script,
-                  fontSize: isLandscapeMobile ? "20px" : isMobile ? "22px" : "32px",
+                  fontSize: isLandscapeMobile ? "18px" : isMobile ? "20px" : "28px",
                   lineHeight: 1,
                   opacity: 0.9,
                 }}
@@ -1046,7 +1067,7 @@ export default function Portfolio({
                   fontFamily: FONTS.display,
                   fontStyle: "italic",
                   fontWeight: 800,
-                  fontSize: isLandscapeMobile ? "22px" : isMobile ? "26px" : "38px",
+                  fontSize: isLandscapeMobile ? "20px" : isMobile ? "24px" : "32px",
                   letterSpacing: "-0.5px",
                   lineHeight: 1,
                   margin: 0,
@@ -1057,7 +1078,7 @@ export default function Portfolio({
             </div>
           </section>
 
-          {/* Non-Scrolling Viewport-Fitted Photo Grid (All photos visible without scrolling) */}
+          {/* Non-Scrolling Viewport-Fitted Photo Grid (Strictly locked within 100vh) */}
           {(() => {
             const count = currentCategoryImages.length;
             let cols = 3;
@@ -1090,10 +1111,10 @@ export default function Portfolio({
                   minHeight: 0,
                   width: "100%",
                   boxSizing: "border-box",
-                  padding: isMobile ? "8px 12px 10px" : "12px 24px 16px",
+                  padding: isMobile ? "6px 10px 8px" : "10px 20px 12px",
                   display: "grid",
-                  gridTemplateColumns: `repeat(${cols}, 1fr)`,
-                  gridTemplateRows: `repeat(${rows}, 1fr)`,
+                  gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+                  gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
                   gap: isMobile ? "6px" : "10px",
                   overflow: "hidden",
                 }}
@@ -1112,6 +1133,7 @@ export default function Portfolio({
                       }
                     }}
                     style={{
+                      position: "relative",
                       width: "100%",
                       height: "100%",
                       minHeight: 0,
@@ -1122,7 +1144,6 @@ export default function Portfolio({
                       boxShadow: "0 4px 12px rgba(0, 0, 0, 0.14)",
                       border: "1px solid rgba(158, 140, 121, 0.25)",
                       background: "var(--color-cream)",
-                      position: "relative",
                       transition: "transform 0.2s ease, box-shadow 0.2s ease",
                     }}
                     onMouseEnter={(e) => {
@@ -1141,6 +1162,9 @@ export default function Portfolio({
                       alt={img.label}
                       loading={i < 8 ? "eager" : "lazy"}
                       style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
                         width: "100%",
                         height: "100%",
                         display: "block",
