@@ -2,7 +2,12 @@ import React from "react";
 import MonographDisciplineSection from "../components/MonographDisciplineSection";
 import MonographAboutSection from "../components/MonographAboutSection";
 import PageFooter from "../components/PageFooter";
-import { CATEGORY_TITLES, CATEGORY_COLORS, type Category } from "../data/gallery";
+import {
+  CATEGORY_TITLES,
+  CATEGORY_COLORS,
+  GALLERY_IMAGES,
+  type Category,
+} from "../data/gallery";
 import "../styles/monograph.css";
 
 export interface HomeProps {
@@ -11,57 +16,38 @@ export interface HomeProps {
   isMobile: boolean;
 }
 
-interface CategorySlideConfig {
-  key: Category;
-  title: string;
-  imageSrc: string;
-  imageAlt: string;
-  imageFocus: string;
-  colorAccent: string;
-}
+const HIGH_RES_HERO_SOURCES: Record<number, string> = {
+  34: "/hero-slides/modern-burlesque.webp",
+  36: "/hero-slides/modern-tiki.webp",
+};
 
-const CATEGORIES: CategorySlideConfig[] = [
-  {
-    key: "Vintage-Glamour",
-    title: CATEGORY_TITLES["Vintage-Glamour"], // "Modern Glamour"
-    imageSrc: "/vintage-glamour.webp",
-    imageAlt: "Modern Glamour photography by Susana Andrea",
-    imageFocus: "50% 30%",
-    colorAccent: CATEGORY_COLORS["Vintage-Glamour"],
-  },
-  {
-    key: "Pin-Up",
-    title: CATEGORY_TITLES["Pin-Up"], // "Modern Pin-Up"
-    imageSrc: "/modern-pinup.webp",
-    imageAlt: "Modern Pin-Up photography by Susana Andrea",
-    imageFocus: "50% 25%",
-    colorAccent: CATEGORY_COLORS["Pin-Up"],
-  },
-  {
-    key: "Classic Cars",
-    title: CATEGORY_TITLES["Classic Cars"], // "Modern Kulture"
-    imageSrc: "/classic-cars.webp",
-    imageAlt: "Modern Kulture photography by Susana Andrea",
-    imageFocus: "50% 25%",
-    colorAccent: CATEGORY_COLORS["Classic Cars"],
-  },
-  {
-    key: "Burlesque",
-    title: CATEGORY_TITLES["Burlesque"], // "Modern Burlesque"
-    imageSrc: "/hero-slides/modern-burlesque.webp",
-    imageAlt: "Modern Burlesque photography by Susana Andrea",
-    imageFocus: "50% 25%",
-    colorAccent: CATEGORY_COLORS["Burlesque"],
-  },
-  {
-    key: "Tiki-Rockabilly",
-    title: CATEGORY_TITLES["Tiki-Rockabilly"], // "Modern Tiki"
-    imageSrc: "/hero-slides/modern-tiki.webp",
-    imageAlt: "Modern Tiki photography by Susana Andrea",
-    imageFocus: "65% 35%",
-    colorAccent: CATEGORY_COLORS["Tiki-Rockabilly"],
-  },
+const CATEGORY_ORDER: Category[] = [
+  "Vintage-Glamour", // Modern Glamour
+  "Pin-Up",          // Modern Pin-Up
+  "Classic Cars",    // Modern Kulture
+  "Burlesque",       // Modern Burlesque
+  "Tiki-Rockabilly", // Modern Tiki
 ];
+
+// Dynamically resolve the exact first image of each category in the portfolio
+const CATEGORIES = CATEGORY_ORDER.map((categoryKey) => {
+  const firstPortfolioImage = GALLERY_IMAGES.find((img) => img.cat === categoryKey);
+  const imageSrc = firstPortfolioImage
+    ? (HIGH_RES_HERO_SOURCES[firstPortfolioImage.id] ?? firstPortfolioImage.src)
+    : "";
+  const title = CATEGORY_TITLES[categoryKey] ?? categoryKey;
+  const imageFocus = firstPortfolioImage?.focus ?? "50% 30%";
+  const colorAccent = CATEGORY_COLORS[categoryKey] ?? "var(--color-crimson, #CD2644)";
+
+  return {
+    key: categoryKey,
+    title,
+    imageSrc,
+    imageAlt: `${title} photography by Susana Andrea`,
+    imageFocus,
+    colorAccent,
+  };
+});
 
 export default function Home({
   onBookSession,
@@ -77,7 +63,7 @@ export default function Home({
         overflowX: "hidden",
       }}
     >
-      {/* Curated Monograph Categories — Starting directly with Modern Glamour */}
+      {/* Curated Categories — Directly rendering the first image of each portfolio category */}
       {CATEGORIES.map((category, index) => (
         <MonographDisciplineSection
           key={category.key}
