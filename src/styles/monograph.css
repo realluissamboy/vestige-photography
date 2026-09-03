@@ -1,0 +1,133 @@
+/* Monograph Stylesheet — Seamless Full-Bleed Scroll & Parallax */
+
+/* 1. Hero High-Contrast Editorial Placard */
+.monograph-hero-placard {
+  background: rgba(239, 233, 217, 0.96);
+  border: 1.5px solid rgba(200, 20, 44, 0.45);
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.35),
+    0 4px 12px rgba(200, 20, 44, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  border-radius: 4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 32px 44px;
+  text-align: center;
+  max-width: 90vw;
+  width: auto;
+  position: relative;
+  z-index: 10;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .monograph-hero-placard {
+    padding: 24px 20px;
+    max-width: 94vw;
+  }
+}
+
+/* 2. Full-Bleed Discipline Sections */
+.discipline-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.discipline-bg-wrapper {
+  position: absolute;
+  inset: -12% 0;
+  width: 100%;
+  height: 124%;
+  will-change: transform;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.discipline-bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Modern CSS Scroll-driven animations with feature detection */
+@supports ((animation-timeline: view()) and (animation-range: entry)) {
+  .discipline-section {
+    view-timeline: --section-timeline block;
+  }
+
+  .discipline-bg-wrapper {
+    animation: discipline-scroll-anim linear both;
+    animation-timeline: --section-timeline;
+    animation-range: entry 0% exit 100%;
+  }
+
+  @keyframes discipline-scroll-anim {
+    from {
+      transform: translate3d(0, -8%, 0);
+    }
+    to {
+      transform: translate3d(0, 8%, 0);
+    }
+  }
+}
+
+/* 3. Lower-Right Portfolio Action Button */
+.discipline-portfolio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 12px 24px;
+  color: #FFFFFF;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
+}
+
+.discipline-portfolio-btn:hover {
+  background: var(--color-crimson, #CD2644);
+  border-color: #FFFFFF;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 32px rgba(205, 38, 68, 0.6);
+}
+
+.discipline-portfolio-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.discipline-portfolio-btn .arrow-icon {
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.discipline-portfolio-btn:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .discipline-portfolio-btn {
+    padding: 10px 18px;
+  }
+}
+
+/* 4. Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .discipline-bg-wrapper {
+    animation: none !important;
+    transform: none !important;
+  }
+}

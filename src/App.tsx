@@ -3,6 +3,7 @@ import { COLORS } from "./theme/colors";
 import { FONTS } from "./theme/fonts";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { type PageKey } from "./data/navigation";
+import type { Category } from "./data/gallery";
 import BookingModal from "./components/BookingModal";
 
 const Home = React.lazy(() => import("./pages/Home"));
@@ -15,31 +16,26 @@ export default function App() {
   const [navHover, setNavHover] = useState<string | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState<boolean>(false);
   const [bookingInitialCategory, setBookingInitialCategory] = useState<string | undefined>(undefined);
+  const [portfolioCategory, setPortfolioCategory] = useState<Category | null>(null);
+  const [monographScrollY, setMonographScrollY] = useState<number>(0);
   const isMobile = useIsMobile();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Ensure free natural scrolling across the monograph and subpages
   useEffect(() => {
     if (typeof document !== "undefined") {
-      if (activePage === "home") {
-        document.documentElement.style.overflow = "hidden";
-        document.documentElement.style.height = "100%";
-        document.body.style.overflow = "hidden";
-        document.body.style.height = "100%";
-        document.body.style.overscrollBehavior = "none";
-      } else {
-        document.documentElement.style.overflow = "";
-        document.documentElement.style.overflowY = "auto";
-        document.documentElement.style.height = "auto";
-        document.body.style.overflow = "";
-        document.body.style.overflowY = "auto";
-        document.body.style.height = "auto";
-        document.body.style.overscrollBehavior = "auto";
-      }
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.overflowY = "auto";
+      document.documentElement.style.height = "auto";
+      document.body.style.overflow = "";
+      document.body.style.overflowY = "auto";
+      document.body.style.height = "auto";
+      document.body.style.overscrollBehavior = "auto";
     }
-  }, [activePage]);
+  }, []);
 
   const handleSetPage = useCallback((newPage: PageKey) => {
     setActivePage(newPage);
@@ -47,6 +43,27 @@ export default function App() {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
   }, []);
+
+  const handleViewPortfolio = useCallback((category: Category) => {
+    if (typeof window !== "undefined") {
+      setMonographScrollY(window.scrollY);
+    }
+    setPortfolioCategory(category);
+    setActivePage("portfolio");
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, []);
+
+  const handleReturnToMonograph = useCallback(() => {
+    setActivePage("home");
+    setPortfolioCategory(null);
+    if (typeof window !== "undefined") {
+      setTimeout(() => {
+        window.scrollTo({ top: monographScrollY, behavior: "smooth" });
+      }, 60);
+    }
+  }, [monographScrollY]);
 
   const handleOpenBooking = useCallback((category?: string) => {
     setBookingInitialCategory(category);
@@ -73,30 +90,22 @@ export default function App() {
     transition: "opacity 0.3s ease, color 0.3s ease",
   });
 
-  const isHomePage = activePage === "home";
-
   return (
     <div
       style={{
-        background: "var(--color-parchment)",
-        height: isHomePage ? "100dvh" : undefined,
-        maxHeight: isHomePage ? "100dvh" : undefined,
-        minHeight: isHomePage ? undefined : "100dvh",
-        overflow: isHomePage ? "hidden" : undefined,
+        background: "var(--color-parchment, #EFE9D9)",
+        minHeight: "100dvh",
         opacity: mounted ? 1 : 0,
         transition: "opacity 0.2s ease",
       }}
     >
-      <Suspense fallback={<div style={{ minHeight: "100dvh", background: "var(--color-parchment)" }} />}>
-        {/* HOME PAGE */}
+      <Suspense fallback={<div style={{ minHeight: "100dvh", background: "var(--color-parchment, #EFE9D9)" }} />}>
+        {/* HOME / MONOGRAPH PAGE */}
         {activePage === "home" && (
           <Home
-            heroVisible={true}
-            isMobile={isMobile}
-            setPage={handleSetPage}
-            navHover={navHover}
-            setNavHover={setNavHover}
             onBookSession={handleOpenBooking}
+            onViewPortfolio={handleViewPortfolio}
+            isMobile={isMobile}
           />
         )}
 
@@ -112,7 +121,7 @@ export default function App() {
           />
         )}
 
-        {/* PORTFOLIO PAGE */}
+        {/* PORTFOLIO DRILL-IN PAGE */}
         {activePage === "portfolio" && (
           <Portfolio
             setPage={handleSetPage}
@@ -120,6 +129,8 @@ export default function App() {
             navStyleDark={navStyleDark}
             setNavHover={setNavHover}
             onBookSession={handleOpenBooking}
+            initialCategory={portfolioCategory}
+            onReturnToMonograph={handleReturnToMonograph}
           />
         )}
       </Suspense>

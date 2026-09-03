@@ -30,6 +30,8 @@ export interface PortfolioProps {
   navStyleDark: (label: string, isActive: boolean) => CSSProperties;
   setNavHover: (p: string | null) => void;
   onBookSession?: (category?: string) => void;
+  initialCategory?: Category | null;
+  onReturnToMonograph?: () => void;
 }
 
 export default function Portfolio({
@@ -39,15 +41,26 @@ export default function Portfolio({
   navStyleDark,
   setNavHover,
   onBookSession,
+  initialCategory,
+  onReturnToMonograph,
 }: PortfolioProps) {
   const { isLandscapeMobile } = useResponsiveViewport();
   const { portfolioCategory, setPortfolioCategory, galleryVisible } =
     usePortfolioState("portfolio");
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
 
-  const [displayedCategory, setDisplayedCategory] = React.useState<Category | null>(portfolioCategory);
+  const [displayedCategory, setDisplayedCategory] = React.useState<Category | null>(
+    initialCategory ?? portfolioCategory
+  );
   const [previewCategory, setPreviewCategory] = React.useState<Category>("Burlesque");
   const [spotlightImageId, setSpotlightImageId] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    if (initialCategory !== undefined) {
+      setPortfolioCategory(initialCategory);
+      setDisplayedCategory(initialCategory);
+    }
+  }, [initialCategory, setPortfolioCategory]);
 
   const handleSelectCategory = (cat: Category) => {
     setPortfolioCategory(cat);
@@ -58,6 +71,10 @@ export default function Portfolio({
   };
 
   const handleBackToPortfolio = () => {
+    if (onReturnToMonograph) {
+      onReturnToMonograph();
+      return;
+    }
     setPortfolioCategory(null);
     setDisplayedCategory(null);
     if (typeof window !== "undefined") {
@@ -1039,7 +1056,7 @@ export default function Portfolio({
                         lineHeight: 1.1,
                       }}
                     >
-                      ← All Collections
+                      {onReturnToMonograph ? "← Return to Monograph" : "← All Collections"}
                     </span>
                   </button>
 
