@@ -84,8 +84,8 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
           style={{
             fontFamily: FONTS.display,
             fontStyle: "italic",
-            fontWeight: 600,
-            fontSize: isMobile ? "10px" : "11px",
+            fontWeight: 700,
+            fontSize: isMobile ? "11px" : "12px",
             letterSpacing: "2.5px",
             textTransform: "uppercase",
             color: COLORS.plum,
@@ -101,18 +101,20 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
           display: "flex",
           flexDirection: "column",
           alignItems: isMobile ? "center" : "flex-end",
-          gap: "2px",
+          gap: "3px",
         }}
       >
         <span
           style={{
-            fontSize: isMobile ? "9px" : "9.5px",
+            fontSize: isMobile ? "11.5px" : "13px",
+            fontWeight: 700,
             letterSpacing: "1.5px",
             textTransform: "uppercase",
             fontFamily: FONTS.display,
             fontStyle: "italic",
             color: COLORS.plum,
-            opacity: 0.8,
+            opacity: 1,
+            lineHeight: 1.2,
           }}
         >
           built by samboy
@@ -122,19 +124,27 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
           target="_blank"
           rel="noopener noreferrer"
           style={{
-            fontSize: isMobile ? "8.5px" : "9px",
-            letterSpacing: "1.5px",
+            fontSize: isMobile ? "11px" : "12px",
+            fontWeight: 600,
+            letterSpacing: "1px",
             textTransform: "lowercase",
             fontFamily: FONTS.display,
             fontStyle: "italic",
-            color: COLORS.plum,
-            opacity: 0.7,
+            color: "var(--color-crimson, #CD2644)",
+            opacity: 0.95,
             textDecoration: "none",
-            borderBottom: "1px solid currentColor",
-            transition: "opacity 0.2s ease",
+            borderBottom: "1.5px solid currentColor",
+            transition: "opacity 0.2s ease, transform 0.2s ease",
+            lineHeight: 1.2,
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.7")}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = "1";
+            e.currentTarget.style.transform = "translateY(-1px)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = "0.95";
+            e.currentTarget.style.transform = "translateY(0)";
+          }}
         >
           www.luissamboy.com
         </a>
