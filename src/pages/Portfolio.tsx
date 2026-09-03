@@ -54,6 +54,17 @@ export default function Portfolio({
   );
   const [previewCategory, setPreviewCategory] = React.useState<Category>("Burlesque");
   const [spotlightImageId, setSpotlightImageId] = React.useState<number | null>(null);
+  const reelRef = React.useRef<HTMLDivElement | null>(null);
+
+  const scrollReel = (direction: "left" | "right") => {
+    if (reelRef.current) {
+      const scrollAmount = reelRef.current.clientWidth * 0.75;
+      reelRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   React.useEffect(() => {
     if (initialCategory !== undefined) {
@@ -65,6 +76,9 @@ export default function Portfolio({
   const handleSelectCategory = (cat: Category) => {
     setPortfolioCategory(cat);
     setDisplayedCategory(cat);
+    if (reelRef.current) {
+      reelRef.current.scrollLeft = 0;
+    }
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "instant" });
     }
@@ -115,7 +129,19 @@ export default function Portfolio({
   const activePreviewColor = CATEGORY_COLORS[previewCategory] ?? "#CD2644";
 
   return (
-    <main style={{ background: "var(--color-parchment)", minHeight: "100vh", fontFamily: FONTS.body, color: "var(--color-ink)" }}>
+    <main
+      style={{
+        background: "var(--color-parchment)",
+        height: displayedCategory ? "100dvh" : "auto",
+        maxHeight: displayedCategory ? "100dvh" : "none",
+        minHeight: displayedCategory ? "100dvh" : "100vh",
+        overflow: displayedCategory ? "hidden" : "visible",
+        display: displayedCategory ? "flex" : "block",
+        flexDirection: "column",
+        fontFamily: FONTS.body,
+        color: "var(--color-ink)",
+      }}
+    >
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
 
       {/* Unified 44px Top Bar on Landscape Mobile vs Standard PageHeader */}
@@ -290,29 +316,53 @@ export default function Portfolio({
             </span>
           </button>
 
-          {/* Right: Book a Session CTA */}
-          <button
-            type="button"
-            onClick={() => onBookSession?.(displayedCategory ? CATEGORY_TITLES[displayedCategory] : undefined)}
-            style={{
-              background: "var(--color-crimson, #CD2644)",
-              border: "none",
-              color: "#FFFFFF",
-              fontFamily: FONTS.display,
-              fontStyle: "italic",
-              fontWeight: 700,
-              fontSize: isMobile ? "10.5px" : "12px",
-              letterSpacing: "1.2px",
-              textTransform: "uppercase",
-              padding: isMobile ? "6px 14px" : "8px 18px",
-              borderRadius: "6px",
-              cursor: "pointer",
-              boxShadow: "0 2px 8px rgba(205, 38, 68, 0.35)",
-              transition: "opacity 0.2s ease",
-            }}
-          >
-            Book a Session
-          </button>
+          {/* Right: View Next Collection CTA */}
+          {(() => {
+            const currentIndex = displayedCategory ? PORTFOLIO_CATEGORIES.indexOf(displayedCategory) : 0;
+            const validIndex = currentIndex >= 0 ? currentIndex : 0;
+            const nextCat = PORTFOLIO_CATEGORIES[(validIndex + 1) % PORTFOLIO_CATEGORIES.length] as Category;
+            const nextCatTitle = CATEGORY_TITLES[nextCat] ?? "";
+            const nextCatColor = CATEGORY_COLORS[nextCat] ?? "var(--color-crimson, #CD2644)";
+
+            return (
+              <button
+                type="button"
+                onClick={() => handleSelectCategory(nextCat)}
+                aria-label={`View next collection: ${nextCatTitle}`}
+                style={{
+                  background: nextCatColor,
+                  border: "none",
+                  color: "#FFFFFF",
+                  fontFamily: FONTS.display,
+                  fontStyle: "italic",
+                  fontWeight: 700,
+                  fontSize: isMobile ? "11px" : "12.5px",
+                  letterSpacing: "1px",
+                  textTransform: "uppercase",
+                  padding: isMobile ? "7px 14px" : "8px 18px",
+                  borderRadius: "999px",
+                  cursor: "pointer",
+                  boxShadow: `0 2px 10px ${nextCatColor}55`,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  transition: "all 0.2s ease",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateX(2px)";
+                  e.currentTarget.style.opacity = "0.95";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateX(0)";
+                  e.currentTarget.style.opacity = "1";
+                }}
+              >
+                <span>View next collection</span>
+                <span style={{ fontSize: "14px" }}>→</span>
+              </button>
+            );
+          })()}
         </header>
       ) : (
         <>
@@ -1018,205 +1068,173 @@ export default function Portfolio({
               >
                 {CATEGORY_TITLES[displayedCategory] ?? ""}
               </h2>
-              <span
-                style={{
-                  fontFamily: FONTS.display,
-                  fontStyle: "italic",
-                  fontSize: isMobile ? "10px" : "11px",
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  opacity: 0.75,
-                  marginLeft: "4px",
-                }}
-              >
-                • {currentCategoryImages.length} Photographs
-              </span>
             </div>
           </section>
+
+          {/* Horizontal Viewport-Fitted Gallery Reel (Does not exceed 100 viewport) */}
           <div
             style={{
-              maxWidth: "1200px",
-              margin: "0 auto",
-              padding: isLandscapeMobile ? "14px 12px 36px" : isMobile ? "16px 12px 40px" : "36px 32px 60px",
-              display: "grid",
-              gridTemplateColumns: isLandscapeMobile ? "repeat(3, 1fr)" : isMobile ? "repeat(2, 1fr)" : "repeat(4, 1fr)",
-              gap: isLandscapeMobile ? "10px" : isMobile ? "12px" : "20px",
-              alignItems: "start",
+              position: "relative",
+              flex: 1,
+              width: "100%",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              minHeight: 0,
             }}
           >
-            {currentCategoryImages.map((img: GalleryImage, i) => (
-              <GalleryImageView
-                key={img.id}
-                img={img}
-                index={i}
-                visible={true}
-                isMobile={isMobile}
-                showLabel={false}
-                srcSet={generateSrcSet(img.src, img.ratio)}
-                sizes={generateSizes()}
-                onClick={() => openLightbox(img)}
-              />
-            ))}
+            {/* Left Nav Arrow */}
+            <button
+              type="button"
+              onClick={() => scrollReel("left")}
+              aria-label="Scroll gallery left"
+              style={{
+                position: "absolute",
+                left: isMobile ? "8px" : "16px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 10,
+                background: "rgba(239, 233, 217, 0.92)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(158, 140, 121, 0.4)",
+                borderRadius: "50%",
+                width: isMobile ? "36px" : "44px",
+                height: isMobile ? "36px" : "44px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
+                fontSize: isMobile ? "18px" : "22px",
+                color: "var(--color-crimson, #CD2644)",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(-50%) scale(1)";
+              }}
+            >
+              ‹
+            </button>
+
+            {/* Horizontal Filmstrip */}
+            <div
+              ref={reelRef}
+              onWheel={(e) => {
+                if (reelRef.current && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                  reelRef.current.scrollLeft += e.deltaY;
+                }
+              }}
+              style={{
+                width: "100%",
+                height: "100%",
+                boxSizing: "border-box",
+                display: "flex",
+                alignItems: "center",
+                gap: isMobile ? "14px" : "24px",
+                padding: isMobile ? "12px 18px" : "18px 48px",
+                overflowX: "auto",
+                overflowY: "hidden",
+                scrollSnapType: "x proximity",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {currentCategoryImages.map((img: GalleryImage, i) => (
+                <div
+                  key={img.id}
+                  onClick={() => openLightbox(img)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View photo ${img.label} in full size`}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      openLightbox(img);
+                    }
+                  }}
+                  style={{
+                    height: "calc(100% - 10px)",
+                    maxHeight: "100%",
+                    width: "auto",
+                    flexShrink: 0,
+                    cursor: "pointer",
+                    borderRadius: "4px",
+                    overflow: "hidden",
+                    boxShadow: "0 10px 28px rgba(0, 0, 0, 0.18)",
+                    border: "1px solid rgba(158, 140, 121, 0.3)",
+                    background: "var(--color-cream)",
+                    scrollSnapAlign: "center",
+                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.02)";
+                    e.currentTarget.style.boxShadow = "0 14px 36px rgba(0, 0, 0, 0.28)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.boxShadow = "0 10px 28px rgba(0, 0, 0, 0.18)";
+                  }}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.label}
+                    loading={i < 4 ? "eager" : "lazy"}
+                    style={{
+                      height: "100%",
+                      width: "auto",
+                      display: "block",
+                      objectFit: "contain",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Right Nav Arrow */}
+            <button
+              type="button"
+              onClick={() => scrollReel("right")}
+              aria-label="Scroll gallery right"
+              style={{
+                position: "absolute",
+                right: isMobile ? "8px" : "16px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                zIndex: 10,
+                background: "rgba(239, 233, 217, 0.92)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(158, 140, 121, 0.4)",
+                borderRadius: "50%",
+                width: isMobile ? "36px" : "44px",
+                height: isMobile ? "36px" : "44px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
+                fontSize: isMobile ? "18px" : "22px",
+                color: "var(--color-crimson, #CD2644)",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-50%) scale(1.08)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(-50%) scale(1)";
+              }}
+            >
+              ›
+            </button>
           </div>
         </>
       )}
 
       </div>
-
-      {displayedCategory !== null && (
-        <>
-          {(() => {
-            const currentIndex = PORTFOLIO_CATEGORIES.indexOf(displayedCategory);
-            const validIndex = currentIndex >= 0 ? currentIndex : 0;
-            const nextCategory = (PORTFOLIO_CATEGORIES[(validIndex + 1) % PORTFOLIO_CATEGORIES.length] ?? "Burlesque") as Category;
-            const nextCategoryTitle = CATEGORY_TITLES[nextCategory] ?? "";
-            const nextCategoryColor = CATEGORY_COLORS[nextCategory] ?? "var(--color-crimson)";
-
-            return (
-              <section
-                style={{
-                  maxWidth: "960px",
-                  margin: "8px auto 32px",
-                  padding: "0 16px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: isMobile && !isLandscapeMobile ? "1fr" : "1fr 1.2fr",
-                    gap: "12px",
-                    alignItems: "stretch",
-                  }}
-                >
-                  {/* Left Card: Return to All Collections */}
-                  <button
-                    type="button"
-                    onClick={handleBackToPortfolio}
-                    aria-label="Return to all collections"
-                    style={{
-                      background: "rgba(0, 0, 0, 0.04)",
-                      border: `1px solid ${COLORS.stone}66`,
-                      borderRadius: "8px",
-                      padding: isMobile ? "16px 18px" : "20px 24px",
-                      textAlign: "left",
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      gap: "4px",
-                      transition: "all 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "rgba(0, 0, 0, 0.07)";
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "rgba(0, 0, 0, 0.04)";
-                      e.currentTarget.style.transform = "translateY(0)";
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily: FONTS.display,
-                        fontStyle: "italic",
-                        fontSize: "10px",
-                        letterSpacing: "2.5px",
-                        textTransform: "uppercase",
-                        color: "var(--color-ink)",
-                        opacity: 0.6,
-                      }}
-                    >
-                      Portfolio Overview
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: FONTS.script,
-                        fontSize: isMobile ? "22px" : "26px",
-                        color: "var(--color-crimson)",
-                        lineHeight: 1.1,
-                      }}
-                    >
-                      {onReturnToMonograph ? "← Back to Homepage" : "← All Collections"}
-                    </span>
-                  </button>
-
-                  {/* Right Card: Explore Next Study */}
-                  <button
-                    type="button"
-                    onClick={() => handleSelectCategory(nextCategory)}
-                    aria-label={`Explore next collection: ${nextCategoryTitle}`}
-                    style={{
-                      background: nextCategoryColor,
-                      color: "#FFFFFF",
-                      border: "none",
-                      borderRadius: "8px",
-                      padding: isMobile ? "16px 18px" : "20px 24px",
-                      textAlign: isMobile && !isLandscapeMobile ? "left" : "right",
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: isMobile && !isLandscapeMobile ? "flex-start" : "flex-end",
-                      gap: "4px",
-                      boxShadow: `0 4px 16px ${nextCategoryColor}33`,
-                      transition: "all 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.opacity = "0.94";
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.opacity = "1";
-                      e.currentTarget.style.transform = "translateY(0)";
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily: FONTS.display,
-                        fontStyle: "italic",
-                        fontSize: "10px",
-                        letterSpacing: "2.5px",
-                        textTransform: "uppercase",
-                        opacity: 0.85,
-                      }}
-                    >
-                      Next Collection
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: FONTS.script,
-                        fontSize: isMobile ? "22px" : "26px",
-                        lineHeight: 1.1,
-                      }}
-                    >
-                      {nextCategoryTitle.startsWith("Modern ") ? nextCategoryTitle : `Modern ${nextCategoryTitle}`} →
-                    </span>
-                  </button>
-                </div>
-              </section>
-            );
-          })()}
-
-          <section
-            style={{
-              textAlign: "center",
-              padding: isMobile ? "0 20px 32px" : "0 24px 44px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "14px",
-            }}
-          >
-            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-              <Button onClick={() => onBookSession?.(portfolioCategory ? CATEGORY_TITLES[portfolioCategory] : undefined)} isMobile={isMobile}>
-                Book a Session
-              </Button>
-            </div>
-          </section>
-
-          <PageFooter visible={galleryVisible} navStyleDark={navStyleDark} isMobile={isMobile} />
-        </>
-      )}
 
       <Lightbox
         image={lightboxImage}
