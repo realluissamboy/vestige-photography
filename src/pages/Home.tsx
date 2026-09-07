@@ -71,7 +71,6 @@ export default function Home({
         imageFocus="50% 25%"
         isCover={true}
         showPortfolioLink={false}
-        zIndex={1}
       />
 
       {/* 2. Curated Categories — Starting with Modern Pin-Up, then Glamour, Burlesque, Tiki, and Kulture */}
@@ -88,7 +87,6 @@ export default function Home({
           isCover={false}
           showPortfolioLink={true}
           onViewPortfolio={onViewPortfolio}
-          zIndex={index + 2}
         />
       ))}
 

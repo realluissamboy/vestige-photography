@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useIsMobile } from "../hooks/useIsMobile";
 import type { GalleryImage as GalleryImageData } from "../data/gallery";
+import { useOverlay } from "../hooks/useOverlay";
 import { FONTS } from "../theme/fonts";
 
 export interface LightboxProps {
@@ -14,86 +15,29 @@ export interface LightboxProps {
 export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxProps) {
   const isMobile = useIsMobile();
   const dialogRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const triggerRef = useRef<HTMLElement | null>(null);
+  const open = Boolean(image);
+  const arrows = useRef({ onPrev, onNext });
+  arrows.current = { onPrev, onNext };
+  useOverlay(open, dialogRef, onClose, '[aria-label="Close lightbox"]');
 
   useEffect(() => {
-    if (!image) return;
-
-    // Store the currently focused element so we can restore it on close
-    triggerRef.current = document.activeElement as HTMLElement;
-
-    const prevBodyOverflow = typeof document !== "undefined" ? document.body.style.overflow : "";
-    const prevDocOverflow = typeof document !== "undefined" ? document.documentElement.style.overflow : "";
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onClose();
-      } else if (e.key === "ArrowLeft" && onPrev) {
-        e.preventDefault();
-        onPrev();
-      } else if (e.key === "ArrowRight" && onNext) {
-        e.preventDefault();
-        onNext();
-      }
-
-      // Focus trap: cycle focus within dialog
-      if (e.key === "Tab" && dialogRef.current) {
-        const focusableElements = dialogRef.current.querySelectorAll(
-          "button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])"
-        );
-        if (focusableElements.length === 0) return;
-
-        const firstElement = focusableElements[0] as HTMLElement;
-        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-        const activeElement = document.activeElement;
-
-        if (e.shiftKey) {
-          // Shift+Tab
-          if (activeElement === firstElement) {
-            e.preventDefault();
-            lastElement.focus();
-          }
-        } else {
-          // Tab
-          if (activeElement === lastElement) {
-            e.preventDefault();
-            firstElement.focus();
-          }
-        }
-      }
+    if (!open) return;
+    const keydown = (event: KeyboardEvent) => {
+      const action = event.key === "ArrowLeft" ? arrows.current.onPrev
+        : event.key === "ArrowRight" ? arrows.current.onNext : undefined;
+      if (action) { event.preventDefault(); action(); }
     };
-
-    // Move focus to close button on open
-    if (closeButtonRef.current) {
-      closeButtonRef.current.focus();
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      if (typeof document !== "undefined") {
-        document.body.style.overflow = "";
-        document.documentElement.style.overflow = "";
-      }
-      document.removeEventListener("keydown", handleKeyDown);
-      // Restore focus on close
-      if (triggerRef.current && typeof triggerRef.current.focus === "function") {
-        triggerRef.current.focus();
-      }
-    };
-  }, [image, onClose, onPrev, onNext]);
+    document.addEventListener("keydown", keydown);
+    return () => document.removeEventListener("keydown", keydown);
+  }, [open]);
 
   if (!image || typeof document === "undefined") return null;
 
   return createPortal(
     <div
       ref={dialogRef}
+      className="gallery-lightbox"
+      tabIndex={-1}
       role="dialog"
       aria-modal="true"
       aria-label={`Photo: ${image.label}`}
@@ -105,7 +49,7 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
         right: 0,
         bottom: 0,
         width: "100vw",
-        height: "100vh",
+        height: "100dvh",
         background: "rgba(10, 10, 11, 0.95)",
         zIndex: 9999,
         display: "flex",
@@ -122,7 +66,7 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
         onClick={(e) => e.stopPropagation()}
         style={{
           maxWidth: isMobile ? "calc(100vw - 32px)" : "calc(100vw - 120px)",
-          maxHeight: isMobile ? "calc(100vh - 48px)" : "calc(100vh - 96px)",
+          maxHeight: isMobile ? "calc(100dvh - 48px)" : "calc(100dvh - 96px)",
           width: "auto",
           height: "auto",
           objectFit: "contain",
@@ -199,7 +143,6 @@ export default function Lightbox({ image, onClose, onPrev, onNext }: LightboxPro
 
       {/* Close Button */}
       <button
-        ref={closeButtonRef}
         aria-label="Close lightbox"
         onClick={(e) => {
           e.stopPropagation();

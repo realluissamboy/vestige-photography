@@ -2,6 +2,19 @@
 
 Append-only. One entry per decision. Newest at the top.
 
+### 2026-09-07 — Replace parallax with natural scrolling
+- **Decision:** Luis requested normal, smooth vertical scrolling and removal of persistent homepage navigation. Remove active homepage parallax, sticky section/portrait behavior, scroll snapping, and image overscan. Keep native touch/wheel scrolling and smooth programmatic section navigation with reduced-motion support.
+- **Rationale:** The previous scroll effect felt janky on mobile. Use stable small-viewport section heights and static images that travel with their sections.
+- **Scope impact:** Supersedes the persistent-navigation part of the earlier responsive review. Booking remains unchanged. Local changes only.
+
+
+### 2026-09-07 — Responsive review implementation and canonical domain correction
+- **Decision:** Luis approved the responsive layout, gallery accessibility and scroll-lock fixes, persistent homepage navigation, responsive images, metadata correction, and current implementation documentation. The canonical domain is `susanavestige.com`.
+- **Proposed by:** Luis, following the local code/browser review.
+- **Rationale:** Restore landscape collection access, make phone galleries readable, retain keyboard focus and homepage position through nested overlays, and remove incorrect domain/route metadata.
+- **Scope impact:** No new backend or separate routes. The existing booking form is explicitly unchanged and deferred; its simulated confirmation is not verified delivery. Work remains local on `codex/vestige-responsive-review`, with no push or deployment authorized.
+- **Related leads consulted:** none.
+
 ### 2026-08-31 — Comprehensive Design System & Interaction Polish
 - **Decision:** (1) Consolidated all design standards, typography rules, color tokens, 3D text elevation effects, component specifications, and motion curves into `DESIGN_SYSTEM.md` as the permanent single source of truth. (2) Unified script typography across all navigation ("Portfolio", "About"), wordmarks, subtitles, founder captions, CTA buttons, and social links using `Great Vibes` (`FONTS.script`). (3) Resolved hero descender clearance with minimum 68px top margin on desktop / 32px on mobile. (4) Replaced subpixel hamburger bars with a mathematically symmetric vector SVG with unified drop-shadow. (5) Implemented universal cross-fade page transitions (280ms cubic-bezier) and category drill-in transitions (200ms cubic-bezier). (6) Added mobile 2-column split-cards (Option A) with category cover photo previews.
 - **Proposed by:** Luis

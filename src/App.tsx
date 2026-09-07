@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, Suspense, type CSSProperties } from "react";
+import React, { useState, useEffect, useCallback, useRef, Suspense, type CSSProperties } from "react";
 import { COLORS } from "./theme/colors";
 import { FONTS } from "./theme/fonts";
 import { useIsMobile } from "./hooks/useIsMobile";
@@ -26,56 +26,51 @@ export default function App() {
     setMounted(true);
   }, []);
 
-  // Natural scroll handling
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      if (portfolioSlideOpen) {
-        document.documentElement.style.overflow = "hidden";
-        document.body.style.overflow = "hidden";
-      } else {
-        document.documentElement.style.overflow = "";
-        document.documentElement.style.overflowY = "auto";
-        document.documentElement.style.height = "auto";
-        document.body.style.overflow = "";
-        document.body.style.overflowY = "auto";
-        document.body.style.height = "auto";
-        document.body.style.overscrollBehavior = "auto";
-      }
-    }
-  }, [portfolioSlideOpen]);
+  const galleryTrigger = useRef<HTMLElement | null>(null);
+  const wasPortfolioActive = useRef(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingPage = useRef<PageKey | null>(null);
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
 
-  // Single-page navigation: scrolls directly to the section with no separate subpages
-  const handleSetPage = useCallback((newPage: PageKey) => {
-    if (portfolioSlideOpen) {
-      setPortfolioSlideOpen(false);
-      setTimeout(() => {
-        setIsPortfolioActive(false);
-        setPortfolioCategory(null);
-      }, 460);
+  const scrollToPage = (page: PageKey) => {
+    const target = document.getElementById(page === "about" ? "about-susana" : page === "portfolio" ? "category-01" : "homepage-cover");
+    const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth";
+    target?.scrollIntoView({ behavior });
+    target?.focus({ preventScroll: true });
+  };
+
+  const handleReturnToMonograph = useCallback(() => {
+    setPortfolioSlideOpen(false);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      setIsPortfolioActive(false);
+      setPortfolioCategory(null);
+    }, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 460);
+  }, []);
+
+  useEffect(() => {
+    if (wasPortfolioActive.current && !isPortfolioActive) {
+      galleryTrigger.current?.focus({ preventScroll: true });
     }
-    if (typeof window !== "undefined") {
-      if (newPage === "about") {
-        setTimeout(() => {
-          const el = document.getElementById("about-susana");
-          if (el) {
-            el.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 120);
-      } else if (newPage === "portfolio") {
-        setTimeout(() => {
-          const el = document.getElementById("category-01");
-          if (el) {
-            el.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 120);
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+    wasPortfolioActive.current = isPortfolioActive;
+    if (!isPortfolioActive && pendingPage.current) {
+      const page = pendingPage.current;
+      pendingPage.current = null;
+      const frame = requestAnimationFrame(() => scrollToPage(page));
+      return () => cancelAnimationFrame(frame);
     }
-  }, [portfolioSlideOpen]);
+  }, [isPortfolioActive]);
+
+  const handleSetPage = useCallback((page: PageKey) => {
+    if (isPortfolioActive) {
+      pendingPage.current = page;
+      handleReturnToMonograph();
+    } else scrollToPage(page);
+  }, [isPortfolioActive, handleReturnToMonograph]);
 
   // Smooth slide-in from right taking over the viewport
   const handleViewPortfolio = useCallback((category: Category) => {
+    galleryTrigger.current = document.activeElement as HTMLElement;
     setPortfolioCategory(category);
     setIsPortfolioActive(true);
     requestAnimationFrame(() => {
@@ -83,15 +78,6 @@ export default function App() {
         setPortfolioSlideOpen(true);
       });
     });
-  }, []);
-
-  // Smooth slide-out back to the homepage
-  const handleReturnToMonograph = useCallback(() => {
-    setPortfolioSlideOpen(false);
-    setTimeout(() => {
-      setIsPortfolioActive(false);
-      setPortfolioCategory(null);
-    }, 460);
   }, []);
 
   const handleOpenBooking = useCallback((category?: unknown) => {
@@ -130,13 +116,16 @@ export default function App() {
     >
       <Suspense fallback={<div style={{ minHeight: "100dvh", background: "var(--color-parchment, #EFE9D9)" }} />}>
         {/* HOMEPAGE MONOGRAPH — The sole page for the entire site */}
+        <div inert={isPortfolioActive || isBookingOpen}>
         <Home
           onBookSession={handleOpenBooking}
           onViewPortfolio={handleViewPortfolio}
           isMobile={isMobile}
         />
+        </div>
+      </Suspense>
 
-        {/* SMOOTH SLIDE-IN PORTFOLIO VIEWPORT TAKEOVER */}
+        {/* Keep the homepage mounted while the gallery chunk loads. */}
         <div
           className="portfolio-slide-over-takeover"
           aria-hidden={!isPortfolioActive}
@@ -157,6 +146,7 @@ export default function App() {
             willChange: "transform",
           }}
         >
+          <Suspense fallback={<p role="status" style={{ padding: "24px" }}>Loading collection…</p>}>
           {isPortfolioActive && (
             <Portfolio
               setPage={handleSetPage}
@@ -168,8 +158,8 @@ export default function App() {
               onReturnToMonograph={handleReturnToMonograph}
             />
           )}
+          </Suspense>
         </div>
-      </Suspense>
 
       {/* BOOKING MODAL */}
       <BookingModal

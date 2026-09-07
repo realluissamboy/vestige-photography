@@ -1,8 +1,7 @@
-/* Monograph Stylesheet — Seamless Full-Bleed Sticky Curtain Scroll & Parallax */
+/* Full-bleed photography in normal document flow. */
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
 }
 
 /* 1. Hero High-Contrast Editorial Placard */
@@ -32,41 +31,34 @@ html {
   }
 }
 
-/* 2. Full-Bleed Sticky Curtain Discipline Sections */
+/* 2. Stable section heights avoid resizing as mobile browser controls collapse. */
 .discipline-section-wrapper {
   position: relative;
   width: 100%;
   height: 100vh;
-  height: 100dvh;
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
+  height: 100svh;
 }
 
 .discipline-section {
-  position: sticky;
-  top: 0;
+  position: relative;
   width: 100%;
   height: 100vh;
-  height: 100dvh;
-  min-height: 560px;
+  height: 100svh;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-sizing: border-box;
-  box-shadow: 0 -24px 60px rgba(0, 0, 0, 0.65);
 }
 
 .discipline-bg-wrapper {
   position: absolute;
-  inset: -10% 0;
+  inset: 0;
   width: 100%;
-  height: 120%;
-  will-change: transform;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
-  transform: translate3d(0, 0, 0) scale(1.05);
-  transition: transform 0.1s linear;
 }
 
 .discipline-bg-image {
@@ -130,6 +122,27 @@ html {
   .discipline-bg-wrapper {
     animation: none !important;
     transform: none !important;
+    transition: none !important;
+  }
+}
+
+.discipline-portfolio-btn:focus-visible,
+.portfolio-content button:focus-visible,
+.portfolio-content [role="button"]:focus-visible,
+.gallery-lightbox button:focus-visible {
+  outline: 3px solid #317B73;
+  outline-offset: 3px;
+}
+.discipline-portfolio-btn { min-height: 44px; }
+.portfolio-content { padding-top: env(safe-area-inset-top); }
+.category-photo-grid { padding-bottom: max(12px, env(safe-area-inset-bottom)) !important; }
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-slide-over-takeover,
+  .portfolio-content *,
+  .gallery-lightbox,
+  .gallery-lightbox *,
+  .discipline-section * {
+    animation: none !important;
     transition: none !important;
   }
 }

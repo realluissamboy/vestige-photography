@@ -1,3 +1,4 @@
+import { responsiveSrcSet } from "./responsiveImages";
 import { COLORS } from "../theme/colors";
 
 export type Ratio = "portrait" | "landscape" | "square";
@@ -116,17 +117,7 @@ export function categoryCover(category: string): GalleryImage | undefined {
  * glamour-vanity, tiki-patio). Pass ratio="landscape" to include the 1280w entry.
  */
 export function generateSrcSet(src: string, ratio?: Ratio): string {
-  if (!src) return "";
-  // Extract basename without .webp extension
-  const match = src.match(/\/([^/]+)\.webp$/);
-  if (!match) return "";
-  const basename = match[1];
-  const base480 = `/portfolio/${basename}-480w.webp 480w`;
-  const base768 = `/portfolio/${basename}-768w.webp 768w`;
-  if (ratio === "landscape") {
-    return `${base480}, ${base768}, /portfolio/${basename}-1280w.webp 1280w`;
-  }
-  return `${base480}, ${base768}`;
+  return responsiveSrcSet(src) ?? "";
 }
 
 /**
