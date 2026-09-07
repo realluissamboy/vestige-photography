@@ -43,7 +43,7 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
         </span>
       </div>
 
-      {/* Right: Built by Samboy with URL underneath */}
+      {/* Right: Website designed by Samboy with URL underneath */}
       <div
         style={{
           display: "flex",
@@ -65,7 +65,7 @@ export default function PageFooter({ visible, isMobile }: PageFooterProps) {
             lineHeight: 1.2,
           }}
         >
-          built by samboy
+          website designed by samboy
         </span>
         <a
           href="https://www.luissamboy.com"
