@@ -1,8 +1,8 @@
 import React from "react";
+import { responsiveSrcSet, coverSizes } from "../data/responsiveImages";
 import { FONTS } from "../theme/fonts";
 import { COLORS } from "../theme/colors";
 import type { Category } from "../data/gallery";
-import { useDirectParallax } from "../hooks/useScrollParallax";
 import { useResponsiveViewport } from "../hooks/useIsMobile";
 
 export interface MonographDisciplineSectionProps {
@@ -16,7 +16,6 @@ export interface MonographDisciplineSectionProps {
   isCover?: boolean; // If true, displays Vestige brand lockup & scroll cue, NO portfolio button
   showPortfolioLink?: boolean;
   onViewPortfolio?: (category: Category) => void;
-  zIndex: number;
 }
 
 export default function MonographDisciplineSection({
@@ -30,9 +29,7 @@ export default function MonographDisciplineSection({
   isCover = false,
   showPortfolioLink = true,
   onViewPortfolio,
-  zIndex,
 }: MonographDisciplineSectionProps) {
-  const { containerRef, targetRef } = useDirectParallax(0.16);
   const { isMobile, isMobilePortrait, isLandscapeMobile } = useResponsiveViewport();
 
   const shouldShowButton = !isCover && showPortfolioLink && onViewPortfolio && categoryKey;
@@ -40,11 +37,10 @@ export default function MonographDisciplineSection({
   return (
     <div
       className="discipline-section-wrapper"
-      style={{ zIndex }}
     >
       <section
         id={id}
-        ref={containerRef}
+        tabIndex={-1}
         className="discipline-section"
         aria-label={isCover ? "Vestige Photography Homepage" : `${title} Collection`}
         style={{
@@ -55,10 +51,15 @@ export default function MonographDisciplineSection({
             : "48px 56px",
         }}
       >
-        {/* Background Image with Direct-DOM Parallax Glide */}
-        <div ref={targetRef} className="discipline-bg-wrapper">
+        {/* Static image scrolls with its section. */}
+        <div className="discipline-bg-wrapper">
           <img
             src={imageSrc}
+            srcSet={responsiveSrcSet(imageSrc)}
+            sizes={coverSizes(imageSrc)}
+            loading={isCover ? "eager" : "lazy"}
+            fetchPriority={isCover ? "high" : "auto"}
+            decoding="async"
             alt={imageAlt}
             className="discipline-bg-image"
             style={{ objectPosition: imageFocus }}
@@ -195,7 +196,7 @@ export default function MonographDisciplineSection({
           <div
             style={{
               position: "absolute",
-              bottom: isLandscapeMobile ? "8px" : isMobile ? "14px" : "28px",
+              bottom: "max(20px, env(safe-area-inset-bottom))",
               left: "50%",
               transform: "translateX(-50%)",
               zIndex: 5,
@@ -225,7 +226,6 @@ export default function MonographDisciplineSection({
                 fontSize: "16px",
                 lineHeight: 1,
                 color: "var(--color-crimson, #CD2644)",
-                animation: "vestige-fade 1.6s ease-in-out infinite alternate",
               }}
             >
               ↓
@@ -240,13 +240,17 @@ export default function MonographDisciplineSection({
               position: "relative",
               zIndex: 5,
               alignSelf: "flex-end",
-              marginBottom: isLandscapeMobile ? "4px" : isMobile ? "8px" : "16px",
+              marginBottom: "env(safe-area-inset-bottom, 0px)",
             }}
           >
             <button
               type="button"
               className="discipline-portfolio-btn"
-              onClick={() => onViewPortfolio(categoryKey)}
+              onClick={(event) => {
+                // Safari does not focus buttons on pointer activation by default.
+                event.currentTarget.focus({ preventScroll: true });
+                onViewPortfolio(categoryKey);
+              }}
               aria-label={`View ${title} Portfolio`}
               style={{
                 borderColor: "rgba(255, 255, 255, 0.4)",

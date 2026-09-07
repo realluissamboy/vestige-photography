@@ -21,6 +21,8 @@ import Lightbox from "../components/Lightbox";
 import Button from "../components/Button";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
+import { useOverlay } from "../hooks/useOverlay";
+import { responsiveSrcSet } from "../data/responsiveImages";
 import { useResponsiveViewport } from "../hooks/useIsMobile";
 
 export interface PortfolioProps {
@@ -49,6 +51,8 @@ function CategoryGalleryView({
   isLandscapeMobile,
   openLightbox,
 }: CategoryGalleryViewProps) {
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => { scrollRef.current?.scrollTo({ top: 0, behavior: "instant" }); }, [category]);
   const images = GALLERY_IMAGES.filter((img) => img.cat === category);
   const count = images.length;
   let cols = 3;
@@ -73,6 +77,8 @@ function CategoryGalleryView({
     else if (count <= 12) { cols = 4; rows = 3; }
     else { cols = 6; rows = 3; }
   }
+
+  if (isMobile) cols = isLandscapeMobile ? 3 : 2;
 
   return (
     <div
@@ -136,8 +142,10 @@ function CategoryGalleryView({
         </div>
       </section>
 
-      {/* Non-Scrolling Viewport-Fitted Photo Grid (Strictly locked within 100vh) */}
+      {/* Mobile collections scroll within the gallery below its persistent controls. */}
       <div
+        ref={scrollRef}
+        className="category-photo-grid"
         style={{
           flex: 1,
           minHeight: 0,
@@ -146,9 +154,13 @@ function CategoryGalleryView({
           padding: isMobile ? "6px 10px 8px" : "10px 20px 12px",
           display: "grid",
           gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-          gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
+          gridTemplateRows: isMobile ? undefined : `repeat(${rows}, minmax(0, 1fr))`,
+          gridAutoRows: isMobile ? "max-content" : undefined,
+          alignContent: isMobile ? "start" : undefined,
+          overflowY: isMobile ? "auto" : "hidden",
+          overscrollBehavior: "contain",
           gap: isMobile ? "6px" : "10px",
-          overflow: "hidden",
+          overflowX: "hidden",
         }}
       >
         {images.map((img: GalleryImage, i: number) => (
@@ -167,7 +179,8 @@ function CategoryGalleryView({
             style={{
               position: "relative",
               width: "100%",
-              height: "100%",
+              height: isMobile ? "auto" : "100%",
+              aspectRatio: isMobile ? "3 / 4" : undefined,
               minHeight: 0,
               minWidth: 0,
               cursor: "pointer",
@@ -191,8 +204,11 @@ function CategoryGalleryView({
           >
             <img
               src={img.src}
+              srcSet={responsiveSrcSet(img.src)}
+              sizes={`calc((100vw - ${isMobile ? 20 + (cols - 1) * 6 : 40 + (cols - 1) * 10}px) / ${cols})`}
               alt={img.label}
-              loading={i < 8 ? "eager" : "lazy"}
+              decoding="async"
+              loading={i < (isMobile ? cols * 2 : 8) ? "eager" : "lazy"}
               style={{
                 position: "absolute",
                 top: 0,
@@ -222,6 +238,8 @@ export default function Portfolio({
   onReturnToMonograph,
 }: PortfolioProps) {
   const { isLandscapeMobile, isMobilePortrait } = useResponsiveViewport();
+  const galleryRef = React.useRef<HTMLElement>(null);
+  useOverlay(Boolean(onReturnToMonograph), galleryRef, onReturnToMonograph ?? (() => setPage("home")), '[aria-label="Back to Homepage"]');
   const { portfolioCategory, setPortfolioCategory, galleryVisible } =
     usePortfolioState("portfolio");
   const { lightboxImage, openLightbox, closeLightbox } = useLightbox();
@@ -260,6 +278,11 @@ export default function Portfolio({
       clearTimeout(slideTimeoutRef.current);
     }
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setPortfolioCategory(cat);
+      setDisplayedCategory(cat);
+      return;
+    }
     setIncomingCategory(cat);
     setIsSliding(true);
     setSlidePhase("enter");
@@ -325,6 +348,12 @@ export default function Portfolio({
 
   return (
     <main
+      ref={galleryRef}
+      className="portfolio-content"
+      role={onReturnToMonograph ? "dialog" : undefined}
+      aria-modal={onReturnToMonograph ? true : undefined}
+      aria-label={onReturnToMonograph ? "Photography collections" : undefined}
+      tabIndex={-1}
       style={{
         background: "var(--color-parchment)",
         height: displayedCategory ? "100dvh" : "auto",
@@ -465,7 +494,9 @@ export default function Portfolio({
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
             borderBottom: "1px solid rgba(158, 140, 121, 0.35)",
-            padding: isMobile ? "10px 16px" : "14px 32px",
+            padding: isMobile ? "8px max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left))" : "14px 32px",
+            gap: "8px",
+            flexShrink: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -481,6 +512,7 @@ export default function Portfolio({
               background: "none",
               border: "none",
               padding: "6px 0",
+              minHeight: "44px",
               cursor: "pointer",
               display: "inline-flex",
               alignItems: "center",
@@ -507,7 +539,7 @@ export default function Portfolio({
                 color: "var(--color-ink, #1A1A1B)",
               }}
             >
-              Back to Homepage
+              {isMobile ? "Back" : "Back to Homepage"}
             </span>
           </button>
 
@@ -530,15 +562,7 @@ export default function Portfolio({
                 onClick={() => {
                   if (isSliding) return;
                   if (isLastCategory) {
-                    if (onReturnToMonograph) {
-                      onReturnToMonograph();
-                    }
-                    setTimeout(() => {
-                      const el = document.getElementById("about-susana");
-                      if (el) {
-                        el.scrollIntoView({ behavior: "smooth" });
-                      }
-                    }, 250);
+                    setPage("about");
                   } else {
                     handleSelectCategory(nextCat);
                   }
@@ -554,7 +578,8 @@ export default function Portfolio({
                   fontSize: isMobile ? "11px" : "12.5px",
                   letterSpacing: "1px",
                   textTransform: "uppercase",
-                  padding: isMobile ? "7px 14px" : "8px 18px",
+                  padding: isMobile ? "7px 10px" : "8px 18px",
+                  minHeight: "44px",
                   borderRadius: "999px",
                   cursor: isSliding ? "default" : "pointer",
                   boxShadow: `0 2px 10px ${btnColor}55`,
@@ -578,7 +603,7 @@ export default function Portfolio({
                   }
                 }}
               >
-                <span>{isLastCategory ? "About Susana Andrea" : "View next collection"}</span>
+                <span>{isLastCategory ? (isMobile ? "About Susana" : "About Susana Andrea") : (isMobile ? "Next collection" : "View next collection")}</span>
                 <span style={{ fontSize: "14px" }}>→</span>
               </button>
             );
@@ -606,9 +631,8 @@ export default function Portfolio({
       <div
         style={{
           flex: displayedCategory !== null ? 1 : undefined,
-          minHeight: displayedCategory !== null ? 0 : isLandscapeMobile && displayedCategory === null ? "calc(100dvh - 48px)" : "auto",
-          height: displayedCategory !== null ? "calc(100dvh - 48px)" : "auto",
-          maxHeight: displayedCategory !== null ? "calc(100dvh - 48px)" : "none",
+          minHeight: displayedCategory !== null ? 0 : isLandscapeMobile ? "calc(100dvh - 48px)" : "auto",
+          height: "auto",
           display: displayedCategory !== null ? "flex" : "block",
           flexDirection: displayedCategory !== null ? "column" : undefined,
           overflow: displayedCategory !== null ? "hidden" : "visible",
@@ -1263,6 +1287,7 @@ export default function Portfolio({
         >
           {/* 1. Outgoing / Current Category Slide */}
           <div
+            inert={isSliding}
             style={{
               position: isSliding ? "absolute" : "relative",
               top: 0,
@@ -1288,6 +1313,7 @@ export default function Portfolio({
           {/* 2. Incoming Category Slide (slides in from right taking over) */}
           {isSliding && incomingCategory && (
             <div
+              inert={isSliding}
               style={{
                 position: "absolute",
                 top: 0,

@@ -1,4 +1,5 @@
 import React from "react";
+import { responsiveSrcSet } from "../data/responsiveImages";
 import { FONTS } from "../theme/fonts";
 import { useResponsiveViewport } from "../hooks/useIsMobile";
 import Button from "./Button";
@@ -46,12 +47,12 @@ export default function MonographAboutSection({
   return (
     <section
       id="about-susana"
+      tabIndex={-1}
       style={{
         background: "var(--color-parchment, #EFE9D9)",
         color: "var(--color-ink, #1A1A1B)",
         position: "relative",
         zIndex: 10,
-        boxShadow: "0 -24px 60px rgba(0, 0, 0, 0.45)",
         minHeight: "100dvh",
         display: "flex",
         flexDirection: "column",
@@ -95,8 +96,7 @@ export default function MonographAboutSection({
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              position: isMobilePortrait ? "static" : "sticky",
-              top: isLandscapeMobile ? "60px" : "80px",
+              position: "static",
             }}
           >
             <div
@@ -111,6 +111,10 @@ export default function MonographAboutSection({
             >
               <img
                 src="/susana headshot.webp"
+                srcSet={responsiveSrcSet("/susana headshot.webp")}
+                sizes={isMobilePortrait ? "190px" : isLandscapeMobile ? "250px" : "320px"}
+                loading="lazy"
+                decoding="async"
                 alt="Susana Andrea, founder of Vestige Photography"
                 style={{
                   display: "block",

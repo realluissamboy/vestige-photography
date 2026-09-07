@@ -1,39 +1,46 @@
-# Vestige Photography — AI Reference
+# Vestige Photography — implementation reference
 
-One-line: React + Vite photography portfolio for Susana Andrea / Vestige Fine Art Photography.
+React 19 + TypeScript + Vite photography portfolio for Susana Andrea / Vestige Fine Art Photography. Canonical domain: **https://susanavestige.com/**.
 
 ## Architecture
-- Single-page React app, client-side routing via component state (no router lib).
-- Component model currently monolithic in `src/vestige-site.jsx` (1,271 LOC). TS migration to `pages/` + `components/` is planned on `refactor/componentize-ts`.
 
-## Tech stack
-- React 19 + react-dom
-- Vite 6 (`@vitejs/plugin-react`)
-- Plain JSX today; TypeScript migration in progress on a parallel branch
-- `sharp` (devDep) used at build-time only for `npm run images`
+- `src/main.tsx` loads React and design tokens; `src/App.tsx` coordinates the homepage, collection takeover, and existing booking modal.
+- `src/pages/Home.tsx` assembles the cover, five collection sections, and About. The homepage scrolls in normal document flow with static images: no parallax, sticky sections, scroll snapping, or persistent homepage navigation. Sections use stable small-viewport heights to avoid mobile browser-toolbar resizing.
+- `src/pages/Portfolio.tsx` renders collection galleries and transitions. Portrait phones use two scrolling columns; landscape phones use three. Desktop/tablet collections retain the fitted grid. Navigation stays outside the scrolling grid.
+- `src/hooks/useOverlay.ts` owns stacked gallery/lightbox focus and scroll locks. The homepage stays mounted during gallery loading; returning restores its scroll position and initiating control. The top overlay alone handles Escape and traps Tab.
+- `src/components/Lightbox.tsx` keeps original-resolution viewing and arrow-key navigation. Opening it makes the gallery inert; closing it preserves the gallery's scroll lock.
+- Data is hand-authored in `src/data/gallery.ts` and `src/data/navigation.tsx`. There is no CMS, router library, analytics, or new backend. About and collections are sections, not separate URLs.
+- `src/styles/monograph.css` controls the cover/section layout and reduced-motion overrides. Existing theme tokens remain in `src/theme/` and `src/styles/tokens.css`.
 
-## Key directories
-- `src/` — application code (currently single file)
-- `public/` — static assets and image originals
-- `public/portfolio/` — gallery imagery
-- `scripts/` — build-time tooling (`gen-image-variants.mjs`)
-- `.claude/rules/` — creative direction specs (`direction-a.md`, `direction-b.md`, `pages.md`, `responsive.md`)
-- `.claude/CLAUDE.md` — project brief + design principles
+## Images
 
-## Image convention
-Source files: `<name>.webp` (e.g. `public/hero.webp`, `public/portfolio/pinup-coral.webp`).
-Variant files generated alongside: `<name>-480w.webp`, `<name>-768w.webp`, `<name>-1280w.webp`.
+Keep original WebP assets under `public/`; never overwrite client originals for optimization. Run `npm run images` after adding imagery. It generates missing 480/768/1280px derivatives, plus 1920px derivatives for `hero-slides/`, without upscaling sources or replacing existing derivatives. It refreshes `src/data/image-variants.json` with actual files and source dimensions.
 
-After adding any new source image, regenerate variants:
+`src/data/responsiveImages.ts` uses that manifest for valid srcsets, preserving each source directory and URL-encoding filenames. Full-bleed image sizes account for stable viewport height without parallax overscan. The cover is eager/high-priority; subsequent sections and the About portrait are lazy. Gallery sizes follow their rendered columns. Lightboxes use originals.
 
+The responsive cover preload in `index.html` must match the homepage cover's srcset and sizes. If the cover changes, update both. Current cover: `/hero-slides/modern-burlesque.webp`.
+
+## Metadata
+
+Canonical and sharing URLs, structured data, robots, and the sitemap use `susanavestige.com`. The sitemap lists only `/`, because the site has no separate page routes. Structured social links match the site's configured Instagram and Facebook accounts. Sharing images use absolute URLs.
+
+## Booking boundary — deferred by Luis, 2026-09-07
+
+`BookingModal.tsx` is unchanged by this review. Its current submission handler simulates success and does not deliver an inquiry; Luis explicitly deferred adjustments. The About section’s Book a Session button opens the existing modal. Do not interpret local open/close tests as successful delivery or change the form under the responsive-improvement scope.
+
+## Validation
+
+```sh
+npm run typecheck
+npm run build
+git diff --check
+npm run preview -- --host 127.0.0.1 --port 5180
 ```
-npm run images
-```
 
-The generator is idempotent — existing variants are skipped, and sources smaller than a target width are skipped for that width.
+With Playwright available, run `node scripts/test-responsive.mjs` in another terminal. The script uses installed Chrome by default. If Playwright is supplied by an external runtime, set `PLAYWRIGHT_MODULE` to its absolute `index.mjs` path. Optional settings: `TEST_URL`, `TEST_OUTPUT`, `TEST_BROWSER=webkit`, and `CHROME_CHANNEL`.
 
-## Naming conventions
-- React components: PascalCase
-- Hooks: `useCamelCase`
-- Asset filenames: kebab-case
-- Brand color tokens (Direction B / Vintage Warmth): Parchment `#EFE9D9`, Tiki `#317B73`, Terracotta `#BC6C25`
+The browser checks cover desktop, tablet, narrow and standard portrait phones, landscape, all five collections, keyboard focus, nested locks, scroll restoration, image errors, reduced motion, rotation, and booking open/close. Screenshots default to `/tmp/vestige-responsive-review`. It blocks POST requests and never submits the form. WebKit requires its matching Playwright browser binary; physical iOS Safari still needs device QA.
+
+Local verification does not establish a deployment. Keep this work on its local `codex/` branch until a push or deployment is requested. Preserve the pre-existing untracked ` 2` component/CSS copies.
+
+Historical creative/scope decisions remain in `project-memory/`; older architecture notes there describe earlier versions, not the current implementation.

@@ -1,0 +1,1176 @@
+{
+  "/burlesque.webp": {
+    "width": 1440,
+    "height": 1920,
+    "variants": [
+      {
+        "src": "/burlesque-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/burlesque-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/burlesque-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/burlesque.webp",
+        "width": 1440
+      }
+    ]
+  },
+  "/classic-cars.webp": {
+    "width": 1440,
+    "height": 1440,
+    "variants": [
+      {
+        "src": "/classic-cars-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/classic-cars-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/classic-cars-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/classic-cars.webp",
+        "width": 1440
+      }
+    ]
+  },
+  "/hero-slides/modern-burlesque.webp": {
+    "width": 3000,
+    "height": 4500,
+    "variants": [
+      {
+        "src": "/hero-slides/modern-burlesque-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/hero-slides/modern-burlesque-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/hero-slides/modern-burlesque-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/hero-slides/modern-burlesque-1920w.webp",
+        "width": 1920
+      },
+      {
+        "src": "/hero-slides/modern-burlesque.webp",
+        "width": 3000
+      }
+    ]
+  },
+  "/hero-slides/modern-tiki.webp": {
+    "width": 3000,
+    "height": 4500,
+    "variants": [
+      {
+        "src": "/hero-slides/modern-tiki-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/hero-slides/modern-tiki-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/hero-slides/modern-tiki-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/hero-slides/modern-tiki-1920w.webp",
+        "width": 1920
+      },
+      {
+        "src": "/hero-slides/modern-tiki.webp",
+        "width": 3000
+      }
+    ]
+  },
+  "/hero.webp": {
+    "width": 1600,
+    "height": 2400,
+    "variants": [
+      {
+        "src": "/hero-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/hero-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/hero-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/hero.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/modern-pinup.webp": {
+    "width": 1440,
+    "height": 1799,
+    "variants": [
+      {
+        "src": "/modern-pinup-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/modern-pinup-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/modern-pinup-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/modern-pinup.webp",
+        "width": 1440
+      }
+    ]
+  },
+  "/portfolio/burlesque-sabrina.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/burlesque-sabrina-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/burlesque-sabrina-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/burlesque-sabrina.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/burlesque-winny.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/burlesque-winny-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/burlesque-winny-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/burlesque-winny.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/cars-a5.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/cars-a5-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/cars-a5-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/cars-a5.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/cars-cervena.webp": {
+    "width": 1600,
+    "height": 1066,
+    "variants": [
+      {
+        "src": "/portfolio/cars-cervena-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/cars-cervena-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/cars-cervena-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/cars-cervena.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/glamour-architectural.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/glamour-architectural-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/glamour-architectural-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/glamour-architectural.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/glamour-ashlyn.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/glamour-ashlyn-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/glamour-ashlyn-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/glamour-ashlyn.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/glamour-seaside.webp": {
+    "width": 1600,
+    "height": 1066,
+    "variants": [
+      {
+        "src": "/portfolio/glamour-seaside-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/glamour-seaside-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/glamour-seaside-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/glamour-seaside.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/glamour-vanity.webp": {
+    "width": 1600,
+    "height": 1066,
+    "variants": [
+      {
+        "src": "/portfolio/glamour-vanity-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/glamour-vanity-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/glamour-vanity-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/glamour-vanity.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--2C0A4365.webp": {
+    "width": 1600,
+    "height": 1067,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4365-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4365-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4365-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4365.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--2C0A4806.webp": {
+    "width": 1600,
+    "height": 1067,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4806-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4806-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4806-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/modern-burlesque--2C0A4806.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--R2C0A6917.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--R2C0A6917-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--R2C0A6917-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--R2C0A6917.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--R2C0A9286.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--R2C0A9286-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--R2C0A9286-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--R2C0A9286.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--r2C0A2691.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A2691-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A2691-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A2691.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--r2C0A2917.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A2917-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A2917-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A2917.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--r2C0A4286.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A4286-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A4286-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A4286.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-burlesque--r2C0A4347.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A4347-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A4347-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-burlesque--r2C0A4347.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--2C0A4660.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--2C0A4660-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--2C0A4660-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--2C0A4660.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--Faggedy Randy and P No Noir.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--Faggedy Randy and P No Noir-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--Faggedy Randy and P No Noir-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--Faggedy Randy and P No Noir.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--GlamGhoul-(1 of 1).webp": {
+    "width": 1600,
+    "height": 1067,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--GlamGhoul-(1 of 1)-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--GlamGhoul-(1 of 1)-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--GlamGhoul-(1 of 1)-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/modern-glamour--GlamGhoul-(1 of 1).webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--R2C0A0407.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--R2C0A0407-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A0407-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A0407.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--R2C0A1135.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--R2C0A1135-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A1135-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A1135.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--R2C0A2144.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--R2C0A2144-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A2144-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A2144.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--R2C0A2431.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--R2C0A2431-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A2431-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A2431.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--R2C0A5263.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--R2C0A5263-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A5263-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A5263.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--R2C0A6177.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--R2C0A6177-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A6177-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A6177.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--R2C0A9752.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--R2C0A9752-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A9752-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--R2C0A9752.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--RE2C0A5644.webp": {
+    "width": 1600,
+    "height": 1067,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--RE2C0A5644-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--RE2C0A5644-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--RE2C0A5644-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/modern-glamour--RE2C0A5644.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/modern-glamour--TJ6.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-glamour--TJ6-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-glamour--TJ6-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-glamour--TJ6.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-kulture--2C0A9056.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-kulture--2C0A9056-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-kulture--2C0A9056-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-kulture--2C0A9056.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-kulture--R2C0A2708.webp": {
+    "width": 1600,
+    "height": 1067,
+    "variants": [
+      {
+        "src": "/portfolio/modern-kulture--R2C0A2708-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A2708-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A2708-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A2708.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/modern-kulture--R2C0A2950.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-kulture--R2C0A2950-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A2950-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A2950.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-kulture--R2C0A6956.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-kulture--R2C0A6956-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A6956-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A6956.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-kulture--R2C0A7114.webp": {
+    "width": 1600,
+    "height": 1067,
+    "variants": [
+      {
+        "src": "/portfolio/modern-kulture--R2C0A7114-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A7114-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A7114-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/modern-kulture--R2C0A7114.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--2C0A8311.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--2C0A8311-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--2C0A8311-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--2C0A8311.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--A0E876E6-FA74-4E22-A0D7-26DFB5261E58.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--A0E876E6-FA74-4E22-A0D7-26DFB5261E58-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--A0E876E6-FA74-4E22-A0D7-26DFB5261E58-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--A0E876E6-FA74-4E22-A0D7-26DFB5261E58.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--EDIT2C0A5244.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--EDIT2C0A5244-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--EDIT2C0A5244-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--EDIT2C0A5244.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--Outlaw2.webp": {
+    "width": 1077,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--Outlaw2-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--Outlaw2-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--Outlaw2.webp",
+        "width": 1077
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--R2C0A1609.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--R2C0A1609-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--R2C0A1609-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--R2C0A1609.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--R2C0A5650.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--R2C0A5650-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--R2C0A5650-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--R2C0A5650.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--R2C0A8596.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--R2C0A8596-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--R2C0A8596-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--R2C0A8596.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-pinup--edit2C0A1022.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-pinup--edit2C0A1022-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-pinup--edit2C0A1022-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-pinup--edit2C0A1022.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-tiki--2C0A0890.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-tiki--2C0A0890-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-tiki--2C0A0890-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-tiki--2C0A0890.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-tiki--2C0A9684.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-tiki--2C0A9684-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-tiki--2C0A9684-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-tiki--2C0A9684.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-tiki--M2.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-tiki--M2-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-tiki--M2-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-tiki--M2.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-tiki--R2C0A3883.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-tiki--R2C0A3883-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-tiki--R2C0A3883-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-tiki--R2C0A3883.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/modern-tiki--r2C0A9501.webp": {
+    "width": 1067,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/modern-tiki--r2C0A9501-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/modern-tiki--r2C0A9501-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/modern-tiki--r2C0A9501.webp",
+        "width": 1067
+      }
+    ]
+  },
+  "/portfolio/pinup-coral.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/pinup-coral-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/pinup-coral-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/pinup-coral.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/pinup-green-wall.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/pinup-green-wall-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/pinup-green-wall-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/pinup-green-wall.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/pinup-marie.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/pinup-marie-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/pinup-marie-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/pinup-marie.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/pinup-mosh.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/pinup-mosh-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/pinup-mosh-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/pinup-mosh.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/tiki-avalon.webp": {
+    "width": 1066,
+    "height": 1600,
+    "variants": [
+      {
+        "src": "/portfolio/tiki-avalon-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/tiki-avalon-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/tiki-avalon.webp",
+        "width": 1066
+      }
+    ]
+  },
+  "/portfolio/tiki-patio.webp": {
+    "width": 1600,
+    "height": 1066,
+    "variants": [
+      {
+        "src": "/portfolio/tiki-patio-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/portfolio/tiki-patio-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/portfolio/tiki-patio-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/portfolio/tiki-patio.webp",
+        "width": 1600
+      }
+    ]
+  },
+  "/susana headshot.webp": {
+    "width": 720,
+    "height": 899,
+    "variants": [
+      {
+        "src": "/susana headshot-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/susana headshot.webp",
+        "width": 720
+      }
+    ]
+  },
+  "/tiki-rockabilly.webp": {
+    "width": 1440,
+    "height": 1920,
+    "variants": [
+      {
+        "src": "/tiki-rockabilly-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/tiki-rockabilly-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/tiki-rockabilly-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/tiki-rockabilly.webp",
+        "width": 1440
+      }
+    ]
+  },
+  "/vintage-glamour.webp": {
+    "width": 1440,
+    "height": 1800,
+    "variants": [
+      {
+        "src": "/vintage-glamour-480w.webp",
+        "width": 480
+      },
+      {
+        "src": "/vintage-glamour-768w.webp",
+        "width": 768
+      },
+      {
+        "src": "/vintage-glamour-1280w.webp",
+        "width": 1280
+      },
+      {
+        "src": "/vintage-glamour.webp",
+        "width": 1440
+      }
+    ]
+  }
+}
