@@ -28,7 +28,7 @@ for (const [name, width, height] of viewports) {
     await page.locator('#homepage-cover').waitFor();
     await pause(page);
     await page.screenshot({ path: `${output}/${engine}-${name}-home.png` });
-    assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), 'https://susanavestige.com/');
+    assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'), 'https://susana-vestige-photography.netlify.app/');
     assert.equal(await page.locator('link[rel="preload"][as="image"]').getAttribute('imagesizes'), await page.locator('#homepage-cover img').getAttribute('sizes'));
     assert.ok(!(await page.content()).includes('vestigefineart.com'));
     assert.equal(await page.locator('.home-navigation').count(), 0);

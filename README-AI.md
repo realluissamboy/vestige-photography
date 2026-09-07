@@ -1,6 +1,6 @@
 # Vestige Photography — implementation reference
 
-React 19 + TypeScript + Vite photography portfolio for Susana Andrea / Vestige Fine Art Photography. Canonical domain: **https://susanavestige.com/**.
+React 19 + TypeScript + Vite photography portfolio for Susana Andrea / Vestige Fine Art Photography. Current canonical production URL: **https://susana-vestige-photography.netlify.app/**.
 
 ## Architecture
 
@@ -22,7 +22,7 @@ The responsive cover preload in `index.html` must match the homepage cover's src
 
 ## Metadata
 
-Canonical and sharing URLs, structured data, robots, and the sitemap use `susanavestige.com`. The sitemap lists only `/`, because the site has no separate page routes. Structured social links match the site's configured Instagram and Facebook accounts. Sharing images use absolute URLs.
+Canonical and sharing URLs, structured data, robots, and the sitemap use `susana-vestige-photography.netlify.app`. The sitemap lists only `/`, because the site has no separate page routes. Structured social links match the site's configured Instagram and Facebook accounts. Sharing images use absolute URLs.
 
 ## Booking boundary — deferred by Luis, 2026-09-07
 
