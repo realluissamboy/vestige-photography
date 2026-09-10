@@ -124,8 +124,6 @@ export default function MonographDisciplineSection({
                     : "clamp(100px, 11vw, 160px)",
                   lineHeight: 0.95,
                   color: "#FDFEFD",
-                  textShadow:
-                    "0 2px 4px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(205, 38, 68, 0.85), 0 0 24px rgba(205, 38, 68, 0.6), 0 0 40px rgba(205, 38, 68, 0.35)",
                   margin: 0,
                   userSelect: "none",
                 }}
@@ -146,8 +144,6 @@ export default function MonographDisciplineSection({
                   margin: isLandscapeMobile ? "4px 0 0" : isMobile ? "8px 0 0" : "14px 0 0",
                   lineHeight: 1.1,
                   fontWeight: 400,
-                  textShadow:
-                    "0 2px 4px rgba(0, 0, 0, 0.75), 0 3px 12px rgba(205, 38, 68, 0.85), 0 0 20px rgba(205, 38, 68, 0.5)",
                 }}
               >
                 Twenty years of modern pin-up
@@ -163,7 +159,6 @@ export default function MonographDisciplineSection({
                   color: "rgba(255, 255, 255, 0.92)",
                   fontWeight: 700,
                   margin: isMobile ? "6px 0 0" : "10px 0 0",
-                  textShadow: "0 2px 6px rgba(0,0,0,0.85)",
                 }}
               >
                 Photography by Susana Andrea
@@ -181,8 +176,6 @@ export default function MonographDisciplineSection({
                 lineHeight: 1,
                 color: "#FDFEFD",
                 margin: 0,
-                textShadow:
-                  "0 2px 6px rgba(0,0,0,0.85), 0 4px 18px rgba(200,20,44,0.75), 0 0 28px rgba(200,20,44,0.45)",
                 userSelect: "none",
               }}
             >
@@ -207,7 +200,6 @@ export default function MonographDisciplineSection({
               color: "#FFFFFF",
               opacity: 0.85,
               pointerEvents: "none",
-              textShadow: "0 2px 6px rgba(0,0,0,0.85)",
             }}
           >
             <span
