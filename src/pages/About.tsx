@@ -1,6 +1,5 @@
 import React, { type CSSProperties } from "react";
 import { FONTS } from "../theme/fonts";
-import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import type { PageKey } from "../data/navigation";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
@@ -32,7 +31,6 @@ export default function About({
     color: "var(--color-crimson, #CD2644)",
     marginBottom: isMobile ? "2px" : "6px",
     lineHeight: 1.1,
-    textShadow: VESTIGE_TEXT_SHADOW,
   };
 
   const bodyText: CSSProperties = {
@@ -143,7 +141,6 @@ export default function About({
                 textAlign: "center",
                 margin: "12px 0 0",
                 lineHeight: 1,
-                textShadow: VESTIGE_TEXT_SHADOW,
               }}
             >
               Susana Andrea, founder
