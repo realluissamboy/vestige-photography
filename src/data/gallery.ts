@@ -41,6 +41,7 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 16, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--A0E876E6-FA74-4E22-A0D7-26DFB5261E58.webp", label: "A0E876E6-FA74-4E22-A0D7-26DFB5261E58", focus: "50% 20%" },
   { id: 15, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--2C0A8311.webp", label: "2C0A8311", focus: "50% 25%" },
   { id: 17, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--EDIT2C0A5244.webp", label: "EDIT2C0A5244", focus: "50% 25%" },
+  { id: 22, ratio: "portrait", cat: "Pin-Up", src: "/portfolio/modern-pinup--edit2C0A1022.webp", label: "edit2C0A1022", focus: "50% 25%" },
   { id: 23, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/modern-kulture--2C0A9056.webp", label: "2C0A9056", focus: "50% 20%" },
   { id: 24, ratio: "landscape", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A2708.webp", label: "R2C0A2708", focus: "50% 30%" },
   { id: 26, ratio: "portrait", cat: "Classic Cars", src: "/portfolio/modern-kulture--R2C0A6956.webp", label: "R2C0A6956", focus: "50% 25%" },
