@@ -12,11 +12,11 @@ export interface BookingModalProps {
 }
 
 const GENRE_OPTIONS = [
-  "Modern Pin-Up",
-  "Modern Glamour",
-  "Modern Burlesque",
-  "Modern Tiki",
-  "Modern Kulture",
+  "Pin-Up",
+  "Glamour",
+  "Burlesque",
+  "Tiki",
+  "Kulture",
   "Editorial / Custom",
 ];
 
@@ -44,33 +44,29 @@ export default function BookingModal({
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
 
-  // Normalize initialCategory if passed from short or full category key
   const resolveCategory = (cat?: unknown): string => {
-    if (typeof cat !== "string" || !cat.trim()) return "Modern Pin-Up";
+    if (typeof cat !== "string" || !cat.trim()) return "Pin-Up";
     if (GENRE_OPTIONS.includes(cat)) return cat;
     const found = GENRE_OPTIONS.find(
       (g) => g.toLowerCase().includes(cat.toLowerCase()) || cat.toLowerCase().includes(g.toLowerCase())
     );
-    return found || "Modern Pin-Up";
+    return found || "Pin-Up";
   };
 
-  // Form State
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [selectedGenres, setSelectedGenres] = useState<string[]>(
-    initialCategory ? [resolveCategory(initialCategory)] : ["Modern Pin-Up"]
+    initialCategory ? [resolveCategory(initialCategory)] : ["Pin-Up"]
   );
   const [timeline, setTimeline] = useState(TIMELINE_OPTIONS[0]);
   const [locationPref, setLocationPref] = useState(LOCATION_OPTIONS[0]);
   const [visionNotes, setVisionNotes] = useState("");
 
-  // Submission State
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Sync initialCategory if passed
   useEffect(() => {
     if (typeof initialCategory === "string" && initialCategory.trim()) {
       const resolved = resolveCategory(initialCategory);
@@ -80,7 +76,6 @@ export default function BookingModal({
     }
   }, [initialCategory]);
 
-  // Handle Dialog Lifecycle, Focus Lock & ESC Key
   useEffect(() => {
     if (!isOpen) {
       setIsSuccess(false);
@@ -101,7 +96,6 @@ export default function BookingModal({
         onClose();
       }
 
-      // Focus trap
       if (e.key === "Tab" && dialogRef.current) {
         const focusableElements = dialogRef.current.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -166,8 +160,34 @@ export default function BookingModal({
     setIsSubmitting(true);
 
     try {
-      // Simulate asynchronous submission (can hook up to Formspree, Resend, Netlify, or custom API)
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const payload: Record<string, string> = {
+        name: fullName.trim(),
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        genres: selectedGenres.join(", "),
+        timeline,
+        location: locationPref,
+        vision: visionNotes.trim(),
+        message: visionNotes.trim(),
+        _subject: "Vestige booking inquiry",
+      };
+      if (email.trim()) {
+        payload._replyto = email.trim();
+      }
+
+      const response = await fetch("https://formsubmit.co/ajax/Vestigephotography@hotmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`FormSubmit responded with ${response.status}`);
+      }
 
       setIsSuccess(true);
     } catch {
@@ -258,7 +278,6 @@ export default function BookingModal({
           overflowY: "auto",
         }}
       >
-        {/* Monograph Inner Framing Line */}
         <div
           style={{
             position: "absolute",
@@ -272,7 +291,6 @@ export default function BookingModal({
           }}
         />
 
-        {/* Close Button */}
         <button
           ref={closeButtonRef}
           type="button"
@@ -311,7 +329,6 @@ export default function BookingModal({
         </button>
 
         {isSuccess ? (
-          /* SUCCESS STATE */
           <div
             style={{
               textAlign: "center",
@@ -400,9 +417,7 @@ export default function BookingModal({
             </p>
           </div>
         ) : (
-          /* FORM STATE */
           <form onSubmit={handleSubmit} style={{ position: "relative", zIndex: 1 }}>
-            {/* Header */}
             <div style={{ textAlign: "center", marginBottom: isMobile ? "20px" : "28px" }}>
               <p
                 style={{
@@ -427,7 +442,6 @@ export default function BookingModal({
                   color: COLORS.crimson,
                   margin: "0 0 8px",
                   lineHeight: 1.1,
-                  textShadow: "1px 1px 0px rgba(0,0,0,0.08)",
                 }}
               >
                 Book a Session
@@ -466,7 +480,6 @@ export default function BookingModal({
               </div>
             )}
 
-            {/* Field 1: Name */}
             <div style={{ marginBottom: isMobile ? "14px" : "18px" }}>
               <label htmlFor="booking-name" style={labelStyle}>
                 Full Name <span style={{ color: COLORS.crimson }}>*</span>
@@ -484,7 +497,6 @@ export default function BookingModal({
               />
             </div>
 
-            {/* Field 2: Phone & Email (Phone required, Email optional - positions swapped) */}
             <div
               style={{
                 display: "grid",
@@ -527,7 +539,6 @@ export default function BookingModal({
               </div>
             </div>
 
-            {/* Field 3: Session Genre Chips */}
             <div style={{ marginBottom: isMobile ? "14px" : "18px" }}>
               <label style={labelStyle}>
                 Session Category of Interest <span style={{ color: COLORS.crimson }}>*</span>
@@ -570,7 +581,6 @@ export default function BookingModal({
               </div>
             </div>
 
-            {/* Field 4: Timeline & Location Selection */}
             <div
               style={{
                 display: "grid",
@@ -624,7 +634,6 @@ export default function BookingModal({
               </div>
             </div>
 
-            {/* Field 5: Creative Vision & Concept Notes */}
             <div style={{ marginBottom: isMobile ? "18px" : "24px" }}>
               <label htmlFor="booking-vision" style={labelStyle}>
                 Creative Vision & Details{" "}
@@ -635,7 +644,7 @@ export default function BookingModal({
                 rows={3}
                 value={visionNotes}
                 onChange={(e) => setVisionNotes(e.target.value)}
-                placeholder="Share any styling ideas, wardrobe thoughts, hair/makeup preferences, or special dates..."
+                placeholder="Share any styling ideas,wardrobe thoughts, hair/makeup preferences, or special dates..."
                 style={{
                   ...inputStyle,
                   resize: "vertical",
@@ -646,7 +655,6 @@ export default function BookingModal({
               />
             </div>
 
-            {/* Submit Action */}
             <div
               style={{
                 display: "flex",
