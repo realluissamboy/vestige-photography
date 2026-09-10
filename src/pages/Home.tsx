@@ -16,16 +16,16 @@ export interface HomeProps {
 }
 
 const HIGH_RES_HERO_SOURCES: Record<number, string> = {
-  36: "/hero-slides/modern-tiki.webp",
+  36: "/tiki-rockabilly.webp",
 };
 
-// Curated order: modern pin-up first, followed by glamour, burlesque, tiki, and kulture
+// Curated order: pin-up first, followed by glamour, burlesque, tiki, and kulture
 const CATEGORY_ORDER: Category[] = [
-  "Pin-Up",          // Modern Pin-Up
-  "Vintage-Glamour", // Modern Glamour
-  "Burlesque",       // Modern Burlesque
-  "Tiki-Rockabilly", // Modern Tiki
-  "Classic Cars",    // Modern Kulture
+  "Pin-Up",
+  "Vintage-Glamour",
+  "Burlesque",
+  "Tiki-Rockabilly",
+  "Classic Cars",
 ];
 
 // Dynamically resolve the exact first image of each category in the portfolio
@@ -62,18 +62,18 @@ export default function Home({
         overflowX: "hidden",
       }}
     >
-      {/* 1. Primary Homepage Cover — The woman with the green dress from Burlesque without portfolio link */}
+      {/* 1. Primary Homepage Cover */}
       <MonographDisciplineSection
         id="homepage-cover"
         title="Vestige"
-        imageSrc="/hero-slides/modern-burlesque.webp"
+        imageSrc="/hero.webp"
         imageAlt="Vestige Photography — Twenty years of modern pin-up"
         imageFocus="50% 25%"
         isCover={true}
         showPortfolioLink={false}
       />
 
-      {/* 2. Curated Categories — Starting with Modern Pin-Up, then Glamour, Burlesque, Tiki, and Kulture */}
+      {/* 2. Curated Categories — Pin-Up, Glamour, Burlesque, Tiki, Kulture */}
       {CATEGORIES.map((category, index) => (
         <MonographDisciplineSection
           key={category.key}

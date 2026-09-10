@@ -82,11 +82,11 @@ export const CATEGORY_COLORS: Record<Category, string> = {
 };
 
 export const CATEGORY_TITLES: Record<Category, string> = {
-  "Pin-Up": "Modern Pin-Up",
-  "Classic Cars": "Modern Kulture",
-  "Burlesque": "Modern Burlesque",
-  "Tiki-Rockabilly": "Modern Tiki",
-  "Vintage-Glamour": "Modern Glamour",
+  "Pin-Up": "Pin-Up",
+  "Classic Cars": "Kulture",
+  "Burlesque": "Burlesque",
+  "Tiki-Rockabilly": "Tiki",
+  "Vintage-Glamour": "Glamour",
 };
 
 export const RATIOS: Record<Ratio, { paddingBottom: string }> = {
