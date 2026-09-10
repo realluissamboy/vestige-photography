@@ -1,6 +1,5 @@
 import React, { type CSSProperties } from "react";
 import { FONTS } from "../theme/fonts";
-import { VESTIGE_TEXT_SHADOW } from "../theme/effects";
 import type { PageKey } from "../data/navigation";
 import PageHeader from "../components/PageHeader";
 import PageFooter from "../components/PageFooter";
@@ -32,7 +31,6 @@ export default function About({
     color: "var(--color-crimson, #CD2644)",
     marginBottom: isMobile ? "2px" : "6px",
     lineHeight: 1.1,
-    textShadow: VESTIGE_TEXT_SHADOW,
   };
 
   const bodyText: CSSProperties = {
@@ -77,7 +75,6 @@ export default function About({
       />
       <div style={{ height: isLandscapeMobile ? "20px" : isMobile ? "36px" : "56px" }} />
 
-      {/* Editorial Side-by-Side Container */}
       <article
         style={{
           maxWidth: "1060px",
@@ -104,7 +101,6 @@ export default function About({
             alignItems: "start",
           }}
         >
-          {/* Left: Susana's Portrait & Founder Signature */}
           <div
             style={{
               display: "flex",
@@ -143,16 +139,13 @@ export default function About({
                 textAlign: "center",
                 margin: "12px 0 0",
                 lineHeight: 1,
-                textShadow: VESTIGE_TEXT_SHADOW,
               }}
             >
               Susana Andrea, founder
             </p>
           </div>
 
-          {/* Right: Narrative and CTA */}
           <div style={{ display: "flex", flexDirection: "column" }}>
-            {/* The Philosophy */}
             <div
               style={{
                 marginBottom: isLandscapeMobile ? "20px" : isMobile ? "24px" : "28px",
@@ -192,7 +185,6 @@ export default function About({
               </p>
             </div>
 
-            {/* The Heritage (combined roots & heritage) */}
             <div
               style={{
                 marginBottom: isLandscapeMobile ? "20px" : isMobile ? "24px" : "28px",
@@ -211,7 +203,6 @@ export default function About({
               </p>
             </div>
 
-            {/* The Accomplishments */}
             <div
               style={{
                 marginBottom: isLandscapeMobile ? "24px" : isMobile ? "28px" : "32px",
@@ -251,7 +242,6 @@ export default function About({
               </p>
             </div>
 
-            {/* CTA at the bottom of the narrative */}
             <div
               style={{
                 paddingTop: "4px",
@@ -266,7 +256,6 @@ export default function About({
           </div>
         </div>
 
-        {/* Integrated Compact Horizontal Footer */}
         <div
           style={{
             width: "100%",
