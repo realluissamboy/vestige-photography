@@ -131,24 +131,6 @@ export default function MonographDisciplineSection({
                 Vestige
               </h1>
 
-              {/* Subtitle */}
-              <p
-                style={{
-                  fontFamily: FONTS.script,
-                  fontSize: isLandscapeMobile
-                    ? "clamp(18px, 4.2vh, 22px)"
-                    : isMobilePortrait
-                    ? "clamp(24px, 5.5vw, 32px)"
-                    : "clamp(34px, 3.4vw, 48px)",
-                  color: "#FDFEFD",
-                  margin: isLandscapeMobile ? "4px 0 0" : isMobile ? "8px 0 0" : "14px 0 0",
-                  lineHeight: 1.1,
-                  fontWeight: 400,
-                }}
-              >
-                Twenty years of modern pin-up
-              </p>
-
               {/* Founder Tagline */}
               <p
                 style={{
@@ -158,7 +140,7 @@ export default function MonographDisciplineSection({
                   textTransform: "uppercase",
                   color: "rgba(255, 255, 255, 0.92)",
                   fontWeight: 700,
-                  margin: isMobile ? "6px 0 0" : "10px 0 0",
+                  margin: isMobile ? "10px 0 0" : "14px 0 0",
                 }}
               >
                 Photography by Susana Andrea
@@ -255,7 +237,6 @@ export default function MonographDisciplineSection({
                   fontWeight: 700,
                   fontSize: isMobile ? "12px" : "14px",
                   letterSpacing: "1px",
-                  textTransform: "uppercase",
                 }}
               >
                 View {title} Portfolio
