@@ -67,7 +67,7 @@ export default function Home({
         id="homepage-cover"
         title="Vestige"
         imageSrc="/hero.webp"
-        imageAlt="Vestige Photography — Twenty years of modern pin-up"
+        imageAlt="Susana Andrea — Vestige Photography"
         imageFocus="50% 25%"
         isCover={true}
         showPortfolioLink={false}
