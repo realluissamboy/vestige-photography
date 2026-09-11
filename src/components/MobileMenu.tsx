@@ -1,10 +1,9 @@
-import { useState, useEffect, type CSSProperties } from "react";
+import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { PAGE_LINKS, SOCIALS } from "../data/navigation";
 import type { PageKey } from "../data/navigation";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
-import { VESTIGE_ICON_SHADOW, VESTIGE_TEXT_SHADOW } from "../theme/effects";
 
 export interface MobileMenuProps {
   variant: "overlay" | "solid";
@@ -91,7 +90,7 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
             display: "block",
             filter: variant === "overlay"
               ? "drop-shadow(0 2px 4px rgba(0,0,0,0.85)) drop-shadow(0 0 10px rgba(200,20,44,0.6))"
-              : VESTIGE_ICON_SHADOW,
+              : undefined,
           }}
           aria-hidden="true"
         >
@@ -156,7 +155,6 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
                 fontFamily: FONTS.script,
                 fontSize: link.isWordmark ? "clamp(44px, 8vh, 64px)" : "clamp(30px, 6vh, 48px)",
                 color: "var(--color-crimson)",
-                textShadow: VESTIGE_TEXT_SHADOW,
                 background: "transparent",
                 border: "none",
                 padding: "6px 24px",
@@ -189,7 +187,6 @@ export default function MobileMenu({ variant, setPage, menuId = "mobile-menu", o
                   fontFamily: FONTS.script,
                   fontSize: "clamp(22px, 4.5vh, 32px)",
                   color: "var(--color-cream)",
-                  textShadow: VESTIGE_TEXT_SHADOW,
                   textDecoration: "none",
                   display: "inline-flex",
                   alignItems: "center",
