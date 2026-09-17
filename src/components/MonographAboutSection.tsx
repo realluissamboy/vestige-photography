@@ -10,8 +10,6 @@ export interface MonographAboutSectionProps {
   onBookSession?: () => void;
 }
 
-const VESTIGE_TEXT_SHADOW = "0 1px 2px rgba(0, 0, 0, 0.12)";
-
 export default function MonographAboutSection({
   onBookSession,
 }: MonographAboutSectionProps) {
@@ -27,7 +25,6 @@ export default function MonographAboutSection({
     color: "var(--color-crimson, #CD2644)",
     marginBottom: isMobile ? "4px" : "8px",
     lineHeight: 1.05,
-    textShadow: VESTIGE_TEXT_SHADOW,
   };
 
   const bodyText: React.CSSProperties = {
@@ -77,7 +74,6 @@ export default function MonographAboutSection({
           boxSizing: "border-box",
         }}
       >
-        {/* Editorial Side-by-Side Grid: Photo on Left, Text & CTA on Right */}
         <div
           style={{
             display: "grid",
@@ -90,7 +86,6 @@ export default function MonographAboutSection({
             alignItems: "start",
           }}
         >
-          {/* Left Column: Susana's Portrait & Founder Signature */}
           <div
             style={{
               display: "flex",
@@ -132,13 +127,11 @@ export default function MonographAboutSection({
                 textAlign: "center",
                 margin: "12px 0 0",
                 lineHeight: 1,
-                textShadow: VESTIGE_TEXT_SHADOW,
               }}
             >
               Susana Andrea, founder
             </p>
 
-            {/* Susana's Social Media Links */}
             <nav
               style={{
                 display: "flex",
@@ -185,9 +178,7 @@ export default function MonographAboutSection({
             </nav>
           </div>
 
-          {/* Right Column: The Narrative and Call to Action */}
           <div style={{ display: "flex", flexDirection: "column" }}>
-            {/* The Philosophy */}
             <div
               style={{
                 marginBottom: isLandscapeMobile ? "22px" : isMobile ? "26px" : "32px",
@@ -227,7 +218,6 @@ export default function MonographAboutSection({
               </p>
             </div>
 
-            {/* The Heritage (combined punk/metal roots and multicultural heritage) */}
             <div
               style={{
                 marginBottom: isLandscapeMobile ? "20px" : isMobile ? "24px" : "28px",
@@ -246,7 +236,6 @@ export default function MonographAboutSection({
               </p>
             </div>
 
-            {/* The Accomplishments */}
             <div
               style={{
                 marginBottom: isLandscapeMobile ? "24px" : isMobile ? "28px" : "32px",
@@ -286,7 +275,6 @@ export default function MonographAboutSection({
               </p>
             </div>
 
-            {/* Call to Action — brought up alongside the text */}
             <div
               style={{
                 paddingTop: "4px",
@@ -301,7 +289,6 @@ export default function MonographAboutSection({
           </div>
         </div>
 
-        {/* Integrated Compact Horizontal Footer */}
         <div
           style={{
             width: "100%",

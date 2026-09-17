@@ -2,7 +2,6 @@ import React from "react";
 import type { CSSProperties } from "react";
 import { COLORS } from "../theme/colors";
 import { FONTS } from "../theme/fonts";
-import { VESTIGE_TEXT_SHADOW, VESTIGE_WORDMARK_SHADOW } from "../theme/effects";
 import MobileMenu from "../components/MobileMenu";
 import {
   GALLERY_IMAGES,
@@ -116,16 +115,6 @@ function CategoryGalleryView({
             flexWrap: "wrap",
           }}
         >
-          <span
-            style={{
-              fontFamily: FONTS.script,
-              fontSize: isLandscapeMobile ? "18px" : isMobile ? "20px" : "28px",
-              lineHeight: 1,
-              opacity: 0.9,
-            }}
-          >
-            a study in
-          </span>
           <h2
             style={{
               fontFamily: FONTS.display,
@@ -396,7 +385,6 @@ export default function Portfolio({
               cursor: "pointer",
               lineHeight: 1,
               padding: 0,
-              textShadow: VESTIGE_WORDMARK_SHADOW,
             }}
           >
             Vestige
@@ -413,7 +401,7 @@ export default function Portfolio({
             {PORTFOLIO_CATEGORIES.map((cat, index) => {
               const isSelected = cat === previewCategory;
               const catTitle = CATEGORY_TITLES[cat] ?? "";
-              const shortLabel = catTitle.replace(/^Modern\s/, "");
+              const shortLabel = catTitle;
               const catColor = CATEGORY_COLORS[cat] ?? "var(--color-crimson)";
 
               return (
@@ -893,7 +881,7 @@ export default function Portfolio({
               {PORTFOLIO_CATEGORIES.map((cat, index) => {
                 const isSelected = cat === previewCategory;
                 const catTitle = CATEGORY_TITLES[cat] ?? "";
-                const shortLabel = catTitle.replace(/^Modern\s/, "").replace(/^Classic\s/, "");
+                const shortLabel = catTitle;
                 const catColor = CATEGORY_COLORS[cat] ?? "var(--color-crimson)";
 
                 return (
@@ -1197,11 +1185,8 @@ export default function Portfolio({
                   }}
                 >
                   <div>
-                    <div style={{ fontFamily: FONTS.script, fontSize: "54px", lineHeight: 0.85, opacity: 0.9 }}>
-                      {title.startsWith("Modern ") ? "modern" : "a modern"}
-                    </div>
-                    <div style={{ fontFamily: FONTS.display, fontStyle: "italic", fontWeight: 800, fontSize: "40px", letterSpacing: "-1px", lineHeight: 1 }}>
-                      {title.replace(/^Modern\s/, "")}
+                    <div style={{ fontFamily: FONTS.script, fontSize: "54px", lineHeight: 0.9 }}>
+                      {title} Portfolio
                     </div>
                     <div
                       style={{
@@ -1351,4 +1336,3 @@ export default function Portfolio({
     </main>
   );
 }
-
